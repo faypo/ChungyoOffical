@@ -56,6 +56,7 @@ export default function FlipBook({ pages, onBack }) {
   const [pendingSpread, setPendingSpread]   = useState(null);
   const [progress, setProgress]             = useState(0);    // 0–1
   const [autoFlipPending, setAutoFlipPending] = useState(false);
+  const [scale, setScale]                   = useState(1);    // zoom level
 
   // Mutable refs — no re-renders needed for these
   const isDraggingRef     = useRef(false);
@@ -261,6 +262,27 @@ export default function FlipBook({ pages, onBack }) {
 
   useEffect(() => () => cancelAnim(), [cancelAnim]);
 
+  // ─── Zoom ─────────────────────────────────────────────────────────────────
+
+  const SCALE_MIN = 0.5;
+  const SCALE_MAX = 3;
+  const SCALE_STEP = 0.25;
+
+  const zoomIn  = useCallback(() => setScale(s => Math.min(s + SCALE_STEP, SCALE_MAX)), []);
+  const zoomOut = useCallback(() => setScale(s => Math.max(s - SCALE_STEP, SCALE_MIN)), []);
+  const zoomReset = useCallback(() => setScale(1), []);
+
+  useEffect(() => {
+    const onWheel = (e) => {
+      if (!e.ctrlKey && !e.metaKey) return;
+      e.preventDefault();
+      if (e.deltaY < 0) zoomIn();
+      else              zoomOut();
+    };
+    window.addEventListener('wheel', onWheel, { passive: false });
+    return () => window.removeEventListener('wheel', onWheel);
+  }, [zoomIn, zoomOut]);
+
   // ─── Mobile: delegate to single-page slider ───────────────────────────────
 
   if (isMobile) return <MobileFlipBook pages={pages} onBack={onBack} />;
@@ -294,7 +316,7 @@ export default function FlipBook({ pages, onBack }) {
           handleDragStart(t.clientX, e.currentTarget.getBoundingClientRect());
         }}
       >
-        <div className="book" ref={bookRef}>
+        <div className="book" ref={bookRef} style={{ transform: `scale(${scale})` }}>
           {/* Left page */}
           <div className="book-side book-left">
             <PageContent page={bgLeft} side="left" />
@@ -354,6 +376,13 @@ export default function FlipBook({ pages, onBack }) {
         >
           {currentSpread < TOTAL_SPREADS - 1 && <span className="hint-arrow">›</span>}
         </div>
+      </div>
+
+      {/* Zoom controls */}
+      <div className="zoom-controls">
+        <button className="zoom-btn" onClick={zoomOut} disabled={scale <= SCALE_MIN} title="縮小">－</button>
+        <button className="zoom-reset" onClick={zoomReset} title="重設">{Math.round(scale * 100)}%</button>
+        <button className="zoom-btn" onClick={zoomIn}  disabled={scale >= SCALE_MAX} title="放大">＋</button>
       </div>
 
       {/* Page dots */}
