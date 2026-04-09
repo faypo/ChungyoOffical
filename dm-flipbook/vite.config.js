@@ -1,7 +1,12 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  server: {
+    historyApiFallback: true,   // dev: 所有路由回傳 index.html
+  },
+  preview: {
+    historyApiFallback: true,   // preview 模式
+  },
 })

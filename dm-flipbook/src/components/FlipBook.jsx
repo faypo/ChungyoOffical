@@ -1,10 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import PageContent from './PageContent';
-import { pages } from '../data/pages';
 
-const TOTAL_SPREADS = pages.length;
-
-function getSpreadPages(spreadIndex) {
+function getSpreadPages(pages, spreadIndex) {
   const page = pages[spreadIndex] ?? null;
   if (spreadIndex === 0) return { left: null, right: page };
   return { left: page, right: page };
@@ -35,14 +32,15 @@ function leafAngles(progress, direction) {
   };
 }
 
-export default function FlipBook() {
+export default function FlipBook({ pages, onBack }) {
+  const TOTAL_SPREADS = pages.length;
+
   const [currentSpread, setCurrentSpread]   = useState(0);
   const [flipActive, setFlipActive]         = useState(false);
   const [flipDirection, setFlipDirection]   = useState(null); // 'next' | 'prev'
   const [pendingSpread, setPendingSpread]   = useState(null);
   const [progress, setProgress]             = useState(0);    // 0–1
   const [autoFlipPending, setAutoFlipPending] = useState(false);
-  const [showThumbnails, setShowThumbnails] = useState(false);
 
   // Mutable refs — no re-renders needed for these
   const isDraggingRef     = useRef(false);
@@ -58,8 +56,8 @@ export default function FlipBook() {
   // Keep currentSpreadRef in sync
   useEffect(() => { currentSpreadRef.current = currentSpread; }, [currentSpread]);
 
-  const { left: leftPage, right: rightPage } = getSpreadPages(currentSpread);
-  const pendingPages = pendingSpread !== null ? getSpreadPages(pendingSpread) : null;
+  const { left: leftPage, right: rightPage } = getSpreadPages(pages, currentSpread);
+  const pendingPages = pendingSpread !== null ? getSpreadPages(pages, pendingSpread) : null;
 
   // Under the closing leaf, show the incoming page so it's revealed as the leaf rotates away
   let bgLeft  = leftPage;
@@ -259,14 +257,11 @@ export default function FlipBook() {
 
   return (
     <div className="flipbook-wrapper">
-      <button
-        className="float-thumb-btn"
-        onClick={() => setShowThumbnails(v => !v)}
-        title="頁面導覽"
-      >
-        ☰
-      </button>
-
+      {onBack && (
+        <button className="flipbook-back-btn" onClick={onBack} title="返回型錄">
+          ← 返回
+        </button>
+      )}
       <div
         className="stage"
         onMouseDown={(e) => {
@@ -354,37 +349,6 @@ export default function FlipBook() {
         ))}
       </div>
 
-      {/* Thumbnails panel */}
-      {showThumbnails && (
-        <div className="thumbnails-overlay" onClick={() => setShowThumbnails(false)}>
-          <div className="thumbnails-panel" onClick={e => e.stopPropagation()}>
-            <div className="thumbnails-header">
-              <span>頁面導覽</span>
-              <button onClick={() => setShowThumbnails(false)}>✕</button>
-            </div>
-            <div className="thumbnails-grid">
-              {pages.map((page, i) => {
-                const label = i === 0 ? '封面' : page.name;
-                return (
-                  <button
-                    key={i}
-                    className={`thumb-item ${i === currentSpread ? 'active' : ''}`}
-                    onClick={() => { goToSpread(i); setShowThumbnails(false); }}
-                    style={{
-                      backgroundImage: `url(${page.src})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                    }}
-                  >
-                    <span className="thumb-label">{label}</span>
-                    {i === currentSpread && <span className="thumb-current">▶</span>}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

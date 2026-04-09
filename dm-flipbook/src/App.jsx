@@ -1,11 +1,19 @@
-import React from 'react';
-import FlipBook from './components/FlipBook';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import DMShowcase from './components/DMShowcase';
+import DMViewer from './components/DMViewer';
 import './App.css';
 
 export default function App() {
   return (
-    <div className="app">
-      <FlipBook />
-    </div>
+    <BrowserRouter>
+      <div className="app">
+        <Routes>
+          <Route path="/"      element={<Navigate to="/dm" replace />} />
+          <Route path="/dm"    element={<DMShowcase />} />
+          <Route path="/dm/:id" element={<DMViewer />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
