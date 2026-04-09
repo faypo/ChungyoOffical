@@ -58,6 +58,9 @@ export default function FlipBook({ pages, onBack }) {
   const [autoFlipPending, setAutoFlipPending] = useState(false);
   const [scale, setScale]                   = useState(1);    // zoom level
 
+  const [panX, setPanX] = useState(0);
+  const [panY, setPanY] = useState(0);
+
   // Mutable refs — no re-renders needed for these
   const isDraggingRef     = useRef(false);
   const dragStartXRef     = useRef(0);
@@ -68,9 +71,18 @@ export default function FlipBook({ pages, onBack }) {
   const currentSpreadRef  = useRef(0);
   const animFrameRef      = useRef(null);
   const bookRef           = useRef(null);
+  const scaleRef          = useRef(1);
+  const isPanningRef      = useRef(false);
+  const panStartXRef      = useRef(0);
+  const panStartYRef      = useRef(0);
+  const panBaseXRef       = useRef(0);
+  const panBaseYRef       = useRef(0);
+  const panXRef           = useRef(0);
+  const panYRef           = useRef(0);
 
-  // Keep currentSpreadRef in sync
+  // Keep currentSpreadRef / scaleRef in sync
   useEffect(() => { currentSpreadRef.current = currentSpread; }, [currentSpread]);
+  useEffect(() => { scaleRef.current = scale; }, [scale]);
 
   const { left: leftPage, right: rightPage } = getSpreadPages(pages, currentSpread);
   const pendingPages = pendingSpread !== null ? getSpreadPages(pages, pendingSpread) : null;
@@ -216,17 +228,49 @@ export default function FlipBook({ pages, onBack }) {
     }
   }, [completeFlip, cancelFlip]);
 
+  // ─── Pan handlers (active when scale > 1) ────────────────────────────────
+
+  const handlePanMove = useCallback((clientX, clientY) => {
+    if (!isPanningRef.current) return;
+    panXRef.current = panBaseXRef.current + (clientX - panStartXRef.current);
+    panYRef.current = panBaseYRef.current + (clientY - panStartYRef.current);
+    setPanX(panXRef.current);
+    setPanY(panYRef.current);
+  }, []);
+
+  const handlePanEnd = useCallback(() => {
+    if (!isPanningRef.current) return;
+    isPanningRef.current = false;
+    document.body.style.cursor = '';
+  }, []);
+
   // ─── Global mouse / touch events ─────────────────────────────────────────
 
   useEffect(() => {
-    const onMouseMove  = (e) => handleDragMove(e.clientX);
-    const onMouseUp    = (e) => handleDragEnd(e.clientX);
-    const onTouchMove  = (e) => {
-      if (isDraggingRef.current) e.preventDefault();
-      handleDragMove(e.touches[0].clientX);
+    const onMouseMove = (e) => {
+      if (isPanningRef.current) handlePanMove(e.clientX, e.clientY);
+      else                      handleDragMove(e.clientX);
     };
-    const onTouchEnd   = (e) =>
-      handleDragEnd(e.changedTouches[0]?.clientX ?? dragStartXRef.current);
+    const onMouseUp = (e) => {
+      if (isPanningRef.current) handlePanEnd();
+      else                      handleDragEnd(e.clientX);
+    };
+    const onTouchMove = (e) => {
+      if (isPanningRef.current) {
+        e.preventDefault();
+        handlePanMove(e.touches[0].clientX, e.touches[0].clientY);
+      } else {
+        if (isDraggingRef.current) e.preventDefault();
+        handleDragMove(e.touches[0].clientX);
+      }
+    };
+    const onTouchEnd = (e) => {
+      if (isPanningRef.current) {
+        handlePanEnd();
+      } else {
+        handleDragEnd(e.changedTouches[0]?.clientX ?? dragStartXRef.current);
+      }
+    };
 
     window.addEventListener('mousemove',  onMouseMove);
     window.addEventListener('mouseup',    onMouseUp);
@@ -238,7 +282,7 @@ export default function FlipBook({ pages, onBack }) {
       window.removeEventListener('touchmove',  onTouchMove);
       window.removeEventListener('touchend',   onTouchEnd);
     };
-  }, [handleDragMove, handleDragEnd]);
+  }, [handleDragMove, handleDragEnd, handlePanMove, handlePanEnd]);
 
   // ─── Keyboard ─────────────────────────────────────────────────────────────
 
@@ -268,9 +312,15 @@ export default function FlipBook({ pages, onBack }) {
   const SCALE_MAX = 3;
   const SCALE_STEP = 0.25;
 
+  const resetPan = useCallback(() => {
+    panXRef.current = 0; panYRef.current = 0;
+    panBaseXRef.current = 0; panBaseYRef.current = 0;
+    setPanX(0); setPanY(0);
+  }, []);
+
   const zoomIn  = useCallback(() => setScale(s => Math.min(s + SCALE_STEP, SCALE_MAX)), []);
   const zoomOut = useCallback(() => setScale(s => Math.max(s - SCALE_STEP, SCALE_MIN)), []);
-  const zoomReset = useCallback(() => setScale(1), []);
+  const zoomReset = useCallback(() => { setScale(1); resetPan(); }, [resetPan]);
 
   useEffect(() => {
     const onWheel = (e) => {
@@ -305,18 +355,35 @@ export default function FlipBook({ pages, onBack }) {
       )}
       <div
         className="stage"
+        style={{ cursor: scaleRef.current > 1 ? 'grab' : 'grab' }}
         onMouseDown={(e) => {
-          if (e.button !== 0 || flipActiveRef.current) return;
+          if (e.button !== 0) return;
           e.preventDefault();
-          handleDragStart(e.clientX, e.currentTarget.getBoundingClientRect());
+          if (scaleRef.current > 1) {
+            isPanningRef.current = true;
+            panStartXRef.current = e.clientX;
+            panStartYRef.current = e.clientY;
+            panBaseXRef.current  = panXRef.current;
+            panBaseYRef.current  = panYRef.current;
+            document.body.style.cursor = 'grabbing';
+          } else if (!flipActiveRef.current) {
+            handleDragStart(e.clientX, e.currentTarget.getBoundingClientRect());
+          }
         }}
         onTouchStart={(e) => {
-          if (flipActiveRef.current) return;
-          const t = e.touches[0];
-          handleDragStart(t.clientX, e.currentTarget.getBoundingClientRect());
+          if (scaleRef.current > 1) {
+            isPanningRef.current = true;
+            panStartXRef.current = e.touches[0].clientX;
+            panStartYRef.current = e.touches[0].clientY;
+            panBaseXRef.current  = panXRef.current;
+            panBaseYRef.current  = panYRef.current;
+          } else if (!flipActiveRef.current) {
+            const t = e.touches[0];
+            handleDragStart(t.clientX, e.currentTarget.getBoundingClientRect());
+          }
         }}
       >
-        <div className="book" ref={bookRef} style={{ transform: `scale(${scale})` }}>
+        <div className="book" ref={bookRef} style={{ transform: `translate(${panX}px, ${panY}px) scale(${scale})` }}>
           {/* Left page */}
           <div className="book-side book-left">
             <PageContent page={bgLeft} side="left" />
