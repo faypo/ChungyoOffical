@@ -1,5 +1,19 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import PageContent from './PageContent';
+import MobileFlipBook from './MobileFlipBook';
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(
+    () => window.matchMedia('(max-width: 700px)').matches
+  );
+  useEffect(() => {
+    const mq      = window.matchMedia('(max-width: 700px)');
+    const handler = (e) => setIsMobile(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+  return isMobile;
+}
 
 function getSpreadPages(pages, spreadIndex) {
   const page = pages[spreadIndex] ?? null;
@@ -33,6 +47,7 @@ function leafAngles(progress, direction) {
 }
 
 export default function FlipBook({ pages, onBack }) {
+  const isMobile      = useIsMobile();
   const TOTAL_SPREADS = pages.length;
 
   const [currentSpread, setCurrentSpread]   = useState(0);
@@ -245,6 +260,10 @@ export default function FlipBook({ pages, onBack }) {
   }, [goNext, goPrev]);
 
   useEffect(() => () => cancelAnim(), [cancelAnim]);
+
+  // ─── Mobile: delegate to single-page slider ───────────────────────────────
+
+  if (isMobile) return <MobileFlipBook pages={pages} onBack={onBack} />;
 
   // ─── Compute leaf transforms ──────────────────────────────────────────────
 

@@ -505,6 +505,82 @@ html, body, #root, .app {
   background: #f0f0f0;
 }
 
+/* ===== Mobile FlipBook (single-page slide) ===== */
+.mobile-flipbook {
+  position: relative;
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: #fff;
+}
+
+.mobile-page-area {
+  width: 100%; height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e8e8e8;
+  cursor: grab;
+}
+.mobile-page-area:active { cursor: grabbing; }
+
+/* Fixed 3:4 portrait frame — pages slide inside.
+   Width is capped by height (92vh × 0.75) OR container width, whichever is smaller.
+   aspect-ratio then derives height automatically, so narrow screens shrink height too. */
+.mobile-book-frame {
+  position: relative;
+  width: min(calc(92vh * 0.75), 100%);
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.35);
+  flex-shrink: 0;
+}
+
+.mobile-page {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  will-change: transform;
+}
+
+.mobile-nav {
+  position: fixed;
+  top: 50%; transform: translateY(-50%);
+  z-index: 50;
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff;
+  width: 36px; height: 60px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 26px;
+  line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0;
+  backdrop-filter: blur(4px);
+  transition: background 0.2s, opacity 0.2s;
+  font-family: inherit;
+}
+.mobile-nav:disabled { opacity: 0.15; cursor: not-allowed; }
+.mobile-nav:hover:not(:disabled) { background: rgba(0,0,0,0.65); }
+.mobile-nav-prev { left: 4px; }
+.mobile-nav-next { right: 4px; }
+
+.mobile-page-indicator {
+  position: fixed;
+  bottom: 16px;
+  left: 50%; transform: translateX(-50%);
+  z-index: 50;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(6px);
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  font-size: 13px;
+  color: #333;
+  white-space: nowrap;
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 700px) {
   .book {
