@@ -4,7 +4,13 @@
 export async function fetchCatalog() {
   const res = await fetch('/catalog.json');
   if (!res.ok) throw new Error('無法載入 catalog.json');
-  return res.json(); // [{ id, title, subtitle }]
+  return res.json(); // [{ id, title, subtitle, button? }]
+}
+
+/** 讀取單一 DM 的 metadata（含 button 設定） */
+export async function fetchDMMeta(dmId) {
+  const catalog = await fetchCatalog();
+  return catalog.find(dm => dm.id === dmId) ?? null;
 }
 
 /** 讀取單一 DM 的頁面列表，回傳 pages 陣列 */

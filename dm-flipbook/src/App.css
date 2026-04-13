@@ -554,6 +554,25 @@ html, body, #root, .app {
 }
 .zoom-reset:hover { background: rgba(0,0,0,0.06); }
 
+/* ===== Mobile shop button ===== */
+.mobile-shop-btn {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 60;
+  background: var(--brand);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  transition: background 0.2s;
+}
+.mobile-shop-btn:hover { background: var(--brand-dark); }
+
 /* ===== Mobile FlipBook (single-page slide) ===== */
 .mobile-flipbook {
   position: relative;

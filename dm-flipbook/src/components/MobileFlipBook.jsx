@@ -10,16 +10,16 @@ function buildMobilePages(pages) {
   const result = [];
   pages.forEach((page, i) => {
     if (i === 0) {
-      result.push({ page, side: 'right' });
+      result.push({ page, side: 'right', spreadIndex: 0 });
     } else {
-      result.push({ page, side: 'left' });
-      result.push({ page, side: 'right' });
+      result.push({ page, side: 'left',  spreadIndex: i });
+      result.push({ page, side: 'right', spreadIndex: i });
     }
   });
   return result;
 }
 
-export default function MobileFlipBook({ pages, onBack }) {
+export default function MobileFlipBook({ pages, buttons = [], onBack }) {
   const mobilePages = buildMobilePages(pages);
   const TOTAL = mobilePages.length;
 
@@ -251,10 +251,22 @@ export default function MobileFlipBook({ pages, onBack }) {
 
   // ─── Render ───────────────────────────────────────────────────────────────
 
+  // 找出目前手機頁（半頁）對應的按鈕設定
+  const activeButton = buttons.find(b => b.page === current) ?? null;
+
   return (
     <div className="mobile-flipbook">
       {onBack && (
         <button className="flipbook-back-btn" onClick={onBack}>← 返回</button>
+      )}
+
+      {activeButton && (
+        <a
+          className="mobile-shop-btn"
+          href={activeButton.url}
+        >
+          前往選購
+        </a>
       )}
 
       <div

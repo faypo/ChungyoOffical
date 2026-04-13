@@ -46,7 +46,7 @@ function leafAngles(progress, direction) {
   };
 }
 
-export default function FlipBook({ pages, onBack }) {
+export default function FlipBook({ pages, buttons = [], onBack }) {
   const isMobile      = useIsMobile();
   const TOTAL_SPREADS = pages.length;
 
@@ -335,7 +335,7 @@ export default function FlipBook({ pages, onBack }) {
 
   // ─── Mobile: delegate to single-page slider ───────────────────────────────
 
-  if (isMobile) return <MobileFlipBook pages={pages} onBack={onBack} />;
+  if (isMobile) return <MobileFlipBook pages={pages} buttons={buttons} onBack={onBack} />;
 
   // ─── Compute leaf transforms ──────────────────────────────────────────────
 
