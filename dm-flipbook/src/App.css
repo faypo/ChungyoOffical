@@ -591,12 +591,15 @@ html, body, #root, .app {
 }
 .mobile-page-area:active { cursor: grabbing; }
 
-/* Fixed 3:4 portrait frame — pages slide inside.
-   Width is capped by height (92vh × 0.75) OR container width, whichever is smaller.
-   aspect-ratio then derives height automatically, so narrow screens shrink height too. */
+/* Fixed 3:4 portrait frame.
+   height = min(90vh, 100vw × 4/3)
+     - 螢幕夠高：height = 90vh，width = 90vh × 0.75
+     - 螢幕較窄：height = 100vw × 4/3，width = 100vw（剛好填滿寬度）
+   aspect-ratio 確保比例不變，svh 用於排除瀏覽器工具列。 */
 .mobile-book-frame {
   position: relative;
-  width: min(calc(92vh * 0.75), 100%);
+  height: min(90vh, calc(100vw * 4 / 3));
+  height: min(90svh, calc(100vw * 4 / 3));
   aspect-ratio: 3 / 4;
   overflow: hidden;
   box-shadow: 0 8px 40px rgba(0,0,0,0.35);
