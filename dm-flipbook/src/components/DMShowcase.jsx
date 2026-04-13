@@ -10,7 +10,11 @@ export default function DMShowcase() {
 
   useEffect(() => {
     fetchCatalog()
-      .then(data => { setCatalog(data); setLoading(false); })
+      .then(data => {
+        const sorted = [...data].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+        setCatalog(sorted);
+        setLoading(false);
+      })
       .catch(err  => { setError(err.message); setLoading(false); });
   }, []);
 
