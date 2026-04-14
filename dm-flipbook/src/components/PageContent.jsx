@@ -8,7 +8,7 @@ export default function PageContent({ page, side }) {
       className="page-inner"
       style={{
         backgroundImage: `url(${page.src})`,
-        backgroundSize: '200% 100%',
+        backgroundSize: '200% auto',
         backgroundPosition: side === 'left' ? 'left center' : 'right center',
         backgroundRepeat: 'no-repeat',
       }}

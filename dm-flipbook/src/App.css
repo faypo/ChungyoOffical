@@ -598,9 +598,9 @@ html, body, #root, .app {
    aspect-ratio 確保比例不變，svh 用於排除瀏覽器工具列。 */
 .mobile-book-frame {
   position: relative;
-  height: min(90vh, calc(100vw * 4 / 3));
-  height: min(90svh, calc(100vw * 4 / 3));
-  aspect-ratio: 3 / 4;
+  height: min(90vh, calc(100vw * 19.2 / 13.6));
+  height: min(90svh, calc(100vw * 19.2 / 13.6));
+  aspect-ratio: 136 / 192;
   overflow: hidden;
   box-shadow: 0 8px 40px rgba(0,0,0,0.35);
   flex-shrink: 0;
