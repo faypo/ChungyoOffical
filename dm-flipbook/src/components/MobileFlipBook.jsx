@@ -10,12 +10,17 @@ function buildMobilePages(pages) {
   const result = [];
   pages.forEach((page, i) => {
     if (i === 0) {
+      // 封面（cover 右半）排第一頁
       result.push({ page, side: 'right', spreadIndex: 0 });
     } else {
       result.push({ page, side: 'left',  spreadIndex: i });
       result.push({ page, side: 'right', spreadIndex: i });
     }
   });
+  // 封底（cover 左半）排最後一頁
+  if (pages.length > 0) {
+    result.push({ page: pages[0], side: 'left', spreadIndex: 0 });
+  }
   return result;
 }
 

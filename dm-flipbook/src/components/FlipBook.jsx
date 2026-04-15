@@ -17,7 +17,7 @@ function useIsMobile() {
 
 function getSpreadPages(pages, spreadIndex) {
   const page = pages[spreadIndex] ?? null;
-  if (spreadIndex === 0) return { left: null, right: page };
+  // spread 0: cover.jpg 左半=封底, 右半=封面, 完整顯示
   return { left: page, right: page };
 }
 
