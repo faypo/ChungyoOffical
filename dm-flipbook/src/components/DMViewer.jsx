@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import FlipBook from './FlipBook';
 import { fetchDMPages, fetchDMMeta } from '../data/catalog';
+import './DMViewer.css';
 
 export default function DMViewer() {
   const { id }     = useParams();

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchCatalog } from '../data/catalog';
+import './DMShowcase.css';
 
 export default function DMShowcase() {
   const navigate = useNavigate();

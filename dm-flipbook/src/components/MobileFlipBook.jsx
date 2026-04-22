@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import PageContent from './PageContent';
+import './MobileFlipBook.css';
 
 /**
  * Flatten spreads into individual mobile pages.

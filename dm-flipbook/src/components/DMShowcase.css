@@ -1,0 +1,97 @@
+/* ===== DM Showcase ===== */
+.showcase-wrapper {
+  width: 100%; height: 100%;
+  overflow-y: auto;
+  padding: 40px 32px 60px;
+  color: #222;
+}
+
+.showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 28px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.showcase-card {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.2s;
+}
+.showcase-card:hover { transform: translateY(-4px); }
+
+.showcase-card-cover {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 136 / 192;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+}
+
+.showcase-card-img {
+  width: 100%; height: 100%;
+  background-repeat: no-repeat;
+  transition: transform 0.3s;
+}
+.showcase-card:hover .showcase-card-img { transform: scale(1.04); }
+
+.showcase-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.showcase-card:hover .showcase-card-overlay { background: rgba(0,0,0,0.35); }
+
+.showcase-card-read {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  border: 2px solid #fff;
+  padding: 8px 20px;
+  border-radius: 4px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+.showcase-card:hover .showcase-card-read {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.showcase-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 0 2px;
+}
+
+.showcase-card-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #222;
+  letter-spacing: 1px;
+}
+
+.showcase-card-sub {
+  font-size: 11px;
+  color: #888;
+  letter-spacing: 2px;
+}
+
+.showcase-card-pages {
+  font-size: 11px;
+  color: #bbb;
+}

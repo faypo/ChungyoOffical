@@ -36,9 +36,35 @@
       "7F": [],
       "8F": [], 
       "9F": [], 
-      "10F": [], 
-      "11F": [], 
-      "12F": [], 
+      "10F": [
+        { "name": "FUJI按摩椅", "phone": "04-2225-9460", "description": "FUJI按摩椅。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "LG", "phone": "04-3609-3368", "description": "LG。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "masse瑪謝律動", "phone": "04-2229-3327", "description": "masse瑪謝律動。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "OSIM", "phone": "04-2226-1495", "description": "OSIM。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "OGAWA", "phone": "04-2229-8907", "description": "OGAWA。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "TAKASHIMA高島", "phone": "04-2229-1068", "description": "TAKASHIMA高島。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "tokuyo", "phone": "04-2225-3362", "description": "tokuyo。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "法雅客", "phone": "04-2225-1605", "description": "法雅客。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "集雅社", "phone": "04-3609-3368", "description": "集雅社。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "映像音響", "phone": "04-2225-1887", "description": "映像音響。", "logo": "/floor-pic/Logo_Gift.jpg" }
+      ], 
+      "11F": [
+        { "name": "Fissler菲仕樂", "phone": "04-2229-1912", "description": "Fissler菲仕樂。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "HOMEWORKING元艇", "phone": "0973-698-803", "description": "HOMEWORKING元艇。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "LE CREUSET法廚", "phone": "0975-331-423", "description": "LE CREUSET法廚。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "NARA Thai Cuisine", "phone": "04-2225-5060", "description": "NARA Thai Cuisine。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "THERMOS膳魔師", "phone": "04-2223-1900", "description": "THERMOS膳魔師。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "Ucom益康屋", "phone": "04-2229-3496", "description": "Ucom益康屋。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "牛頭牌", "phone": "04-2229-3496", "description": "牛頭牌。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "西華SILWA", "phone": "04-2223-7508", "description": "西華SILWA。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "均岱鍋具", "phone": "04-2221-2065", "description": "均岱鍋具。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "開飯川食堂", "phone": "04-2223-5168", "description": "開飯川食堂。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "鼎王鵝媽媽", "phone": "04-2223-9152", "description": "鼎王鵝媽媽。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "賽博", "phone": "無專線", "description": "賽博。", "logo": "/floor-pic/Logo_Gift.jpg" }
+      ], 
+      "12F": [
+        { "name": "DAISO大創百貨", "phone": "0928-361-675", "description": "DAISO大創百貨。", "logo": "/floor-pic/Logo_Gift.jpg" }
+      ], 
       "13F": [
         { "name": "顧客服務中心", "phone": "0800-422800", "description": "顧客服務中心。", "logo": "/floor-pic/Logo_Gift.jpg" }
       ],
@@ -65,9 +91,59 @@
       "7F": [],
       "8F": [], 
       "9F": [], 
-      "10F": [], 
-      "11F": [], 
-      "12F": [], 
+      "10F": [
+        { "name": "ASKO賽寧", "phone": "04-2225-2953", "description": "ASKO賽寧。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "DIKE", "phone": "0921-179378", "description": "DIKE。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "dyson", "phone": "04-2225-7499", "description": "dyson。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "heng style恆隆行", "phone": "04-2225-5851", "description": "heng style恆隆行。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "Junior喬尼亞", "phone": "04-2225-3873", "description": "Junior喬尼亞", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "jura優瑞", "phone": "04-2225-6233", "description": "jura優瑞。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "Panasonic按摩椅", "phone": "04-2229-4690", "description": "Panasonic按摩椅。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "集雅社Panasonic", "phone": "04-3609-3368", "description": "集雅社Panasonic。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "飛利浦家電", "phone": "04-2225-4405", "description": "飛利浦家電。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "佳醫", "phone": "04-2225-3545", "description": "佳醫。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "來思比irobot", "phone": "04-2225-5029", "description": "來思比irobot。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "征利", "phone": "04-2227-8468", "description": "征利。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "虎牌", "phone": "04-2223-2185", "description": "虎牌。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "科林助聽器", "phone": "04-2220-2668", "description": "科林助聽器。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "飛利浦PH", "phone": "04-2229-3008", "description": "飛利浦PH。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "象印", "phone": "04-2223-5672", "description": "象印。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "嘉儀", "phone": "04-2223-6049", "description": "嘉儀。", "logo": "/floor-pic/Logo_Gift.jpg" }
+      ], 
+      "11F": [
+        { "name": "BBL Premium", "phone": "04-2225-5410", "description": "BBL Premium。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "DAY&DAY", "phone": "04-2225-7798", "description": "DAY&DAY。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "IN HOUSE", "phone": "04-2229-7007", "description": "IN HOUSE。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "La belle格蕾寢飾", "phone": "04-2229-4265", "description": "La belle格蕾寢飾。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "S'eduir", "phone": "04-2225-9135", "description": "S'eduir。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "TENDAYs", "phone": "04-2229-7317", "description": "TENDAYs。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "TEMPUR丹普", "phone": "04-2225-3398", "description": "TEMPUR丹普。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "Tonia Nicole 東妮", "phone": "04-2223-6481", "description": "Tonia Nicole 東妮。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "生活好品2號店", "phone": "04-2225-3456#5274", "description": "生活好品2號店。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "京都西川", "phone": "04-2225-1864", "description": "京都西川。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "法藍瓷", "phone": "04-2225-4941", "description": "法藍瓷。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "易眠床．易眠枕", "phone": "04-2223-2070", "description": "易眠床．易眠枕。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "金．安德森", "phone": "04-2223-7637", "description": "金．安德森。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "金格名床", "phone": "04-2225-9295", "description": "金格名床。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "陶八", "phone": "04-2225-3868", "description": "陶八。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "瑞香 Ruei Siang", "phone": "無專線", "description": "瑞香 Ruei Siang。", "logo": "/floor-pic/Logo_Gift.jpg" }
+      ], 
+      "12F": [
+        { "name": "Artso亞梭傢俬", "phone": "04-2229-4268", "description": "Artso亞梭傢俬", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "BUTTER by Nail Nail", "phone": "04-2229-9051", "description": "BUTTER by Nail Nail。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "cosmescents伊聖詩", "phone": "04-2227-0229", "description": "cosmescents伊聖詩。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "HERBOX荷柏園", "phone": "04-2226-4232", "description": "HERBOX荷柏園。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "Home.焙小日子", "phone": "04-2229-7126", "description": "Home.焙小日子。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "JUST HERB香草集", "phone": "04-2229-7328", "description": "JUST HERB香草集。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "L'erbolario蕾莉歐", "phone": "04-2223-9153", "description": "L'erbolario蕾莉歐。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "Les nez香鼻子", "phone": "0908-879272", "description": "Les nez香鼻子。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "O'right歐萊德", "phone": "04-2229-5806", "description": "O'right歐萊德。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "卡雅仕KYOGOKU", "phone": "無專線", "description": "卡雅仕KYOGOKU。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "有益帖", "phone": "04-2229-2883", "description": "有益帖。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "萬寶暄", "phone": "04-2223-1685", "description": "萬寶暄。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "歐法頌", "phone": "無專線", "description": "歐法頌。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "曜越科技", "phone": "04-2252-8636", "description": "曜越科技。", "logo": "/floor-pic/Logo_Gift.jpg" }
+      ], 
       "13F": [
         { "name": "生活好品1號店", "phone": "04-2225-3456#261", "description": "生活好品1號店。", "logo": "/floor-pic/Logo_Gift.jpg" }
       ],
@@ -92,9 +168,27 @@
       "7F": [],
       "8F": [], 
       "9F": [], 
-      "10F": [], 
-      "11F": [], 
-      "12F": [], 
+      "10F": [
+        { "name": "誠品書店", "phone": "04-2221-1287", "description": "誠品書店。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "CHIC MOO", "phone": "無專線", "description": "CHIC MOO。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "Fevrier 菲芙利", "phone": "04-2225-5012", "description": "Fevrier 菲芙利。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "Like Do", "phone": "0979-705873", "description": "Like Do。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "Keizu 好鞋好設計", "phone": "無專線", "description": "Keizu 好鞋好設計。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "拿鐵小姐", "phone": "無專線", "description": "拿鐵小姐。", "logo": "/floor-pic/Logo_Gift.jpg" }
+      ], 
+      "11F": [
+        { "name": "誠品書店", "phone": "04-2221-1287", "description": "誠品書店。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "blackpages CAFE", "phone": "04-2221-1287#28", "description": "blackpages CAFE。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "expo誠品生活文創平台", "phone": "04-2221-1287#23", "description": "expo誠品生活文創平台。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "FeatherLeather羽革", "phone": "04-2222-1568", "description": "FeatherLeather羽革。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "PEPPER'S", "phone": "04-2228-3289", "description": "PEPPER'S。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "Pintoo", "phone": "04-2227-0158", "description": "Pintoo。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "SOB DEALL", "phone": "04-2225-3485", "description": "SOB DEALL。", "logo": "/floor-pic/Logo_Gift.jpg" }
+      ], 
+      "12F": [
+        { "name": "瓦城泰式料理", "phone": "04-2220-5678", "description": "瓦城泰式料理。", "logo": "/floor-pic/Logo_Gift.jpg" },
+        { "name": "京悅港式飲茶", "phone": "04-2223-3919", "description": "京悅港式飲茶。", "logo": "/floor-pic/Logo_Gift.jpg" }
+      ], 
       "13F": [
          { "name": "名人/奧可那泳裝", "phone": "暫無電話", "description": "名人/奧可那泳裝", "logo": "/floor-pic/Logo_Gift.jpg" }
       ],

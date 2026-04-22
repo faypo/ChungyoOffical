@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './FloorGuide.css';
 
 const BUILDINGS = ['A', 'B', 'C'];
 

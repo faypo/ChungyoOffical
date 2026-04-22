@@ -1,0 +1,237 @@
+/* ===== Stage ===== */
+.stage {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  perspective: 2000px;
+  cursor: grab;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+/* ===== Book ===== */
+.book {
+  display: flex;
+  align-items: stretch;
+  position: relative;
+  height: min(90vh, 700px);
+  width: min(130vh, 1050px);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+  transform-style: preserve-3d;
+}
+
+.book-side {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+
+.book-left {
+  border-radius: 4px 0 0 4px;
+  box-shadow: -8px 0 20px rgba(0,0,0,0.4) inset;
+}
+
+.book-right {
+  border-radius: 0 4px 4px 0;
+  box-shadow: 8px 0 20px rgba(0,0,0,0.4) inset;
+}
+
+.book-spine {
+  width: 12px;
+  background: linear-gradient(to right, #ccc, #fff, #ccc);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 5;
+  box-shadow: 0 0 8px rgba(0,0,0,0.15);
+}
+
+/* ===== Flip animations — JS-driven two-leaf page turn ===== */
+
+/*
+ * Transforms are set entirely via inline style by FlipBook.jsx.
+ * CSS only provides positioning, pivot points, and overflow clipping.
+ * No CSS animation / keyframes — they would conflict with drag-tracking.
+ */
+
+.flip-leaf {
+  position: absolute;
+  top: 0; bottom: 0;
+  overflow: hidden;
+  z-index: 10;
+  will-change: transform;
+}
+
+/* NEXT: right page flips over to the left */
+.flip-next-closing {
+  left: 50%; right: 0;
+  transform-origin: left center;
+  box-shadow: -4px 0 20px rgba(0,0,0,0.35);
+}
+
+.flip-next-opening {
+  left: 0; right: 50%;
+  transform-origin: right center;
+  box-shadow: 4px 0 20px rgba(0,0,0,0.25);
+}
+
+/* PREV: left page flips over to the right */
+.flip-prev-closing {
+  left: 0; right: 50%;
+  transform-origin: right center;
+  box-shadow: 4px 0 20px rgba(0,0,0,0.35);
+}
+
+.flip-prev-opening {
+  left: 50%; right: 0;
+  transform-origin: left center;
+  box-shadow: -4px 0 20px rgba(0,0,0,0.25);
+}
+
+/* Subtle gradient overlay gives a paper-fold feel */
+.flip-next-closing::after, .flip-prev-closing::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  background: linear-gradient(to left, transparent 30%, rgba(0,0,0,0.18) 100%);
+}
+.flip-prev-closing::after {
+  background: linear-gradient(to right, transparent 30%, rgba(0,0,0,0.18) 100%);
+}
+
+/* ===== Click hints ===== */
+.click-hint {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 20%;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 20;
+  cursor: pointer;
+}
+.left-hint { left: 0; }
+.right-hint { right: 0; }
+
+.hint-arrow {
+  font-size: 48px;
+  color: rgba(0,0,0,0.15);
+  transition: color 0.2s, transform 0.2s;
+  user-select: none;
+  line-height: 1;
+}
+.click-hint:hover .hint-arrow {
+  color: rgba(0,0,0,0.45);
+  transform: scale(1.2);
+}
+
+/* ===== Floating controls ===== */
+.float-nav {
+  position: fixed;
+  top: 50%; transform: translateY(-50%);
+  z-index: 50;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff;
+  width: 48px; height: 80px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 36px;
+  line-height: 1;
+  backdrop-filter: blur(4px);
+  transition: background 0.2s, opacity 0.2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.float-nav:disabled { opacity: 0.15; cursor: not-allowed; }
+.float-nav:hover:not(:disabled) { background: rgba(0,0,0,0.7); }
+.float-nav-left  { left: 12px; }
+.float-nav-right { right: 12px; }
+
+.float-dots {
+  position: fixed;
+  bottom: 16px; left: 50%; transform: translateX(-50%);
+  z-index: 50;
+  display: flex; gap: 8px; align-items: center;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(6px);
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.2);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s, transform 0.2s;
+}
+.dot.active {
+  background: var(--brand);
+  transform: scale(1.5);
+}
+.dot:hover:not(.active) { background: rgba(0,0,0,0.4); }
+
+/* ===== Zoom controls ===== */
+.zoom-controls {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(6px);
+  padding: 6px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+
+.zoom-btn {
+  width: 28px; height: 28px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  color: #333;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s;
+  font-family: inherit;
+}
+.zoom-btn:hover:not(:disabled) { background: rgba(0,0,0,0.08); }
+.zoom-btn:disabled { opacity: 0.25; cursor: not-allowed; }
+
+.zoom-reset {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 12px;
+  color: #555;
+  min-width: 40px;
+  text-align: center;
+  font-family: inherit;
+  letter-spacing: 0.5px;
+  padding: 0 4px;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+.zoom-reset:hover { background: rgba(0,0,0,0.06); }
+
+/* ===== Responsive ===== */
+@media (max-width: 700px) {
+  .book {
+    height: min(80vh, 500px);
+    width: 98vw;
+  }
+  .float-nav { width: 36px; height: 60px; font-size: 26px; }
+  .float-nav-left  { left: 4px; }
+  .float-nav-right { right: 4px; }
+  .float-dots { display: none; }
+}

@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import PageContent from './PageContent';
 import MobileFlipBook from './MobileFlipBook';
+import './FlipBook.css';
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(

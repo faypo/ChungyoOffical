@@ -1,4 +1,5 @@
 import React from 'react';
+import './PageContent.css';
 
 export default function PageContent({ page, side }) {
   if (!page) return <div className="page-empty" />;
