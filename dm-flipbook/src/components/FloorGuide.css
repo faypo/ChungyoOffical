@@ -183,3 +183,151 @@
   color: #334d6e;
   line-height: 1.7;
 }
+
+/* ===== Mobile ===== */
+@media (max-width: 700px) {
+  .floor-guide {
+    flex-direction: column;
+    position: relative;
+  }
+
+  /* Right panel takes full width */
+  .floor-right {
+    width: 100%;
+    flex: 1;
+    padding-top: 0;
+    background: #fff;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Fixed tab circles header
+     bar 高度 70px，圓圈從 top:20px 開始 (100px 圓心在 70px = 邊線位置)
+     → 非選中半圓底部剛好貼齊邊線 */
+  .floor-tabs {
+    position: fixed;
+    top: 0;
+    left: 0; right: 0;
+    height: 70px;
+    transform: none;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    padding-top: 20px;
+    background: #dce6f4;
+    z-index: 100;
+    pointer-events: none;
+    border-bottom: 2px solid #004098;
+  }
+
+  /* Smaller circles on mobile */
+  .floor-tab-btn {
+    width: 100px; height: 100px;
+    border-width: 2px;
+    pointer-events: auto;
+  }
+
+  .floor-tab-label {
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+
+  /* Scrollable content: starts below active circle bottom (70px bar + 2px border + 50px circle peek) */
+  .floor-content {
+    position: absolute;
+    top: 122px;
+    left: 0; right: 0;
+    bottom: 52px; /* leave room for bottom floor bar */
+    overflow-y: auto;
+    padding: 12px 12px 20px;
+    border-top: none;
+    margin-top: 0;
+  }
+
+  /* Cards smaller on mobile */
+  .floor-card-logo {
+    width: 100px; height: 100px;
+  }
+
+  .floor-card-name { font-size: 16px; }
+
+  /* ── Floor menu button (bottom full-width bar) ── */
+  .floor-menu-btn {
+    position: fixed;
+    bottom: 0;
+    left: 0; right: 0;
+    z-index: 110;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #004098;
+    color: #fff;
+    border: none;
+    border-top: 2px solid #002d6b;
+    padding: 14px 20px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    letter-spacing: 1px;
+  }
+  .floor-menu-btn-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .floor-menu-btn-icon { font-size: 18px; }
+
+  /* ── Floor drawer (slide in from right) ── */
+  .floor-drawer {
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: 65%;
+    max-width: 260px;
+    background: #fff;
+    z-index: 200;
+    overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform 0.28s ease;
+    box-shadow: -4px 0 20px rgba(0,0,0,0.2);
+  }
+  .floor-drawer.open {
+    transform: translateX(0);
+  }
+
+  .floor-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    background: #004098;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
+  .floor-drawer-close {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: inherit;
+  }
+  .floor-drawer-close:hover { background: rgba(255,255,255,0.15); }
+
+  /* Backdrop */
+  .floor-drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 199;
+  }
+}

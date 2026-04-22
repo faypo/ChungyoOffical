@@ -3,11 +3,26 @@ import './FloorGuide.css';
 
 const BUILDINGS = ['A', 'B', 'C'];
 
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(
+    () => window.matchMedia('(max-width: 700px)').matches
+  );
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 700px)');
+    const handler = (e) => setIsMobile(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+  return isMobile;
+}
+
 export default function FloorGuide() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedBuilding, setSelectedBuilding] = useState('A');
   const [selectedFloor, setSelectedFloor] = useState(null);
+  const [floorDrawerOpen, setFloorDrawerOpen] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     fetch('/floor-guide.json')
@@ -24,25 +39,57 @@ export default function FloorGuide() {
   if (!data)   return <div className="page-status page-error">資料載入失敗</div>;
 
   const counters = data.counters?.[selectedBuilding]?.[selectedFloor] ?? [];
+  const currentFloorLabel = data.floors.find(f => f.id === selectedFloor)?.label ?? '';
+
+  const handleFloorSelect = (id) => {
+    setSelectedFloor(id);
+    setFloorDrawerOpen(false);
+  };
 
   return (
     <div className="floor-guide">
-      {/* Left: floor list (1/5) */}
-      <div className="floor-list">
-        {data.floors.map(f => (
-          <button
-            key={f.id}
-            className={`floor-list-item${selectedFloor === f.id ? ' active' : ''}`}
-            onClick={() => setSelectedFloor(f.id)}
-          >
-            {f.label}
-          </button>
-        ))}
-      </div>
+      {/* ── Mobile: floor drawer overlay ── */}
+      {isMobile && (
+        <>
+          {floorDrawerOpen && (
+            <div className="floor-drawer-backdrop" onClick={() => setFloorDrawerOpen(false)} />
+          )}
+          <div className={`floor-drawer${floorDrawerOpen ? ' open' : ''}`}>
+            <div className="floor-drawer-header">
+              <span>選擇樓層</span>
+              <button className="floor-drawer-close" onClick={() => setFloorDrawerOpen(false)}>✕</button>
+            </div>
+            {data.floors.map(f => (
+              <button
+                key={f.id}
+                className={`floor-list-item${selectedFloor === f.id ? ' active' : ''}`}
+                onClick={() => handleFloorSelect(f.id)}
+              >
+                {f.label}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
 
-      {/* Right: building tabs + content (4/5) */}
+      {/* ── Desktop: left floor list ── */}
+      {!isMobile && (
+        <div className="floor-list">
+          {data.floors.map(f => (
+            <button
+              key={f.id}
+              className={`floor-list-item${selectedFloor === f.id ? ' active' : ''}`}
+              onClick={() => setSelectedFloor(f.id)}
+            >
+              {f.label}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Right: building tabs + content */}
       <div className="floor-right">
-        {/* Content — rendered FIRST so tabs paint on top without needing z-index */}
+        {/* Content — rendered FIRST so tabs paint on top */}
         <div className="floor-content">
           {counters.length === 0 ? (
             <div className="floor-empty">此樓層暫無資料</div>
@@ -74,7 +121,7 @@ export default function FloorGuide() {
           )}
         </div>
 
-        {/* Tab circles — rendered AFTER content so they paint on top naturally */}
+        {/* Tab circles */}
         <div className="floor-tabs">
           {BUILDINGS.map(b => (
             <button
@@ -86,6 +133,14 @@ export default function FloorGuide() {
             </button>
           ))}
         </div>
+
+        {/* Mobile: floor menu button (top-right) */}
+        {isMobile && (
+          <button className="floor-menu-btn" onClick={() => setFloorDrawerOpen(true)}>
+            <span className="floor-menu-btn-label">{currentFloorLabel || '樓層'}</span>
+            <span className="floor-menu-btn-icon">☰</span>
+          </button>
+        )}
       </div>
     </div>
   );
