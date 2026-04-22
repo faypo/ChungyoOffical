@@ -63,7 +63,7 @@
         { "name": "賽博", "phone": "無專線", "description": "賽博。", "logo": "/floor-pic/Logo_Gift.jpg" }
       ], 
       "12F": [
-        { "name": "DAISO大創百貨", "phone": "0928-361-675", "description": "DAISO大創百貨。", "logo": "/floor-pic/Logo_Gift.jpg" }
+        { "name": "DAISO大創百貨", "phone": "0928-361-675", "description": "DAISO大創百貨。", "logo": "/floor-pic/daiso.png" }
       ], 
       "13F": [
         { "name": "顧客服務中心", "phone": "0800-422800", "description": "顧客服務中心。", "logo": "/floor-pic/Logo_Gift.jpg" }
@@ -186,8 +186,8 @@
         { "name": "SOB DEALL", "phone": "04-2225-3485", "description": "SOB DEALL。", "logo": "/floor-pic/Logo_Gift.jpg" }
       ], 
       "12F": [
-        { "name": "瓦城泰式料理", "phone": "04-2220-5678", "description": "瓦城泰式料理。", "logo": "/floor-pic/Logo_Gift.jpg" },
-        { "name": "京悅港式飲茶", "phone": "04-2223-3919", "description": "京悅港式飲茶。", "logo": "/floor-pic/Logo_Gift.jpg" }
+        { "name": "瓦城泰式料理", "phone": "04-2220-5678", "description": "自1990年創立以來，已成為全台最大的泰式連鎖餐飲第一品牌，以高品質的道地美味、親切熱誠的服務，及溫馨舒適的環境，引領全台泰式餐飲風潮。。", "logo": "/floor-pic/瓦城.png" },
+        { "name": "京悅港式飲茶", "phone": "04-2223-3919", "description": "京悅港式飲茶。", "logo": "/floor-pic/京悅.png" }
       ], 
       "13F": [
          { "name": "名人/奧可那泳裝", "phone": "暫無電話", "description": "名人/奧可那泳裝", "logo": "/floor-pic/Logo_Gift.jpg" }

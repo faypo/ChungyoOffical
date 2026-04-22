@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './FloorGuide.css';
 
 const BUILDINGS = ['A', 'B', 'C'];
+
+const BUILDING_COLORS = { A: '#6E6E6E', B: '#6E6E6E', C: '#6E6E6E' };
+const BUILDING_BG     = { A: '#D9D9D9', B: '#D9D9D9', C: '#D9D9D9' };
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(
@@ -23,6 +26,8 @@ export default function FloorGuide() {
   const [selectedFloor, setSelectedFloor] = useState(null);
   const [floorDrawerOpen, setFloorDrawerOpen] = useState(false);
   const isMobile = useIsMobile();
+  const touchStartX = useRef(null);
+  const touchStartY = useRef(null);
 
   useEffect(() => {
     fetch('/floor-guide.json')
@@ -46,8 +51,27 @@ export default function FloorGuide() {
     setFloorDrawerOpen(false);
   };
 
+  const onTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const onTouchEnd = (e) => {
+    if (touchStartX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    const dy = e.changedTouches[0].clientY - touchStartY.current;
+    // Only trigger if mostly horizontal swipe and enough distance
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+      const idx = BUILDINGS.indexOf(selectedBuilding);
+      if (dx < 0 && idx < BUILDINGS.length - 1) setSelectedBuilding(BUILDINGS[idx + 1]);
+      if (dx > 0 && idx > 0) setSelectedBuilding(BUILDINGS[idx - 1]);
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
+  };
+
   return (
-    <div className="floor-guide">
+    <div className="floor-guide" style={{ '--bc': BUILDING_COLORS[selectedBuilding], '--bc-bg': BUILDING_BG[selectedBuilding] }}>
       {/* ── Mobile: floor drawer overlay ── */}
       {isMobile && (
         <>
@@ -90,7 +114,7 @@ export default function FloorGuide() {
       {/* Right: building tabs + content */}
       <div className="floor-right">
         {/* Content — rendered FIRST so tabs paint on top */}
-        <div className="floor-content">
+        <div className="floor-content" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
           {counters.length === 0 ? (
             <div className="floor-empty">此樓層暫無資料</div>
           ) : (
