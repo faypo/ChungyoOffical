@@ -21,6 +21,74 @@
     { "id": "B3",  "label": "B3   國際美食街|主題餐廳"  },
     { "id": "B4-5",  "label": "B4-5   地下停車場"  }
   ],
+  "floorInfo": {
+    "A": {
+      "1F":   { "title": "", "icons": [] },
+      "2F":   { "title": "", "icons": [] },
+      "M2F":  { "title": "", "icons": [] },
+      "3F":   { "title": "", "icons": [] },
+      "4F":   { "title": "", "icons": [] },
+      "5F":   { "title": "", "icons": [] },
+      "6F":   { "title": "", "icons": [] },
+      "7F":   { "title": "", "icons": [] },
+      "8F":   { "title": "", "icons": [] },
+      "9F":   { "title": "", "icons": [] },
+      "10F":  { "title": "", "icons": [] },
+      "11F":  { "title": "", "icons": [] },
+      "12F":  { "title": "", "icons": [] },
+      "13F":  { "title": "", "icons": [] },
+      "14F":  { "title": "", "icons": [] },
+      "15F":  { "title": "", "icons": [] },
+      "B1":   { "title": "", "icons": [] },
+      "B2":   { "title": "", "icons": [] },
+      "B3":   { "title": "", "icons": [] },
+      "B4-5": { "title": "", "icons": [] }
+    },
+    "B": {
+      "1F":   { "title": "", "icons": [] },
+      "2F":   { "title": "", "icons": [] },
+      "M2F":  { "title": "", "icons": [] },
+      "3F":   { "title": "", "icons": [] },
+      "4F":   { "title": "", "icons": [] },
+      "5F":   { "title": "", "icons": [] },
+      "6F":   { "title": "", "icons": [] },
+      "7F":   { "title": "", "icons": [] },
+      "8F":   { "title": "", "icons": [] },
+      "9F":   { "title": "", "icons": [] },
+      "10F":  { "title": "", "icons": [] },
+      "11F":  { "title": "", "icons": [] },
+      "12F":  { "title": "", "icons": [] },
+      "13F":  { "title": "", "icons": [] },
+      "14F":  { "title": "", "icons": [] },
+      "15F":  { "title": "", "icons": [] },
+      "B1":   { "title": "", "icons": [] },
+      "B2":   { "title": "", "icons": [] },
+      "B3":   { "title": "", "icons": [] },
+      "B4-5": { "title": "", "icons": [] }
+    },
+    "C": {
+      "1F":   { "title": "", "icons": [] },
+      "2F":   { "title": "", "icons": [] },
+      "M2F":  { "title": "", "icons": [] },
+      "3F":   { "title": "", "icons": [] },
+      "4F":   { "title": "", "icons": [] },
+      "5F":   { "title": "", "icons": [] },
+      "6F":   { "title": "", "icons": [] },
+      "7F":   { "title": "", "icons": [] },
+      "8F":   { "title": "", "icons": [] },
+      "9F":   { "title": "", "icons": [] },
+      "10F":  { "title": "", "icons": [] },
+      "11F":  { "title": "", "icons": [] },
+      "12F":  { "title": "", "icons": [] },
+      "13F":  { "title": "", "icons": [] },
+      "14F":  { "title": "", "icons": [] },
+      "15F":  { "title": "15F 主題餐廳", "icons": ["cutlery.png", "toilet.png"] },
+      "B1":   { "title": "", "icons": [] },
+      "B2":   { "title": "", "icons": [] },
+      "B3":   { "title": "", "icons": [] },
+      "B4-5": { "title": "", "icons": [] }
+    }
+  },
   "counters": {
     "A": {
       "1F": [
@@ -186,7 +254,7 @@
         { "name": "SOB DEALL", "phone": "04-2225-3485", "description": "SOB DEALL。", "logo": "/floor-pic/Logo_Gift.jpg" }
       ], 
       "12F": [
-        { "name": "瓦城泰式料理", "phone": "04-2220-5678", "description": "自1990年創立以來，已成為全台最大的泰式連鎖餐飲第一品牌，以高品質的道地美味、親切熱誠的服務，及溫馨舒適的環境，引領全台泰式餐飲風潮。。", "logo": "/floor-pic/瓦城.png" },
+        { "name": "瓦城泰式料理", "phone": "04-2220-5678", "description": "自1990年創立以來，已成為全台最大的泰式連鎖餐飲第一品牌，以高品質的道地美味、親切熱誠的服務，及溫馨舒適的環境，引領全台泰式餐飲風潮。", "logo": "/floor-pic/瓦城.png" },
         { "name": "京悅港式飲茶", "phone": "04-2223-3919", "description": "京悅港式飲茶。", "logo": "/floor-pic/京悅.png" }
       ], 
       "13F": [

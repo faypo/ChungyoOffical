@@ -43,7 +43,8 @@ export default function FloorGuide() {
   if (loading) return <div className="page-status">載入中…</div>;
   if (!data)   return <div className="page-status page-error">資料載入失敗</div>;
 
-  const counters = data.counters?.[selectedBuilding]?.[selectedFloor] ?? [];
+  const counters  = data.counters?.[selectedBuilding]?.[selectedFloor] ?? [];
+  const floorInfo = data.floorInfo?.[selectedBuilding]?.[selectedFloor] ?? null;
   const currentFloorLabel = data.floors.find(f => f.id === selectedFloor)?.label ?? '';
 
   const handleFloorSelect = (id) => {
@@ -115,6 +116,22 @@ export default function FloorGuide() {
       <div className="floor-right">
         {/* Content — rendered FIRST so tabs paint on top */}
         <div className="floor-content" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+          {/* 樓層大介紹區塊 */}
+          {floorInfo && (floorInfo.title || floorInfo.icons?.length > 0) && (
+            <div className="floor-intro">
+              {floorInfo.title && (
+                <div className="floor-intro-title">{floorInfo.title}</div>
+              )}
+              {floorInfo.icons?.length > 0 && (
+                <div className="floor-intro-icons">
+                  {floorInfo.icons.map((icon, i) => (
+                    <img key={i} className="floor-intro-icon" src={`/floor-pic/icon/${icon}`} alt={icon} />
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
           {counters.length === 0 ? (
             <div className="floor-empty">此樓層暫無資料</div>
           ) : (
@@ -153,7 +170,11 @@ export default function FloorGuide() {
               className={`floor-tab-btn${selectedBuilding === b ? ' active' : ''}`}
               onClick={() => setSelectedBuilding(b)}
             >
-              <span className="floor-tab-label">{b}棟</span>
+              <span className="floor-tab-bg" />
+              <span className="floor-tab-label">
+                <span className="floor-tab-letter">{b}</span>
+                <span className="floor-tab-suffix">棟</span>
+              </span>
             </button>
           ))}
         </div>
