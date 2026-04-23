@@ -135,9 +135,7 @@ export default function CustomerFeedback() {
 
     setErrors({});
 
-    if(!confirm('確定要送出嗎？送出後將無法修改。')) {
-      return;
-    }
+
 
     const titleSuffix = gender === '1' ? '先生' : '小姐';
     const title = `${cleanLastName}${titleSuffix}`;
@@ -162,11 +160,7 @@ export default function CustomerFeedback() {
   };
 
   const handleReset = (confirmState) => {
-    if(confirmState){
-      if(!confirm('確定要重新填寫嗎？目前輸入的資料將會被清除。')) {
-        return;
-      }
-    }
+
     setLastName('');
     setGender('1');
     setEmail('');
