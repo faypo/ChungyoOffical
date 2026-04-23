@@ -58,23 +58,25 @@ export default function CustomerFeedback() {
   const fetchFeedback = async (data) => {
     try {
       const transportData = prepareTransportPayload(data);
-      const API_URL = '/feedback/schedule/COAPI.jsp';
+      const API_URL = 'https://emp-test.chungyo.com.tw/schedule/COAPI.jsp';
       const queryString = new URLSearchParams({'payload':transportData}).toString();      
       const finalUrl = `${API_URL}?${queryString}`;
       const response = await fetch(finalUrl, { method: 'POST'  });
 
 
       if (response.ok) { 
-        alert('意見單已成功發送！感謝您的寶貴回饋。');
+        console.log(response)
+        console.log('意見單已成功發送！感謝您的寶貴回饋。')
         return true;
       } else {
         const errorText = await response.text(); 
-        alert('發送失敗，請確認網路狀態或稍後再試。');
+        console.log('發送失敗，請確認網路狀態或稍後再試。')
         return false;
       }
       
     } catch (error) {
-      alert('系統發生異常，請聯絡客服人員。');
+      console.log('系統發生異常，請聯絡客服人員。')
+      console.log(error)
       return false;
     }
   };
@@ -182,7 +184,6 @@ export default function CustomerFeedback() {
 
   return (
     <>
-      {/* 這裡加入 Loading 遮罩組件 */}
       {isLoading && (
         <div className="loading-overlay">
           <div className="spinner"></div>
@@ -195,7 +196,7 @@ export default function CustomerFeedback() {
           <form onSubmit={handleSubmit} noValidate>
             <div>
               <h2 style={{ textAlign: 'center', marginBottom: '40px' }}>顧客意見回饋</h2>
-            </div>            
+            </div>                      
             
             { (fieldConfig.lastName || fieldConfig.gender) && (
               <div className="split-row">
