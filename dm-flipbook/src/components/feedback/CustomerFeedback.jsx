@@ -11,11 +11,11 @@ const fieldConfig = {
 };
 
 export default function CustomerFeedback() {
-  const [lastName, setLastName] = useState('林');
+  const [lastName, setLastName] = useState('');
   const [gender, setGender] = useState('1'); 
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('0901631882');
-  const [content, setContent] = useState('test');
+  const [phone, setPhone] = useState('');
+  const [content, setContent] = useState('');
   const [errors, setErrors] = useState({});
   
   const [isLoading, setIsLoading] = useState(false);
@@ -58,46 +58,27 @@ export default function CustomerFeedback() {
   const fetchFeedback = async (data) => {
     try {
       const transportData = prepareTransportPayload(data);
-      const API_URL = import.meta.env.VITE_PROXY_API_URL;
+      const API_URL = '/feedback/schedule/COAPI.jsp';
       const queryString = new URLSearchParams({'payload':transportData}).toString();      
       const finalUrl = `${API_URL}?${queryString}`;
-      
       const response = await fetch(finalUrl, { method: 'POST'  });
-      console.log(response);
+
 
       if (response.ok) { 
-        // await sendEmail();
         alert('意見單已成功發送！感謝您的寶貴回饋。');
         return true;
       } else {
         const errorText = await response.text(); 
-        console.error('伺服器錯誤內容:', errorText);
         alert('發送失敗，請確認網路狀態或稍後再試。');
         return false;
       }
       
     } catch (error) {
-      console.error('API 傳送發生錯誤:', error);
       alert('系統發生異常，請聯絡客服人員。');
       return false;
     }
   };
 
-  const sendEmail = async () => {
-    // 請替換為您最新的 GAS 網址
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbyC_cevHRytf5cB-7_OkxB_COM8_P6zeqsbGsuZ1xJtNWtzwWIL5tvsWt0nPePV8xPzdw/exec";
-
-    try {
-      const response = await fetch(GAS_URL, {
-        method: "POST",
-        mode: "no-cors"
-      });
-      console.log("請求已送出");
-    } catch (error) {
-      console.error("寄信請求失敗", error);
-    }
-  };
-  
   const handleSubmit = async (e) => {
     e.preventDefault(); 
 
