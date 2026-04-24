@@ -19,7 +19,7 @@ html, body {
 
 .feedback-container {
     width: 100%;
-    padding: 0 30px;
+    padding: 10px 30px;
     margin: auto 0;     
     box-sizing: border-box;
     display: flex;
@@ -31,6 +31,34 @@ html, body {
     display: flex;
     flex-direction: column; 
 
+}
+
+.status-message {
+    margin-bottom: 20px;
+    border-radius: 4px;
+    font-size: 12px;
+    text-align: center;
+    font-weight: bold;    
+    animation: fadeIn 0.3s ease-in-out;
+    padding: 12px 8px;      
+    letter-spacing: 0px;
+}
+
+.status-message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.status-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .split-row {
@@ -160,16 +188,21 @@ textarea.input-box {
     letter-spacing: 2px;
     transition: background-color 0.2s;
 }
-.submit-btn:hover {
+
+.submit-btn:active{
     background-color: #4c4ece;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1)
 }
+
 .reset-btn {
     background-color: #fff;
     color: #555;
-    border: 1px solid #aaa;
+    border: 1px solid #999999;
 }
-.reset-btn:hover {
-    background-color: #e6e6e6;
+
+.reset-btn:active {
+  background-color: #9e9e9e; 
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1)
 }
 
 .submit-btn:disabled, 
@@ -178,12 +211,28 @@ textarea.input-box {
     cursor: not-allowed;
 }
 
-.submit-btn:disabled:hover {
-    background-color: #9e9e9e; 
+@media (hover: hover) {
+    .submit-btn:hover {
+        background-color: #4c4ece;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1)
+    }
+
+    .submit-btn:disabled:hover {
+        background-color: #9e9e9e; 
+        box-shadow:none;
+    }
 }
 
-.reset-btn:disabled:hover {
-    background-color: #fff;
+@media (hover: hover) {
+    .reset-btn:hover {
+        background-color: #E0E0E0;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1)
+    }
+
+    .reset-btn:disabled:hover {
+        background-color: #fff;
+        box-shadow:none;
+    }
 }
 
 
@@ -224,12 +273,23 @@ textarea.input-box {
     letter-spacing: 1px;
 }
 
+.btn-nbsp{
+    display: none;
+}
+
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 360px) {
+    .status-message {
+        padding: 12px 16px;
+        letter-spacing: 1px;
+    }
+}
+
+@media (min-width: 768px) {   
     .form-row {
         flex-direction: row;
         align-items: flex-start;
@@ -244,6 +304,11 @@ textarea.input-box {
         flex-grow: 1;
         width: auto;
     }
+
+    .status-message {
+        font-size: 15px;
+    }
+
     .gender-btn {
         flex-grow: 0; 
     }
@@ -267,6 +332,10 @@ textarea.input-box {
         flex-grow: 1;
         width: auto;
     }
+
+    .btn-nbsp{
+        display: block;
+    }
 }
 
 @media (min-width: 1400px) {
@@ -274,5 +343,18 @@ textarea.input-box {
         max-width: 1288px;
     }
 }
+
+@media (min-width: 1920px) {
+    .feedback-container {
+        max-width: 1400px;
+    }
+}
+
+@media (min-width: 2560px) {
+    .feedback-container {
+        max-width: 1920px;
+    }
+}
+
 
 

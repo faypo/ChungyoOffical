@@ -19,6 +19,7 @@ export default function CustomerFeedback() {
   const [errors, setErrors] = useState({});
   
   const [isLoading, setIsLoading] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState({ message: '', type: '' });
 
   const appProfile = {
     c1: '6368756e', c2: '67796f2d', c3: '32383431', c4: '31303236', //app_K
@@ -28,7 +29,7 @@ export default function CustomerFeedback() {
   const allocateBuffer = (p1, p2, p3, p4) => {
     return CryptoJS.enc.Hex.parse([p1, p2, p3, p4].join(''));
   };
-  
+
 
   const primaryCtx = allocateBuffer(appProfile.c1, appProfile.c2, appProfile.c3, appProfile.c4);
   const offsetCtx = allocateBuffer(appProfile.m1, appProfile.m2, appProfile.m3, appProfile.m4);
@@ -62,27 +63,22 @@ export default function CustomerFeedback() {
       const queryString = new URLSearchParams({'payload':transportData}).toString();      
       const finalUrl = `${API_URL}?${queryString}`;
       const response = await fetch(finalUrl, { method: 'POST'  });
-
-
       if (response.ok) { 
-        console.log(response)
-        console.log('意見單已成功發送！感謝您的寶貴回饋。')
-        return true;
+        return { success: true, message: '意見單已成功發送！感謝您的寶貴回饋。' };
       } else {
         const errorText = await response.text(); 
-        console.log('發送失敗，請確認網路狀態或稍後再試。')
-        return false;
-      }
+        return { success: false, message: '發送失敗，請確認網路狀態或稍後再試。' };
+      }      
       
     } catch (error) {
-      console.log('系統發生異常，請聯絡客服人員。')
-      console.log(error)
-      return false;
+      console.log(error);
+      return { success: false, message: '系統發生異常，請聯絡客服人員。' };
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault(); 
+    setSubmitStatus({ message: '', type: '' });
 
     const cleanLastName = sanitizeInput(lastName);
     const cleanEmail = sanitizeInput(email);
@@ -146,12 +142,17 @@ export default function CustomerFeedback() {
       phone: cleanPhone,
       Opinion: cleanContent 
     };
-    // Loading
+    
     setIsLoading(true);
 
     try {
-      const isSuccess = await fetchFeedback(feedbackData);
-      if (isSuccess) {
+      const result = await fetchFeedback(feedbackData);
+      setSubmitStatus({ 
+        message: result.message, 
+        type: result.success ? 'success' : 'error' 
+      });
+
+      if (result.success) {
         handleReset(false);
       }
     } finally {
@@ -159,20 +160,25 @@ export default function CustomerFeedback() {
     }
   };
 
-  const handleReset = (confirmState) => {
-
+  const handleReset = (clearStatusMessage = true) => {
     setLastName('');
     setGender('1');
     setEmail('');
     setPhone('');
     setContent('');
     setErrors({});
+    if (clearStatusMessage) {
+      setSubmitStatus({ message: '', type: '' });
+    }
   };
 
   const handleChange = (setter, fieldName) => (e) => {
     setter(e.target.value);
     if (errors[fieldName]) {
       setErrors(prev => ({ ...prev, [fieldName]: '' }));
+    }
+    if (submitStatus.message) {
+      setSubmitStatus({ message: '', type: '' });
     }
   };
 
@@ -189,8 +195,13 @@ export default function CustomerFeedback() {
         <div className="feedback-container">
           <form onSubmit={handleSubmit} noValidate>
             <div>
-              <h2 style={{ textAlign: 'center', marginBottom: '40px' }}>顧客意見回饋</h2>
-            </div>                      
+              <h2 style={{ textAlign: 'center', marginBottom: '15px' }}>顧客意見回饋</h2>
+            </div>        
+            {submitStatus.message && (
+              <div className={`status-message ${submitStatus.type}`}>
+                {submitStatus.message}
+              </div>
+            )}
             
             { (fieldConfig.lastName || fieldConfig.gender) && (
               <div className="split-row">
@@ -222,11 +233,21 @@ export default function CustomerFeedback() {
                       <div className="gender-group">
                         <div
                           className={`gender-btn ${gender === '1' ? 'active' : ''} ${isLoading ? 'disabled' : ''}`}
-                          onClick={() => !isLoading && setGender('1')}
+                          onClick={() => {
+                            if(!isLoading) {
+                              setGender('1');
+                              setSubmitStatus({ message: '', type: '' });
+                            }
+                          }}
                         >男</div>
                         <div 
                           className={`gender-btn ${gender === '2' ? 'active' : ''} ${isLoading ? 'disabled' : ''}`}
-                          onClick={() => !isLoading && setGender('2')}
+                          onClick={() => {
+                            if(!isLoading) {
+                              setGender('2');
+                              setSubmitStatus({ message: '', type: '' });
+                            }
+                          }}
                         >女</div>
                       </div>
                     </div>
@@ -299,7 +320,7 @@ export default function CustomerFeedback() {
             )}
 
             <div className="form-row">
-              <div className="form-label">
+              <div className="form-label btn-nbsp">
                 &nbsp;
               </div>
               <div className="form-control">
@@ -307,7 +328,7 @@ export default function CustomerFeedback() {
                   <button 
                     type="button" 
                     className="submit-btn reset-btn" 
-                    onClick={() => handleReset()}
+                    onClick={() => handleReset(true)}
                     disabled={isLoading}
                   >
                     重新填寫
