@@ -9,7 +9,7 @@ export default defineConfig({
     historyApiFallback: true,   // dev: 所有路由回傳 index.html
     proxy: {
       '/feedback': {
-        target: 'https://emp-test.chungyo.com.tw',
+        target: 'http://localhost:3000',
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/feedback/, ''),
@@ -23,7 +23,7 @@ export default defineConfig({
             console.log('實際發送 URL:', options.target + proxyReq.path);
           });
         },
-      },
+      }
     },
   },
   preview: {

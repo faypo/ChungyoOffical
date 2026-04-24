@@ -56,19 +56,31 @@ export default function CustomerFeedback() {
     return processed.toString(); 
   };
 
-  const fetchFeedback = async (data) => {
+    const fetchFeedback = async (data) => {
     try {
+      
       const transportData = prepareTransportPayload(data);
-      const API_URL = 'https://emp-test.chungyo.com.tw/schedule/COAPI.jsp';
-      const queryString = new URLSearchParams({'payload':transportData}).toString();      
-      const finalUrl = `${API_URL}?${queryString}`;
-      const response = await fetch(finalUrl, { method: 'POST'  });
+      const API_URL = '/api/feedback'
+
+      const requestData = {
+        payload: transportData
+      };
+
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          // 告訴後端我們傳送的是 JSON 格式
+          'Content-Type': 'application/json'
+        },
+        // 將物件轉換為 JSON 字串放入 body
+        body: JSON.stringify(requestData)
+      });
       if (response.ok) { 
         return { success: true, message: '意見單已成功發送！感謝您的寶貴回饋。' };
       } else {
         const errorText = await response.text(); 
         return { success: false, message: '發送失敗，請確認網路狀態或稍後再試。' };
-      }      
+      }
       
     } catch (error) {
       console.log(error);
