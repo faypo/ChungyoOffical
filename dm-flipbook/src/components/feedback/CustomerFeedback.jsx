@@ -60,7 +60,7 @@ export default function CustomerFeedback() {
     try {
       
       const transportData = prepareTransportPayload(data);
-      const API_URL = 'https://dmpage.chungyo.com.tw/background/feedback'
+      const API_URL = '/api/feedback'
 
       const requestData = {
         payload: transportData
