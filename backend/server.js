@@ -7,7 +7,7 @@ const API_URL = 'https://emp-test.chungyo.com.tw/schedule/COAPI.jsp';
 const PORT = 3000;
 
 const server = http.createServer((req, res) => {
-    if (req.method === 'POST' && req.url === '/feedback') {
+    if (req.method === 'POST' && req.url === '/api/feedback') {
         let body = '';
 
         req.on('data', chunk => {
@@ -84,5 +84,4 @@ server.listen(PORT, () => {
     console.log(`Local:   http://localhost:${PORT}`);
     console.log(`Network: http://${require('os').hostname()}:${PORT}`);
 });
-
 
