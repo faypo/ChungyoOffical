@@ -10,6 +10,8 @@ const MAIL_SEND_FROM = process.env.MAIL_SEND_FROM;
 const MAIL_SEND_TO = process.env.MAIL_SEND_TO; 
 const API_URL = process.env.API_URL;
 const PORT = process.env.PORT || 4000; 
+const MAIL_SEND_SUBJECT = process.env.MAIL_SEND_SUBJECT;
+const MAIL_SEND_TEXT = process.env.MAIL_SEND_TEXT;
 
 sgMail.setApiKey(SENDGRID_API_KEY);
 
@@ -83,12 +85,6 @@ const server = http.createServer((req, res) => {
                             Data: ResponseData
                         }));                        
                     });
-                });
-
-                Req.on('error', (error) => {
-                    console.error('Error forwarding:', error);
-                    res.writeHead(502, { 'Content-Type': 'application/json' });
-                    res.end(JSON.stringify({ error: 'Bad Gateway: Cannot connect to server.' }));
                 });
 
                 Req.end();
