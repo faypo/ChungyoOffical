@@ -58,9 +58,17 @@ export default function CustomerFeedback() {
 
     const fetchFeedback = async (data) => {
     try {
+
+      const envResponse = await fetch('/env.json');
+      
+      if (!envResponse.ok) {
+        throw new Error('無法載入env.json');
+      }
+      
+      const envConfig = await envResponse.json();
+      const API_URL = envConfig.api_url;
       
       const transportData = prepareTransportPayload(data);
-      const API_URL = '/api/feedback'
 
       const requestData = {
         payload: transportData
@@ -69,10 +77,8 @@ export default function CustomerFeedback() {
       const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
-          // 告訴後端我們傳送的是 JSON 格式
           'Content-Type': 'application/json'
         },
-        // 將物件轉換為 JSON 字串放入 body
         body: JSON.stringify(requestData)
       });
       if (response.ok) { 

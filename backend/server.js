@@ -1,10 +1,34 @@
+require('dotenv').config(); 
+
 const http = require('http');
 const https = require('https');
 const crypto = require('crypto');
+const sgMail = require('@sendgrid/mail'); 
 
-//  後端 API 的網址
-const API_URL = 'https://emp-test.chungyo.com.tw/schedule/COAPI.jsp';
-const PORT = 4000;
+const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
+const MAIL_SEND_FROM = process.env.MAIL_SEND_FROM;
+const MAIL_SEND_TO = process.env.MAIL_SEND_TO; 
+const API_URL = process.env.API_URL;
+const PORT = process.env.PORT || 4000; 
+
+sgMail.setApiKey(SENDGRID_API_KEY);
+
+const sendNotificationEmail = async () => {
+    const msg = {
+        to: MAIL_SEND_TO,
+        from: MAIL_SEND_FROM,
+        subject: MAIL_SEND_SUBJECT,
+        text:MAIL_SEND_TEXT,
+    };
+
+    try {
+        await sgMail.send(msg);
+    } catch (error) {
+        if (error.response) {
+            console.error(error.response.body);
+        }
+    }
+};
 
 const server = http.createServer((req, res) => {
     if (req.method === 'POST' && req.url === '/api/feedback') {
@@ -25,7 +49,6 @@ const server = http.createServer((req, res) => {
                     return res.end(JSON.stringify({ error: 'Missing payload' }));
                 }
 
-                // 將資料組裝成 JSP 要求的 Query String
                 const queryString = new URLSearchParams({ 'payload': transportData }).toString();
                 const finalJspUrl = `${API_URL}?${queryString}`;
 
@@ -34,9 +57,12 @@ const server = http.createServer((req, res) => {
                     secureOptions: crypto.constants.SSL_OP_LEGACY_SERVER_CONNECT
                 };
 
-                //headers:{'Content-Type': 'application/json'},body:{payload:JSON.stringify(transportData)}
-                const Req = https.request(finalJspUrl, 
-                    requestOptions, (emp_test) => {
+                //測試寄信
+                // sendNotificationEmail()
+                // res.writeHead(200, { 'Content-Type': 'application/json' });
+                // res.end(JSON.stringify({ ok: true }));
+
+                const Req = https.request(finalJspUrl, requestOptions, (emp_test) => {
                     let ResponseData = '';
 
                     emp_test.on('data', chunk => {
@@ -44,26 +70,28 @@ const server = http.createServer((req, res) => {
                     });
 
                     emp_test.on('end', () => {
-                        // 這裡可以根據  的 statusCode 決定回傳給前端的狀態碼
+                        const isSuccess = emp_test.statusCode === 200;
+
+                        if (isSuccess) {
+                            sendNotificationEmail();
+                        }
+
                         res.writeHead(emp_test.statusCode, { 'Content-Type': 'application/json' });
-                        // 假設  回傳的是純文字，我們把它包裝成 JSON 格式回傳，方便 React 處理
                         res.end(JSON.stringify({
-                            success: emp_test.statusCode === 200,
-                            message: 'Request forwarded to ',
+                            success: isSuccess,
+                            message: 'Request forwarded',
                             Data: ResponseData
-                        }));
+                        }));                        
                     });
                 });
 
                 Req.on('error', (error) => {
-                    console.error('Error forwarding to :', error);
+                    console.error('Error forwarding:', error);
                     res.writeHead(502, { 'Content-Type': 'application/json' });
-                    res.end(JSON.stringify({ error: 'Bad Gateway: Cannot connect to  server.' }));
+                    res.end(JSON.stringify({ error: 'Bad Gateway: Cannot connect to server.' }));
                 });
 
-                // 執行發送
                 Req.end();
-
 
             } catch (error) {
                 console.error('Error parsing frontend JSON:', error);
@@ -80,8 +108,8 @@ const server = http.createServer((req, res) => {
 
 
 server.listen(PORT, () => {
-    const hostname = 'localhost'; // 或使用 os.hostname()
+    const hostname = require('os').hostname();
     console.log(`Local:   http://localhost:${PORT}`);
-    console.log(`Network: http://${require('os').hostname()}:${PORT}`);
+    console.log(`Network: http://${hostname}:${PORT}`);
 });
 
