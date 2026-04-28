@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import CryptoJS from 'crypto-js';
 import './CustomerFeedback.css';
+import ConfirmModal from './ConfirmModal';
 
 const fieldConfig = {
   lastName: true,
@@ -20,6 +21,15 @@ export default function CustomerFeedback() {
   
   const [isLoading, setIsLoading] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({ message: '', type: '' });
+
+  const [modalConfig, setModalConfig] = useState({
+    isOpen: false,
+    actionType: '', // submit or reset
+    title: '',
+    message: '',
+    confirmText: '',
+    confirmBtnStyle: 'primary'
+  });
 
   const appProfile = {
     c1: '6368756e', c2: '67796f2d', c3: '32383431', c4: '31303236', //app_K
@@ -56,28 +66,28 @@ export default function CustomerFeedback() {
     return processed.toString(); 
   };
 
-    const fetchFeedback = async (data) => {
+  const fetchFeedback = async (data) => {
     try {
 
       const envResponse = await fetch('/env.json');
-      
+
       if (!envResponse.ok) {
         throw new Error('無法載入env.json');
       }
       
       const envConfig = await envResponse.json();
       const API_URL = envConfig.api_url;
-      
+
       const transportData = prepareTransportPayload(data);
 
-      const requestData = {
-        payload: transportData
+      const requestData = { 
+        payload: transportData 
       };
 
       const response = await fetch(API_URL, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
+        headers: { 
+          'Content-Type': 'application/json' 
         },
         body: JSON.stringify(requestData)
       });
@@ -87,14 +97,14 @@ export default function CustomerFeedback() {
         const errorText = await response.text(); 
         return { success: false, message: '發送失敗，請確認網路狀態或稍後再試。' };
       }
-      
+
     } catch (error) {
       console.log(error);
       return { success: false, message: '系統發生異常，請聯絡客服人員。' };
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handlePreSubmit = (e) => {
     e.preventDefault(); 
     setSubmitStatus({ message: '', type: '' });
 
@@ -149,10 +159,21 @@ export default function CustomerFeedback() {
 
     setErrors({});
 
+    setModalConfig({
+      isOpen: true,
+      actionType: 'submit',
+      title: '確認送出',
+      message: '確定要送出這份意見回饋嗎？送出後將無法修改。',
+      confirmText: '確認送出',
+      confirmBtnStyle: 'primary'
+    });
+  };
 
-
-    const titleSuffix = gender === '1' ? '先生' : '小姐';
-    const title = `${cleanLastName}${titleSuffix}`;
+  const executeSubmit = async () => {
+    closeModal();
+    const cleanLastName = sanitizeInput(lastName);
+    const cleanPhone = sanitizeInput(phone);
+    const cleanContent = sanitizeInput(content);
 
     const feedbackData = {
       Surname: cleanLastName,
@@ -171,14 +192,30 @@ export default function CustomerFeedback() {
       });
 
       if (result.success) {
-        handleReset(false);
+        actualReset(false);
       }
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleReset = (clearStatusMessage = true) => {
+  const handlePreReset = () => {
+    setModalConfig({
+      isOpen: true,
+      actionType: 'reset',
+      title: '重新填寫',
+      message: '確定要清除所有已填寫的資料嗎？',
+      confirmText: '確定清除',
+      confirmBtnStyle: 'danger'
+    });
+  };
+
+  const executeReset = () => {
+    closeModal();
+    actualReset(true);
+  };
+
+  const actualReset = (clearStatusMessage = true) => {
     setLastName('');
     setGender('1');
     setEmail('');
@@ -187,6 +224,18 @@ export default function CustomerFeedback() {
     setErrors({});
     if (clearStatusMessage) {
       setSubmitStatus({ message: '', type: '' });
+    }
+  };
+
+  const closeModal = () => {
+    setModalConfig(prev => ({ ...prev, isOpen: false }));
+  };
+
+  const handleModalConfirm = () => {
+    if (modalConfig.actionType === 'submit') {
+      executeSubmit();
+    } else if (modalConfig.actionType === 'reset') {
+      executeReset();
     }
   };
 
@@ -209,9 +258,19 @@ export default function CustomerFeedback() {
         </div>
       )}
 
+      <ConfirmModal 
+        isOpen={modalConfig.isOpen}
+        title={modalConfig.title}
+        message={modalConfig.message}
+        confirmText={modalConfig.confirmText}
+        confirmBtnStyle={modalConfig.confirmBtnStyle}
+        onConfirm={handleModalConfirm}
+        onCancel={closeModal}
+      />
+
       <div className="feedback-wrapper">
         <div className="feedback-container">
-          <form onSubmit={handleSubmit} noValidate>
+          <form onSubmit={handlePreSubmit} noValidate>
             <div>
               <h2 style={{ textAlign: 'center', marginBottom: '15px' }}>顧客意見回饋</h2>
             </div>        
@@ -346,7 +405,7 @@ export default function CustomerFeedback() {
                   <button 
                     type="button" 
                     className="submit-btn reset-btn" 
-                    onClick={() => handleReset(true)}
+                    onClick={handlePreReset} 
                     disabled={isLoading}
                   >
                     重新填寫

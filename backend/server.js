@@ -59,11 +59,6 @@ const server = http.createServer((req, res) => {
                     secureOptions: crypto.constants.SSL_OP_LEGACY_SERVER_CONNECT
                 };
 
-                //測試寄信
-                // sendNotificationEmail()
-                // res.writeHead(200, { 'Content-Type': 'application/json' });
-                // res.end(JSON.stringify({ ok: true }));
-
                 const Req = https.request(finalJspUrl, requestOptions, (emp_test) => {
                     let ResponseData = '';
 
@@ -85,6 +80,12 @@ const server = http.createServer((req, res) => {
                             Data: ResponseData
                         }));                        
                     });
+                });
+
+                Req.on('error', (error) => {
+                    console.error('Error forwarding:', error);
+                    res.writeHead(502, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ error: 'Bad Gateway: Cannot connect to server.' }));
                 });
 
                 Req.end();
