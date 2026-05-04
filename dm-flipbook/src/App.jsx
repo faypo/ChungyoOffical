@@ -4,6 +4,7 @@ import DMShowcase from './components/DMShowcase';
 import DMViewer from './components/DMViewer';
 import FloorGuide from './components/FloorGuide';
 import CustomerFeedbackViewer from './components/feedback/CustomerFeedbackViewer';
+import Food from './components/Food';
 import './App.css';
 
 export default function App() {
@@ -16,6 +17,7 @@ export default function App() {
           <Route path="/dm/:id" element={<DMViewer />} />
           <Route path="/floor" element={<FloorGuide />} />
           <Route path="/CustomerFeedback" element={<CustomerFeedbackViewer />} />
+          <Route path="/food" element={<Food />} />
         </Routes>
       </div>
     </BrowserRouter>
