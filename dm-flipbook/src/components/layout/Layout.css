@@ -1,0 +1,26 @@
+/* ===== Layout ===== */
+.layout {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.layout--webview {
+  /* Full height, no header/footer */
+}
+
+.layout--browser {
+  --header-h: 56px;
+}
+
+@media (max-width: 700px) {
+  .layout--browser { --header-h: 52px; }
+}
+
+.layout-main {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}

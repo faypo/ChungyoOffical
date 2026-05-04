@@ -250,7 +250,7 @@
      bar 45px, circles 70px, padding-top 10px → circle centre at 10+35=45px = border */
   .floor-tabs {
     position: fixed;
-    top: 52px;
+    top: calc(var(--header-h, 0px) + 52px);
     left: 0; right: 0;
     height: 45px;
     transform: none;
@@ -283,7 +283,7 @@
   /* Scrollable content: 52px menu + 45px bar + 2px border + 35px active circle peek */
   .floor-content {
     position: absolute;
-    top: 134px;
+    top: calc(var(--header-h, 0px) + 134px);
     left: 0; right: 0;
     bottom: 0;
     overflow-y: auto;
@@ -302,7 +302,7 @@
   /* ── Floor menu button (top full-width bar) ── */
   .floor-menu-btn {
     position: fixed;
-    top: 0;
+    top: var(--header-h, 0px);
     left: 0; right: 0;
     z-index: 110;
     display: flex;
