@@ -92,7 +92,7 @@ export default function CustomerFeedback() {
         body: JSON.stringify(requestData)
       });
       if (response.ok) { 
-        return { success: true, message: '意見單已成功發送！感謝您的寶貴回饋。' };
+        return { success: true, message: '意見回饋已成功發送！感謝您的寶貴回饋。' };
       } else {
         const errorText = await response.text(); 
         return { success: false, message: '發送失敗，請確認網路狀態或稍後再試。' };
