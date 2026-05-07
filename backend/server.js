@@ -67,21 +67,38 @@ const server = http.createServer((req, res) => {
                     });
 
                     emp_test.on('end', () => {
-                        const isSuccess = emp_test.statusCode === 200;
+                        let isApiSuccess = false;
+                        let parsedData = null;    
 
-                        if (isSuccess) {
+                        const isHttpSuccess = emp_test.statusCode === 200;
+
+                        if (isHttpSuccess) {
+                            try {
+                                parsedData = JSON.parse(ResponseData); 
+                                
+                                if (parsedData.status === 'success') {
+                                    isApiSuccess = true; 
+                                }
+
+                            } catch (error) {
+                                console.error('無法解析回傳的 JSON 資料:', error);
+                            }
+                        }
+
+
+                        if (isApiSuccess) {
                             sendNotificationEmail();
                         }
 
                         res.writeHead(emp_test.statusCode, { 'Content-Type': 'application/json' });
                         res.end(JSON.stringify({
-                            success: isSuccess,
-                            message: 'Request forwarded',
-                            Data: ResponseData
+                            success: isApiSuccess, 
+                            message: isApiSuccess ? 'Request success' : 'Request Error',
+                            Data: parsedData || ResponseData 
                         }));                        
                     });
                 });
-
+                
                 Req.on('error', (error) => {
                     console.error('Error forwarding:', error);
                     res.writeHead(502, { 'Content-Type': 'application/json' });
