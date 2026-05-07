@@ -11,12 +11,28 @@ const fieldConfig = {
   content: true
 };
 
+// 錯誤提示icon與訊息
+const ErrorMessage = ({ message }) => {
+  if (!message) return null;
+  return (
+    <div className="error-text">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+      {message}
+    </div>
+  );
+};
+
 export default function CustomerFeedback() {
   const [lastName, setLastName] = useState('');
   const [gender, setGender] = useState('1'); 
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [content, setContent] = useState('');
+  const [isAgreed, setIsAgreed] = useState(false);
   const [errors, setErrors] = useState({});
   
   const [isLoading, setIsLoading] = useState(false);
@@ -39,7 +55,7 @@ export default function CustomerFeedback() {
   const allocateBuffer = (p1, p2, p3, p4) => {
     return CryptoJS.enc.Hex.parse([p1, p2, p3, p4].join(''));
   };
-
+  
 
   const primaryCtx = allocateBuffer(appProfile.c1, appProfile.c2, appProfile.c3, appProfile.c4);
   const offsetCtx = allocateBuffer(appProfile.m1, appProfile.m2, appProfile.m3, appProfile.m4);
@@ -94,8 +110,7 @@ export default function CustomerFeedback() {
       if (response.ok) { 
         return { success: true, message: '意見回饋已成功發送！感謝您的寶貴回饋。' };
       } else {
-        const errorText = await response.text(); 
-        return { success: false, message: '發送失敗，請確認網路狀態或稍後再試。' };
+        return { success: false, message: '系統發生異常，請聯絡客服人員。'  };
       }
 
     } catch (error) {
@@ -147,9 +162,13 @@ export default function CustomerFeedback() {
     if (fieldConfig.content) {
       if (!cleanContent) {
         newErrors.content = '意見內容不得為空！';
-      }else if (cleanContent.length > 1000) {
+      } else if (cleanContent.length > 1000) {
         newErrors.content = '意見內容請勿超過 1000 字！';
       }
+    }
+
+    if (!isAgreed) {
+      newErrors.isAgreed = '請務必勾選同意提供個人資料！';
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -221,6 +240,7 @@ export default function CustomerFeedback() {
     setEmail('');
     setPhone('');
     setContent('');
+    setIsAgreed(false);
     setErrors({});
     if (clearStatusMessage) {
       setSubmitStatus({ message: '', type: '' });
@@ -296,7 +316,7 @@ export default function CustomerFeedback() {
                         placeholder="請輸入中文姓氏"
                         disabled={isLoading} 
                       />
-                      {errors.lastName && <div className="error-text">{errors.lastName}</div>}
+                      <ErrorMessage message={errors.lastName} />
                     </div>
                   </div>
                 )}
@@ -334,7 +354,7 @@ export default function CustomerFeedback() {
             )}
 
             {fieldConfig.email && (
-              <div className="form-row">
+              <div className="form-row" style={{ marginBottom: '16px' }}>
                 <div className="form-label">
                   <span className="required-star">*</span>E-mail
                 </div>
@@ -347,13 +367,13 @@ export default function CustomerFeedback() {
                     placeholder="" 
                     disabled={isLoading}
                   />
-                  {errors.email && <div className="error-text">{errors.email}</div>}
+                  <ErrorMessage message={errors.email} />
                 </div>
               </div>
             )}
 
             {fieldConfig.phone && (
-              <div className="form-row">
+              <div className="form-row" style={{ marginBottom: '16px' }}>
                 <div className="form-label">
                   <span className="required-star">*</span>聯絡電話
                 </div>
@@ -366,13 +386,13 @@ export default function CustomerFeedback() {
                     placeholder=""
                     disabled={isLoading}
                   />
-                  {errors.phone && <div className="error-text">{errors.phone}</div>}
+                  <ErrorMessage message={errors.phone} />
                 </div>
               </div>
             )}
 
             {fieldConfig.content && (
-              <div className="form-row">
+              <div className="form-row" style={{ marginBottom: '16px' }}>
                 <div className="form-label">
                   <span className="required-star">*</span>意見內容
                 </div>
@@ -391,10 +411,50 @@ export default function CustomerFeedback() {
                       {content.length} / 1000
                     </div>
                   </div>
-                  {errors.content && <div className="error-text">{errors.content}</div>}
+                  <ErrorMessage message={errors.content} />
                 </div>
               </div>
             )}
+
+            <div className="form-row">
+              <div className="form-label btn-nbsp">
+                &nbsp;
+              </div>
+              <div className="form-control">
+                <div className="btn-group isagree-group">
+                  <input 
+                    type="checkbox"
+                    id="agreement-checkbox"
+                    checked={isAgreed}
+                    disabled={isLoading}
+                    className='isagree-checkbox'
+                    onChange={(e) => {
+                      setIsAgreed(e.target.checked);
+                      if (errors.isAgreed) {
+                        setErrors(prev => ({ ...prev, isAgreed: '' }));
+                      }
+                      if (submitStatus.message) {
+                        setSubmitStatus({ message: '', type: '' });
+                      }
+                    }}
+                  />
+                  <label>
+                    <span>本人同意將個人資料(包括但不限於姓氏、性別、連絡電話) 提供予 中友百貨 ，作為「顧客意見回饋」聯繫及回覆之用。</span>
+                  </label>
+                </div>
+                <ErrorMessage message={errors.isAgreed} />
+
+                <div className="privacy-policy-box">
+                  <strong className='privacy-policy-label'>顧客意見回饋個資法說明事項：</strong>
+                  <p className="privacy-policy-text">
+                    測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試
+                    測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試
+                    測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試
+                    測試測試測試測試測試測試測試測試。
+                  </p>
+                </div>
+              </div>
+            </div>
 
             <div className="form-row">
               <div className="form-label btn-nbsp">
