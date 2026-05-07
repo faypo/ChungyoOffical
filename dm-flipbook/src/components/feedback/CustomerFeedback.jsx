@@ -55,7 +55,7 @@ export default function CustomerFeedback() {
   const allocateBuffer = (p1, p2, p3, p4) => {
     return CryptoJS.enc.Hex.parse([p1, p2, p3, p4].join(''));
   };
-  
+
 
   const primaryCtx = allocateBuffer(appProfile.c1, appProfile.c2, appProfile.c3, appProfile.c4);
   const offsetCtx = allocateBuffer(appProfile.m1, appProfile.m2, appProfile.m3, appProfile.m4);
@@ -447,10 +447,9 @@ export default function CustomerFeedback() {
                 <div className="privacy-policy-box">
                   <strong className='privacy-policy-label'>顧客意見回饋個資法說明事項：</strong>
                   <p className="privacy-policy-text">
-                    測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試
-                    測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試
-                    測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試測試
-                    測試測試測試測試測試測試測試測試。
+                    中友百貨 股份有限公司基於客戶管理與服務之蒐集目的，自您提供顧客意見三年內於台灣地區蒐集、處理及利用 您的識別類之個人資料。
+                    謹依個人資料保護法相關規定告知您得於前述期間內，就您提供之個人資料依法提出查詢或 請求閱覽、製給複製本、補充或更正、停止蒐集、處理或利用及刪除。
+                    您得選擇不提供上述任一個資，惟不提供時將 無法進行顧客意見處理之服務。
                   </p>
                 </div>
               </div>
