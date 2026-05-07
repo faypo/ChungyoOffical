@@ -1,5 +1,10 @@
 
 
+/* 滾動點擊事件穿透遮罩 */
+.site-mobile-backdrop {
+    pointer-events: none; 
+}
+
 .feedback-wrapper {
     font-family: "Microsoft JhengHei", "PingFang TC", sans-serif;
     background-color: #f2f2f2;
@@ -67,6 +72,12 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+}
+
+.form-title{
+    text-align: center;
+    margin: 40px;
+    font-size: 18px;
 }
 
 .form-label {
@@ -287,6 +298,12 @@ textarea.input-box {
 }
 
 @media (min-width: 768px) {   
+
+    .form-title{
+        margin: 60px;
+        font-size: 20px;
+    }
+
     .form-row {
         flex-direction: row;
         align-items: flex-start;
@@ -334,22 +351,43 @@ textarea.input-box {
         display: block;
     }
 }
+@media (min-width: 1024px) {
+
+    .feedback-container {
+        margin-left: 20px;
+        margin-right: 20px;
+        padding: 8vh 40px;
+    }
+}
 
 @media (min-width: 1400px) {
     .feedback-container {
         max-width: 1288px;
     }
+
+    .form-title{
+        font-size: 22px;
+    }
+
+    .form-label {
+        font-size: 16px;
+    }
 }
 
 @media (min-width: 1920px) {
     .feedback-container {
-        max-width: 1400px;
+        max-width: 1660px;
+        padding: 12vh 60px;
+    }
+
+    .form-label {
+        font-size: 18px;
     }
 }
 
 @media (min-width: 2560px) {
     .feedback-container {
-        max-width: 1920px;
+        max-width: 2240px;
     }
 }
 

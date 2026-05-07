@@ -271,8 +271,8 @@ export default function CustomerFeedback() {
       <div className="feedback-wrapper">
         <div className="feedback-container">
           <form onSubmit={handlePreSubmit} noValidate>
-            <div>
-              <h2 style={{ textAlign: 'center', marginBottom: '15px' }}>顧客意見回饋</h2>
+            <div className='form-title'>
+              <h2>顧客意見回饋</h2>
             </div>        
             {submitStatus.message && (
               <div className={`status-message ${submitStatus.type}`}>
