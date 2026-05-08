@@ -16,11 +16,25 @@ const MAIL_SEND_TEXT = process.env.MAIL_SEND_TEXT;
 sgMail.setApiKey(SENDGRID_API_KEY);
 
 const sendNotificationEmail = async () => {
+    const now = new Date();
+    const formattedDate = now.toLocaleString('zh-TW', { 
+        timeZone: 'Asia/Taipei',
+        year: 'numeric', 
+        month: 'numeric', 
+        day: 'numeric',
+        hour: '2-digit', 
+        minute: '2-digit', 
+        second: '2-digit',
+        hour12: true 
+    });
+
+    const MAIL_SEND_TEXT = `※.日期/時間:  ${formattedDate}\n※.已收到新的顧客意見回饋，請前往入口網進行確認。`;
+
     const msg = {
         to: MAIL_SEND_TO,
         from: MAIL_SEND_FROM,
         subject: MAIL_SEND_SUBJECT,
-        text:MAIL_SEND_TEXT,
+        text: MAIL_SEND_TEXT, 
     };
 
     try {
