@@ -19,7 +19,7 @@ export async function fetchDMPages(dmId) {
   if (!res.ok) throw new Error(`無法載入 ${dmId} 頁面清單`);
   const files = await res.json();
   return files.map(file => ({
-    src: `/dm-pic/${dmId}/${file}`,
+    src: `/api/images/dm-pic/${dmId}/${file}`,
     name: file.replace('.jpg', ''),
   }));
 }

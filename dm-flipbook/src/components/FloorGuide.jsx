@@ -125,7 +125,7 @@ export default function FloorGuide() {
               {floorInfo.icons?.length > 0 && (
                 <div className="floor-intro-icons">
                   {floorInfo.icons.map((icon, i) => (
-                    <img key={i} className="floor-intro-icon" src={`/floor-pic/icon/${icon}`} alt={icon} />
+                    <img key={i} className="floor-intro-icon" src={`/api/images/floor-pic/icon/${icon}`} alt={icon} />
                   ))}
                 </div>
               )}

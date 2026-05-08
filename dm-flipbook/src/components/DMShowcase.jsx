@@ -6,6 +6,7 @@ import './DMShowcase.css';
 export default function DMShowcase() {
   const navigate = useNavigate();
   const [catalog, setCatalog] = useState([]);
+  const [covers, setCovers]   = useState({});   // { [dmId]: url }
   const [loading, setLoading] = useState(true);
   const [error, setError]     = useState(null);
 
@@ -15,8 +16,23 @@ export default function DMShowcase() {
         const sorted = [...data].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
         setCatalog(sorted);
         setLoading(false);
+
+        /* 取每個 DM 的第一張圖作為封面 */
+        sorted.forEach(dm => {
+          fetch(`/api/dm/${dm.id}/pages`)
+            .then(r => r.ok ? r.json() : [])
+            .then(files => {
+              if (files.length > 0) {
+                setCovers(prev => ({
+                  ...prev,
+                  [dm.id]: `/api/images/dm-pic/${dm.id}/${files[0]}`,
+                }));
+              }
+            })
+            .catch(() => {});
+        });
       })
-      .catch(err  => { setError(err.message); setLoading(false); });
+      .catch(err => { setError(err.message); setLoading(false); });
   }, []);
 
   if (loading) return <div className="page-status">載入中…</div>;
@@ -26,7 +42,7 @@ export default function DMShowcase() {
     <div className="showcase-wrapper">
       <div className="showcase-grid">
         {catalog.map((dm) => {
-          const coverSrc = `/dm-pic/${dm.id}/cover.jpg`;
+          const coverSrc = covers[dm.id] ?? '';
           return (
             <button
               key={dm.id}
@@ -38,7 +54,7 @@ export default function DMShowcase() {
                 <div
                   className="showcase-card-img"
                   style={{
-                    backgroundImage: `url(${coverSrc})`,
+                    backgroundImage: coverSrc ? `url(${coverSrc})` : 'none',
                     backgroundSize: '200% 100%',
                     backgroundPosition: 'right center',
                   }}
