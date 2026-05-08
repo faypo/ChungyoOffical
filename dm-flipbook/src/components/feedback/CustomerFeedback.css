@@ -21,7 +21,7 @@
 
 .feedback-container {
     width: 100%;
-    padding: 10px 30px;
+    padding: 0px 30px;
     margin: auto 0;     
     box-sizing: border-box;
     display: flex;
@@ -137,7 +137,7 @@
 textarea.input-box {
     min-height: 150px;
     max-height: 500px; 
-    resize: vertical;
+    resize: none;
 }
 
 .privacy-policy-box{
@@ -212,7 +212,7 @@ textarea.input-box {
 .submit-btn {
     background-color: #4c6fce;
     color: white;
-    border: none;
+    border: 1px solid #4c6fce;
     padding: 12px 0;
     width: 100%;
     border-radius: 30px;
@@ -221,6 +221,7 @@ textarea.input-box {
     cursor: pointer;
     letter-spacing: 2px;
     transition: background-color 0.2s;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
 }
 
 .submit-btn:active{
@@ -232,6 +233,7 @@ textarea.input-box {
     background-color: #fff;
     color: #555;
     border: 1px solid #999999;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
 }
 
 .reset-btn:active {
@@ -356,7 +358,6 @@ textarea.input-box {
         flex-grow: 1;
         width: auto;
     }
-
     .status-message {
         font-size: 15px;
     }
@@ -390,11 +391,18 @@ textarea.input-box {
     }
 }
 @media (min-width: 1024px) {
+    .feedback-wrapper{
+        background-color: #ffffff;
+    }
 
     .feedback-container {
+        background-color: #f2f2f2;
         margin-left: 20px;
         margin-right: 20px;
-        padding: 2vh 40px;
+        padding: 0px 40px;
+        border: 1px solid color-mix(in srgb, var(--fc) 25%, white);
+        border-radius: 8px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
     }
 }
 
@@ -410,12 +418,16 @@ textarea.input-box {
     .form-label {
         font-size: 16px;
     }
+
+    textarea.input-box{
+        resize: vertical;
+    }
 }
 
 @media (min-width: 1920px) {
     .feedback-container {
         max-width: 1660px;
-        padding: 12vh 60px;
+        padding: 40px 60px;
     }
 
     .form-label {
