@@ -12,10 +12,14 @@
 
 .layout--browser {
   --header-h: 56px;
+  --footer-h: 104px;
 }
 
 @media (max-width: 700px) {
-  .layout--browser { --header-h: 52px; }
+  .layout--browser {
+    --header-h: 52px;
+    --footer-h: 270px;
+  }
 }
 
 .layout-main {

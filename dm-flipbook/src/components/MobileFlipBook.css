@@ -82,7 +82,7 @@
 
 .mobile-page-indicator {
   position: fixed;
-  bottom: 16px;
+  bottom: calc(var(--footer-h, 0px) + 28px);
   left: 50%; transform: translateX(-50%);
   z-index: 50;
   background: rgba(255,255,255,0.85);

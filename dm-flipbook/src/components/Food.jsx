@@ -91,7 +91,7 @@ export default function Food() {
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    fetch('/food-guide.json')
+    fetch('/api/food-guide')
       .then(r => r.json())
       .then(d => {
         setData(d);

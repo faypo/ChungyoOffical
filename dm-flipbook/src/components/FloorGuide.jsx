@@ -30,7 +30,7 @@ export default function FloorGuide() {
   const touchStartY = useRef(null);
 
   useEffect(() => {
-    fetch('/floor-guide.json')
+    fetch('/api/floor-guide')
       .then(r => r.json())
       .then(d => {
         setData(d);
