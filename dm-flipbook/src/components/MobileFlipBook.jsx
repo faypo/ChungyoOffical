@@ -271,7 +271,7 @@ export default function MobileFlipBook({ pages, buttons = [], onBack }) {
           className="mobile-shop-btn"
           href={activeButton.url}
         >
-          前往選購
+          立即觀看
         </a>
       )}
 
