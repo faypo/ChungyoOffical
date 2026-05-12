@@ -105,6 +105,25 @@
 .dm-form input:focus { outline: none; border-color: #888; }
 .dm-form input:disabled { background: #f5f5f5; color: #888; }
 
+.dm-form-date-row {
+  display: flex;
+  gap: 16px;
+}
+.dm-form-date-row label {
+  flex: 1;
+}
+
+.dm-date-cell {
+  font-size: 12px;
+  color: #555;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+.dm-date-none {
+  color: #bbb;
+  font-size: 12px;
+}
+
 .dm-form-actions {
   display: flex;
   gap: 10px;
@@ -269,6 +288,33 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* ── Form select ── */
+.dm-form-select {
+  padding: 8px 10px;
+  font-size: 13px;
+  font-family: inherit;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: #222;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.dm-form-select:focus { outline: none; border-color: #888; }
+
+/* ── Type badge ── */
+.dm-type-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+.dm-type-badge--double { background: #eef2ff; color: #3730a3; }
+.dm-type-badge--single { background: #f0fdf4; color: #166534; }
+.dm-type-badge--strip  { background: #fff7ed; color: #9a3412; }
 
 /* ── Table ── */
 .dm-table {
@@ -459,3 +505,33 @@
   padding: 4px 14px;
   border-radius: 20px;
 }
+
+/* ── 封面設定 ── */
+.cover-current {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.cover-current-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  letter-spacing: 0.5px;
+}
+
+.cover-current-img {
+  width: 160px;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+  object-fit: cover;
+}
+
+.cover-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+

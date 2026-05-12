@@ -18,7 +18,7 @@ function RestaurantCard({ restaurant }) {
   const imgSrc = restaurant.image
     ? (restaurant.image.startsWith('/') || restaurant.image.startsWith('http')
         ? restaurant.image
-        : `/food-pic/${restaurant.image}`)
+        : `/api/images/food-pic/${restaurant.image}`)
     : null;
 
   return (

@@ -7,9 +7,13 @@ import DMViewer from './components/DMViewer';
 import FloorGuide from './components/FloorGuide';
 import CustomerFeedbackViewer from './components/feedback/CustomerFeedbackViewer';
 import Food from './components/Food';
+import Service from './components/Service';
 import AdminLayout from './components/admin/AdminLayout';
 import DMManager from './components/admin/DMManager';
 import FloorGuideManager from './components/admin/FloorGuideManager';
+import FoodGuideManager from './components/admin/FoodGuideManager';
+import WinnersManager from './components/admin/WinnersManager';
+import Winners from './components/Winners';
 import './App.css';
 
 export default function App() {
@@ -23,6 +27,8 @@ export default function App() {
               <Route index element={<Navigate to="dm" replace />} />
               <Route path="dm"    element={<DMManager />} />
               <Route path="floor" element={<FloorGuideManager />} />
+              <Route path="food"    element={<FoodGuideManager />} />
+              <Route path="winners" element={<WinnersManager />} />
             </Route>
 
             {/* 一般頁面 — 有 Layout */}
@@ -34,7 +40,9 @@ export default function App() {
                   <Route path="/dm/:id" element={<DMViewer />} />
                   <Route path="/floor" element={<FloorGuide />} />
                   <Route path="/CustomerFeedback" element={<CustomerFeedbackViewer />} />
-                  <Route path="/food" element={<Food />} />
+                  <Route path="/food"    element={<Food />} />
+                  <Route path="/service" element={<Service />} />
+                  <Route path="/winners" element={<Winners />} />
                 </Routes>
               </Layout>
             } />

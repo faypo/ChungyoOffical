@@ -5,6 +5,8 @@ import './AdminLayout.css';
 const NAV = [
   { to: '/admin/dm',    label: 'DM 管理' },
   { to: '/admin/floor', label: '樓層導覽' },
+  { to: '/admin/food',    label: '美食導覽' },
+  { to: '/admin/winners', label: '得獎名單' },
 ];
 
 export default function AdminLayout() {

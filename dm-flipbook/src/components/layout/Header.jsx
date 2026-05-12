@@ -3,9 +3,11 @@ import { NavLink } from 'react-router-dom';
 import './Header.css';
 
 const NAV_ITEMS = [
-  { to: '/dm',               label: 'DM導覽' },
+  { to: '/dm',               label: '電子型錄DM' },
   { to: '/floor',            label: '樓層導覽' },
   { to: '/food',             label: '美食導覽' },
+  { to: '/service',          label: '貼心服務' },
+  { to: '/winners',          label: '得獎名單' },
   { to: '/CustomerFeedback', label: '客服意見' },
 ];
 

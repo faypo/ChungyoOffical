@@ -3,6 +3,9 @@ const fs      = require('fs');
 const path    = require('path');
 const { DATA_DIR, readJSON } = require('../utils/json');
 
+const IMAGE_EXT = /\.(jpg|jpeg|png|webp)$/i;
+const SERVICE_KEYS = ['service', 'traffic', 'parking', 'gift'];
+
 const router = express.Router();
 
 router.get('/catalog', (_req, res) => {
@@ -21,6 +24,23 @@ router.get('/dm/:id/pages', (req, res) => {
   const indexPath = path.join(DATA_DIR, 'dm-pic', req.params.id, 'index.json');
   if (!fs.existsSync(indexPath)) return res.status(404).json({ error: 'DM not found' });
   res.json(JSON.parse(fs.readFileSync(indexPath, 'utf8')));
+});
+
+router.get('/service-images', (_req, res) => {
+  const dir = path.join(DATA_DIR, 'service');
+  const result = {};
+  if (fs.existsSync(dir)) {
+    const files = fs.readdirSync(dir).filter(f => IMAGE_EXT.test(f));
+    SERVICE_KEYS.forEach(key => {
+      const found = files.find(f => f.toLowerCase().startsWith(key + '.'));
+      if (found) result[key] = `/api/images/service/${found}`;
+    });
+  }
+  res.json(result);
+});
+
+router.get('/winners', (_req, res) => {
+  res.json(readJSON('winners.json'));
 });
 
 module.exports = router;

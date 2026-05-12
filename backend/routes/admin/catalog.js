@@ -22,11 +22,28 @@ const upload = multer({
   fileFilter: (_req, file, cb) => cb(null, IMAGE_EXT.test(file.originalname)),
 });
 
+const coverStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const dir = path.join(DATA_DIR, 'dm-pic', req.params.id);
+    fs.mkdirSync(dir, { recursive: true });
+    cb(null, dir);
+  },
+  filename: (_req, file, cb) => {
+    const ext = path.extname(file.originalname).toLowerCase();
+    cb(null, `cover${ext}`);
+  },
+});
+
+const coverUpload = multer({
+  storage: coverStorage,
+  fileFilter: (_req, file, cb) => cb(null, IMAGE_EXT.test(file.originalname)),
+});
+
 function rebuildIndex(dmId) {
   const dir = path.join(DATA_DIR, 'dm-pic', dmId);
   if (!fs.existsSync(dir)) return;
   const files = fs.readdirSync(dir)
-    .filter(f => IMAGE_EXT.test(f))
+    .filter(f => IMAGE_EXT.test(f) && !/^cover\./i.test(f))
     .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
   fs.writeFileSync(path.join(dir, 'index.json'), JSON.stringify(files, null, 2));
   return files;
@@ -39,7 +56,7 @@ router.get('/', (_req, res) => {
 
 /* ── POST /api/admin/catalog ── 新增 DM */
 router.post('/', (req, res) => {
-  const { id, title, subtitle, order, button } = req.body;
+  const { id, title, subtitle, order, button, type, hotspots } = req.body;
   if (!id || !title) return res.status(400).json({ error: 'id 與 title 為必填' });
 
   const catalog = readJSON('catalog.json');
@@ -49,8 +66,10 @@ router.post('/', (req, res) => {
     id,
     order:    Number(order) || catalog.length + 1,
     title,
-    subtitle: subtitle || '',
-    button:   button   || [],
+    subtitle: subtitle  || '',
+    type:     type      || 'double',
+    button:   button    || [],
+    hotspots: hotspots  || [],
   });
   writeJSON('catalog.json', catalog);
   fs.mkdirSync(path.join(DATA_DIR, 'dm-pic', id), { recursive: true });
@@ -97,6 +116,44 @@ router.delete('/:id/images/:file', (req, res) => {
   fs.unlinkSync(filePath);
   const files = rebuildIndex(req.params.id);
   res.json({ success: true, files });
+});
+
+/* ── POST /api/admin/catalog/:id/cover ── 上傳封面圖片 */
+router.post('/:id/cover', coverUpload.single('cover'), (req, res) => {
+  const catalog = readJSON('catalog.json');
+  const idx = catalog.findIndex(d => d.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ error: '找不到此 DM' });
+
+  const newFile = req.file?.filename;
+  if (!newFile) return res.status(400).json({ error: '未提供封面圖片' });
+
+  /* 刪除不同副檔名的舊封面 */
+  const dir = path.join(DATA_DIR, 'dm-pic', req.params.id);
+  fs.readdirSync(dir)
+    .filter(f => /^cover\./i.test(f) && f !== newFile)
+    .forEach(f => fs.unlinkSync(path.join(dir, f)));
+
+  catalog[idx].cover = newFile;
+  writeJSON('catalog.json', catalog);
+  res.json({ success: true, cover: newFile });
+});
+
+/* ── DELETE /api/admin/catalog/:id/cover ── 刪除封面圖片 */
+router.delete('/:id/cover', (req, res) => {
+  const catalog = readJSON('catalog.json');
+  const idx = catalog.findIndex(d => d.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ error: '找不到此 DM' });
+
+  const dir = path.join(DATA_DIR, 'dm-pic', req.params.id);
+  if (fs.existsSync(dir)) {
+    fs.readdirSync(dir)
+      .filter(f => /^cover\./i.test(f))
+      .forEach(f => fs.unlinkSync(path.join(dir, f)));
+  }
+
+  delete catalog[idx].cover;
+  writeJSON('catalog.json', catalog);
+  res.json({ success: true });
 });
 
 module.exports = router;

@@ -17,8 +17,14 @@ export default function DMShowcase() {
         setCatalog(sorted);
         setLoading(false);
 
-        /* 取每個 DM 的第一張圖作為封面 */
+        /* 有 cover 欄位的直接用，其餘取第一張圖 */
+        const initial = {};
         sorted.forEach(dm => {
+          if (dm.cover) initial[dm.id] = `/api/images/dm-pic/${dm.id}/${dm.cover}`;
+        });
+        setCovers(initial);
+
+        sorted.filter(dm => !dm.cover).forEach(dm => {
           fetch(`/api/dm/${dm.id}/pages`)
             .then(r => r.ok ? r.json() : [])
             .then(files => {
@@ -38,10 +44,23 @@ export default function DMShowcase() {
   if (loading) return <div className="page-status">載入中…</div>;
   if (error)   return <div className="page-status page-error">載入失敗：{error}</div>;
 
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const visibleDMs = catalog.filter(dm => {
+    if (dm.startDate && today < new Date(dm.startDate)) return false;
+    if (dm.endDate) {
+      const end = new Date(dm.endDate);
+      end.setHours(23, 59, 59, 999);
+      if (today > end) return false;
+    }
+    return true;
+  });
+
   return (
     <div className="showcase-wrapper">
       <div className="showcase-grid">
-        {catalog.map((dm) => {
+        {visibleDMs.map((dm) => {
           const coverSrc = covers[dm.id] ?? '';
           return (
             <button
@@ -55,8 +74,9 @@ export default function DMShowcase() {
                   className="showcase-card-img"
                   style={{
                     backgroundImage: coverSrc ? `url(${coverSrc})` : 'none',
-                    backgroundSize: '200% 100%',
-                    backgroundPosition: 'right center',
+                    ...(dm.type === 'double'
+                      ? { backgroundSize: '200% 100%', backgroundPosition: 'right center' }
+                      : { backgroundSize: 'cover',    backgroundPosition: 'center top' }),
                   }}
                 />
                 <div className="showcase-card-overlay">

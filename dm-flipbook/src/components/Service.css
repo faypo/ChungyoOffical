@@ -1,0 +1,101 @@
+/* ===== Service Page ===== */
+.service-page {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+}
+
+/* ── Left sidebar ── */
+.service-sidebar {
+  width: 130px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: #2c2c2c;
+  padding: 16px 0;
+  gap: 4px;
+}
+
+.service-tab {
+  display: block;
+  width: 100%;
+  padding: 14px 16px;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  color: rgba(255, 255, 255, 0.65);
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+.service-tab:hover  { background: rgba(255,255,255,0.08); color: #fff; }
+.service-tab.active { background: rgba(255,255,255,0.14); color: #fff; }
+
+/* ── Right content ── */
+.service-content {
+  flex: 1;
+  overflow: auto;
+  background: #f4f5f7;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 24px;
+}
+
+.service-img {
+  max-width: 100%;
+  display: block;
+  border-radius: 6px;
+}
+
+.service-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: #aaa;
+  font-size: 14px;
+  margin-top: 80px;
+}
+.service-empty-icon {
+  font-size: 48px;
+}
+
+/* ── Mobile ── */
+@media (max-width: 700px) {
+  .service-page {
+    flex-direction: column;
+  }
+
+  .service-sidebar {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 0;
+    gap: 0;
+    scrollbar-width: none;
+  }
+  .service-sidebar::-webkit-scrollbar { display: none; }
+
+  .service-tab {
+    flex-shrink: 0;
+    padding: 14px 18px;
+    text-align: center;
+    border-bottom: 3px solid transparent;
+    font-size: 13px;
+  }
+  .service-tab.active {
+    background: none;
+    border-bottom-color: #fff;
+    color: #fff;
+  }
+
+  .service-content {
+    padding: 16px;
+  }
+}

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-const LayoutContext = createContext({ isWebView: false, isMobile: false });
+const LayoutContext = createContext({ isWebView: false, isMobile: false, viewerMode: null, setViewerMode: () => {} });
 
 export function LayoutProvider({ children }) {
   const [isWebView] = useState(() => {
@@ -16,6 +16,7 @@ export function LayoutProvider({ children }) {
   const [isMobile, setIsMobile] = useState(
     () => window.matchMedia('(max-width: 700px)').matches
   );
+  const [viewerMode, setViewerMode] = useState(null); // null | 'full' | 'page'
 
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 700px)');
@@ -25,7 +26,7 @@ export function LayoutProvider({ children }) {
   }, []);
 
   return (
-    <LayoutContext.Provider value={{ isWebView, isMobile }}>
+    <LayoutContext.Provider value={{ isWebView, isMobile, viewerMode, setViewerMode }}>
       {children}
     </LayoutContext.Provider>
   );

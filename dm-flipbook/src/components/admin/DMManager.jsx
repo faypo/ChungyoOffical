@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
+import HotspotEditor from './HotspotEditor';
 import './DMManager.css';
 
 const API = '/api/admin/catalog';
 
-const EMPTY_FORM = { id: '', title: '', subtitle: '', order: '' };
+const EMPTY_FORM = { id: '', title: '', subtitle: '', order: '', type: 'double', startDate: '', endDate: '' };
+
+const TYPE_LABEL = { double: '双頁', single: '單頁', strip: '長條' };
 
 function apiFetch(url, opts = {}) {
   return fetch(url, { headers: { 'Content-Type': 'application/json' }, ...opts });
@@ -11,17 +14,14 @@ function apiFetch(url, opts = {}) {
 
 /* ── 預覽 Modal ── */
 function PreviewModal({ dmId, onClose }) {
-  const [pages, setPages]         = useState([]);
-  const [loading, setLoading]     = useState(true);
-  const [lightbox, setLightbox]   = useState(null);
+  const [pages, setPages]       = useState([]);
+  const [loading, setLoading]   = useState(true);
+  const [lightbox, setLightbox] = useState(null);
 
   useEffect(() => {
     fetch(`/api/dm/${dmId}/pages`)
       .then(r => r.json())
-      .then(files => {
-        setPages(Array.isArray(files) ? files : []);
-        setLoading(false);
-      })
+      .then(files => { setPages(Array.isArray(files) ? files : []); setLoading(false); })
       .catch(() => setLoading(false));
   }, [dmId]);
 
@@ -36,9 +36,7 @@ function PreviewModal({ dmId, onClose }) {
         </div>
 
         {loading && <p className="preview-status">載入中…</p>}
-        {!loading && pages.length === 0 && (
-          <p className="preview-status">尚無圖片</p>
-        )}
+        {!loading && pages.length === 0 && <p className="preview-status">尚無圖片</p>}
 
         {!loading && pages.length > 0 && (
           <div className="preview-grid">
@@ -59,11 +57,7 @@ function PreviewModal({ dmId, onClose }) {
             onClick={e => { e.stopPropagation(); setLightbox(i => Math.max(0, i - 1)); }}
             disabled={lightbox === 0}
           >‹</button>
-          <img
-            src={imgSrc(pages[lightbox])}
-            alt={pages[lightbox]}
-            onClick={e => e.stopPropagation()}
-          />
+          <img src={imgSrc(pages[lightbox])} alt={pages[lightbox]} onClick={e => e.stopPropagation()} />
           <button
             className="lightbox-nav lightbox-next"
             onClick={e => { e.stopPropagation(); setLightbox(i => Math.min(pages.length - 1, i + 1)); }}
@@ -77,27 +71,31 @@ function PreviewModal({ dmId, onClose }) {
 }
 
 export default function DMManager() {
-  const [catalog, setCatalog]         = useState([]);
-  const [loading, setLoading]         = useState(true);
-  const [form, setForm]               = useState(EMPTY_FORM);
-  const [editingId, setEditingId]     = useState(null);
-  const [showForm, setShowForm]       = useState(false);
-  const [uploading, setUploading]     = useState(null);
-  const [uploadFiles, setUploadFiles] = useState([]);
-  const [managingBtns, setManagingBtns]   = useState(null); // dm id
+  const [catalog, setCatalog]             = useState([]);
+  const [loading, setLoading]             = useState(true);
+  const [form, setForm]                   = useState(EMPTY_FORM);
+  const [editingId, setEditingId]         = useState(null);
+  const [showForm, setShowForm]           = useState(false);
+  const [uploading, setUploading]         = useState(null);
+  const [uploadFiles, setUploadFiles]     = useState([]);
+  const [managingBtns, setManagingBtns]   = useState(null);
   const [btnList, setBtnList]             = useState([]);
   const [btnForm, setBtnForm]             = useState({ page: '', url: '' });
   const [editingBtnIdx, setEditingBtnIdx] = useState(null);
   const [showBtnForm, setShowBtnForm]     = useState(false);
-  const [previewUrls, setPreviewUrls] = useState([]);
-  const [isDragOver, setIsDragOver]   = useState(false);
-  const [previewing, setPreviewing]   = useState(null);
-  const [msg, setMsg]                 = useState(null);
-  const fileInputRef                  = useRef();
-  const dragItemRef                   = useRef(null);
-  const dragOverRef                   = useRef(null);
+  const [editingHotspots, setEditingHotspots] = useState(null); // { id, hotspots }
+  const [coverDmId, setCoverDmId]         = useState(null);  // strip 封面管理
+  const [coverFile, setCoverFile]         = useState(null);
+  const [coverPreviewUrl, setCoverPreviewUrl] = useState(null);
+  const [previewUrls, setPreviewUrls]     = useState([]);
+  const [isDragOver, setIsDragOver]       = useState(false);
+  const [previewing, setPreviewing]       = useState(null);
+  const [msg, setMsg]                     = useState(null);
+  const fileInputRef     = useRef();
+  const coverInputRef    = useRef();
+  const dragItemRef      = useRef(null);
+  const dragOverRef      = useRef(null);
 
-  /* 管理縮圖 URL 的生命週期 */
   useEffect(() => {
     const urls = uploadFiles.map(f => URL.createObjectURL(f));
     setPreviewUrls(urls);
@@ -126,7 +124,15 @@ export default function DMManager() {
   };
 
   const openEdit = (dm) => {
-    setForm({ id: dm.id, title: dm.title, subtitle: dm.subtitle || '', order: dm.order });
+    setForm({
+      id:        dm.id,
+      title:     dm.title,
+      subtitle:  dm.subtitle  || '',
+      order:     dm.order,
+      type:      dm.type      || 'double',
+      startDate: dm.startDate || '',
+      endDate:   dm.endDate   || '',
+    });
     setEditingId(dm.id);
     setShowForm(true);
   };
@@ -155,34 +161,20 @@ export default function DMManager() {
     load();
   };
 
-  const openUpload = (id) => {
-    setUploading(id);
-    setUploadFiles([]);
-  };
+  const openUpload = (id) => { setUploading(id); setUploadFiles([]); };
 
-  /* ── 嵌入按鈕管理 ── */
+  /* ── 嵌入按鈕（double / single 用）── */
   const openBtns = (dm) => {
     setManagingBtns(dm.id);
     setBtnList(dm.button ? [...dm.button] : []);
     setShowBtnForm(false);
     setEditingBtnIdx(null);
   };
-
   const closeBtns = () => { setManagingBtns(null); setShowBtnForm(false); };
 
-  const openAddBtn = () => {
-    setBtnForm({ page: '', url: '' });
-    setEditingBtnIdx(null);
-    setShowBtnForm(true);
-  };
-
-  const openEditBtn = (i) => {
-    setBtnForm({ page: String(btnList[i].page), url: btnList[i].url });
-    setEditingBtnIdx(i);
-    setShowBtnForm(true);
-  };
-
-  const deleteBtn = (i) => setBtnList(list => list.filter((_, idx) => idx !== i));
+  const openAddBtn  = () => { setBtnForm({ page: '', url: '' }); setEditingBtnIdx(null); setShowBtnForm(true); };
+  const openEditBtn = (i) => { setBtnForm({ page: String(btnList[i].page), url: btnList[i].url }); setEditingBtnIdx(i); setShowBtnForm(true); };
+  const deleteBtn   = (i) => setBtnList(list => list.filter((_, idx) => idx !== i));
 
   const saveBtnForm = () => {
     const page = Number(btnForm.page);
@@ -199,10 +191,7 @@ export default function DMManager() {
   };
 
   const handleSaveBtns = async () => {
-    const res  = await apiFetch(`${API}/${managingBtns}`, {
-      method: 'PUT',
-      body: JSON.stringify({ button: btnList }),
-    });
+    const res  = await apiFetch(`${API}/${managingBtns}`, { method: 'PUT', body: JSON.stringify({ button: btnList }) });
     const data = await res.json();
     if (!res.ok) return showMsg(data.error || '儲存失敗', 'err');
     showMsg('已儲存');
@@ -210,17 +199,74 @@ export default function DMManager() {
     load();
   };
 
+  /* ── 熱區管理（strip 用）── */
+  const openHotspots = (dm) => {
+    setEditingHotspots({ id: dm.id, hotspots: dm.hotspots || [] });
+  };
+
+  /* ── 封面管理（strip 用）── */
+  const openCover = (dm) => {
+    setCoverDmId(dm.id);
+    setCoverFile(null);
+    setCoverPreviewUrl(null);
+  };
+  const closeCover = () => {
+    if (coverPreviewUrl) URL.revokeObjectURL(coverPreviewUrl);
+    setCoverDmId(null);
+    setCoverFile(null);
+    setCoverPreviewUrl(null);
+  };
+  const handleCoverFileChange = (file) => {
+    if (!file || !file.type.startsWith('image/')) return;
+    if (coverPreviewUrl) URL.revokeObjectURL(coverPreviewUrl);
+    setCoverFile(file);
+    setCoverPreviewUrl(URL.createObjectURL(file));
+  };
+  const handleCoverUpload = async () => {
+    if (!coverFile) return;
+    const fd = new FormData();
+    fd.append('cover', coverFile);
+    const res  = await fetch(`${API}/${coverDmId}/cover`, { method: 'POST', body: fd });
+    const data = await res.json();
+    if (!res.ok) return showMsg(data.error || '上傳失敗', 'err');
+    showMsg('封面已更新');
+    closeCover();
+    load();
+  };
+  const handleCoverDelete = async () => {
+    if (!window.confirm('確定要刪除封面圖片？')) return;
+    const res  = await fetch(`${API}/${coverDmId}/cover`, { method: 'DELETE' });
+    const data = await res.json();
+    if (!res.ok) return showMsg(data.error || '刪除失敗', 'err');
+    showMsg('封面已刪除');
+    closeCover();
+    load();
+  };
+
+  const handleSaveHotspots = async (spots) => {
+    const res  = await apiFetch(`${API}/${editingHotspots.id}`, { method: 'PUT', body: JSON.stringify({ hotspots: spots }) });
+    const data = await res.json();
+    if (!res.ok) return showMsg(data.error || '儲存失敗', 'err');
+    showMsg('熱區已儲存');
+    setEditingHotspots(null);
+    load();
+  };
+
+  /* ── 上傳圖片 ── */
+  const isStrip = uploading ? (catalog.find(d => d.id === uploading)?.type === 'strip') : false;
+
   const addFiles = (files) => {
     const images = files.filter(f => f.type.startsWith('image/'));
-    if (images.length) setUploadFiles(prev => [...prev, ...images]);
+    if (!images.length) return;
+    if (isStrip) setUploadFiles([images[0]]); // 長條版型只取第一張
+    else setUploadFiles(prev => [...prev, ...images]);
   };
 
   const handleUpload = async () => {
     if (!uploadFiles.length) return;
     const fd = new FormData();
-    /* 依排序結果重新命名，確保後端排序與拖曳順序一致 */
     uploadFiles.forEach((f, i) => {
-      const ext = f.name.split('.').pop().toLowerCase();
+      const ext     = f.name.split('.').pop().toLowerCase();
       const renamed = new File([f], `${String(i + 1).padStart(3, '0')}.${ext}`, { type: f.type });
       fd.append('images', renamed);
     });
@@ -232,7 +278,6 @@ export default function DMManager() {
     setUploadFiles([]);
   };
 
-  /* 拖曳排序結束，重新排列 uploadFiles */
   const handleReorderEnd = () => {
     const from = dragItemRef.current;
     const to   = dragOverRef.current;
@@ -299,6 +344,36 @@ export default function DMManager() {
                 placeholder="數字越小越前面"
               />
             </label>
+            <label>
+              版型
+              <select
+                value={form.type}
+                onChange={e => setForm(f => ({ ...f, type: e.target.value }))}
+                className="dm-form-select"
+              >
+                <option value="double">双頁</option>
+                <option value="single">單頁</option>
+                <option value="strip">長條</option>
+              </select>
+            </label>
+            <div className="dm-form-date-row">
+              <label>
+                開始日期
+                <input
+                  type="date"
+                  value={form.startDate}
+                  onChange={e => setForm(f => ({ ...f, startDate: e.target.value }))}
+                />
+              </label>
+              <label>
+                結束日期
+                <input
+                  type="date"
+                  value={form.endDate}
+                  onChange={e => setForm(f => ({ ...f, endDate: e.target.value }))}
+                />
+              </label>
+            </div>
             <div className="dm-form-actions">
               <button type="submit" className="btn btn-primary">儲存</button>
               <button type="button" className="btn btn-ghost" onClick={closeForm}>取消</button>
@@ -310,55 +385,54 @@ export default function DMManager() {
       {/* ── 上傳圖片 ── */}
       {uploading && (
         <div className="dm-form-card">
-          <div className="dm-form-title">上傳圖片：{uploading}</div>
+          <div className="dm-form-title">
+            上傳圖片：{uploading}
+            {isStrip && <span className="dm-type-badge dm-type-badge--strip">長條版型（限 1 張）</span>}
+          </div>
 
-          {/* Drop Zone */}
           <div
             className={`upload-dropzone${isDragOver ? ' upload-dropzone--over' : ''}`}
             onDragOver={e => { e.preventDefault(); setIsDragOver(true); }}
             onDragLeave={() => setIsDragOver(false)}
-            onDrop={e => {
-              e.preventDefault();
-              setIsDragOver(false);
-              addFiles(Array.from(e.dataTransfer.files));
-            }}
+            onDrop={e => { e.preventDefault(); setIsDragOver(false); addFiles(Array.from(e.dataTransfer.files)); }}
             onClick={() => fileInputRef.current.click()}
           >
             <span className="upload-dropzone-icon">+</span>
             <span className="upload-dropzone-text">拖曳圖片到此，或點擊選擇檔案</span>
-            <span className="upload-dropzone-sub">支援 JPG、PNG、WebP，可多選</span>
+            <span className="upload-dropzone-sub">
+              {isStrip ? '長條版型只需上傳 1 張圖' : '支援 JPG、PNG、WebP，可多選'}
+            </span>
           </div>
           <input
             ref={fileInputRef}
             type="file"
             accept="image/*"
-            multiple
+            multiple={!isStrip}
             style={{ display: 'none' }}
             onChange={e => { addFiles(Array.from(e.target.files)); e.target.value = ''; }}
           />
 
-          {/* 已選擇的檔案列表（可拖曳排序）*/}
           {uploadFiles.length > 0 && (
             <div className="upload-file-list">
               <div className="upload-file-list-header">
-                <span>{uploadFiles.length} 個檔案・拖曳可調整頁序</span>
+                <span>{uploadFiles.length} 個檔案{!isStrip && '・拖曳可調整頁序'}</span>
                 <button className="upload-clear-btn" onClick={() => setUploadFiles([])}>全部清除</button>
               </div>
               {uploadFiles.map((file, i) => (
                 <div
                   key={`${file.name}-${i}`}
                   className="upload-file-item"
-                  draggable
-                  onDragStart={() => { dragItemRef.current = i; }}
-                  onDragEnter={() => { dragOverRef.current = i; }}
-                  onDragEnd={handleReorderEnd}
+                  draggable={!isStrip}
+                  onDragStart={() => { if (!isStrip) dragItemRef.current = i; }}
+                  onDragEnter={() => { if (!isStrip) dragOverRef.current = i; }}
+                  onDragEnd={!isStrip ? handleReorderEnd : undefined}
                   onDragOver={e => e.preventDefault()}
                 >
-                  <span className="upload-file-handle">⠿</span>
+                  {!isStrip && <span className="upload-file-handle">⠿</span>}
                   <img src={previewUrls[i]} alt={file.name} className="upload-file-thumb" />
                   <span className="upload-file-name">{file.name}</span>
                   <span className="upload-file-size">{(file.size / 1024).toFixed(0)} KB</span>
-                  <span className="upload-file-order">#{i + 1}</span>
+                  {!isStrip && <span className="upload-file-order">#{i + 1}</span>}
                   <button
                     className="upload-file-remove"
                     onClick={() => setUploadFiles(f => f.filter((_, idx) => idx !== i))}
@@ -377,12 +451,11 @@ export default function DMManager() {
         </div>
       )}
 
-      {/* ── 嵌入按鈕管理 ── */}
+      {/* ── 嵌入按鈕管理（double / single）── */}
       {managingBtns && (
         <div className="dm-form-card">
           <div className="dm-form-title">嵌入按鈕管理：{managingBtns}</div>
 
-          {/* 新增/編輯表單 */}
           {showBtnForm && (
             <div className="btn-form">
               <input
@@ -404,19 +477,10 @@ export default function DMManager() {
             </div>
           )}
 
-          {/* 按鈕列表 */}
-          {btnList.length === 0 && !showBtnForm && (
-            <p className="dm-upload-hint">尚無嵌入按鈕</p>
-          )}
+          {btnList.length === 0 && !showBtnForm && <p className="dm-upload-hint">尚無嵌入按鈕</p>}
           {btnList.length > 0 && (
             <table className="dm-table btn-table">
-              <thead>
-                <tr>
-                  <th>頁碼</th>
-                  <th>連結 URL</th>
-                  <th>操作</th>
-                </tr>
-              </thead>
+              <thead><tr><th>頁碼</th><th>連結 URL</th><th>操作</th></tr></thead>
               <tbody>
                 {btnList.map((b, i) => (
                   <tr key={i}>
@@ -440,6 +504,72 @@ export default function DMManager() {
         </div>
       )}
 
+      {/* ── 熱區管理（strip）── */}
+      {editingHotspots && (
+        <div className="dm-form-card">
+          <div className="dm-form-title">熱區管理：{editingHotspots.id}</div>
+          <HotspotEditor
+            dmId={editingHotspots.id}
+            initialHotspots={editingHotspots.hotspots}
+            onSave={handleSaveHotspots}
+            onCancel={() => setEditingHotspots(null)}
+          />
+        </div>
+      )}
+
+      {/* ── 封面設定（strip）── */}
+      {coverDmId && (() => {
+        const dm = catalog.find(d => d.id === coverDmId);
+        const existingCover = dm?.cover
+          ? `/api/images/dm-pic/${coverDmId}/${dm.cover}`
+          : null;
+        return (
+          <div className="dm-form-card">
+            <div className="dm-form-title">封面設定：{coverDmId}</div>
+
+            {existingCover && !coverFile && (
+              <div className="cover-current">
+                <p className="cover-current-label">目前封面</p>
+                <img src={existingCover} alt="目前封面" className="cover-current-img" />
+                <button className="btn btn-sm btn-danger" onClick={handleCoverDelete}>刪除封面</button>
+              </div>
+            )}
+
+            <div
+              className="upload-dropzone"
+              onClick={() => coverInputRef.current.click()}
+              onDragOver={e => e.preventDefault()}
+              onDrop={e => { e.preventDefault(); handleCoverFileChange(e.dataTransfer.files[0]); }}
+            >
+              <span className="upload-dropzone-icon">+</span>
+              <span className="upload-dropzone-text">
+                {coverFile ? '已選擇，可重新選擇' : existingCover ? '上傳新封面以取代' : '拖曳或點擊選擇封面圖片'}
+              </span>
+              <span className="upload-dropzone-sub">支援 JPG、PNG、WebP</span>
+            </div>
+            <input
+              ref={coverInputRef}
+              type="file"
+              accept="image/*"
+              style={{ display: 'none' }}
+              onChange={e => { handleCoverFileChange(e.target.files[0]); e.target.value = ''; }}
+            />
+
+            {coverPreviewUrl && (
+              <div className="cover-preview">
+                <p className="cover-current-label">預覽</p>
+                <img src={coverPreviewUrl} alt="預覽" className="cover-current-img" />
+              </div>
+            )}
+
+            <div className="dm-form-actions">
+              <button className="btn btn-primary" onClick={handleCoverUpload} disabled={!coverFile}>上傳</button>
+              <button className="btn btn-ghost" onClick={closeCover}>取消</button>
+            </div>
+          </div>
+        );
+      })()}
+
       {/* ── DM 列表 ── */}
       {loading ? (
         <p className="dm-loading">載入中…</p>
@@ -449,8 +579,10 @@ export default function DMManager() {
             <tr>
               <th>排序</th>
               <th>ID</th>
+              <th>版型</th>
               <th>標題</th>
               <th>副標題</th>
+              <th>展示期間</th>
               <th>操作</th>
             </tr>
           </thead>
@@ -459,28 +591,43 @@ export default function DMManager() {
               <tr key={dm.id}>
                 <td>{dm.order}</td>
                 <td><code>{dm.id}</code></td>
+                <td>
+                  <span className={`dm-type-badge dm-type-badge--${dm.type || 'double'}`}>
+                    {TYPE_LABEL[dm.type] || '双頁'}
+                  </span>
+                </td>
                 <td>{dm.title}</td>
                 <td>{dm.subtitle}</td>
+                <td className="dm-date-cell">
+                  {dm.startDate || dm.endDate
+                    ? <>{dm.startDate || '—'}<br />{dm.endDate ? `~ ${dm.endDate}` : ''}</>
+                    : <span className="dm-date-none">不限</span>
+                  }
+                </td>
                 <td className="dm-table-actions">
                   <button className="btn btn-sm btn-blue" onClick={() => setPreviewing(dm.id)}>預覽</button>
                   <button className="btn btn-sm" onClick={() => openUpload(dm.id)}>上傳圖片</button>
-                  <button className="btn btn-sm" onClick={() => openBtns(dm)}>嵌入按鈕</button>
+                  {dm.type === 'strip' ? (
+                    <>
+                      <button className="btn btn-sm btn-blue" onClick={() => openHotspots(dm)}>熱區管理</button>
+                      <button className="btn btn-sm btn-blue" onClick={() => openCover(dm)}>封面設定</button>
+                    </>
+                  ) : (
+                    <button className="btn btn-sm" onClick={() => openBtns(dm)}>嵌入按鈕</button>
+                  )}
                   <button className="btn btn-sm" onClick={() => openEdit(dm)}>編輯</button>
                   <button className="btn btn-sm btn-danger" onClick={() => handleDelete(dm.id)}>刪除</button>
                 </td>
               </tr>
             ))}
             {sortedCatalog.length === 0 && (
-              <tr><td colSpan={5} className="dm-empty">尚無資料</td></tr>
+              <tr><td colSpan={6} className="dm-empty">尚無資料</td></tr>
             )}
           </tbody>
         </table>
       )}
 
-      {/* ── 預覽 Modal ── */}
-      {previewing && (
-        <PreviewModal dmId={previewing} onClose={() => setPreviewing(null)} />
-      )}
+      {previewing && <PreviewModal dmId={previewing} onClose={() => setPreviewing(null)} />}
     </div>
   );
 }

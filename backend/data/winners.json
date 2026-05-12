@@ -1,0 +1,104 @@
+{
+  "events": [
+    {
+      "id": "ev-1778570184574",
+      "title": "115母親節 大獎狂歡抽 得獎名單",
+      "winners": [],
+      "rows": [
+        {
+          "value": "永續生活 週週抽",
+          "children": [
+            {
+              "value": "DIKE HLE810除濕機6L (HLE810WT，市價7,800元，共4名)",
+              "children": [
+                {
+                  "value": "4/23(四)\t",
+                  "children": [
+                    {
+                      "value": "01364",
+                      "children": [
+                        {
+                          "value": "顏○婷",
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "value": "4/30(四)",
+                  "children": [
+                    {
+                      "value": "41259",
+                      "children": [
+                        {
+                          "value": "劉○琪",
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "value": "5/07(四)",
+                  "children": [
+                    {
+                      "value": "120914",
+                      "children": [
+                        {
+                          "value": "張○澤",
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "value": "5/12(二)",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "value": "寵愛壓軸抽",
+          "children": [
+            {
+              "value": "FUJI按摩椅 AI愛沙發 (FG-814，市價45,800元，共1名)",
+              "children": [
+                {
+                  "value": "5/12(二)\t",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subtitle1": "4/16(四)-5/11(一)持中友APP於百貨店內/購物網當日每筆不限金額消費， 即可獲得1組幸運號碼，依此類推，有機會獲得狂歡大獎。",
+      "columns": [
+        "活動名稱",
+        "獎項",
+        "抽獎日期",
+        "幸運號碼",
+        "得獎者"
+      ],
+      "subtitle2": "抽獎地點/時間：13F贈獎中心 / 隔日11:30"
+    },
+    {
+      "id": "ev-1778573158212",
+      "title": "123",
+      "subtitle1": "",
+      "subtitle2": "",
+      "columns": [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "rows": []
+    }
+  ]
+}

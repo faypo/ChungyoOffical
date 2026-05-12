@@ -1,13 +1,12 @@
 /* ===== Layout ===== */
 .layout {
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
 }
 
 .layout--webview {
-  /* Full height, no header/footer */
+  min-height: 100%;
 }
 
 .layout--browser {
@@ -22,9 +21,25 @@
   }
 }
 
-.layout-main {
+/* DM viewer（/dm/:id）：全螢幕，footer 固定在視窗底部 */
+.layout--viewer {
+  height: 100vh;
+}
+
+.layout--viewer .layout-main {
   flex: 1;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 一般頁面：自然捲動，footer 在內容最底部 */
+.layout--page {
+  min-height: 100vh;
+}
+
+.layout--page .layout-main {
+  flex: 1;
   display: flex;
   flex-direction: column;
 }
