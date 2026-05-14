@@ -1,0 +1,54 @@
+.act-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-size: 1rem;
+  color: #666;
+}
+
+.act-page {
+  min-height: 100vh;
+  background: #fff;
+}
+
+.act-content {
+  max-width: 800px;
+  margin: 0 auto;
+  /* 圖片間無縫隙 */
+  font-size: 0;
+  line-height: 0;
+}
+
+.act-img-wrapper {
+  position: relative;
+  display: block;
+  font-size: 0;
+  line-height: 0;
+}
+
+.act-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.act-hotspot {
+  position: absolute;
+  cursor: pointer;
+  background: transparent;
+}
+
+.act-youtube {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 */
+}
+
+.act-youtube iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}

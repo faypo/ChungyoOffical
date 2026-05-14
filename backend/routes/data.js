@@ -43,4 +43,11 @@ router.get('/winners', (_req, res) => {
   res.json(readJSON('winners.json'));
 });
 
+router.get('/activity/:id', (req, res) => {
+  const data = readJSON('activities.json', { activities: [] });
+  const activity = data.activities.find(a => a.id === req.params.id);
+  if (!activity) return res.status(404).json({ error: '找不到此活動頁' });
+  res.json(activity);
+});
+
 module.exports = router;

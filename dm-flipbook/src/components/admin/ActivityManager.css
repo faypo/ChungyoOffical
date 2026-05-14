@@ -1,0 +1,86 @@
+.am-url-hint {
+  margin-top: 8px;
+  font-size: 0.82rem;
+  color: #666;
+}
+
+.am-url-hint code {
+  background: #f0f0f0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+.am-add-btns {
+  display: flex;
+  gap: 8px;
+}
+
+.am-yt-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 12px 0 4px;
+}
+
+.am-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.am-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fafafa;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: grab;
+  user-select: none;
+}
+
+.am-item:active { cursor: grabbing; }
+
+.am-drag-handle {
+  font-size: 1.2rem;
+  color: #bbb;
+  flex-shrink: 0;
+}
+
+.am-thumb {
+  width: 56px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.am-yt-badge {
+  width: 56px;
+  height: 40px;
+  background: #ff0000;
+  color: #fff;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.am-label {
+  flex: 1;
+  font-size: 0.85rem;
+  color: #444;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.am-del {
+  flex-shrink: 0;
+}

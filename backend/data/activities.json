@@ -1,0 +1,32 @@
+{
+  "activities": [
+    {
+      "id": "act-1778725858121",
+      "title": "123",
+      "content": [
+        {
+          "type": "image",
+          "file": "unnamed.jpg",
+          "hotspots": [
+            {
+              "id": "1778726093324",
+              "x": 6.962961832682292,
+              "y": 3.139767287991689,
+              "width": 88,
+              "height": 0.5861504907306434,
+              "url": "http://localhost:5173/food"
+            }
+          ]
+        },
+        {
+          "type": "youtube",
+          "videoId": "6sNRYtT8mjo"
+        },
+        {
+          "type": "image",
+          "file": "unnamed.jpg"
+        }
+      ]
+    }
+  ]
+}

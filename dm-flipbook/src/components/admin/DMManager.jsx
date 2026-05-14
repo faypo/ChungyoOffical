@@ -270,12 +270,22 @@ export default function DMManager() {
       const renamed = new File([f], `${String(i + 1).padStart(3, '0')}.${ext}`, { type: f.type });
       fd.append('images', renamed);
     });
-    const res  = await fetch(`${API}/${uploading}/upload`, { method: 'POST', body: fd });
-    const data = await res.json();
-    if (!res.ok) return showMsg(data.error || '上傳失敗', 'err');
-    showMsg(`已上傳 ${data.files?.length ?? 0} 張圖片`);
-    setUploading(null);
-    setUploadFiles([]);
+    try {
+      const res  = await fetch(`${API}/${uploading}/upload`, { method: 'POST', body: fd });
+      const text = await res.text();
+      let data;
+      try { data = JSON.parse(text); } catch {
+        console.error('上傳回應非 JSON：', text.slice(0, 200));
+        return showMsg('伺服器回應格式錯誤，請查看 console', 'err');
+      }
+      if (!res.ok) return showMsg(data.error || '上傳失敗', 'err');
+      showMsg(`已上傳 ${data.files?.length ?? 0} 張圖片`);
+      setUploading(null);
+      setUploadFiles([]);
+    } catch (err) {
+      console.error('上傳失敗：', err);
+      showMsg(`上傳失敗：${err.message}`, 'err');
+    }
   };
 
   const handleReorderEnd = () => {

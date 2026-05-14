@@ -13,7 +13,9 @@ import DMManager from './components/admin/DMManager';
 import FloorGuideManager from './components/admin/FloorGuideManager';
 import FoodGuideManager from './components/admin/FoodGuideManager';
 import WinnersManager from './components/admin/WinnersManager';
+import ActivityManager from './components/admin/ActivityManager';
 import Winners from './components/Winners';
+import ActivityPage from './components/ActivityPage';
 import './App.css';
 
 export default function App() {
@@ -25,10 +27,11 @@ export default function App() {
             {/* Admin — 無 header/footer */}
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<Navigate to="dm" replace />} />
-              <Route path="dm"    element={<DMManager />} />
-              <Route path="floor" element={<FloorGuideManager />} />
-              <Route path="food"    element={<FoodGuideManager />} />
-              <Route path="winners" element={<WinnersManager />} />
+              <Route path="dm"       element={<DMManager />} />
+              <Route path="floor"    element={<FloorGuideManager />} />
+              <Route path="food"     element={<FoodGuideManager />} />
+              <Route path="winners"  element={<WinnersManager />} />
+              <Route path="activity" element={<ActivityManager />} />
             </Route>
 
             {/* 一般頁面 — 有 Layout */}
@@ -42,7 +45,8 @@ export default function App() {
                   <Route path="/CustomerFeedback" element={<CustomerFeedbackViewer />} />
                   <Route path="/food"    element={<Food />} />
                   <Route path="/service" element={<Service />} />
-                  <Route path="/winners" element={<Winners />} />
+                  <Route path="/winners"          element={<Winners />} />
+                  <Route path="/activity/:id"    element={<ActivityPage />} />
                 </Routes>
               </Layout>
             } />

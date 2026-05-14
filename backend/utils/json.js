@@ -3,8 +3,12 @@ const path = require('path');
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
 
-function readJSON(file) {
-  return JSON.parse(fs.readFileSync(path.join(DATA_DIR, file), 'utf8'));
+function readJSON(file, fallback = {}) {
+  try {
+    return JSON.parse(fs.readFileSync(path.join(DATA_DIR, file), 'utf8'));
+  } catch {
+    return fallback;
+  }
 }
 
 function writeJSON(file, data) {

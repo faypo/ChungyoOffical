@@ -14,8 +14,8 @@ function overlaps(a, b) {
   );
 }
 
-export default function HotspotEditor({ dmId, initialHotspots = [], onSave, onCancel }) {
-  const [imgSrc, setImgSrc]         = useState(null);
+export default function HotspotEditor({ dmId, imgSrc: imgSrcProp, initialHotspots = [], onSave, onCancel }) {
+  const [imgSrc, setImgSrc]         = useState(imgSrcProp ?? null);
   const [hotspots, setHotspots]     = useState(
     () => initialHotspots.map(s => ({ ...s, id: s.id || genId() }))
   );
@@ -28,15 +28,16 @@ export default function HotspotEditor({ dmId, initialHotspots = [], onSave, onCa
   const canvasRef  = useRef();
   const drawingRef = useRef(null);
 
-  /* ── 載入圖片 ── */
+  /* ── 載入圖片（只在沒有外部 imgSrc 時才 fetch DM 圖片）── */
   useEffect(() => {
+    if (imgSrcProp || !dmId) return;
     fetch(`/api/dm/${dmId}/pages`)
       .then(r => r.json())
       .then(files => {
         if (files[0]) setImgSrc(`/api/images/dm-pic/${dmId}/${files[0]}`);
       })
       .catch(() => {});
-  }, [dmId]);
+  }, [dmId, imgSrcProp]);
 
   /* ── 追蹤 canvas 尺寸 ── */
   const updateSize = useCallback(() => {
