@@ -49,6 +49,7 @@ export default function DMViewer() {
   return (
     <FlipBook
       pages={pages}
+      type={meta?.type ?? 'double'}
       buttons={meta?.button ?? []}
       onBack={() => navigate(-1)}
     />

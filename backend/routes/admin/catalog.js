@@ -42,10 +42,27 @@ const coverUpload = multer({
 function rebuildIndex(dmId) {
   const dir = path.join(DATA_DIR, 'dm-pic', dmId);
   if (!fs.existsSync(dir)) return;
-  const files = fs.readdirSync(dir)
-    .filter(f => IMAGE_EXT.test(f) && !/^cover\./i.test(f))
+
+  const allFiles = new Set(
+    fs.readdirSync(dir).filter(f => IMAGE_EXT.test(f) && !/^cover\./i.test(f))
+  );
+
+  // 讀取現有順序
+  const indexPath = path.join(dir, 'index.json');
+  let existing = [];
+  try { existing = JSON.parse(fs.readFileSync(indexPath, 'utf8')); } catch {}
+
+  // 保留現有順序中仍存在的檔案
+  const ordered = existing.filter(f => allFiles.has(f));
+
+  // 新增的檔案（不在現有順序中）依檔名排序後加到最後
+  const orderedSet = new Set(ordered);
+  const newFiles = [...allFiles]
+    .filter(f => !orderedSet.has(f))
     .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
-  fs.writeFileSync(path.join(dir, 'index.json'), JSON.stringify(files, null, 2));
+
+  const files = [...ordered, ...newFiles];
+  fs.writeFileSync(indexPath, JSON.stringify(files, null, 2));
   return files;
 }
 
@@ -107,6 +124,16 @@ router.delete('/:id', (req, res) => {
 router.post('/:id/upload', upload.array('images'), (req, res) => {
   const files = rebuildIndex(req.params.id);
   res.json({ success: true, files });
+});
+
+/* ── PUT /api/admin/catalog/:id/pages/order ── 調整頁序 */
+router.put('/:id/pages/order', (req, res) => {
+  const { order } = req.body;
+  if (!Array.isArray(order)) return res.status(400).json({ error: 'order 必須是陣列' });
+  const dir = path.join(DATA_DIR, 'dm-pic', req.params.id);
+  if (!fs.existsSync(dir)) return res.status(404).json({ error: '找不到此 DM' });
+  fs.writeFileSync(path.join(dir, 'index.json'), JSON.stringify(order, null, 2));
+  res.json({ success: true });
 });
 
 /* ── DELETE /api/admin/catalog/:id/images/:file ── 刪除單張圖片 */

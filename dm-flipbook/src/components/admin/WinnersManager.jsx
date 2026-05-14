@@ -178,12 +178,14 @@ export default function WinnersManager() {
   };
 
   // ── Delete event ──
-  const handleDeleteEvent = async () => {
-    if (!window.confirm(`確定要刪除「${activeEvent?.title}」？`)) return;
-    const res = await apiFetch(`${API}/events/${activeId}`, { method: 'DELETE' });
+  const handleDeleteEvent = async (id) => {
+    const ev = events.find(e => e.id === id);
+    if (!window.confirm(`確定要刪除「${ev?.title}」？`)) return;
+    const res = await apiFetch(`${API}/events/${id}`, { method: 'DELETE' });
     const json = await res.json();
     if (!res.ok) return showMsgFn(json.error || '刪除失敗', 'err');
     showMsgFn('已刪除活動');
+    if (activeId === id) setActiveId(null);
     load();
   };
 
@@ -214,48 +216,68 @@ export default function WinnersManager() {
 
       {msg && <div className={`fg-msg fg-msg--${msg.type}`}>{msg.text}</div>}
 
-      {/* ── Event tabs ── */}
-      <div className="food-cat-tabs-row">
-        <div className="food-cat-tabs">
-          {events.map(e => (
-            <button
-              key={e.id}
-              className={`fg-building-tab${activeId === e.id ? ' active' : ''}`}
-              onClick={() => { setActiveId(e.id); setShowAddEvent(false); }}
-            >
-              {e.title}
-            </button>
-          ))}
+      {/* ── Event list ── */}
+      <div className="fg-section">
+        <div className="fg-section-header">
+          <span className="fg-section-title">活動列表</span>
+          <button className="fg-btn fg-btn-ghost fg-btn-sm" onClick={() => setShowAddEvent(v => !v)}>
+            ＋ 新增活動
+          </button>
         </div>
-        <button
-          className="fg-btn fg-btn-ghost fg-btn-sm"
-          onClick={() => setShowAddEvent(v => !v)}
-        >
-          ＋ 新增活動
-        </button>
-      </div>
 
-      {/* ── Add event panel ── */}
-      {showAddEvent && (
-        <div className="fg-info-card">
-          <div className="fg-info-card-title">新增活動</div>
-          <div className="food-addcat-row">
-            <input
-              className="fg-info-input"
-              placeholder="活動名稱"
-              value={newTitle}
-              onChange={e => setNewTitle(e.target.value)}
-              onKeyDown={e => e.key === 'Enter' && handleAddEvent()}
-            />
-            <button className="fg-btn fg-btn-primary fg-btn-sm" onClick={handleAddEvent}>確認新增</button>
-            <button className="fg-btn fg-btn-ghost fg-btn-sm" onClick={() => setShowAddEvent(false)}>取消</button>
+        {showAddEvent && (
+          <div className="fg-info-card">
+            <div className="fg-info-card-title">新增活動</div>
+            <div className="food-addcat-row">
+              <input
+                className="fg-info-input"
+                placeholder="活動名稱"
+                value={newTitle}
+                onChange={e => setNewTitle(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && handleAddEvent()}
+              />
+              <button className="fg-btn fg-btn-primary fg-btn-sm" onClick={handleAddEvent}>確認新增</button>
+              <button className="fg-btn fg-btn-ghost fg-btn-sm" onClick={() => setShowAddEvent(false)}>取消</button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {events.length === 0 && !showAddEvent && (
-        <div className="fg-empty">尚無活動，請點「＋ 新增活動」</div>
-      )}
+        {events.length === 0 && !showAddEvent && (
+          <div className="fg-empty">尚無活動，請點「＋ 新增活動」</div>
+        )}
+
+        {events.length > 0 && (
+          <table className="fg-table">
+            <thead>
+              <tr>
+                <th>活動名稱</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              {events.map(e => (
+                <tr key={e.id} className={activeId === e.id ? 'fg-tr-active' : ''}>
+                  <td>{e.title}</td>
+                  <td className="fg-table-actions">
+                    <button
+                      className={`fg-btn fg-btn-sm ${activeId === e.id ? 'fg-btn-primary' : 'fg-btn-ghost'}`}
+                      onClick={() => { setActiveId(e.id); setShowAddEvent(false); }}
+                    >
+                      {activeId === e.id ? '編輯中' : '編輯'}
+                    </button>
+                    <button
+                      className="fg-btn fg-btn-danger fg-btn-sm"
+                      onClick={() => handleDeleteEvent(e.id)}
+                    >
+                      刪除
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
 
       {activeEvent && (
         <div className="wm-editor">
@@ -323,7 +345,7 @@ export default function WinnersManager() {
             <button className="fg-btn fg-btn-primary" onClick={handleSave} disabled={saving}>
               {saving ? '儲存中…' : '儲存'}
             </button>
-            <button className="fg-btn fg-btn-danger" onClick={handleDeleteEvent}>刪除活動</button>
+            <button className="fg-btn fg-btn-danger" onClick={() => handleDeleteEvent(activeId)}>刪除活動</button>
           </div>
         </div>
       )}

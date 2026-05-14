@@ -84,12 +84,14 @@ export default function ActivityManager() {
   };
 
   /* ── 刪除活動頁 ── */
-  const handleDelete = async () => {
-    if (!window.confirm(`確定刪除「${activeActivity?.title}」？`)) return;
-    const res = await apiFetch(`${API}/${activeId}`, { method: 'DELETE' });
+  const handleDelete = async (id) => {
+    const act = activities.find(a => a.id === id);
+    if (!window.confirm(`確定刪除「${act?.title}」？`)) return;
+    const res = await apiFetch(`${API}/${id}`, { method: 'DELETE' });
     const d = await res.json();
     if (!res.ok) return showMsgFn(d.error || '刪除失敗', 'err');
     showMsgFn('已刪除');
+    if (activeId === id) setActiveId(null);
     load();
   };
 
@@ -197,45 +199,70 @@ export default function ActivityManager() {
 
       {msg && <div className={`fg-msg fg-msg--${msg.type}`}>{msg.text}</div>}
 
-      {/* ── 活動頁 tabs ── */}
-      <div className="food-cat-tabs-row">
-        <div className="food-cat-tabs">
-          {activities.map(a => (
-            <button
-              key={a.id}
-              className={`fg-building-tab${activeId === a.id ? ' active' : ''}`}
-              onClick={() => { setActiveId(a.id); setShowAdd(false); }}
-            >
-              {a.title}
-            </button>
-          ))}
+      {/* ── 活動頁列表 ── */}
+      <div className="fg-section">
+        <div className="fg-section-header">
+          <span className="fg-section-title">活動頁列表</span>
+          <button className="fg-btn fg-btn-ghost fg-btn-sm" onClick={() => setShowAdd(v => !v)}>
+            ＋ 新增活動頁
+          </button>
         </div>
-        <button className="fg-btn fg-btn-ghost fg-btn-sm" onClick={() => setShowAdd(v => !v)}>
-          ＋ 新增活動頁
-        </button>
-      </div>
 
-      {/* ── 新增面板 ── */}
-      {showAdd && (
-        <div className="fg-info-card">
-          <div className="fg-info-card-title">新增活動頁</div>
-          <div className="food-addcat-row">
-            <input
-              className="fg-info-input"
-              placeholder="活動頁名稱"
-              value={newTitle}
-              onChange={e => setNewTitle(e.target.value)}
-              onKeyDown={e => e.key === 'Enter' && handleAdd()}
-            />
-            <button className="fg-btn fg-btn-primary fg-btn-sm" onClick={handleAdd}>確認</button>
-            <button className="fg-btn fg-btn-ghost fg-btn-sm" onClick={() => setShowAdd(false)}>取消</button>
+        {showAdd && (
+          <div className="fg-info-card">
+            <div className="fg-info-card-title">新增活動頁</div>
+            <div className="food-addcat-row">
+              <input
+                className="fg-info-input"
+                placeholder="活動頁名稱"
+                value={newTitle}
+                onChange={e => setNewTitle(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && handleAdd()}
+              />
+              <button className="fg-btn fg-btn-primary fg-btn-sm" onClick={handleAdd}>確認</button>
+              <button className="fg-btn fg-btn-ghost fg-btn-sm" onClick={() => setShowAdd(false)}>取消</button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {activities.length === 0 && !showAdd && (
-        <div className="fg-empty">尚無活動頁，請點「＋ 新增活動頁」</div>
-      )}
+        {activities.length === 0 && !showAdd && (
+          <div className="fg-empty">尚無活動頁，請點「＋ 新增活動頁」</div>
+        )}
+
+        {activities.length > 0 && (
+          <table className="fg-table">
+            <thead>
+              <tr>
+                <th>名稱</th>
+                <th>前台網址</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              {activities.map(a => (
+                <tr key={a.id} className={activeId === a.id ? 'fg-tr-active' : ''}>
+                  <td>{a.title}</td>
+                  <td><code>/activity/{a.id}</code></td>
+                  <td className="fg-table-actions">
+                    <button
+                      className={`fg-btn fg-btn-sm ${activeId === a.id ? 'fg-btn-primary' : 'fg-btn-ghost'}`}
+                      onClick={() => { setActiveId(a.id); setShowAdd(false); }}
+                    >
+                      {activeId === a.id ? '編輯中' : '編輯'}
+                    </button>
+                    <button
+                      className="fg-btn fg-btn-danger fg-btn-sm"
+                      onClick={() => handleDelete(a.id)}
+                    >
+                      刪除
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
 
       {activeActivity && (
         <div className="wm-editor">
@@ -339,7 +366,7 @@ export default function ActivityManager() {
             <button className="fg-btn fg-btn-primary" onClick={handleSave} disabled={saving}>
               {saving ? '儲存中…' : '儲存'}
             </button>
-            <button className="fg-btn fg-btn-danger" onClick={handleDelete}>刪除活動頁</button>
+            <button className="fg-btn fg-btn-danger" onClick={() => handleDelete(activeId)}>刪除活動頁</button>
           </div>
         </div>
       )}

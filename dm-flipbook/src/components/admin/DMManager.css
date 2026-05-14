@@ -303,6 +303,14 @@
 }
 .dm-form-select:focus { outline: none; border-color: #888; }
 
+/* ── Locked field hint ── */
+.dm-field-locked {
+  margin-left: 6px;
+  font-size: 11px;
+  font-weight: 400;
+  color: #9ca3af;
+}
+
 /* ── Type badge ── */
 .dm-type-badge {
   display: inline-block;

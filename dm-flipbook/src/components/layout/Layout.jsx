@@ -14,7 +14,7 @@ export default function Layout({ children }) {
   const isViewer = isDmRoute && viewerMode !== 'page';
 
   if (isWebView) {
-    return <div className="layout layout--webview">{children}</div>;
+    return <div className={`layout layout--webview${isViewer ? ' layout--webview-viewer' : ''}`}>{children}</div>;
   }
 
   return (

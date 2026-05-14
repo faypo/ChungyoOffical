@@ -9,6 +9,15 @@
   min-height: 100%;
 }
 
+.layout--webview-viewer {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.layout--webview-viewer > * {
+  height: 100%;
+}
+
 .layout--browser {
   --header-h: 56px;
   --footer-h: 104px;

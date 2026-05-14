@@ -91,10 +91,13 @@ export default function DMManager() {
   const [isDragOver, setIsDragOver]       = useState(false);
   const [previewing, setPreviewing]       = useState(null);
   const [msg, setMsg]                     = useState(null);
-  const fileInputRef     = useRef();
-  const coverInputRef    = useRef();
-  const dragItemRef      = useRef(null);
-  const dragOverRef      = useRef(null);
+  const [existingPages, setExistingPages]         = useState([]);
+  const [existingPagesDirty, setExistingPagesDirty] = useState(false);
+  const fileInputRef          = useRef();
+  const coverInputRef         = useRef();
+  const dragItemRef           = useRef(null);
+  const dragOverRef           = useRef(null);
+  const dragExistingItemRef   = useRef(null);
 
   useEffect(() => {
     const urls = uploadFiles.map(f => URL.createObjectURL(f));
@@ -161,7 +164,17 @@ export default function DMManager() {
     load();
   };
 
-  const openUpload = (id) => { setUploading(id); setUploadFiles([]); };
+  const openUpload = async (id) => {
+    setUploading(id);
+    setUploadFiles([]);
+    setExistingPages([]);
+    setExistingPagesDirty(false);
+    try {
+      const r = await fetch(`/api/dm/${id}/pages`);
+      const files = await r.json();
+      setExistingPages(Array.isArray(files) ? files : []);
+    } catch {}
+  };
 
   /* ── 嵌入按鈕（double / single 用）── */
   const openBtns = (dm) => {
@@ -265,9 +278,13 @@ export default function DMManager() {
   const handleUpload = async () => {
     if (!uploadFiles.length) return;
     const fd = new FormData();
+    const maxExisting = isStrip ? 0 : existingPages.reduce((max, f) => {
+      const n = parseInt(f, 10);
+      return isNaN(n) ? max : Math.max(max, n);
+    }, 0);
     uploadFiles.forEach((f, i) => {
       const ext     = f.name.split('.').pop().toLowerCase();
-      const renamed = new File([f], `${String(i + 1).padStart(3, '0')}.${ext}`, { type: f.type });
+      const renamed = new File([f], `${String(maxExisting + i + 1).padStart(3, '0')}.${ext}`, { type: f.type });
       fd.append('images', renamed);
     });
     try {
@@ -280,8 +297,14 @@ export default function DMManager() {
       }
       if (!res.ok) return showMsg(data.error || '上傳失敗', 'err');
       showMsg(`已上傳 ${data.files?.length ?? 0} 張圖片`);
-      setUploading(null);
       setUploadFiles([]);
+      // 重新載入現有圖片列表
+      try {
+        const r = await fetch(`/api/dm/${uploading}/pages`);
+        const files = await r.json();
+        setExistingPages(Array.isArray(files) ? files : []);
+        setExistingPagesDirty(false);
+      } catch {}
     } catch (err) {
       console.error('上傳失敗：', err);
       showMsg(`上傳失敗：${err.message}`, 'err');
@@ -300,6 +323,28 @@ export default function DMManager() {
       copy.splice(to, 0, moved);
       return copy;
     });
+  };
+
+
+  const handleSaveOrder = async () => {
+    const res  = await apiFetch(`${API}/${uploading}/pages/order`, {
+      method: 'PUT',
+      body: JSON.stringify({ order: existingPages }),
+    });
+    const data = await res.json();
+    if (!res.ok) return showMsg(data.error || '儲存失敗', 'err');
+    showMsg('排序已儲存');
+    setExistingPagesDirty(false);
+  };
+
+  const handleDeleteExistingImage = async (file) => {
+    if (!window.confirm(`確定刪除圖片「${file}」？`)) return;
+    const res  = await fetch(`${API}/${uploading}/images/${file}`, { method: 'DELETE' });
+    const data = await res.json();
+    if (!res.ok) return showMsg(data.error || '刪除失敗', 'err');
+    setExistingPages(prev => prev.filter(f => f !== file));
+    setExistingPagesDirty(false);
+    showMsg('已刪除');
   };
 
   const sortedCatalog = [...catalog].sort((a, b) => a.order - b.order);
@@ -355,11 +400,12 @@ export default function DMManager() {
               />
             </label>
             <label>
-              版型
+              版型{editingId && <span className="dm-field-locked">（建立後不可更改）</span>}
               <select
                 value={form.type}
                 onChange={e => setForm(f => ({ ...f, type: e.target.value }))}
                 className="dm-form-select"
+                disabled={!!editingId}
               >
                 <option value="double">双頁</option>
                 <option value="single">單頁</option>
@@ -422,10 +468,58 @@ export default function DMManager() {
             onChange={e => { addFiles(Array.from(e.target.files)); e.target.value = ''; }}
           />
 
+          {/* ── 現有圖片 ── */}
+          {existingPages.length > 0 && (
+            <div className="upload-file-list">
+              <div className="upload-file-list-header">
+                <span>現有圖片（{existingPages.length} 張）{!isStrip && '・拖曳可調整順序'}</span>
+                {existingPagesDirty && (
+                  <button className="btn btn-primary btn-sm" onClick={handleSaveOrder}>儲存排序</button>
+                )}
+              </div>
+              {existingPages.map((file, i) => (
+                <div
+                  key={file}
+                  className="upload-file-item"
+                  draggable={!isStrip}
+                  onDragStart={() => { if (!isStrip) dragExistingItemRef.current = i; }}
+                  onDragOver={e => e.preventDefault()}
+                  onDrop={e => {
+                    e.preventDefault();
+                    if (isStrip) return;
+                    const from = dragExistingItemRef.current;
+                    dragExistingItemRef.current = null;
+                    if (from === null || from === i) return;
+                    setExistingPages(prev => {
+                      const copy = [...prev];
+                      const [moved] = copy.splice(from, 1);
+                      copy.splice(i, 0, moved);
+                      return copy;
+                    });
+                    setExistingPagesDirty(true);
+                  }}
+                >
+                  {!isStrip && <span className="upload-file-handle">⠿</span>}
+                  <img
+                    src={`/api/images/dm-pic/${uploading}/${file}`}
+                    alt={file}
+                    className="upload-file-thumb"
+                  />
+                  <span className="upload-file-name">{file}</span>
+                  {!isStrip && <span className="upload-file-order">#{i + 1}</span>}
+                  <button
+                    className="upload-file-remove"
+                    onClick={() => handleDeleteExistingImage(file)}
+                  >✕</button>
+                </div>
+              ))}
+            </div>
+          )}
+
           {uploadFiles.length > 0 && (
             <div className="upload-file-list">
               <div className="upload-file-list-header">
-                <span>{uploadFiles.length} 個檔案{!isStrip && '・拖曳可調整頁序'}</span>
+                <span>待上傳：{uploadFiles.length} 個檔案{!isStrip && '・拖曳可調整頁序'}</span>
                 <button className="upload-clear-btn" onClick={() => setUploadFiles([])}>全部清除</button>
               </div>
               {uploadFiles.map((file, i) => (
