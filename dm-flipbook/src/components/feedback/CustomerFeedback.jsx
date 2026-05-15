@@ -354,7 +354,7 @@ export default function CustomerFeedback() {
             )}
 
             {fieldConfig.email && (
-              <div className="form-row" style={{ marginBottom: '16px' }}>
+              <div className="form-row">
                 <div className="form-label">
                   <span className="required-star">*</span>E-mail
                 </div>
@@ -373,9 +373,9 @@ export default function CustomerFeedback() {
             )}
 
             {fieldConfig.phone && (
-              <div className="form-row" style={{ marginBottom: '16px' }}>
+              <div className="form-row">
                 <div className="form-label">
-                  <span className="required-star">*</span>聯絡電話
+                  <span className="required-star">*</span>手機號碼
                 </div>
                 <div className="form-control">
                   <input 
@@ -392,7 +392,7 @@ export default function CustomerFeedback() {
             )}
 
             {fieldConfig.content && (
-              <div className="form-row" style={{ marginBottom: '16px' }}>
+              <div className="form-row">
                 <div className="form-label">
                   <span className="required-star">*</span>意見內容
                 </div>
