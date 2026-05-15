@@ -32,7 +32,7 @@
 .form-row {
     display: flex;
     flex-direction: column; 
-
+    
 }
 
 .status-message {
@@ -348,7 +348,7 @@ textarea.input-box {
         margin-bottom: 24px;
     }
     .form-label {
-        width: 140px;
+        width: 100px;
         flex-shrink: 0;
         margin-bottom: 0;
     }
@@ -376,7 +376,7 @@ textarea.input-box {
         align-items: flex-start;
     }
     .split-half .form-label {
-        width: 140px; 
+        width: 100px; 
         flex-shrink: 0;
         margin-bottom: 0;
     }
