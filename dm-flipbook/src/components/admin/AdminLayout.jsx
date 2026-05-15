@@ -8,6 +8,7 @@ const NAV = [
   { to: '/admin/food',     label: '美食導覽' },
   { to: '/admin/winners',  label: '得獎名單' },
   { to: '/admin/activity', label: '活動頁' },
+  { to: '/admin/gallery',  label: '時尚藝廊' },
 ];
 
 export default function AdminLayout() {

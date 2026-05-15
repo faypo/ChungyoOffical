@@ -14,8 +14,10 @@ import FloorGuideManager from './components/admin/FloorGuideManager';
 import FoodGuideManager from './components/admin/FoodGuideManager';
 import WinnersManager from './components/admin/WinnersManager';
 import ActivityManager from './components/admin/ActivityManager';
+import GalleryManager from './components/admin/GalleryManager';
 import Winners from './components/Winners';
 import ActivityPage from './components/ActivityPage';
+import GalleryPage from './components/GalleryPage';
 import './App.css';
 
 export default function App() {
@@ -32,6 +34,7 @@ export default function App() {
               <Route path="food"     element={<FoodGuideManager />} />
               <Route path="winners"  element={<WinnersManager />} />
               <Route path="activity" element={<ActivityManager />} />
+              <Route path="gallery"  element={<GalleryManager />} />
             </Route>
 
             {/* 一般頁面 — 有 Layout */}
@@ -47,6 +50,7 @@ export default function App() {
                   <Route path="/service" element={<Service />} />
                   <Route path="/winners"          element={<Winners />} />
                   <Route path="/activity/:id"    element={<ActivityPage />} />
+                  <Route path="/gallery"         element={<GalleryPage />} />
                 </Routes>
               </Layout>
             } />

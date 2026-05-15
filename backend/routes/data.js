@@ -50,4 +50,12 @@ router.get('/activity/:id', (req, res) => {
   res.json(activity);
 });
 
+router.get('/gallery', (_req, res) => {
+  res.json(readJSON('gallery.json', { content: [] }));
+});
+
+router.get('/config', (_req, res) => {
+  res.json(readJSON('config.json', {}));
+});
+
 module.exports = router;

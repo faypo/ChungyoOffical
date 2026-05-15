@@ -1,18 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import './Header.css';
 
-const NAV_ITEMS = [
+const INTERNAL_NAV = [
   { to: '/dm',               label: '電子型錄DM' },
   { to: '/floor',            label: '樓層導覽' },
   { to: '/food',             label: '美食導覽' },
   { to: '/service',          label: '貼心服務' },
   { to: '/winners',          label: '得獎名單' },
-  { to: '/CustomerFeedback', label: '客服意見' },
+  { to: '/gallery',          label: '中友時尚藝廊' },
+  { to: '/CustomerFeedback', label: '客戶意見' },
 ];
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [memberUrl, setMemberUrl] = useState('');
+
+  useEffect(() => {
+    fetch('/api/config')
+      .then(r => r.ok ? r.json() : {})
+      .then(d => { if (d.memberUrl) setMemberUrl(d.memberUrl); })
+      .catch(() => {});
+  }, []);
 
   return (
     <header className="site-header">
@@ -21,7 +30,7 @@ export default function Header() {
 
         {/* Desktop nav */}
         <nav className="site-nav">
-          {NAV_ITEMS.map(({ to, label }) => (
+          {INTERNAL_NAV.map(({ to, label }) => (
             <NavLink
               key={to}
               to={to}
@@ -30,6 +39,16 @@ export default function Header() {
               {label}
             </NavLink>
           ))}
+          {memberUrl && (
+            <a
+              href={memberUrl}
+              className="site-nav-link"
+              target="_blank"
+              rel="noreferrer"
+            >
+              會員點數查詢
+            </a>
+          )}
         </nav>
 
         {/* Mobile hamburger */}
@@ -47,7 +66,7 @@ export default function Header() {
         <div className="site-mobile-backdrop" onClick={() => setMenuOpen(false)} />
       )}
       <nav className={`site-mobile-nav${menuOpen ? ' open' : ''}`}>
-        {NAV_ITEMS.map(({ to, label }) => (
+        {INTERNAL_NAV.map(({ to, label }) => (
           <NavLink
             key={to}
             to={to}
@@ -57,6 +76,17 @@ export default function Header() {
             {label}
           </NavLink>
         ))}
+        {memberUrl && (
+          <a
+            href={memberUrl}
+            className="site-mobile-nav-link"
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => setMenuOpen(false)}
+          >
+            會員點數查詢
+          </a>
+        )}
       </nav>
     </header>
   );
