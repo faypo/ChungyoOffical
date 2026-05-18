@@ -7,6 +7,7 @@ const router = express.Router();
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
+// 需求方取消通知功能，程式留存暫不使用
 async function sendNotificationEmail() {
   try {
     await sgMail.send({
@@ -46,14 +47,15 @@ router.post('/', (req, res) => {
           parsed = JSON.parse(data);
           if (parsed.status === 'success') {
             isSuccess = true;
-            sendNotificationEmail();
+            // 程式註解，暫不使用
+            //sendNotificationEmail();
           }
         } catch (e) {
           console.error('無法解析回傳 JSON:', e);
         }
       }
-
-      res.status(jspRes.statusCode).json({
+      const finalStatusCode = isSuccess ? jspRes.statusCode : 400;
+      res.status(finalStatusCode).json({
         success: isSuccess,
         message: isSuccess ? 'Request success' : 'Request Error',
         Data:    parsed || data,

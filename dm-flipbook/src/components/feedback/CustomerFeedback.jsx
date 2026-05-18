@@ -194,11 +194,24 @@ export default function CustomerFeedback() {
     const cleanPhone = sanitizeInput(phone);
     const cleanContent = sanitizeInput(content);
 
+    const now = new Date();
+    const currentMinutes = now.getMinutes();
+    const remainder = currentMinutes % 10;
+    
+    if (remainder !== 0) {
+      now.setMinutes(currentMinutes + (10 - remainder));
+    }
+
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const currentTime = `${hours}:${minutes}`;
+
     const feedbackData = {
       Surname: cleanLastName,
       sex: gender,
       phone: cleanPhone,
-      Opinion: cleanContent 
+      Opinion: cleanContent,
+      hh: currentTime
     };
     
     setIsLoading(true);
@@ -439,7 +452,7 @@ export default function CustomerFeedback() {
                     }}
                   />
                   <label>
-                    <span>本人同意將個人資料(包括但不限於姓氏、性別、連絡電話) 提供予 中友百貨 ，作為「顧客意見回饋」聯繫及回覆之用。</span>
+                    <span>本人同意將個人資料(包括但不限於姓氏、性別、手機號碼) 提供予 中友百貨 ，作為「顧客意見回饋」聯繫及回覆之用。</span>
                   </label>
                 </div>
                 <ErrorMessage message={errors.isAgreed} />
