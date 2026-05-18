@@ -5,6 +5,7 @@ const foodGuideRoutes    = require('./food-guide');
 const winnersRoutes      = require('./winners');
 const activityRoutes     = require('./activity');
 const galleryRoutes      = require('./gallery');
+const bannerRoutes       = require('./banner');
 
 const router = express.Router();
 
@@ -14,5 +15,6 @@ router.use('/food-guide',  foodGuideRoutes);
 router.use('/winners',     winnersRoutes);
 router.use('/activity',    activityRoutes);
 router.use('/gallery',     galleryRoutes);
+router.use('/banner',      bannerRoutes);
 
 module.exports = router;

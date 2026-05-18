@@ -3,6 +3,7 @@ import { NavLink, Outlet } from 'react-router-dom';
 import './AdminLayout.css';
 
 const NAV = [
+  { to: '/admin/banner',   label: '首頁 Banner' },
   { to: '/admin/dm',       label: 'DM 管理' },
   { to: '/admin/floor',    label: '樓層導覽' },
   { to: '/admin/food',     label: '美食導覽' },

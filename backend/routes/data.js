@@ -50,6 +50,10 @@ router.get('/activity/:id', (req, res) => {
   res.json(activity);
 });
 
+router.get('/banners', (_req, res) => {
+  res.json(readJSON('banners.json', { banners: [] }));
+});
+
 router.get('/gallery', (_req, res) => {
   res.json(readJSON('gallery.json', { content: [] }));
 });

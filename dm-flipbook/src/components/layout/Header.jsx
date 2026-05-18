@@ -26,7 +26,9 @@ export default function Header() {
   return (
     <header className="site-header">
       <div className="site-header-inner">
-        <NavLink to="/dm" className="site-logo">中友百貨</NavLink>
+        <NavLink to="/" className="site-logo">
+          <img src="/BN-LOGO.png" alt="中友百貨" className="site-logo-img" />
+        </NavLink>
 
         {/* Desktop nav */}
         <nav className="site-nav">

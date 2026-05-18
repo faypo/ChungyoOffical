@@ -18,6 +18,8 @@ import GalleryManager from './components/admin/GalleryManager';
 import Winners from './components/Winners';
 import ActivityPage from './components/ActivityPage';
 import GalleryPage from './components/GalleryPage';
+import Home from './components/Home';
+import BannerManager from './components/admin/BannerManager';
 import './App.css';
 
 export default function App() {
@@ -28,7 +30,8 @@ export default function App() {
           <Routes>
             {/* Admin — 無 header/footer */}
             <Route path="/admin" element={<AdminLayout />}>
-              <Route index element={<Navigate to="dm" replace />} />
+              <Route index element={<Navigate to="banner" replace />} />
+              <Route path="banner"   element={<BannerManager />} />
               <Route path="dm"       element={<DMManager />} />
               <Route path="floor"    element={<FloorGuideManager />} />
               <Route path="food"     element={<FoodGuideManager />} />
@@ -41,7 +44,7 @@ export default function App() {
             <Route path="*" element={
               <Layout>
                 <Routes>
-                  <Route path="/"      element={<Navigate to="/dm" replace />} />
+                  <Route path="/"      element={<Home />} />
                   <Route path="/dm"    element={<DMShowcase />} />
                   <Route path="/dm/:id" element={<DMViewer />} />
                   <Route path="/floor" element={<FloorGuide />} />

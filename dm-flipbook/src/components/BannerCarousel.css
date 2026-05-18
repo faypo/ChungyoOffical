@@ -1,0 +1,83 @@
+.bc-root {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  background: #eee;
+}
+
+.bc-track {
+  display: flex;
+  transition: transform 0.5s ease;
+  will-change: transform;
+}
+
+.bc-slide {
+  flex-shrink: 0;
+  /* width 由 JS slideWidth 動態設定，確保跟容器等寬 */
+}
+
+.bc-link {
+  display: block;
+  line-height: 0;
+}
+
+.bc-img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Arrows */
+.bc-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.28);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 40px;
+  line-height: 1;
+  padding: 6px 14px;
+  border-radius: 4px;
+  transition: background 0.2s;
+  z-index: 10;
+}
+.bc-arrow:hover { background: rgba(0, 0, 0, 0.52); }
+.bc-arrow--prev { left: 12px; }
+.bc-arrow--next { right: 12px; }
+
+/* Dots */
+.bc-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.bc-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s, border-color 0.2s;
+}
+.bc-dot.active {
+  background: #fff;
+  border-color: #fff;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .bc-arrow { font-size: 28px; padding: 4px 10px; }
+  .bc-dot   { width: 8px; height: 8px; }
+}
