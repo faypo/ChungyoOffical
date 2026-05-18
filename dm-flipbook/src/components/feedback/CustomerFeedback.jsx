@@ -194,11 +194,24 @@ export default function CustomerFeedback() {
     const cleanPhone = sanitizeInput(phone);
     const cleanContent = sanitizeInput(content);
 
+    const now = new Date();
+    const currentMinutes = now.getMinutes();
+    const remainder = currentMinutes % 10;
+    
+    if (remainder !== 0) {
+      now.setMinutes(currentMinutes + (10 - remainder));
+    }
+
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const currentTime = `${hours}:${minutes}`;
+
     const feedbackData = {
       Surname: cleanLastName,
       sex: gender,
       phone: cleanPhone,
-      Opinion: cleanContent 
+      Opinion: cleanContent,
+      hh: currentTime
     };
     
     setIsLoading(true);

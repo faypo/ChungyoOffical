@@ -99,8 +99,9 @@ const server = http.createServer((req, res) => {
                                 console.error('無法解析回傳的 JSON 資料:', error);
                             }
                         }
+                        const finalStatusCode = isApiSuccess ? emp_test.statusCode : 400;
 
-                        res.writeHead(emp_test.statusCode, { 'Content-Type': 'application/json' });
+                        res.writeHead(finalStatusCode, { 'Content-Type': 'application/json' });
                         res.end(JSON.stringify({
                             success: isApiSuccess, 
                             message: isApiSuccess ? 'Request success' : 'Request Error',
