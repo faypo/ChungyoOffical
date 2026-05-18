@@ -15,6 +15,7 @@ const MAIL_SEND_TEXT = process.env.MAIL_SEND_TEXT;
 
 sgMail.setApiKey(SENDGRID_API_KEY);
 
+// 需求方取消通知功能 程式留存暫不使用
 const sendNotificationEmail = async () => {
     const now = new Date();
     const formattedDate = now.toLocaleString('zh-TW', { 
@@ -97,11 +98,6 @@ const server = http.createServer((req, res) => {
                             } catch (error) {
                                 console.error('無法解析回傳的 JSON 資料:', error);
                             }
-                        }
-
-
-                        if (isApiSuccess) {
-                            sendNotificationEmail();
                         }
 
                         res.writeHead(emp_test.statusCode, { 'Content-Type': 'application/json' });
