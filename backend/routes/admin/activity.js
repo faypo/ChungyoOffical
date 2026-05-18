@@ -42,9 +42,12 @@ router.put('/:id', (req, res) => {
   const data = readJSON(FILE, { activities: [] });
   const idx = data.activities.findIndex(a => a.id === req.params.id);
   if (idx === -1) return res.status(404).json({ error: '找不到此活動頁' });
-  const { title, content } = req.body;
-  if (title   !== undefined) data.activities[idx].title   = title;
-  if (content !== undefined) data.activities[idx].content = content;
+  const { title, content, ogTitle, ogDescription, ogImage } = req.body;
+  if (title         !== undefined) data.activities[idx].title         = title;
+  if (content       !== undefined) data.activities[idx].content       = content;
+  if (ogTitle       !== undefined) data.activities[idx].ogTitle       = ogTitle;
+  if (ogDescription !== undefined) data.activities[idx].ogDescription = ogDescription;
+  if (ogImage       !== undefined) data.activities[idx].ogImage       = ogImage;
   writeJSON(FILE, data);
   res.json({ success: true });
 });
@@ -65,6 +68,32 @@ router.delete('/:id', (req, res) => {
 router.post('/:id/upload', upload.array('images'), (req, res) => {
   const files = req.files?.map(f => f.filename) ?? [];
   res.json({ success: true, files });
+});
+
+/* POST /api/admin/activity/:id/upload-og */
+const uploadOg = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => {
+      const dir = path.join(DATA_DIR, 'activity-pic', req.params.id);
+      fs.mkdirSync(dir, { recursive: true });
+      // 刪除舊的 _og-image.* 避免不同副檔名的殘檔
+      fs.readdirSync(dir)
+        .filter(f => f.startsWith('_og-image.'))
+        .forEach(f => fs.unlinkSync(path.join(dir, f)));
+      cb(null, dir);
+    },
+    filename: (_req, file, cb) => {
+      const ext = path.extname(file.originalname).toLowerCase() || '.jpg';
+      cb(null, `_og-image${ext}`);
+    },
+  }),
+  fileFilter: (_req, file, cb) => cb(null, IMAGE_EXT.test(file.originalname)),
+});
+
+router.post('/:id/upload-og', uploadOg.single('ogImage'), (req, res) => {
+  if (!req.file) return res.status(400).json({ error: '無效的圖片' });
+  const url = `/api/images/activity-pic/${req.params.id}/${req.file.filename}`;
+  res.json({ success: true, url });
 });
 
 /* DELETE /api/admin/activity/:id/image/:file */

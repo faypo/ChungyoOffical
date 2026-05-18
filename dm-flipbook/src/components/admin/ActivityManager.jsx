@@ -25,13 +25,17 @@ export default function ActivityManager() {
   const [showAdd, setShowAdd]       = useState(false);
   const [newTitle, setNewTitle]     = useState('');
 
-  const [editTitle,   setEditTitle]   = useState('');
-  const [editContent, setEditContent] = useState([]);
+  const [editTitle,          setEditTitle]          = useState('');
+  const [editOgTitle,        setEditOgTitle]        = useState('');
+  const [editOgDescription,  setEditOgDescription]  = useState('');
+  const [editOgImage,        setEditOgImage]        = useState('');
+  const [editContent,        setEditContent]        = useState([]);
 
   const [ytInput, setYtInput] = useState('');
   const [showYt, setShowYt]   = useState(false);
   const [uploading, setUploading] = useState(false);
-  const fileRef = useRef();
+  const fileRef   = useRef();
+  const ogFileRef = useRef();
 
   // 熱區編輯：editContent 裡的 index
   const [hotspotIdx, setHotspotIdx] = useState(null);
@@ -65,6 +69,9 @@ export default function ActivityManager() {
     const act = activities.find(a => a.id === activeId);
     if (!act) return;
     setEditTitle(act.title ?? '');
+    setEditOgTitle(act.ogTitle ?? '');
+    setEditOgDescription(act.ogDescription ?? '');
+    setEditOgImage(act.ogImage ?? '');
     setEditContent(JSON.parse(JSON.stringify(act.content ?? [])));
     setHotspotIdx(null);
   }, [activeId, activities]);
@@ -101,7 +108,13 @@ export default function ActivityManager() {
     setSaving(true);
     const res = await apiFetch(`${API}/${activeId}`, {
       method: 'PUT',
-      body: JSON.stringify({ title: editTitle, content: editContent }),
+      body: JSON.stringify({
+        title:          editTitle,
+        content:        editContent,
+        ogTitle:        editOgTitle,
+        ogDescription:  editOgDescription,
+        ogImage:        editOgImage,
+      }),
     });
     setSaving(false);
     const d = await res.json();
@@ -123,6 +136,19 @@ export default function ActivityManager() {
     if (!res.ok) return showMsgFn(d.error || '上傳失敗', 'err');
     const newItems = (d.files ?? []).map(file => ({ type: 'image', file, hotspots: [] }));
     setEditContent(prev => [...prev, ...newItems]);
+    e.target.value = '';
+  };
+
+  /* ── 上傳 OG 圖片 ── */
+  const handleOgUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const fd = new FormData();
+    fd.append('ogImage', file);
+    const res = await fetch(`${API}/${activeId}/upload-og`, { method: 'POST', body: fd });
+    const d = await res.json();
+    if (!res.ok) return showMsgFn(d.error || 'OG 圖片上傳失敗', 'err');
+    setEditOgImage(d.url);
     e.target.value = '';
   };
 
@@ -275,6 +301,54 @@ export default function ActivityManager() {
             </label>
             <div className="am-url-hint">
               前台網址：<code>/activity/{activeId}</code>
+            </div>
+            <div className="am-og-section">
+              <div className="am-og-title">社群分享預覽（OG Tags）</div>
+              <label className="wm-meta-label">
+                og:title
+                <input
+                  className="fg-info-input"
+                  placeholder="分享時顯示的標題"
+                  value={editOgTitle}
+                  onChange={e => setEditOgTitle(e.target.value)}
+                />
+              </label>
+              <label className="wm-meta-label">
+                og:description
+                <input
+                  className="fg-info-input"
+                  placeholder="分享時顯示的描述"
+                  value={editOgDescription}
+                  onChange={e => setEditOgDescription(e.target.value)}
+                />
+              </label>
+              <label className="wm-meta-label">
+                og:image（社群分享預覽圖）
+                <div className="am-og-img-row">
+                  {editOgImage && (
+                    <img src={editOgImage} alt="OG preview" className="am-og-preview" />
+                  )}
+                  <div className="am-og-img-btns">
+                    <button
+                      type="button"
+                      className="fg-btn fg-btn-ghost fg-btn-sm"
+                      onClick={() => ogFileRef.current?.click()}
+                    >
+                      {editOgImage ? '更換圖片' : '上傳圖片'}
+                    </button>
+                    {editOgImage && (
+                      <button
+                        type="button"
+                        className="fg-btn fg-btn-danger fg-btn-sm"
+                        onClick={() => setEditOgImage('')}
+                      >
+                        移除
+                      </button>
+                    )}
+                  </div>
+                  <input ref={ogFileRef} type="file" accept="image/*" hidden onChange={handleOgUpload} />
+                </div>
+              </label>
             </div>
           </div>
 

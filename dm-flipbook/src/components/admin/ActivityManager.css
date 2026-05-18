@@ -1,3 +1,40 @@
+.am-og-section {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e5e5;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.am-og-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 2px;
+}
+
+.am-og-img-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.am-og-preview {
+  width: 120px;
+  height: 63px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #e5e5e5;
+  flex-shrink: 0;
+}
+
+.am-og-img-btns {
+  display: flex;
+  gap: 6px;
+}
+
 .am-url-hint {
   margin-top: 8px;
   font-size: 0.82rem;
