@@ -54,8 +54,29 @@ router.get('/banners', (_req, res) => {
   res.json(readJSON('banners.json', { banners: [] }));
 });
 
+router.get('/home-events', (_req, res) => {
+  const data = readJSON('home-events.json', { events: [] });
+  const now  = new Date();
+  data.events = data.events.filter(e => {
+    const start = e.startDate ? new Date(e.startDate) : null;
+    const end   = e.endDate   ? new Date(e.endDate)   : null;
+    if (start && now < start) return false;
+    if (end   && now > end)   return false;
+    return true;
+  });
+  res.json(data);
+});
+
 router.get('/gallery', (_req, res) => {
   res.json(readJSON('gallery.json', { content: [] }));
+});
+
+router.get('/home-promo', (_req, res) => {
+  res.json(readJSON('home-promo.json', {}));
+});
+
+router.get('/home-fb', (_req, res) => {
+  res.json(readJSON('home-fb.json', { src: '' }));
 });
 
 router.get('/config', (_req, res) => {

@@ -1,31 +1,18 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './BannerCarousel.css';
 
 export default function BannerCarousel({ banners = [] }) {
-  const [index,      setIndex]      = useState(0);
-  const [paused,     setPaused]     = useState(false);
-  const [slideWidth, setSlideWidth] = useState(0);
-  const rootRef  = useRef();
-  const timerRef = useRef();
+  const [index,  setIndex]  = useState(0);
+  const [paused, setPaused] = useState(false);
   const count = banners.length;
-
-  /* 量測容器寬度，視窗縮放時同步更新 */
-  useEffect(() => {
-    const el = rootRef.current;
-    if (!el) return;
-    const ro = new ResizeObserver(() => setSlideWidth(el.offsetWidth));
-    ro.observe(el);
-    setSlideWidth(el.offsetWidth);
-    return () => ro.disconnect();
-  }, []);
 
   const next = useCallback(() => setIndex(i => (i + 1) % count), [count]);
   const prev = useCallback(() => setIndex(i => (i - 1 + count) % count), [count]);
 
   useEffect(() => {
     if (count <= 1 || paused) return;
-    timerRef.current = setInterval(next, 5000);
-    return () => clearInterval(timerRef.current);
+    const t = setInterval(next, 5000);
+    return () => clearInterval(t);
   }, [count, paused, next]);
 
   useEffect(() => { setIndex(0); }, [count]);
@@ -35,13 +22,12 @@ export default function BannerCarousel({ banners = [] }) {
   return (
     <div
       className="bc-root"
-      ref={rootRef}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
       <div
         className="bc-track"
-        style={{ transform: `translateX(-${index * slideWidth}px)` }}
+        style={{ transform: `translateX(-${index * 100}%)` }}
       >
         {banners.map((b, i) => {
           const img = (
@@ -52,11 +38,7 @@ export default function BannerCarousel({ banners = [] }) {
             />
           );
           return (
-            <div
-              key={b.id}
-              className="bc-slide"
-              style={{ width: slideWidth || undefined }}
-            >
+            <div key={b.id} className="bc-slide">
               {b.url ? <a href={b.url} className="bc-link">{img}</a> : img}
             </div>
           );

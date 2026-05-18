@@ -1,0 +1,65 @@
+.hp-root {
+  width: 100%;
+}
+
+.hp-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #222;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e8e8e8;
+}
+
+/* 大圖 */
+.hp-hero {
+  margin-bottom: 10px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* 標籤列 */
+.hp-labels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.hp-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #444;
+  letter-spacing: 0.3px;
+}
+
+/* 2×2 圖卡格 */
+.hp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.hp-card {
+  border-radius: 8px;
+  overflow: hidden;
+  background: #eee;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.hp-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.13);
+}
+
+.hp-link {
+  display: block;
+  line-height: 0;
+}
+
+.hp-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}

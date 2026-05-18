@@ -14,8 +14,8 @@
 }
 
 .bc-slide {
-  flex-shrink: 0;
-  /* width 由 JS slideWidth 動態設定，確保跟容器等寬 */
+  flex: 0 0 100%;
+  width: 100%;
 }
 
 .bc-link {

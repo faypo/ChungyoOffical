@@ -73,14 +73,18 @@
   font-weight: 700;
   color: #555;
   letter-spacing: 0.5px;
-  border-bottom: 2px solid #e0e0e0;
+  border-bottom: 3px solid #777;
+  border-right: 1px solid #999;
 }
+.winners-table th:last-child { border-right: none; }
 
 .winners-table td {
   padding: 11px 14px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 2px solid #999;
+  border-right: 1px solid #999;
   color: #333;
 }
+.winners-table td:last-child { border-right: none; }
 .winners-table tr:last-child td { border-bottom: none; }
 .winners-table tr:hover td { background: #fafafa; }
 

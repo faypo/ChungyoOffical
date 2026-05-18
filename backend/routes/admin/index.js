@@ -6,6 +6,9 @@ const winnersRoutes      = require('./winners');
 const activityRoutes     = require('./activity');
 const galleryRoutes      = require('./gallery');
 const bannerRoutes       = require('./banner');
+const homeEventRoutes    = require('./home-event');
+const homeFBRoutes       = require('./home-fb');
+const homePromoRoutes    = require('./home-promo');
 
 const router = express.Router();
 
@@ -16,5 +19,8 @@ router.use('/winners',     winnersRoutes);
 router.use('/activity',    activityRoutes);
 router.use('/gallery',     galleryRoutes);
 router.use('/banner',      bannerRoutes);
+router.use('/home-event',  homeEventRoutes);
+router.use('/home-fb',     homeFBRoutes);
+router.use('/home-promo',  homePromoRoutes);
 
 module.exports = router;

@@ -1,0 +1,58 @@
+.he-section {
+  padding: 36px 32px 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.he-title {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 800;
+  color: #222;
+  letter-spacing: 3px;
+  margin-bottom: 20px;
+}
+
+.he-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.he-card {
+  border-radius: 8px;
+  overflow: hidden;
+  background: #eee;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.he-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+}
+
+.he-link {
+  display: block;
+  line-height: 0;
+}
+
+.he-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 平板：2 欄 */
+@media (max-width: 900px) {
+  .he-section { padding: 24px 20px 36px; }
+  .he-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+}
+
+/* 手機：1 欄 */
+@media (max-width: 500px) {
+  .he-section { padding: 20px 12px 28px; }
+  .he-grid { grid-template-columns: 1fr; gap: 10px; }
+  .he-title { font-size: 17px; }
+}

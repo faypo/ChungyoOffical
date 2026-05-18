@@ -20,6 +20,9 @@ import ActivityPage from './components/ActivityPage';
 import GalleryPage from './components/GalleryPage';
 import Home from './components/Home';
 import BannerManager from './components/admin/BannerManager';
+import HomeEventsManager from './components/admin/HomeEventsManager';
+import HomeFBManager from './components/admin/HomeFBManager';
+import HomePromoManager from './components/admin/HomePromoManager';
 import './App.css';
 
 export default function App() {
@@ -31,7 +34,10 @@ export default function App() {
             {/* Admin — 無 header/footer */}
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<Navigate to="banner" replace />} />
-              <Route path="banner"   element={<BannerManager />} />
+              <Route path="banner"      element={<BannerManager />} />
+              <Route path="home-event"  element={<HomeEventsManager />} />
+              <Route path="home-fb"     element={<HomeFBManager />} />
+              <Route path="home-promo"  element={<HomePromoManager />} />
               <Route path="dm"       element={<DMManager />} />
               <Route path="floor"    element={<FloorGuideManager />} />
               <Route path="food"     element={<FoodGuideManager />} />

@@ -1,0 +1,29 @@
+{
+  "title": "歡聚饗宴 美味上桌",
+  "heroFile": "hero.jpg",
+  "heroUrl": "",
+  "leftLabel": "玉山中友卡指定主題餐廳",
+  "rightLabel": "玉山中友卡指定美食專櫃",
+  "cards": [
+    {
+      "slot": 1,
+      "file": "card-1.jpg",
+      "url": ""
+    },
+    {
+      "slot": 2,
+      "file": "card-2.jpg",
+      "url": ""
+    },
+    {
+      "slot": 3,
+      "file": "card-3.jpg",
+      "url": ""
+    },
+    {
+      "slot": 4,
+      "file": "card-4.jpg",
+      "url": ""
+    }
+  ]
+}
