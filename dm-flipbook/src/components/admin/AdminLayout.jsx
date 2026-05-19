@@ -16,6 +16,7 @@ const HOME_NAV = [
   { to: '/admin/home-event', label: '活動訊息' },
   { to: '/admin/home-fb',    label: 'FB 社群' },
   { to: '/admin/home-promo', label: '推廣區' },
+  { to: '/admin/logos',      label: 'Logo 輪播' },
 ];
 
 export default function AdminLayout() {

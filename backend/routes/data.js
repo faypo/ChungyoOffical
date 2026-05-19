@@ -71,6 +71,10 @@ router.get('/gallery', (_req, res) => {
   res.json(readJSON('gallery.json', { content: [] }));
 });
 
+router.get('/logos', (_req, res) => {
+  res.json(readJSON('logos.json', { groups: [] }));
+});
+
 router.get('/home-promo', (_req, res) => {
   res.json(readJSON('home-promo.json', {}));
 });

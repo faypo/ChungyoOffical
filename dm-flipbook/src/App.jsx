@@ -23,6 +23,7 @@ import BannerManager from './components/admin/BannerManager';
 import HomeEventsManager from './components/admin/HomeEventsManager';
 import HomeFBManager from './components/admin/HomeFBManager';
 import HomePromoManager from './components/admin/HomePromoManager';
+import LogoManager from './components/admin/LogoManager';
 import './App.css';
 
 export default function App() {
@@ -38,6 +39,7 @@ export default function App() {
               <Route path="home-event"  element={<HomeEventsManager />} />
               <Route path="home-fb"     element={<HomeFBManager />} />
               <Route path="home-promo"  element={<HomePromoManager />} />
+              <Route path="logos"       element={<LogoManager />} />
               <Route path="dm"       element={<DMManager />} />
               <Route path="floor"    element={<FloorGuideManager />} />
               <Route path="food"     element={<FoodGuideManager />} />

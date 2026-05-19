@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import BannerCarousel from './BannerCarousel';
 import HomeEvents from './HomeEvents';
 import HomeBottom from './HomeBottom';
+import LogoCarousel from './LogoCarousel';
 import './Home.css';
 
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
       <BannerCarousel banners={banners} />
       <HomeEvents />
       <HomeBottom />
+      <LogoCarousel />
     </div>
   );
 }
