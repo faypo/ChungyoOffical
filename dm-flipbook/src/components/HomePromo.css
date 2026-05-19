@@ -3,13 +3,18 @@
 }
 
 .hp-title {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 800;
   color: #222;
   letter-spacing: 2px;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
   padding-bottom: 10px;
   border-bottom: 2px solid #e8e8e8;
+  text-align: center;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* 大圖 */
@@ -28,10 +33,11 @@
 }
 
 .hp-label {
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 600;
   color: #444;
   letter-spacing: 0.3px;
+  text-align: center;
 }
 
 /* 2×2 圖卡格 */

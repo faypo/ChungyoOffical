@@ -4,15 +4,19 @@ const API = '/api/admin/home-promo';
 
 function ImageSlot({ label, file, slot, onUploaded }) {
   const inputRef = useRef();
+  const [ts, setTs] = useState(() => Date.now());
   const endpoint = slot === 'hero' ? `${API}/upload-hero` : `${API}/upload-card/${slot}`;
-  const imgSrc   = file ? `/api/images/home-promo-pic/${file}` : null;
+  const imgSrc   = file ? `/api/images/home-promo-pic/${file}?t=${ts}` : null;
 
   const upload = async (f) => {
     const fd = new FormData();
     fd.append('image', f);
     const r = await fetch(endpoint, { method: 'POST', body: fd });
     const d = await r.json();
-    if (d.file) onUploaded(d.file);
+    if (d.file) {
+      setTs(Date.now());
+      onUploaded(d.file);
+    }
   };
 
   return (

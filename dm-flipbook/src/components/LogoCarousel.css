@@ -34,7 +34,7 @@
 }
 
 .lc-logo {
-  max-height: 80px;
+  max-height: 120px;
   max-width: 100%;
   width: auto;
   height: auto;
@@ -44,6 +44,6 @@
 
 @media (max-width: 700px) {
   .lc-viewport { padding: 0 16px; }
-  .lc-logo { max-height: 56px; }
+  .lc-logo { max-height: 80px; }
   .lc-slide { gap: 12px; }
 }

@@ -30,6 +30,11 @@
   margin-bottom: 16px;
   padding-bottom: 10px;
   border-bottom: 2px solid #e8e8e8;
+  text-align: center;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hb-fb-wrap {

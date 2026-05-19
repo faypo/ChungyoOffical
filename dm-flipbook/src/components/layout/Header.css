@@ -4,8 +4,7 @@
   top: 0;
   z-index: 1000;
   width: 100%;
-  background: #6E6E6E;
-  border-bottom: 2px solid #555;
+  background: #2b2f32;
   flex-shrink: 0;
 }
 
@@ -26,7 +25,7 @@
 .site-logo:hover { opacity: 0.85; }
 
 .site-logo-img {
-  height: 36px;
+  height: 26px;
   width: auto;
   object-fit: contain;
 }
@@ -39,7 +38,7 @@
 
 .site-nav-link {
   padding: 6px 16px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
@@ -75,7 +74,7 @@
 .site-mobile-nav {
   display: none;
   flex-direction: column;
-  background: #5a5a5a;
+  background: #2b2f32;
   overflow: hidden;
   max-height: 0;
   transition: max-height 0.25s ease;
