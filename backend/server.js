@@ -67,7 +67,7 @@ const distPath = process.env.FRONTEND_DIST_PATH
 if (fs.existsSync(distPath)) {
   app.use(express.static(distPath));
   // SPA catch-all：其他所有路由都回傳 index.html（讓 React Router 處理）
-  app.get('*', (req, res) => {
+  app.use((req, res) => {
     res.sendFile(path.join(distPath, 'index.html'));
   });
 }
