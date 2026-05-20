@@ -32,7 +32,7 @@ app.get('/activity/:id', (req, res) => {
   const ogImage       = escAttr(rawOgImage.startsWith('http') ? rawOgImage : (rawOgImage ? baseUrl + rawOgImage : ''));
 
   const htmlPath = process.env.FRONTEND_HTML_PATH
-    || path.join(__dirname, '../dm-flipbook/dist/index.html');
+    || path.join(__dirname, '../html/index.html');
 
   if (!fs.existsSync(htmlPath)) {
     // 開發環境尚未 build，回傳最小 HTML（讓 curl / 爬蟲工具可測試 OG tags）
@@ -59,6 +59,18 @@ app.use('/api/images', express.static(path.join(__dirname, 'data')));
 app.use('/api', dataRoutes);
 app.use('/api/feedback', feedbackRoutes);
 app.use('/api/admin', adminRoutes);
+
+// 部署時服務前端打包檔案
+const distPath = process.env.FRONTEND_DIST_PATH
+  || path.join(__dirname, '../html');
+
+if (fs.existsSync(distPath)) {
+  app.use(express.static(distPath));
+  // SPA catch-all：其他所有路由都回傳 index.html（讓 React Router 處理）
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(distPath, 'index.html'));
+  });
+}
 
 app.listen(PORT, () => {
   const hostname = require('os').hostname();

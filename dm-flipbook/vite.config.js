@@ -8,8 +8,7 @@ export default defineConfig({
   server: {
     historyApiFallback: true,   // dev: 所有路由回傳 index.html
     proxy: {
-      '/api':      { target: 'http://localhost:4000', changeOrigin: true },
-      '/activity': { target: 'http://localhost:4000', changeOrigin: true },
+      '/api': { target: 'http://localhost:4000', changeOrigin: true },
     },
   },
   preview: {
