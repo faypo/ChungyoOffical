@@ -1,17 +1,29 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const LayoutContext = createContext({ isWebView: false, isMobile: false, viewerMode: null, setViewerMode: () => {} });
 
-export function LayoutProvider({ children }) {
-  const [isWebView] = useState(() => {
-    if (sessionStorage.getItem('webview') === '1') return true;
-    const params = new URLSearchParams(window.location.search);
+function detectWebView(search) {
+  if (sessionStorage.getItem('webview') === '1') return true;
+  try {
+    const params = new URLSearchParams(search);
     if (params.get('webview') === '1') {
       sessionStorage.setItem('webview', '1');
       return true;
     }
-    return false;
-  });
+  } catch (_) {}
+  return false;
+}
+
+export function LayoutProvider({ children }) {
+  const location = useLocation();
+  const [isWebView, setIsWebView] = useState(() => detectWebView(window.location.search));
+
+  useEffect(() => {
+    if (!isWebView && detectWebView(location.search)) {
+      setIsWebView(true);
+    }
+  }, [location.search]);
 
   const [isMobile, setIsMobile] = useState(
     () => window.matchMedia('(max-width: 700px)').matches

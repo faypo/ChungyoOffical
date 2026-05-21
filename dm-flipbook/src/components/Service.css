@@ -71,26 +71,30 @@
 @media (max-width: 700px) {
   .service-page {
     flex-direction: column;
+    height: calc(100dvh - var(--header-h, 0px));
   }
 
   .service-sidebar {
     width: 100%;
     flex-direction: row;
-    overflow-x: auto;
+    overflow-x: hidden;
+    overflow-y: hidden;
     border-right: none;
     border-bottom: 2px solid #6E6E6E;
-    scrollbar-width: none;
   }
-  .service-sidebar::-webkit-scrollbar { display: none; }
 
   .service-tab {
-    flex-shrink: 0;
-    padding: 14px 18px;
+    flex: 1;
+    padding: 12px 4px;
     text-align: center;
     border-bottom: 3px solid transparent;
-    border-right: none;
-    font-size: 13px;
+    border-right: 1px solid color-mix(in srgb, #6E6E6E 20%, white);
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
+  .service-tab:last-child { border-right: none; }
   .service-tab.active {
     background: #6E6E6E;
     border-bottom-color: transparent;

@@ -234,6 +234,7 @@
   .floor-guide {
     flex-direction: column;
     position: relative;
+    height: calc(100dvh - var(--header-h, 0px));
   }
 
   /* Right panel takes full width */
@@ -280,10 +281,10 @@
     font-size: 20px;
   }
 
-  /* Scrollable content: 52px menu + 45px bar + 2px border + 35px active circle peek */
+  /* Scrollable content: 52px menu + 45px bar + 2px border + 35px active circle peek = 134px */
   .floor-content {
     position: absolute;
-    top: calc(var(--header-h, 0px) + 134px);
+    top: 134px;
     left: 0; right: 0;
     bottom: 0;
     overflow-y: auto;

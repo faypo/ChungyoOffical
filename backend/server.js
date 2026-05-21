@@ -28,11 +28,13 @@ app.get('/activity/:id', (req, res) => {
   const ogTitle       = escAttr(activity?.ogTitle       || '中友百貨公司');
   const ogDescription = escAttr(activity?.ogDescription || '');
   const rawOgImage    = activity?.ogImage || '';
-  const baseUrl       = `${req.protocol}://${req.get('host')}`;
+  const baseUrl       = (process.env.ORIGIN || `${req.protocol}://${req.get('host')}`).replace(/\/$/, '');
   const ogImage       = escAttr(rawOgImage.startsWith('http') ? rawOgImage : (rawOgImage ? baseUrl + rawOgImage : ''));
 
   const htmlPath = process.env.FRONTEND_HTML_PATH
     || path.join(__dirname, '../html/index.html');
+
+  res.set('Cache-Control', 'public, max-age=300');
 
   if (!fs.existsSync(htmlPath)) {
     // 開發環境尚未 build，回傳最小 HTML（讓 curl / 爬蟲工具可測試 OG tags）
