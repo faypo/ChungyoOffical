@@ -45,8 +45,6 @@ export default function Header() {
             <a
               href={memberUrl}
               className="site-nav-link"
-              target="_blank"
-              rel="noreferrer"
             >
               會員點數查詢
             </a>
@@ -82,8 +80,6 @@ export default function Header() {
           <a
             href={memberUrl}
             className="site-mobile-nav-link"
-            target="_blank"
-            rel="noreferrer"
             onClick={() => setMenuOpen(false)}
           >
             會員點數查詢
