@@ -33,14 +33,28 @@ function GroupBlock({ group, index: gi, onDelete, onLogoDelete, onLogoUpload, on
   };
 
   /* Logo 圖片之間的拖曳排序 */
-  const onItemDragStart = (e, id) => { if (isFile(e)) return; setDrag(id); e.dataTransfer.effectAllowed = 'move'; };
-  const onItemDragOver  = (e, id) => { if (isFile(e)) return; e.preventDefault(); setOver(id); };
-  const onItemDrop      = (e, id) => {
-    if (isFile(e)) return; e.preventDefault();
-    if (!drag || drag === id) return;
+  const onItemDragStart = (e, id) => {
+    e.dataTransfer.setData('text/plain', id);
+    e.dataTransfer.effectAllowed = 'move';
+    setDrag(id);
+  };
+  const onItemDragOver = (e, id) => {
+    if (isFile(e)) return;
+    e.preventDefault();
+    e.stopPropagation();
+    e.dataTransfer.dropEffect = 'move';
+    setOver(id);
+  };
+  const onItemDragEnd = () => { setDrag(null); setOver(null); };
+  const onItemDrop    = (e, id) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const fromId = e.dataTransfer.getData('text/plain') || drag;
+    if (!fromId || fromId === id) { setDrag(null); setOver(null); return; }
     const arr  = [...group.logos];
-    const from = arr.findIndex(l => l.id === drag);
+    const from = arr.findIndex(l => l.id === fromId);
     const to   = arr.findIndex(l => l.id === id);
+    if (from === -1 || to === -1) { setDrag(null); setOver(null); return; }
     arr.splice(to, 0, arr.splice(from, 1)[0]);
     onLogoReorder(group.id, arr.map(l => l.id));
     setDrag(null); setOver(null);
@@ -75,16 +89,20 @@ function GroupBlock({ group, index: gi, onDelete, onLogoDelete, onLogoUpload, on
           <div key={logo.id} draggable
             onDragStart={e => onItemDragStart(e, logo.id)}
             onDragOver={e => onItemDragOver(e, logo.id)}
+            onDragEnd={onItemDragEnd}
             onDrop={e => onItemDrop(e, logo.id)}
             style={{
               position: 'relative', width: 90, height: 72,
-              border: `2px solid ${over === logo.id ? '#555' : '#ddd'}`,
-              borderRadius: 6, background: '#fff', cursor: 'grab',
-              opacity: drag === logo.id ? 0.4 : 1, flexShrink: 0,
+              border: `2px solid ${over === logo.id ? '#1976d2' : '#ddd'}`,
+              borderRadius: 6, background: over === logo.id ? '#e3f2fd' : '#fff',
+              cursor: 'grab', opacity: drag === logo.id ? 0.35 : 1,
+              flexShrink: 0, transition: 'border-color 0.12s, background 0.12s',
+              outline: over === logo.id ? '2px solid #1976d2' : 'none',
             }}
           >
             <img src={`/api/images/logo-pic/${logo.file}`} alt="logo"
-              style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+              draggable={false}
+              style={{ width: '100%', height: '100%', objectFit: 'contain', pointerEvents: 'none' }} />
             <button onClick={() => onLogoDelete(group.id, logo.id)}
               style={{
                 position: 'absolute', top: 2, right: 2,
@@ -163,12 +181,16 @@ export default function LogoManager() {
   };
 
   const reorderLogos = async (gid, ids) => {
+    setGroups(prev => prev.map(g =>
+      g.id === gid
+        ? { ...g, logos: ids.map(id => g.logos.find(l => l.id === id)).filter(Boolean) }
+        : g
+    ));
     await fetch(`${API}/group/${gid}/reorder`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ids }),
     });
-    reload();
   };
 
   return (

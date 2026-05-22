@@ -9,7 +9,8 @@ const bannerRoutes       = require('./banner');
 const homeEventRoutes    = require('./home-event');
 const homeFBRoutes       = require('./home-fb');
 const homePromoRoutes    = require('./home-promo');
-const logosRoutes        = require('./logos');
+const logosRoutes            = require('./logos');
+const sustainabilityRoutes   = require('./sustainability');
 
 const router = express.Router();
 
@@ -23,6 +24,7 @@ router.use('/banner',      bannerRoutes);
 router.use('/home-event',  homeEventRoutes);
 router.use('/home-fb',     homeFBRoutes);
 router.use('/home-promo',  homePromoRoutes);
-router.use('/logos',       logosRoutes);
+router.use('/logos',            logosRoutes);
+router.use('/sustainability',   sustainabilityRoutes);
 
 module.exports = router;

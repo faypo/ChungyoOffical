@@ -87,4 +87,10 @@ router.get('/config', (_req, res) => {
   res.json(readJSON('config.json', {}));
 });
 
+router.get('/privacy-policy', (_req, res) => {
+  const filePath = path.join(DATA_DIR, 'privacy-policy.html');
+  if (!fs.existsSync(filePath)) return res.status(404).send('');
+  res.type('html').send(fs.readFileSync(filePath, 'utf8'));
+});
+
 module.exports = router;

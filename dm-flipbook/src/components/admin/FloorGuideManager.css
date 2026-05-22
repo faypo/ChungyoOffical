@@ -214,6 +214,35 @@
   line-height: 1;
 }
 
+.fg-icon-wrap {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+}
+.fg-icon-delete {
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  border: none;
+  font-size: 9px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 1;
+}
+.fg-icon-wrap:hover .fg-icon-delete { opacity: 1; }
+.fg-icon-delete:hover { background: #e53935; }
+
 .fg-icon-upload-btn {
   padding: 6px 12px;
   font-size: 12px;

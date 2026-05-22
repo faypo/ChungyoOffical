@@ -30,13 +30,13 @@
   }
 }
 
-/* DM viewer（/dm/:id）：全螢幕，footer 固定在視窗底部 */
+/* DM viewer（/dm/:id）：main 占滿視窗剩餘高度，footer 在視窗下方可捲動 */
 .layout--viewer {
-  height: 100vh;
+  --footer-h: 0px;
 }
 
 .layout--viewer .layout-main {
-  flex: 1;
+  height: calc(100dvh - var(--header-h, 56px));
   overflow: hidden;
   display: flex;
   flex-direction: column;

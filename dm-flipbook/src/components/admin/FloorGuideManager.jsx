@@ -170,6 +170,19 @@ export default function FloorGuideManager() {
     });
   };
 
+  const handleIconDelete = async (filename) => {
+    const res  = await fetch(`${API}/icon/${encodeURIComponent(filename)}`, { method: 'DELETE' });
+    const data = await res.json();
+    if (res.status === 409) {
+      showMsgFn(`此圖示正在使用中：${data.usedBy.join('、')}，請先從樓層資訊移除後再刪除`, 'err');
+      return;
+    }
+    if (!res.ok) { showMsgFn(data.error || '刪除失敗', 'err'); return; }
+    setIconLibrary(prev => prev.filter(f => f !== filename));
+    setInfoForm(f => ({ ...f, icons: f.icons.filter(x => x !== filename) }));
+    showMsgFn('圖示已刪除');
+  };
+
   const handleIconUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -262,16 +275,23 @@ export default function FloorGuideManager() {
             {iconLibrary.map(filename => {
               const selected = infoForm.icons.includes(filename);
               return (
-                <button
-                  key={filename}
-                  type="button"
-                  className={`fg-icon-item${selected ? ' selected' : ''}`}
-                  onClick={() => toggleIcon(filename)}
-                  title={filename}
-                >
-                  <img src={`/api/images/floor-pic/icon/${filename}`} alt={filename} />
-                  {selected && <span className="fg-icon-check">✓</span>}
-                </button>
+                <div key={filename} className="fg-icon-wrap">
+                  <button
+                    type="button"
+                    className={`fg-icon-item${selected ? ' selected' : ''}`}
+                    onClick={() => toggleIcon(filename)}
+                    title={filename}
+                  >
+                    <img src={`/api/images/floor-pic/icon/${filename}`} alt={filename} />
+                    {selected && <span className="fg-icon-check">✓</span>}
+                  </button>
+                  <button
+                    type="button"
+                    className="fg-icon-delete"
+                    onClick={() => handleIconDelete(filename)}
+                    title="刪除圖示"
+                  >✕</button>
+                </div>
               );
             })}
             <button

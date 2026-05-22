@@ -9,7 +9,7 @@ const INTERNAL_NAV = [
   { to: '/service',          label: '貼心服務' },
   { to: '/winners',          label: '得獎名單' },
   { to: '/gallery',          label: '中友時尚藝廊' },
-  { to: '/CustomerFeedback', label: '客戶意見' },
+  { to: '/CustomerFeedback', label: '顧客意見' },
 ];
 
 export default function Header() {

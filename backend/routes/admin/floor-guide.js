@@ -62,6 +62,28 @@ router.post('/icon', uploadIcon.single('icon'), (req, res) => {
   res.json({ filename: req.file.filename });
 });
 
+/* DELETE icon — checks if any floor uses it first */
+router.delete('/icon/:filename', (req, res) => {
+  const filename = req.params.filename;
+  const filePath = path.join(DATA_DIR, 'floor-pic', 'icon', filename);
+  if (!fs.existsSync(filePath)) return res.status(404).json({ error: '圖示不存在' });
+
+  const data = readJSON(FILE);
+  const usedBy = [];
+  for (const building of Object.keys(data.floorInfo ?? {})) {
+    for (const floor of Object.keys(data.floorInfo[building] ?? {})) {
+      const icons = data.floorInfo[building][floor]?.icons ?? [];
+      if (icons.includes(filename)) usedBy.push(`${building}棟 ${floor}`);
+    }
+  }
+  if (usedBy.length) {
+    return res.status(409).json({ error: '此圖示正在使用中', usedBy });
+  }
+
+  fs.unlinkSync(filePath);
+  res.json({ success: true });
+});
+
 /* GET all */
 router.get('/', (_req, res) => {
   res.json(readJSON(FILE));

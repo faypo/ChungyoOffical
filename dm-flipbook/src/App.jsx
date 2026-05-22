@@ -24,6 +24,8 @@ import HomeEventsManager from './components/admin/HomeEventsManager';
 import HomeFBManager from './components/admin/HomeFBManager';
 import HomePromoManager from './components/admin/HomePromoManager';
 import LogoManager from './components/admin/LogoManager';
+import SustainabilityManager from './components/admin/SustainabilityManager';
+import PrivacyPolicy from './components/PrivacyPolicy';
 import './App.css';
 
 export default function App() {
@@ -45,7 +47,8 @@ export default function App() {
               <Route path="food"     element={<FoodGuideManager />} />
               <Route path="winners"  element={<WinnersManager />} />
               <Route path="activity" element={<ActivityManager />} />
-              <Route path="gallery"  element={<GalleryManager />} />
+              <Route path="gallery"        element={<GalleryManager />} />
+              <Route path="sustainability" element={<SustainabilityManager />} />
             </Route>
 
             {/* 一般頁面 — 有 Layout */}
@@ -62,6 +65,7 @@ export default function App() {
                   <Route path="/winners"          element={<Winners />} />
                   <Route path="/activity/:id"    element={<ActivityPage />} />
                   <Route path="/gallery"         element={<GalleryPage />} />
+                  <Route path="/privacy"         element={<PrivacyPolicy />} />
                 </Routes>
               </Layout>
             } />

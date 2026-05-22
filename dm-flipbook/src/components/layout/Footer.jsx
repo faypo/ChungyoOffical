@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Footer.css';
 
 const SOCIAL = [
@@ -25,6 +25,15 @@ const LINKS = [
 ];
 
 export default function Footer() {
+  const [sustainabilityUrl, setSustainabilityUrl] = useState('');
+
+  useEffect(() => {
+    fetch('/api/config')
+      .then(r => r.ok ? r.json() : {})
+      .then(d => { if (d.sustainabilityReportUrl) setSustainabilityUrl(d.sustainabilityReportUrl); })
+      .catch(() => {});
+  }, []);
+
   return (
     <footer className="site-footer">
       <div className="footer-inner">
@@ -47,6 +56,10 @@ export default function Footer() {
           {LINKS.map(({ label, href }) => (
             <a key={label} href={href} className="footer-link">{label}</a>
           ))}
+          <a href="/privacy" className="footer-link">隱私權政策</a>
+          {sustainabilityUrl && (
+            <a href={sustainabilityUrl} className="footer-link">中友永續報告書</a>
+          )}
         </div>
 
         {/* Social */}
