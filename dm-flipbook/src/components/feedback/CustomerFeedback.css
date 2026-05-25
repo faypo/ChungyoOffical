@@ -339,6 +339,10 @@ textarea.input-box {
 
 @media (min-width: 768px) {   
 
+    .privacy-policy-box{
+        margin-top: 0px;
+    }
+
     .form-title{
         margin-bottom: 60px;
         font-size: 20px;
