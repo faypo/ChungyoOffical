@@ -153,9 +153,9 @@ export default function CustomerFeedback() {
     if (fieldConfig.phone) {
       const phoneRegex = /^0\d{9}$/;
       if (!cleanPhone) {
-        newErrors.phone = '聯絡電話不得為空！';
+        newErrors.phone = '手機號碼不得為空！';
       } else if (!phoneRegex.test(cleanPhone)) {
-        newErrors.phone = '電話必須為 10 碼數字！ 範例: 0901234567';
+        newErrors.phone = '手機號碼必須為 10 碼數字！ 範例: 0901234567';
       }
     }
 
