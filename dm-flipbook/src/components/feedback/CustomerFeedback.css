@@ -1,8 +1,3 @@
-
-body{
-    height: 100%;
-}
-
 /* 滾動點擊事件穿透遮罩 */
 .site-mobile-backdrop {
     pointer-events: none; 
