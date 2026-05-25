@@ -153,9 +153,9 @@ export default function CustomerFeedback() {
     if (fieldConfig.phone) {
       const phoneRegex = /^0\d{9}$/;
       if (!cleanPhone) {
-        newErrors.phone = '聯絡電話不得為空！';
+        newErrors.phone = '手機號碼不得為空！';
       } else if (!phoneRegex.test(cleanPhone)) {
-        newErrors.phone = '電話必須為 10 碼數字！ 範例: 0901234567';
+        newErrors.phone = '手機號碼必須為 10 碼數字！ 範例: 0901234567';
       }
     }
 
@@ -434,6 +434,15 @@ export default function CustomerFeedback() {
                 &nbsp;
               </div>
               <div className="form-control">
+
+                <div className="privacy-policy-box">
+                  <strong className='privacy-policy-label'>顧客意見回饋個資法說明事項：</strong>
+                  <p className="privacy-policy-text">
+                    中友百貨股份有限公司 為提供完善與多元之會員服務，將依《個人資料保護法》蒐集、處理及利用您所提供之個人資料。您可依法提出查詢、閱覽、更正、停止利用或刪除個人資料等權利；
+                    若不同意本公司處理及利用您的個人資料，得立即聯繫本公司停止相關作業，並辦理會員資格註銷。本公司有權保留修訂本隱私權政策之權利，修訂內容將公告於本公司官方網站。
+                  </p>
+                </div>
+
                 <div className="btn-group isagree-group">
                   <input 
                     type="checkbox"
@@ -457,14 +466,6 @@ export default function CustomerFeedback() {
                 </div>
                 <ErrorMessage message={errors.isAgreed} />
 
-                <div className="privacy-policy-box">
-                  <strong className='privacy-policy-label'>顧客意見回饋個資法說明事項：</strong>
-                  <p className="privacy-policy-text">
-                    中友百貨 股份有限公司基於客戶管理與服務之蒐集目的，自您提供顧客意見三年內於台灣地區蒐集、處理及利用 您的識別類之個人資料。
-                    謹依個人資料保護法相關規定告知您得於前述期間內，就您提供之個人資料依法提出查詢或 請求閱覽、製給複製本、補充或更正、停止蒐集、處理或利用及刪除。
-                    您得選擇不提供上述任一個資，惟不提供時將 無法進行顧客意見處理之服務。
-                  </p>
-                </div>
               </div>
             </div>
 
