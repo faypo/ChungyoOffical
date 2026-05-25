@@ -42,7 +42,7 @@ export default function ActivityPage() {
   const [error, setError]       = useState(null);
 
   useEffect(() => {
-    fetch(`/api/activity/${id}`)
+    fetch(`/api/activity/${id}`, { cache: 'no-store' })
       .then(r => { if (!r.ok) throw new Error(); return r.json(); })
       .then(d => { setActivity(d); setLoading(false); })
       .catch(() => { setError(true); setLoading(false); });

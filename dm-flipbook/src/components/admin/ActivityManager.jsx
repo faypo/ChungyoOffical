@@ -171,13 +171,28 @@ export default function ActivityManager() {
     setHotspotIdx(null);
   }, [editContent, activeId]);
 
-  /* ── 熱區儲存 ── */
-  const handleHotspotSave = useCallback((hotspots) => {
-    setEditContent(prev => prev.map((item, i) =>
+  /* ── 熱區儲存（儲存熱區後自動寫入後端）── */
+  const handleHotspotSave = useCallback(async (hotspots) => {
+    const newContent = editContent.map((item, i) =>
       i === hotspotIdx ? { ...item, hotspots } : item
-    ));
+    );
+    setEditContent(newContent);
     setHotspotIdx(null);
-  }, [hotspotIdx]);
+
+    const res = await apiFetch(`${API}/${activeId}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        title:         editTitle,
+        content:       newContent,
+        ogTitle:       editOgTitle,
+        ogDescription: editOgDescription,
+        ogImage:       editOgImage,
+      }),
+    });
+    const d = await res.json();
+    if (!res.ok) showMsgFn(d.error || '儲存失敗', 'err');
+    else { showMsgFn('熱區已儲存'); load(); }
+  }, [hotspotIdx, editContent, activeId, editTitle, editOgTitle, editOgDescription, editOgImage]);
 
   /* ── 拖曳排序（只在 drop 時重排，避免非同步問題）── */
   const handleDragStart = (i) => { dragSrc.current = i; };
