@@ -259,18 +259,20 @@ export default function WinnersManager() {
                 <tr key={e.id} className={activeId === e.id ? 'fg-tr-active' : ''}>
                   <td>{e.title}</td>
                   <td className="fg-table-actions">
-                    <button
-                      className={`fg-btn fg-btn-sm ${activeId === e.id ? 'fg-btn-primary' : 'fg-btn-ghost'}`}
-                      onClick={() => { setActiveId(e.id); setShowAddEvent(false); }}
-                    >
-                      {activeId === e.id ? '編輯中' : '編輯'}
-                    </button>
-                    <button
-                      className="fg-btn fg-btn-danger fg-btn-sm"
-                      onClick={() => handleDeleteEvent(e.id)}
-                    >
-                      刪除
-                    </button>
+                    <div className="fg-table-actions-inner">
+                      <button
+                        className={`fg-btn fg-btn-sm ${activeId === e.id ? 'fg-btn-primary' : 'fg-btn-ghost'}`}
+                        onClick={() => { setActiveId(e.id); setShowAddEvent(false); }}
+                      >
+                        {activeId === e.id ? '編輯中' : '編輯'}
+                      </button>
+                      <button
+                        className="fg-btn fg-btn-danger fg-btn-sm"
+                        onClick={() => handleDeleteEvent(e.id)}
+                      >
+                        刪除
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}

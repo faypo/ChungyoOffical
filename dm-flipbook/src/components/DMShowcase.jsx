@@ -24,7 +24,7 @@ export default function DMShowcase() {
         });
         setCovers(initial);
 
-        sorted.filter(dm => !dm.cover).forEach(dm => {
+        sorted.filter(dm => !dm.cover && dm.type !== 'url').forEach(dm => {
           fetch(`/api/dm/${dm.id}/pages`)
             .then(r => r.ok ? r.json() : [])
             .then(files => {
@@ -66,7 +66,13 @@ export default function DMShowcase() {
             <button
               key={dm.id}
               className="showcase-card"
-              onClick={() => navigate(`/dm/${dm.id}`)}
+              onClick={() => {
+                if (dm.type === 'url' && dm.url) {
+                  window.location.href = dm.url;
+                } else {
+                  navigate(`/dm/${dm.id}`);
+                }
+              }}
               title={dm.title}
             >
               <div className="showcase-card-cover">

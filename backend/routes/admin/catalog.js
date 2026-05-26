@@ -71,28 +71,48 @@ router.get('/', (_req, res) => {
   res.json(readJSON('catalog.json'));
 });
 
+function generateId(catalog) {
+  const tw  = new Date(Date.now() + 8 * 60 * 60 * 1000);
+  const pad = n => String(n).padStart(2, '0');
+  const date = `${tw.getUTCFullYear()}${pad(tw.getUTCMonth() + 1)}${pad(tw.getUTCDate())}`;
+  const pattern = new RegExp(`^${date}(\\d{3})$`);
+  let max = 0;
+  for (const dm of catalog) {
+    const m = dm.id.match(pattern);
+    if (m) max = Math.max(max, parseInt(m[1], 10));
+  }
+  return `${date}${String(max + 1).padStart(3, '0')}`;
+}
+
 /* ── POST /api/admin/catalog ── 新增 DM */
 router.post('/', (req, res) => {
-  const { id, title, subtitle, order, button, type, hotspots } = req.body;
-  if (!id || !title) return res.status(400).json({ error: 'id 與 title 為必填' });
+  const { title, subtitle, order, button, type, hotspots, url } = req.body;
+  if (!title) return res.status(400).json({ error: 'title 為必填' });
 
   const catalog = readJSON('catalog.json');
-  if (catalog.find(d => d.id === id)) return res.status(409).json({ error: 'ID 已存在' });
+  const id = generateId(catalog);
+  const dmType = type || 'double';
 
-  catalog.push({
+  const entry = {
     id,
     order:    Number(order) || catalog.length + 1,
     title,
-    subtitle: subtitle  || '',
-    type:     type      || 'double',
-    button:   button    || [],
-    hotspots: hotspots  || [],
-  });
-  writeJSON('catalog.json', catalog);
-  fs.mkdirSync(path.join(DATA_DIR, 'dm-pic', id), { recursive: true });
-  fs.writeFileSync(path.join(DATA_DIR, 'dm-pic', id, 'index.json'), '[]');
+    subtitle: subtitle || '',
+    type:     dmType,
+    button:   button   || [],
+    hotspots: hotspots || [],
+  };
+  if (dmType === 'url') entry.url = url || '';
 
-  res.json({ success: true });
+  catalog.push(entry);
+  writeJSON('catalog.json', catalog);
+
+  fs.mkdirSync(path.join(DATA_DIR, 'dm-pic', id), { recursive: true });
+  if (dmType !== 'url') {
+    fs.writeFileSync(path.join(DATA_DIR, 'dm-pic', id, 'index.json'), '[]');
+  }
+
+  res.json({ success: true, id });
 });
 
 /* ── PUT /api/admin/catalog/:id ── 編輯 DM */

@@ -51,7 +51,18 @@ router.get('/activity/:id', (req, res) => {
 });
 
 router.get('/banners', (_req, res) => {
-  res.json(readJSON('banners.json', { banners: [] }));
+  const data = readJSON('banners.json', { banners: [] });
+  const now  = new Date();
+  data.banners = data.banners.filter(b => {
+    if (b.startDate && now < new Date(b.startDate)) return false;
+    if (b.endDate) {
+      const end = new Date(b.endDate);
+      end.setHours(23, 59, 59, 999);
+      if (now > end) return false;
+    }
+    return true;
+  });
+  res.json(data);
 });
 
 router.get('/home-events', (_req, res) => {

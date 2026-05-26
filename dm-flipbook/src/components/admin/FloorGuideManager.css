@@ -1,5 +1,6 @@
 /* ===== Floor Guide Manager ===== */
 .fg-manager {
+  width: 100%;
   max-width: 1000px;
   display: flex;
   flex-direction: column;
@@ -266,8 +267,6 @@
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
 }
 
 .fg-section-header {
@@ -399,14 +398,19 @@
 }
 .fg-table tr:last-child td { border-bottom: none; }
 .fg-table tr:hover td { background: #fafafa; }
-.fg-table tr.fg-tr-active td { background: #eef2ff; }
+.fg-table tr.fg-tr-active td { background: #dce8ff; }
+.fg-table tr.fg-tr-active td:first-child { border-left: 3px solid #2c7be5; }
+.fg-table tr.fg-tr-active td code { background: transparent; }
 
 .fg-table-actions {
+  white-space: nowrap;
+  width: 1%;
+}
+
+.fg-table-actions-inner {
   display: flex;
   gap: 6px;
   align-items: center;
-  white-space: nowrap;
-  width: 1%;
 }
 
 .fg-th-handle { width: 28px; }

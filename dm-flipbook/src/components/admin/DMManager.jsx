@@ -4,9 +4,9 @@ import './DMManager.css';
 
 const API = '/api/admin/catalog';
 
-const EMPTY_FORM = { id: '', title: '', subtitle: '', order: '', type: 'double', startDate: '', endDate: '' };
+const EMPTY_FORM = { title: '', subtitle: '', order: '', type: 'double', startDate: '', endDate: '', url: '' };
 
-const TYPE_LABEL = { double: '双頁', single: '單頁', strip: '長條' };
+const TYPE_LABEL = { double: '雙頁', single: '單頁', strip: '長條', url: 'URL' };
 
 function apiFetch(url, opts = {}) {
   return fetch(url, { headers: { 'Content-Type': 'application/json' }, ...opts });
@@ -128,13 +128,13 @@ export default function DMManager() {
 
   const openEdit = (dm) => {
     setForm({
-      id:        dm.id,
       title:     dm.title,
       subtitle:  dm.subtitle  || '',
       order:     dm.order,
       type:      dm.type      || 'double',
       startDate: dm.startDate || '',
       endDate:   dm.endDate   || '',
+      url:       dm.url       || '',
     });
     setEditingId(dm.id);
     setShowForm(true);
@@ -363,16 +363,9 @@ export default function DMManager() {
         <div className="dm-form-card">
           <div className="dm-form-title">{editingId ? `編輯：${editingId}` : '新增 DM'}</div>
           <form className="dm-form" onSubmit={handleSubmit}>
-            <label>
-              ID（唯一，建立後不可改）
-              <input
-                value={form.id}
-                onChange={e => setForm(f => ({ ...f, id: e.target.value }))}
-                placeholder="例：dm-5"
-                disabled={!!editingId}
-                required
-              />
-            </label>
+            {editingId && (
+              <div className="dm-id-hint">ID：<code>{editingId}</code></div>
+            )}
             <label>
               標題
               <input
@@ -407,11 +400,23 @@ export default function DMManager() {
                 className="dm-form-select"
                 disabled={!!editingId}
               >
-                <option value="double">双頁</option>
+                <option value="double">雙頁</option>
                 <option value="single">單頁</option>
                 <option value="strip">長條</option>
+                <option value="url">URL</option>
               </select>
             </label>
+            {form.type === 'url' && (
+              <label>
+                導向 URL
+                <input
+                  value={form.url}
+                  onChange={e => setForm(f => ({ ...f, url: e.target.value }))}
+                  placeholder="https://..."
+                  required={form.type === 'url'}
+                />
+              </label>
+            )}
             <div className="dm-form-date-row">
               <label>
                 開始日期
@@ -709,15 +714,23 @@ export default function DMManager() {
                   }
                 </td>
                 <td className="dm-table-actions">
-                  <button className="btn btn-sm btn-blue" onClick={() => setPreviewing(dm.id)}>預覽</button>
-                  <button className="btn btn-sm" onClick={() => openUpload(dm.id)}>上傳圖片</button>
-                  {dm.type === 'strip' ? (
+                  {dm.type === 'url' ? (
                     <>
-                      <button className="btn btn-sm btn-blue" onClick={() => openHotspots(dm)}>熱區管理</button>
                       <button className="btn btn-sm btn-blue" onClick={() => openCover(dm)}>封面設定</button>
                     </>
                   ) : (
-                    <button className="btn btn-sm" onClick={() => openBtns(dm)}>嵌入按鈕</button>
+                    <>
+                      <button className="btn btn-sm btn-blue" onClick={() => setPreviewing(dm.id)}>預覽</button>
+                      <button className="btn btn-sm" onClick={() => openUpload(dm.id)}>上傳圖片</button>
+                      {dm.type === 'strip' ? (
+                        <>
+                          <button className="btn btn-sm btn-blue" onClick={() => openHotspots(dm)}>熱區管理</button>
+                          <button className="btn btn-sm btn-blue" onClick={() => openCover(dm)}>封面設定</button>
+                        </>
+                      ) : (
+                        <button className="btn btn-sm" onClick={() => openBtns(dm)}>嵌入按鈕</button>
+                      )}
+                    </>
                   )}
                   <button className="btn btn-sm" onClick={() => openEdit(dm)}>編輯</button>
                   <button className="btn btn-sm btn-danger" onClick={() => handleDelete(dm.id)}>刪除</button>

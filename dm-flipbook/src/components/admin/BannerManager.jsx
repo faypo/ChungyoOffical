@@ -12,6 +12,8 @@ export default function BannerManager() {
   const [msg,         setMsg]         = useState(null);
   const [uploading,   setUploading]   = useState(false);
   const [urls,        setUrls]        = useState({});
+  const [startDates,  setStartDates]  = useState({});
+  const [endDates,    setEndDates]    = useState({});
   const [dropActive,  setDropActive]  = useState(false);
 
   const fileRef    = useRef();
@@ -30,6 +32,8 @@ export default function BannerManager() {
       const list = d.banners ?? [];
       setBanners(list);
       setUrls(Object.fromEntries(list.map(b => [b.id, b.url ?? ''])));
+      setStartDates(Object.fromEntries(list.map(b => [b.id, b.startDate ?? ''])));
+      setEndDates(Object.fromEntries(list.map(b => [b.id, b.endDate ?? ''])));
     } catch {
       showMsg('無法連線到後端', 'err');
     }
@@ -84,14 +88,19 @@ export default function BannerManager() {
     uploadFiles(e.dataTransfer.files);
   };
 
-  /* ── URL 自動儲存 ── */
-  const handleUrlBlur = async (id) => {
+  /* ── 欄位自動儲存（overrides 用來傳剛剛 onChange 的值，避免 React batching 讀到舊 state）── */
+  const handleFieldSave = async (id, overrides = {}) => {
     const res = await fetch(`${API}/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url: urls[id] ?? '' }),
+      body: JSON.stringify({
+        url:       overrides.url       ?? urls[id]       ?? '',
+        startDate: overrides.startDate ?? startDates[id] ?? '',
+        endDate:   overrides.endDate   ?? endDates[id]   ?? '',
+      }),
     });
-    if (!res.ok) showMsg('連結儲存失敗', 'err');
+    const d = await res.json();
+    if (!res.ok) showMsg(d.error || '儲存失敗', 'err');
   };
 
   const handleDelete = async (id) => {
@@ -186,13 +195,43 @@ export default function BannerManager() {
                   alt={b.file}
                   className="bm-thumb"
                 />
-                <input
-                  className="fg-info-input bm-url-input"
-                  placeholder="連結網址（選填，空白表示不跳轉）"
-                  value={urls[b.id] ?? ''}
-                  onChange={e => setUrls(prev => ({ ...prev, [b.id]: e.target.value }))}
-                  onBlur={() => handleUrlBlur(b.id)}
-                />
+                <div className="bm-fields">
+                  <input
+                    className="fg-info-input"
+                    placeholder="連結網址（選填，空白表示不跳轉）"
+                    value={urls[b.id] ?? ''}
+                    onChange={e => setUrls(prev => ({ ...prev, [b.id]: e.target.value }))}
+                    onBlur={() => handleFieldSave(b.id)}
+                  />
+                  <div className="bm-date-row">
+                    <label className="bm-date-label">
+                      開始日期
+                      <input
+                        type="date"
+                        className="fg-info-input"
+                        value={startDates[b.id] ?? ''}
+                        onChange={e => {
+                          const val = e.target.value;
+                          setStartDates(prev => ({ ...prev, [b.id]: val }));
+                          handleFieldSave(b.id, { startDate: val });
+                        }}
+                      />
+                    </label>
+                    <label className="bm-date-label">
+                      結束日期
+                      <input
+                        type="date"
+                        className="fg-info-input"
+                        value={endDates[b.id] ?? ''}
+                        onChange={e => {
+                          const val = e.target.value;
+                          setEndDates(prev => ({ ...prev, [b.id]: val }));
+                          handleFieldSave(b.id, { endDate: val });
+                        }}
+                      />
+                    </label>
+                  </div>
+                </div>
                 <button
                   className="fg-btn fg-btn-danger fg-btn-sm"
                   onClick={() => handleDelete(b.id)}

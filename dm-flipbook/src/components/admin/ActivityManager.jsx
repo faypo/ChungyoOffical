@@ -34,6 +34,7 @@ export default function ActivityManager() {
   const [ytInput, setYtInput] = useState('');
   const [showYt, setShowYt]   = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [dragOver, setDragOver]   = useState(false);
   const fileRef   = useRef();
   const ogFileRef = useRef();
 
@@ -123,9 +124,9 @@ export default function ActivityManager() {
     load();
   };
 
-  /* ── 上傳圖片 ── */
-  const handleUpload = async (e) => {
-    const files = Array.from(e.target.files);
+  /* ── 上傳圖片（接受 FileList 或 File[]）── */
+  const uploadFiles = async (fileList) => {
+    const files = Array.from(fileList).filter(f => f.type.startsWith('image/'));
     if (!files.length) return;
     setUploading(true);
     const fd = new FormData();
@@ -136,7 +137,17 @@ export default function ActivityManager() {
     if (!res.ok) return showMsgFn(d.error || '上傳失敗', 'err');
     const newItems = (d.files ?? []).map(file => ({ type: 'image', file, hotspots: [] }));
     setEditContent(prev => [...prev, ...newItems]);
+  };
+
+  const handleUpload = async (e) => {
+    await uploadFiles(e.target.files);
     e.target.value = '';
+  };
+
+  const handleDropZone = async (e) => {
+    e.preventDefault();
+    setDragOver(false);
+    await uploadFiles(e.dataTransfer.files);
   };
 
   /* ── 上傳 OG 圖片 ── */
@@ -285,18 +296,20 @@ export default function ActivityManager() {
                   <td>{a.title}</td>
                   <td><code>/activity/{a.id}</code></td>
                   <td className="fg-table-actions">
-                    <button
-                      className={`fg-btn fg-btn-sm ${activeId === a.id ? 'fg-btn-primary' : 'fg-btn-ghost'}`}
-                      onClick={() => { setActiveId(a.id); setShowAdd(false); }}
-                    >
-                      {activeId === a.id ? '編輯中' : '編輯'}
-                    </button>
-                    <button
-                      className="fg-btn fg-btn-danger fg-btn-sm"
-                      onClick={() => handleDelete(a.id)}
-                    >
-                      刪除
-                    </button>
+                    <div className="fg-table-actions-inner">
+                      <button
+                        className={`fg-btn fg-btn-sm ${activeId === a.id ? 'fg-btn-primary' : 'fg-btn-ghost'}`}
+                        onClick={() => { setActiveId(a.id); setShowAdd(false); }}
+                      >
+                        {activeId === a.id ? '編輯中' : '編輯'}
+                      </button>
+                      <button
+                        className="fg-btn fg-btn-danger fg-btn-sm"
+                        onClick={() => handleDelete(a.id)}
+                      >
+                        刪除
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -400,8 +413,16 @@ export default function ActivityManager() {
               </div>
             )}
 
+            <div
+              className={`am-drop-zone${dragOver ? ' am-drop-zone--over' : ''}`}
+              onDragOver={e => { e.preventDefault(); setDragOver(true); }}
+              onDragLeave={() => setDragOver(false)}
+              onDrop={handleDropZone}
+            >
             {editContent.length === 0 ? (
-              <div className="fg-empty">尚無內容，請上傳圖片或加入 YouTube</div>
+              <div className="fg-empty am-drop-hint">
+                {dragOver ? '放開以上傳' : '尚無內容，請上傳圖片、加入 YouTube，或直接拖曳圖片至此'}
+              </div>
             ) : (
               <div className="am-list">
                 {editContent.map((item, i) => (
@@ -448,6 +469,7 @@ export default function ActivityManager() {
                 ))}
               </div>
             )}
+            </div>
           </div>
 
           {/* ── 操作按鈕 ── */}

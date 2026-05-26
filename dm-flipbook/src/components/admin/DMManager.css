@@ -303,6 +303,20 @@
 }
 .dm-form-select:focus { outline: none; border-color: #888; }
 
+/* ── Edit mode ID display ── */
+.dm-id-hint {
+  font-size: 12px;
+  color: #666;
+  padding: 6px 10px;
+  background: #f5f5f5;
+  border-radius: 5px;
+  border: 1px solid #e0e0e0;
+}
+.dm-id-hint code {
+  font-family: monospace;
+  color: #333;
+}
+
 /* ── Locked field hint ── */
 .dm-field-locked {
   margin-left: 6px;

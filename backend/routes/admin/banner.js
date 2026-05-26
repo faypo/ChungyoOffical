@@ -51,8 +51,10 @@ router.put('/:id', (req, res) => {
   const data = readJSON(FILE, { banners: [] });
   const idx  = data.banners.findIndex(b => b.id === req.params.id);
   if (idx === -1) return res.status(404).json({ error: '找不到此 Banner' });
-  const { url } = req.body;
-  if (url !== undefined) data.banners[idx].url = url;
+  const { url, startDate, endDate } = req.body;
+  if (url       !== undefined) data.banners[idx].url       = url;
+  if (startDate !== undefined) data.banners[idx].startDate = startDate;
+  if (endDate   !== undefined) data.banners[idx].endDate   = endDate;
   writeJSON(FILE, data);
   res.json({ success: true });
 });
