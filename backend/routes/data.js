@@ -21,6 +21,7 @@ router.get('/food-guide', (_req, res) => {
 });
 
 router.get('/dm/:id/pages', (req, res) => {
+  if (!/^[\w-]+$/.test(req.params.id)) return res.status(400).json({ error: 'Invalid ID' });
   const indexPath = path.join(DATA_DIR, 'dm-pic', req.params.id, 'index.json');
   if (!fs.existsSync(indexPath)) return res.status(404).json({ error: 'DM not found' });
   res.json(JSON.parse(fs.readFileSync(indexPath, 'utf8')));

@@ -58,7 +58,10 @@ app.get('/activity/:id', (req, res) => {
   res.type('html').send(html);
 });
 
-app.use('/api/images',    express.static(path.join(__dirname, 'data')));
+app.use('/api/images', (req, res, next) => {
+  if (!/\.(jpg|jpeg|png|gif|webp|svg|ico|pdf)$/i.test(req.path)) return res.status(403).end();
+  next();
+}, express.static(path.join(__dirname, 'data')));
 app.use('/api/documents', express.static(path.join(__dirname, 'data', 'documents')));
 app.use('/api', dataRoutes);
 app.use('/api/feedback', feedbackRoutes);

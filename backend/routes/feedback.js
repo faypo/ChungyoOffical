@@ -22,10 +22,14 @@ async function sendNotificationEmail() {
 }
 
 router.post('/', (req, res) => {
-  const { payload } = req.body;
+  const payload = req.body?.payload;
 
-  if (!payload) {
+  if (!payload || typeof payload !== 'string') {
     return res.status(400).json({ error: 'Missing payload' });
+  }
+
+  if (!process.env.API_URL) {
+    return res.status(502).json({ error: 'Bad Gateway: Feedback service not configured.' });
   }
 
   const queryString    = new URLSearchParams({ payload }).toString();
