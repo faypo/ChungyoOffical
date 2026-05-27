@@ -14,6 +14,8 @@ const { adminLogger } = require('./utils/logger');
 const PORT = process.env.PORT || 4000;
 
 const app = express();
+app.disable('x-powered-by');
+app.use((req, res, next) => { res.removeHeader('Server'); next(); });
 app.use(cors());
 app.use(express.json());
 

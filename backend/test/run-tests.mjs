@@ -1,13 +1,13 @@
 /**
- * ChungyoOffical Backend — 整合測試工具 v2.0
- * 涵蓋：黑箱安全、白箱邏輯、HTTP Method 矩陣、CORS、Header 驗證、
+ * ChungyoOffical Backend — 整合測試工具 v2.1
+ * 涵蓋：黑箱安全、白箱邏輯、Admin API、HTTP Method 矩陣、CORS、Header 驗證、
  *        Payload 注入、漸進式負載、混合流量、慢速連線 (Slowloris)
  *
  * 用法：node run-tests.mjs [options]
- *   --base-url    http://localhost:4000   目標伺服器（預設 localhost:4000）
- *   --mode        all|black|white|stress  測試模式（預設 all）
- *   --concurrency 20                     壓力測試並發數
- *   --iterations  50                     壓力測試迭代次數
+ *   --base-url    http://localhost:4000        目標伺服器（預設 localhost:4000）
+ *   --mode        all|black|white|admin|stress 測試模式（預設 all）
+ *   --concurrency 20                          壓力測試並發數
+ *   --iterations  50                          壓力測試迭代次數
  *
  * 回歸標記：
  *   [R-JSON]  防止 /api/images 洩漏 JSON 資料（修復 2026-05）
@@ -46,7 +46,7 @@ const INFO = `${c.cyan}ℹ${c.reset}`;
 const stats = { passed: 0, failed: 0, warned: 0 };
 
 // ─── 工具函式 ─────────────────────────────────────────────────────────────────
-async function req(method, path, { body, headers = {}, timeoutMs = 8000 } = {}) {
+async function req(method, path, { body, headers = {}, timeoutMs = 8000, skipBody = false } = {}) {
   const url  = `${BASE_URL}${path}`;
   const ctrl = new AbortController();
   const tid  = setTimeout(() => ctrl.abort(), timeoutMs);
@@ -58,12 +58,17 @@ async function req(method, path, { body, headers = {}, timeoutMs = 8000 } = {}) 
   if (body !== undefined) opts.body = typeof body === 'string' ? body : JSON.stringify(body);
   const t0 = performance.now();
   try {
-    const res  = await fetch(url, opts);
+    const res = await fetch(url, opts);
     clearTimeout(tid);
-    const ms   = Math.round(performance.now() - t0);
-    let text   = '';
+    const ms  = Math.round(performance.now() - t0);
+    // 圖片等二進位資源：drain body 釋放連線但不存入記憶體
+    if (skipBody || /\.(jpg|jpeg|png|webp|gif|pdf)$/i.test(path)) {
+      try { await res.body?.cancel(); } catch {}
+      return { ok: res.ok, status: res.status, ms, text: '', json: null, headers: res.headers };
+    }
+    let text = '';
     try { text = await res.text(); } catch {}
-    let json   = null;
+    let json = null;
     try { json = JSON.parse(text); } catch {}
     return { ok: res.ok, status: res.status, ms, text, json, headers: res.headers };
   } catch (e) {
@@ -569,12 +574,204 @@ async function stressTests() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
+// Admin API 測試
+// ═══════════════════════════════════════════════════════════════════════════════
+async function adminTests() {
+  console.log(`\n${c.bold}${c.magenta}▶ Admin API 測試${c.reset}`);
+
+  // ── 1. Admin GET 端點 — 連通性與 JSON 格式 ─────────────────────────────────
+  section('1. Admin GET 端點 — 連通性與資料結構');
+  const adminGetCases = [
+    ['/api/admin/activity',    d => Array.isArray(d?.activities), 'activities 陣列'],
+    ['/api/admin/catalog',     d => Array.isArray(d),             'Array'],
+    ['/api/admin/banner',      d => d !== null,                   '物件'],
+    ['/api/admin/floor-guide', d => d !== null,                   '物件'],
+    ['/api/admin/food-guide',  d => d !== null,                   '物件'],
+    ['/api/admin/gallery',     d => d !== null,                   '物件'],
+    ['/api/admin/home-event',  d => d !== null,                   '物件'],
+    ['/api/admin/home-fb',     d => d !== null,                   '物件'],
+    ['/api/admin/home-promo',  d => d !== null,                   '物件'],
+    ['/api/admin/logos',       d => d !== null,                   '物件'],
+    ['/api/admin/winners',     d => d !== null,                   '物件'],
+  ];
+  for (const [ep, check, label] of adminGetCases) {
+    const r = await req('GET', ep);
+    assert(`GET ${ep} → 200`,   r.status === 200, `HTTP ${r.status}`);
+    assert(`GET ${ep} → ${label}`, check(r.json),  r.text?.slice(0, 40));
+  }
+
+  // floor-guide 額外：GET /icons
+  const rIcons = await req('GET', '/api/admin/floor-guide/icons');
+  assert('GET /api/admin/floor-guide/icons → 200 且為陣列', rIcons.status === 200 && Array.isArray(rIcons.json), `HTTP ${rIcons.status}`);
+
+  // ── 2. Admin POST 必填欄位驗證 ─────────────────────────────────────────────
+  section('2. Admin POST — 必填欄位驗證 → 400');
+  const requiredFieldCases = [
+    ['/api/admin/activity', {},         'activity 缺 title'],
+    ['/api/admin/catalog',  {},         'catalog 缺 title'],
+    ['/api/admin/banner',   {},         'banner 缺 file'],
+  ];
+  for (const [ep, body, label] of requiredFieldCases) {
+    const r = await req('POST', ep, { body });
+    assert(`${label} → 400`, r.status === 400, `HTTP ${r.status}`);
+    assert(`${label} → JSON error 欄位`, r.json?.error !== undefined, r.text?.slice(0, 40));
+  }
+
+  // ── 3. Admin 不存在 ID → 404 ───────────────────────────────────────────────
+  section('3. Admin — 不存在 ID 回傳 404');
+  const notFoundCases = [
+    ['PUT',    '/api/admin/activity/nonexistent-99999',       { title: 'x' }],
+    ['DELETE', '/api/admin/activity/nonexistent-99999',       {}],
+    ['POST',   '/api/admin/activity/nonexistent-99999/copy',  {}],
+    ['PUT',    '/api/admin/catalog/nonexistent-99999',        { title: 'x' }],
+    ['DELETE', '/api/admin/catalog/nonexistent-99999',        {}],
+    ['PUT',    '/api/admin/winners/nonexistent-99999',        {}],
+    ['DELETE', '/api/admin/winners/nonexistent-99999',        {}],
+  ];
+  for (const [method, path, body] of notFoundCases) {
+    const r = await req(method, path, { body });
+    assert(`${method} ${path} → 404`, r.status === 404, `HTTP ${r.status}`);
+  }
+
+  // ── 4. Admin safeName 路徑穿越防護 ─────────────────────────────────────────
+  section('4. Admin 端點 safeName 路徑穿越防護 [R-PATH]');
+
+  // 穿越用的 ID 與檔名（URL 編碼，讓 Express 解碼後含路徑符號）
+  const traversalIds = [
+    ['..%2Fetc',           'URL 編碼斜線穿越'],
+    ['..%2F..%2Fetc',      '雙層 URL 編碼穿越'],
+    ['..%5C..%5Cetc',      'Windows 反斜線編碼穿越'],
+    ['..%2Fdata%2Fconfig', '穿越至 config.json'],
+  ];
+  const traversalFiles = [
+    ['..%2Fetc.jpg',          'URL 編碼斜線檔名'],
+    ['..%2F..%2Fconfig.json', '穿越至 config.json 檔名'],
+  ];
+
+  // DELETE /api/admin/activity/:id/image/:file — id 驗證
+  for (const [id, label] of traversalIds) {
+    const r = await req('DELETE', `/api/admin/activity/${id}/image/test.jpg`);
+    assert(`activity DELETE /:id/image — 阻擋 ID [${label}]`, r.status === 400, `HTTP ${r.status}`, 'R-PATH');
+  }
+  // DELETE /api/admin/activity/:id/image/:file — file 驗證
+  for (const [file, label] of traversalFiles) {
+    const r = await req('DELETE', `/api/admin/activity/act-test/image/${file}`);
+    assert(`activity DELETE /:id/image — 阻擋 file [${label}]`, r.status === 400, `HTTP ${r.status}`, 'R-PATH');
+  }
+
+  // DELETE /api/admin/catalog/:id/images/:file — id 驗證
+  for (const [id, label] of traversalIds) {
+    const r = await req('DELETE', `/api/admin/catalog/${id}/images/test.jpg`);
+    assert(`catalog DELETE /:id/images — 阻擋 ID [${label}]`, r.status === 400, `HTTP ${r.status}`, 'R-PATH');
+  }
+  // DELETE /api/admin/catalog/:id/images/:file — file 驗證
+  for (const [file, label] of traversalFiles) {
+    const r = await req('DELETE', `/api/admin/catalog/dm-1/images/${file}`);
+    assert(`catalog DELETE /:id/images — 阻擋 file [${label}]`, r.status === 400, `HTTP ${r.status}`, 'R-PATH');
+  }
+
+  // DELETE /api/admin/floor-guide/icon/:filename
+  for (const [file, label] of traversalFiles) {
+    const r = await req('DELETE', `/api/admin/floor-guide/icon/${file}`);
+    assert(`floor-guide DELETE /icon — 阻擋 filename [${label}]`, r.status === 400, `HTTP ${r.status}`, 'R-PATH');
+  }
+
+  // DELETE /api/admin/gallery/image/:file
+  for (const [file, label] of traversalFiles) {
+    const r = await req('DELETE', `/api/admin/gallery/image/${file}`);
+    assert(`gallery DELETE /image — 阻擋 file [${label}]`, r.status === 400, `HTTP ${r.status}`, 'R-PATH');
+  }
+
+  // ── 5. 上傳端點 — 無檔案請求不 crash ──────────────────────────────────────
+  section('5. 上傳端點 — 無檔案請求不 crash（非 500）');
+  const uploadNoCrashCases = [
+    'POST /api/admin/activity/nonexistent/upload',
+    'POST /api/admin/activity/nonexistent/upload-og',
+    'POST /api/admin/catalog/nonexistent/upload',
+    'POST /api/admin/catalog/nonexistent/cover',
+    'POST /api/admin/gallery/upload',
+    'POST /api/admin/floor-guide/logo',
+    'POST /api/admin/floor-guide/icon',
+  ];
+  for (const entry of uploadNoCrashCases) {
+    const [method, path] = entry.split(' ');
+    const r = await req(method, path);
+    assert(`${method} ${path} 無檔案 → 非 500`, r.status !== 500, `HTTP ${r.status}`);
+  }
+
+  // ── 6. 新功能 — 活動頁複製（含 cleanup）─────────────────────────────────
+  section('6. 新功能 — 活動頁複製 POST /:id/copy');
+  const actListR = await req('GET', '/api/admin/activity');
+  if (actListR.json?.activities?.length > 0) {
+    const srcId = actListR.json.activities[0].id;
+    const srcTitle = actListR.json.activities[0].title;
+
+    const copyR = await req('POST', `/api/admin/activity/${srcId}/copy`);
+    assert(`POST /activity/${srcId}/copy → 200`, copyR.status === 200, `HTTP ${copyR.status}`);
+    assert('回傳新 id 字串', typeof copyR.json?.id === 'string', JSON.stringify(copyR.json));
+
+    if (copyR.json?.id) {
+      const newId = copyR.json.id;
+      const listR = await req('GET', '/api/admin/activity');
+      const copied = listR.json?.activities?.find(a => a.id === newId);
+      assert('複製的活動頁出現在清單中',  !!copied, newId);
+      assert('複製標題含「（複製）」',    copied?.title?.includes('（複製）'), copied?.title);
+      assert('複製標題包含原標題',        copied?.title?.includes(srcTitle), copied?.title);
+
+      // cleanup
+      const delR = await req('DELETE', `/api/admin/activity/${newId}`);
+      assert(`清除複製品（${newId}）→ 200`, delR.status === 200, `HTTP ${delR.status}`);
+    }
+  } else {
+    console.log(`  ${INFO}  無活動資料，跳過複製測試`);
+  }
+
+  // 複製不存在 ID → 404
+  const badCopyR = await req('POST', '/api/admin/activity/nonexistent-copy-99/copy');
+  assert('複製不存在 ID → 404', badCopyR.status === 404, `HTTP ${badCopyR.status}`);
+
+  // ── 7. 新功能 — 標籤 (tags) ───────────────────────────────────────────────
+  section('7. 新功能 — 活動頁標籤 tags');
+  const actListR2 = await req('GET', '/api/admin/activity');
+  if (actListR2.json?.activities?.length > 0) {
+    const testAct = actListR2.json.activities[0];
+    const origTags = testAct.tags ?? [];
+
+    // 寫入 tags
+    const putR = await req('PUT', `/api/admin/activity/${testAct.id}`, {
+      body: { tags: ['測試A', '測試B'] },
+    });
+    assert(`PUT /activity/${testAct.id} 更新 tags → 200`, putR.status === 200, `HTTP ${putR.status}`);
+
+    // 驗證
+    const verR = await req('GET', '/api/admin/activity');
+    const updated = verR.json?.activities?.find(a => a.id === testAct.id);
+    assert('tags 正確儲存為陣列',       Array.isArray(updated?.tags), JSON.stringify(updated?.tags));
+    assert('tags 內容正確',             JSON.stringify(updated?.tags) === JSON.stringify(['測試A', '測試B']), JSON.stringify(updated?.tags));
+
+    // 清空 tags
+    await req('PUT', `/api/admin/activity/${testAct.id}`, { body: { tags: origTags } });
+    console.log(`  ${INFO}  已還原 tags 為 [${origTags.join(', ')}]`);
+  } else {
+    console.log(`  ${INFO}  無活動資料，跳過標籤測試`);
+  }
+
+  // ── 8. 抽換圖片 — 無檔案與不存在 ID ─────────────────────────────────────
+  section('8. 新功能 — 抽換圖片 POST /:id/replace-image/:index');
+  const badReplaceId = await req('POST', '/api/admin/activity/nonexistent-99999/replace-image/0');
+  assert('不存在 ID + 無檔案 → 400',   badReplaceId.status === 400, `HTTP ${badReplaceId.status}`);
+
+  const badReplaceIdx = await req('POST', '/api/admin/activity/act-test/replace-image/notanumber');
+  assert('非數字 index + 無檔案 → 400', badReplaceIdx.status === 400, `HTTP ${badReplaceIdx.status}`);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
 // 主入口
 // ═══════════════════════════════════════════════════════════════════════════════
 async function main() {
   console.log(`${c.bold}${c.cyan}
 ╔══════════════════════════════════════════════════════╗
-║   ChungyoOffical — API 測試工具 v2.0                  ║
+║   ChungyoOffical — API 測試工具 v2.1                  ║
 ║   目標: ${BASE_URL.padEnd(44)}║
 ║   模式: ${MODE.padEnd(44)}║
 ╚══════════════════════════════════════════════════════╝${c.reset}`);
@@ -583,6 +780,7 @@ async function main() {
 
   if (MODE === 'all' || MODE === 'black')  await blackBoxTests();
   if (MODE === 'all' || MODE === 'white')  await whiteBoxTests();
+  if (MODE === 'all' || MODE === 'admin')  await adminTests();
   if (MODE === 'all' || MODE === 'stress') await stressTests();
 
   const elapsed = ((performance.now() - t0) / 1000).toFixed(1);
