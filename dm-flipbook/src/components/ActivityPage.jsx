@@ -58,7 +58,7 @@ export default function ActivityPage() {
           if (item.type === 'image') {
             return (
               <ImageWithHotspots
-                key={i}
+                key={item.file ?? i}
                 src={`/api/images/activity-pic/${id}/${item.file}`}
                 hotspots={item.hotspots ?? []}
               />
@@ -68,7 +68,7 @@ export default function ActivityPage() {
             const vid = extractYouTubeId(item.videoId);
             if (!vid) return null;
             return (
-              <div key={i} className="act-youtube">
+              <div key={item.videoId ?? i} className="act-youtube">
                 <iframe
                   src={`https://www.youtube.com/embed/${vid}`}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

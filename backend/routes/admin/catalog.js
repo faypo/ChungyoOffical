@@ -7,10 +7,13 @@ const { DATA_DIR, readJSON, writeJSON } = require('../../utils/json');
 const router = express.Router();
 
 const IMAGE_EXT = /\.(jpg|jpeg|png|webp)$/i;
+const safeName  = (p) => path.basename(p ?? '');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const dir = path.join(DATA_DIR, 'dm-pic', req.params.id);
+    const id = safeName(req.params.id);
+    if (!id || id !== req.params.id) return cb(new Error('無效的 ID'));
+    const dir = path.join(DATA_DIR, 'dm-pic', id);
     fs.mkdirSync(dir, { recursive: true });
     cb(null, dir);
   },
@@ -24,7 +27,9 @@ const upload = multer({
 
 const coverStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const dir = path.join(DATA_DIR, 'dm-pic', req.params.id);
+    const id = safeName(req.params.id);
+    if (!id || id !== req.params.id) return cb(new Error('無效的 ID'));
+    const dir = path.join(DATA_DIR, 'dm-pic', id);
     fs.mkdirSync(dir, { recursive: true });
     cb(null, dir);
   },
@@ -134,7 +139,7 @@ router.delete('/:id', (req, res) => {
   catalog = catalog.filter(d => d.id !== req.params.id);
   writeJSON('catalog.json', catalog);
 
-  const dmDir = path.join(DATA_DIR, 'dm-pic', req.params.id);
+  const dmDir = path.join(DATA_DIR, 'dm-pic', safeName(req.params.id));
   if (fs.existsSync(dmDir)) fs.rmSync(dmDir, { recursive: true });
 
   res.json({ success: true });
@@ -142,7 +147,7 @@ router.delete('/:id', (req, res) => {
 
 /* ── POST /api/admin/catalog/:id/upload ── 上傳圖片 */
 router.post('/:id/upload', upload.array('images'), (req, res) => {
-  const files = rebuildIndex(req.params.id);
+  const files = rebuildIndex(safeName(req.params.id));
   res.json({ success: true, files });
 });
 
@@ -150,7 +155,7 @@ router.post('/:id/upload', upload.array('images'), (req, res) => {
 router.put('/:id/pages/order', (req, res) => {
   const { order } = req.body;
   if (!Array.isArray(order)) return res.status(400).json({ error: 'order 必須是陣列' });
-  const dir = path.join(DATA_DIR, 'dm-pic', req.params.id);
+  const dir = path.join(DATA_DIR, 'dm-pic', safeName(req.params.id));
   if (!fs.existsSync(dir)) return res.status(404).json({ error: '找不到此 DM' });
   fs.writeFileSync(path.join(dir, 'index.json'), JSON.stringify(order, null, 2));
   res.json({ success: true });
@@ -158,10 +163,14 @@ router.put('/:id/pages/order', (req, res) => {
 
 /* ── DELETE /api/admin/catalog/:id/images/:file ── 刪除單張圖片 */
 router.delete('/:id/images/:file', (req, res) => {
-  const filePath = path.join(DATA_DIR, 'dm-pic', req.params.id, req.params.file);
+  const id   = safeName(req.params.id);
+  const file = safeName(req.params.file);
+  if (!id || id !== req.params.id || !file || file !== req.params.file)
+    return res.status(400).json({ error: '無效的參數' });
+  const filePath = path.join(DATA_DIR, 'dm-pic', id, file);
   if (!fs.existsSync(filePath)) return res.status(404).json({ error: '檔案不存在' });
   fs.unlinkSync(filePath);
-  const files = rebuildIndex(req.params.id);
+  const files = rebuildIndex(id);
   res.json({ success: true, files });
 });
 
@@ -175,7 +184,7 @@ router.post('/:id/cover', coverUpload.single('cover'), (req, res) => {
   if (!newFile) return res.status(400).json({ error: '未提供封面圖片' });
 
   /* 刪除不同副檔名的舊封面 */
-  const dir = path.join(DATA_DIR, 'dm-pic', req.params.id);
+  const dir = path.join(DATA_DIR, 'dm-pic', safeName(req.params.id));
   fs.readdirSync(dir)
     .filter(f => /^cover\./i.test(f) && f !== newFile)
     .forEach(f => fs.unlinkSync(path.join(dir, f)));
@@ -191,7 +200,7 @@ router.delete('/:id/cover', (req, res) => {
   const idx = catalog.findIndex(d => d.id === req.params.id);
   if (idx === -1) return res.status(404).json({ error: '找不到此 DM' });
 
-  const dir = path.join(DATA_DIR, 'dm-pic', req.params.id);
+  const dir = path.join(DATA_DIR, 'dm-pic', safeName(req.params.id));
   if (fs.existsSync(dir)) {
     fs.readdirSync(dir)
       .filter(f => /^cover\./i.test(f))

@@ -70,8 +70,8 @@ export default function Winners() {
                 <table className="winners-table">
                   <thead>
                     <tr>
-                      {(event.columns ?? []).map((col, i) => (
-                        <th key={i}>{col}</th>
+                      {(event.columns ?? []).map((col) => (
+                        <th key={col}>{col}</th>
                       ))}
                     </tr>
                   </thead>
@@ -96,8 +96,8 @@ export default function Winners() {
       <div className="winners-notice">
         <p className="winners-notice-title">注意事項：</p>
         <ol className="winners-notice-list">
-          {NOTICE_ITEMS.map((item, i) => (
-            <li key={i}>{item}</li>
+          {NOTICE_ITEMS.map((item) => (
+            <li key={item}>{item}</li>
           ))}
         </ol>
       </div>

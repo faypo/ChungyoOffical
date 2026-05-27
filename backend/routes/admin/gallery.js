@@ -42,7 +42,9 @@ router.post('/upload', upload.array('images'), (req, res) => {
 
 /* DELETE /api/admin/gallery/image/:file */
 router.delete('/image/:file', (req, res) => {
-  const filePath = path.join(PIC_DIR(), req.params.file);
+  const file = path.basename(req.params.file ?? '');
+  if (!file || file !== req.params.file) return res.status(400).json({ error: '無效的檔名' });
+  const filePath = path.join(PIC_DIR(), file);
   if (!fs.existsSync(filePath)) return res.status(404).json({ error: '檔案不存在' });
   fs.unlinkSync(filePath);
   res.json({ success: true });

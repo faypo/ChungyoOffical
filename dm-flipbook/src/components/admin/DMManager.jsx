@@ -219,6 +219,7 @@ export default function DMManager() {
 
   /* ── 封面管理（strip 用）── */
   const openCover = (dm) => {
+    if (coverPreviewUrl) URL.revokeObjectURL(coverPreviewUrl);
     setCoverDmId(dm.id);
     setCoverFile(null);
     setCoverPreviewUrl(null);
@@ -633,7 +634,7 @@ export default function DMManager() {
           ? `/api/images/dm-pic/${coverDmId}/${dm.cover}`
           : null;
         return (
-          <div className="dm-form-card">
+          <div key={coverDmId} className="dm-form-card">
             <div className="dm-form-title">封面設定：{coverDmId}</div>
 
             {existingCover && !coverFile && (

@@ -50,9 +50,9 @@ export default function BannerCarousel({ banners = [] }) {
           <button className="bc-arrow bc-arrow--prev" onClick={prev} aria-label="上一張">&#8249;</button>
           <button className="bc-arrow bc-arrow--next" onClick={next} aria-label="下一張">&#8250;</button>
           <div className="bc-dots">
-            {banners.map((_, i) => (
+            {banners.map((b, i) => (
               <button
-                key={i}
+                key={b.id}
                 className={`bc-dot${i === index ? ' active' : ''}`}
                 onClick={() => setIndex(i)}
                 aria-label={`第 ${i + 1} 張`}

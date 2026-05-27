@@ -560,7 +560,7 @@ export default function ActivityManager() {
               <div className="am-list">
                 {editContent.map((item, i) => (
                   <div
-                    key={i}
+                    key={item.file ?? item.videoId ?? i}
                     className="am-item"
                     draggable
                     onDragStart={() => handleDragStart(i)}

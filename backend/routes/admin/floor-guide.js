@@ -64,7 +64,8 @@ router.post('/icon', uploadIcon.single('icon'), (req, res) => {
 
 /* DELETE icon — checks if any floor uses it first */
 router.delete('/icon/:filename', (req, res) => {
-  const filename = req.params.filename;
+  const filename = path.basename(req.params.filename ?? '');
+  if (!filename || filename !== req.params.filename) return res.status(400).json({ error: '無效的檔名' });
   const filePath = path.join(DATA_DIR, 'floor-pic', 'icon', filename);
   if (!fs.existsSync(filePath)) return res.status(404).json({ error: '圖示不存在' });
 

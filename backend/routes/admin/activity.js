@@ -8,9 +8,13 @@ const router = express.Router();
 const FILE = 'activities.json';
 const IMAGE_EXT = /\.(jpg|jpeg|png|webp)$/i;
 
+const safeName = (p) => path.basename(p ?? '');
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const dir = path.join(DATA_DIR, 'activity-pic', req.params.id);
+    const id = safeName(req.params.id);
+    if (!id || id !== req.params.id) return cb(new Error('無效的 ID'));
+    const dir = path.join(DATA_DIR, 'activity-pic', id);
     fs.mkdirSync(dir, { recursive: true });
     cb(null, dir);
   },
@@ -60,7 +64,7 @@ router.delete('/:id', (req, res) => {
   if (idx === -1) return res.status(404).json({ error: '找不到此活動頁' });
   data.activities.splice(idx, 1);
   writeJSON(FILE, data);
-  const dir = path.join(DATA_DIR, 'activity-pic', req.params.id);
+  const dir = path.join(DATA_DIR, 'activity-pic', safeName(req.params.id));
   if (fs.existsSync(dir)) fs.rmSync(dir, { recursive: true });
   res.json({ success: true });
 });
@@ -75,7 +79,9 @@ router.post('/:id/upload', upload.array('images'), (req, res) => {
 const uploadOg = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
-      const dir = path.join(DATA_DIR, 'activity-pic', req.params.id);
+      const id = safeName(req.params.id);
+      if (!id || id !== req.params.id) return cb(new Error('無效的 ID'));
+      const dir = path.join(DATA_DIR, 'activity-pic', id);
       fs.mkdirSync(dir, { recursive: true });
       // 刪除舊的 _og-image.* 避免不同副檔名的殘檔
       fs.readdirSync(dir)
@@ -107,9 +113,9 @@ router.post('/:id/replace-image/:index', upload.single('image'), (req, res) => {
   if (!act) return res.status(404).json({ error: '找不到此活動頁' });
   if (!act.content[idx] || act.content[idx].type !== 'image')
     return res.status(400).json({ error: '指定項目不是圖片' });
-  const oldFile = act.content[idx].file;
-  if (oldFile !== req.file.filename) {
-    const oldPath = path.join(DATA_DIR, 'activity-pic', req.params.id, oldFile);
+  const oldFile = safeName(act.content[idx].file);
+  if (oldFile && oldFile !== req.file.filename) {
+    const oldPath = path.join(DATA_DIR, 'activity-pic', safeName(req.params.id), oldFile);
     if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
   }
   act.content[idx].file = req.file.filename;
@@ -126,7 +132,7 @@ router.post('/:id/copy', (req, res) => {
   const newAct = JSON.parse(JSON.stringify(src));
   newAct.id    = newId;
   newAct.title = `${src.title}（複製）`;
-  const srcDir = path.join(DATA_DIR, 'activity-pic', req.params.id);
+  const srcDir = path.join(DATA_DIR, 'activity-pic', safeName(req.params.id));
   const dstDir = path.join(DATA_DIR, 'activity-pic', newId);
   fs.mkdirSync(dstDir, { recursive: true });
   if (fs.existsSync(srcDir)) {
@@ -141,7 +147,11 @@ router.post('/:id/copy', (req, res) => {
 
 /* DELETE /api/admin/activity/:id/image/:file */
 router.delete('/:id/image/:file', (req, res) => {
-  const filePath = path.join(DATA_DIR, 'activity-pic', req.params.id, req.params.file);
+  const id   = safeName(req.params.id);
+  const file = safeName(req.params.file);
+  if (!id || id !== req.params.id || !file || file !== req.params.file)
+    return res.status(400).json({ error: '無效的參數' });
+  const filePath = path.join(DATA_DIR, 'activity-pic', id, file);
   if (!fs.existsSync(filePath)) return res.status(404).json({ error: '檔案不存在' });
   fs.unlinkSync(filePath);
   res.json({ success: true });

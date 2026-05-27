@@ -361,7 +361,7 @@ export default function FlipBook({ pages, type = 'double', buttons = [], onBack 
       )}
       <div
         className="stage"
-        style={{ cursor: scaleRef.current > 1 ? 'grab' : 'grab' }}
+        style={{ cursor: scaleRef.current > 1 ? 'grab' : 'default' }}
         onMouseDown={(e) => {
           if (e.button !== 0) return;
           e.preventDefault();

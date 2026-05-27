@@ -124,8 +124,8 @@ export default function FloorGuide() {
               )}
               {floorInfo.icons?.length > 0 && (
                 <div className="floor-intro-icons">
-                  {floorInfo.icons.map((icon, i) => (
-                    <img key={i} className="floor-intro-icon" src={`/api/images/floor-pic/icon/${icon}`} alt={icon} />
+                  {floorInfo.icons.map((icon) => (
+                    <img key={icon} className="floor-intro-icon" src={`/api/images/floor-pic/icon/${icon}`} alt={icon} />
                   ))}
                 </div>
               )}
@@ -137,7 +137,7 @@ export default function FloorGuide() {
           ) : (
             <div className="floor-cards">
               {counters.map((c, i) => (
-                <div key={i} className="floor-card">
+                <div key={c.name || i} className="floor-card">
                   <div className="floor-card-logo">
                     {c.logo ? (
                       <img src={c.logo} alt={c.name} />
