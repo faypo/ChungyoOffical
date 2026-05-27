@@ -1,11 +1,22 @@
 const express = require('express');
 const https   = require('https');
 const crypto  = require('crypto');
+const CryptoJS = require('crypto-js');
 const sgMail  = require('@sendgrid/mail');
 
 const router = express.Router();
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+const prepareTransportPayload = (data) => {
+  const rawStream = JSON.stringify(data);
+  const processed = CryptoJS.AES.encrypt(rawStream, CryptoJS.enc.Hex.parse(process.env.SECRET_KEY_HEX), {
+    iv: CryptoJS.enc.Hex.parse(process.env.SECRET_IV_HEX),
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7
+  });
+  return processed.toString(); 
+};
 
 // 需求方取消通知功能，程式留存暫不使用
 async function sendNotificationEmail() {
@@ -22,16 +33,17 @@ async function sendNotificationEmail() {
 }
 
 router.post('/', (req, res) => {
-  const payload = req.body?.payload;
+  const data = req.body;
 
-  if (!payload || typeof payload !== 'string') {
-    return res.status(400).json({ error: 'Missing payload' });
+  if (!data || Object.keys(data).length === 0) {
+    return res.status(400).json({ error: 'Missing data' });
   }
 
   if (!process.env.API_URL) {
     return res.status(502).json({ error: 'Bad Gateway: Feedback service not configured.' });
   }
 
+  const payload = prepareTransportPayload(data);
   const queryString    = new URLSearchParams({ payload }).toString();
   const finalJspUrl    = `${process.env.API_URL}?${queryString}`;
   const requestOptions = {
