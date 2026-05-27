@@ -13,37 +13,37 @@
 
 /* ── Left: category list (desktop) ── */
 .food-category-list {
-  width: 20%;
+  width: 21%;
   flex-shrink: 0;
   overflow-y: auto;
-  border-right: 2px solid var(--fc);
-  background: #fff;
+  background: #F8F9FA;
 }
 
 .food-category-item {
   width: 100%;
-  padding: 14px 16px;
+  padding: 20px 16px;
   border: none;
   border-bottom: 1px solid color-mix(in srgb, var(--fc) 30%, white);
   background: none;
   cursor: pointer;
   text-align: left;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   font-family: inherit;
   color: #444;
   letter-spacing: 0.5px;
+  text-align: center;
   transition: background 0.15s, color 0.15s;
 }
 .food-category-item:hover  { background: color-mix(in srgb, var(--fc) 15%, white); color: #222; }
-.food-category-item.active { background: var(--fc); color: #fff; }
+.food-category-item.active { background: #6E6E6E; color: #fff; }
 
 /* ── Right panel (desktop) ── */
 .food-right {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: var(--fc-bg);
+  background: #FFFFFF;
   overflow: hidden;
 }
 
@@ -53,7 +53,6 @@
   overflow-y: auto;
   padding: 24px;
   background: #fff;
-  border-top: 2px solid var(--fc);
   display: flex;
   flex-direction: column;
   gap: 32px;
