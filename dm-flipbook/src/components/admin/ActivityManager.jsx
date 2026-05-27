@@ -35,6 +35,7 @@ export default function ActivityManager() {
   const [tagInput,           setTagInput]           = useState('');
   const [filterTags,         setFilterTags]         = useState([]);
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
+  const [filterPanelStyle,   setFilterPanelStyle]   = useState({ top: 0, left: 0 });
   const filterDropdownRef = useRef();
 
   const [ytInput, setYtInput] = useState('');
@@ -284,8 +285,16 @@ export default function ActivityManager() {
 
   const allTags = [...new Set(activities.flatMap(a => a.tags ?? []))];
   const filteredActivities = filterTags.length > 0
-    ? activities.filter(a => filterTags.every(t => (a.tags ?? []).includes(t)))
+    ? activities.filter(a => filterTags.some(t => (a.tags ?? []).includes(t)))
     : activities;
+
+  // 篩選條件變動時，自動選第一筆
+  useEffect(() => {
+    const next = filterTags.length > 0
+      ? activities.filter(a => filterTags.some(t => (a.tags ?? []).includes(t)))
+      : activities;
+    setActiveId(next.length > 0 ? next[0].id : null);
+  }, [filterTags]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) return <p className="fg-loading">載入中…</p>;
 
@@ -352,7 +361,13 @@ export default function ActivityManager() {
             <div className="am-filter-dropdown">
               <button
                 className={`am-filter-btn${filterTags.length > 0 ? ' has-filter' : ''}`}
-                onClick={() => setShowFilterDropdown(v => !v)}
+                onClick={() => {
+                  if (!showFilterDropdown && filterDropdownRef.current) {
+                    const r = filterDropdownRef.current.getBoundingClientRect();
+                    setFilterPanelStyle({ top: r.bottom + 4, left: r.left });
+                  }
+                  setShowFilterDropdown(v => !v);
+                }}
               >
                 {filterTags.length > 0 ? `已選 ${filterTags.length} 個標籤` : '全部'}
                 <span className="am-filter-arrow">{showFilterDropdown ? '▲' : '▼'}</span>
@@ -361,7 +376,10 @@ export default function ActivityManager() {
                 <button className="am-filter-clear" onClick={() => setFilterTags([])}>✕ 清除</button>
               )}
               {showFilterDropdown && (
-                <div className="am-filter-panel">
+                <div
+                  className="am-filter-panel"
+                  style={{ position: 'fixed', top: filterPanelStyle.top, left: filterPanelStyle.left, zIndex: 9999 }}
+                >
                   {allTags.map(tag => (
                     <label key={tag} className="am-filter-option">
                       <input
