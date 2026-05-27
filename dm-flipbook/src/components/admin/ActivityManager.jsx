@@ -31,12 +31,20 @@ export default function ActivityManager() {
   const [editOgImage,        setEditOgImage]        = useState('');
   const [editContent,        setEditContent]        = useState([]);
 
+  const [editTags,           setEditTags]           = useState([]);
+  const [tagInput,           setTagInput]           = useState('');
+  const [filterTags,         setFilterTags]         = useState([]);
+  const [showFilterDropdown, setShowFilterDropdown] = useState(false);
+  const filterDropdownRef = useRef();
+
   const [ytInput, setYtInput] = useState('');
   const [showYt, setShowYt]   = useState(false);
   const [uploading, setUploading] = useState(false);
   const [dragOver, setDragOver]   = useState(false);
-  const fileRef   = useRef();
-  const ogFileRef = useRef();
+  const fileRef        = useRef();
+  const ogFileRef      = useRef();
+  const replaceFileRef = useRef();
+  const replacingIdxRef = useRef(null);
 
   // 熱區編輯：editContent 裡的 index
   const [hotspotIdx, setHotspotIdx] = useState(null);
@@ -67,6 +75,15 @@ export default function ActivityManager() {
   useEffect(() => { load(); }, []);
 
   useEffect(() => {
+    const handler = (e) => {
+      if (filterDropdownRef.current && !filterDropdownRef.current.contains(e.target))
+        setShowFilterDropdown(false);
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
+
+  useEffect(() => {
     const act = activities.find(a => a.id === activeId);
     if (!act) return;
     setEditTitle(act.title ?? '');
@@ -74,6 +91,7 @@ export default function ActivityManager() {
     setEditOgDescription(act.ogDescription ?? '');
     setEditOgImage(act.ogImage ?? '');
     setEditContent(JSON.parse(JSON.stringify(act.content ?? [])));
+    setEditTags(act.tags ? [...act.tags] : []);
     setHotspotIdx(null);
   }, [activeId, activities]);
 
@@ -115,6 +133,7 @@ export default function ActivityManager() {
         ogTitle:        editOgTitle,
         ogDescription:  editOgDescription,
         ogImage:        editOgImage,
+        tags:           editTags,
       }),
     });
     setSaving(false);
@@ -198,6 +217,7 @@ export default function ActivityManager() {
         ogTitle:       editOgTitle,
         ogDescription: editOgDescription,
         ogImage:       editOgImage,
+        tags:          editTags,
       }),
     });
     const d = await res.json();
@@ -221,6 +241,51 @@ export default function ActivityManager() {
     dragSrc.current = null;
   };
   const handleDragEnd = () => { dragSrc.current = null; };
+
+  /* ── 標籤管理 ── */
+  const addTag = () => {
+    const t = tagInput.trim();
+    if (!t || editTags.includes(t)) return;
+    setEditTags(prev => [...prev, t]);
+    setTagInput('');
+  };
+  const removeTag = (tag) => setEditTags(prev => prev.filter(t => t !== tag));
+
+  /* ── 換圖 ── */
+  const triggerReplace = (idx) => {
+    replacingIdxRef.current = idx;
+    replaceFileRef.current?.click();
+  };
+  const handleReplaceImage = async (e) => {
+    const file = e.target.files?.[0];
+    e.target.value = '';
+    if (!file) return;
+    const idx = replacingIdxRef.current;
+    replacingIdxRef.current = null;
+    if (idx === null) return;
+    const fd = new FormData();
+    fd.append('image', file);
+    const res = await fetch(`${API}/${activeId}/replace-image/${idx}`, { method: 'POST', body: fd });
+    const d = await res.json();
+    if (!res.ok) return showMsgFn(d.error || '換圖失敗', 'err');
+    setEditContent(prev => prev.map((item, i) => i === idx ? { ...item, file: d.file } : item));
+    showMsgFn('圖片已更換，熱區設定已保留');
+    load();
+  };
+
+  /* ── 複製活動頁 ── */
+  const handleCopy = async (id) => {
+    const res = await apiFetch(`${API}/${id}/copy`, { method: 'POST' });
+    const d = await res.json();
+    if (!res.ok) return showMsgFn(d.error || '複製失敗', 'err');
+    showMsgFn('已複製活動頁');
+    load();
+  };
+
+  const allTags = [...new Set(activities.flatMap(a => a.tags ?? []))];
+  const filteredActivities = filterTags.length > 0
+    ? activities.filter(a => filterTags.every(t => (a.tags ?? []).includes(t)))
+    : activities;
 
   if (loading) return <p className="fg-loading">載入中…</p>;
 
@@ -281,19 +346,61 @@ export default function ActivityManager() {
           <div className="fg-empty">尚無活動頁，請點「＋ 新增活動頁」</div>
         )}
 
+        {allTags.length > 0 && (
+          <div className="am-filter-row" ref={filterDropdownRef}>
+            <span className="am-filter-label">篩選標籤：</span>
+            <div className="am-filter-dropdown">
+              <button
+                className={`am-filter-btn${filterTags.length > 0 ? ' has-filter' : ''}`}
+                onClick={() => setShowFilterDropdown(v => !v)}
+              >
+                {filterTags.length > 0 ? `已選 ${filterTags.length} 個標籤` : '全部'}
+                <span className="am-filter-arrow">{showFilterDropdown ? '▲' : '▼'}</span>
+              </button>
+              {filterTags.length > 0 && (
+                <button className="am-filter-clear" onClick={() => setFilterTags([])}>✕ 清除</button>
+              )}
+              {showFilterDropdown && (
+                <div className="am-filter-panel">
+                  {allTags.map(tag => (
+                    <label key={tag} className="am-filter-option">
+                      <input
+                        type="checkbox"
+                        checked={filterTags.includes(tag)}
+                        onChange={() => setFilterTags(prev =>
+                          prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
+                        )}
+                      />
+                      {tag}
+                    </label>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
         {activities.length > 0 && (
           <table className="fg-table">
             <thead>
               <tr>
                 <th>名稱</th>
+                <th>標籤</th>
                 <th>前台網址</th>
                 <th>操作</th>
               </tr>
             </thead>
             <tbody>
-              {activities.map(a => (
+              {filteredActivities.map(a => (
                 <tr key={a.id} className={activeId === a.id ? 'fg-tr-active' : ''}>
                   <td>{a.title}</td>
+                  <td>
+                    <div className="am-list-tags">
+                      {(a.tags ?? []).map(tag => (
+                        <span key={tag} className="am-list-tag">{tag}</span>
+                      ))}
+                    </div>
+                  </td>
                   <td><code>/activity/{a.id}</code></td>
                   <td className="fg-table-actions">
                     <div className="fg-table-actions-inner">
@@ -304,11 +411,13 @@ export default function ActivityManager() {
                         {activeId === a.id ? '編輯中' : '編輯'}
                       </button>
                       <button
+                        className="fg-btn fg-btn-ghost fg-btn-sm"
+                        onClick={() => handleCopy(a.id)}
+                      >複製</button>
+                      <button
                         className="fg-btn fg-btn-danger fg-btn-sm"
                         onClick={() => handleDelete(a.id)}
-                      >
-                        刪除
-                      </button>
+                      >刪除</button>
                     </div>
                   </td>
                 </tr>
@@ -330,6 +439,29 @@ export default function ActivityManager() {
             <div className="am-url-hint">
               前台網址：<code>/activity/{activeId}</code>
             </div>
+
+            <div className="am-tags-section">
+              <div className="am-og-title">標籤</div>
+              <div className="am-tags-row">
+                {editTags.map(tag => (
+                  <span key={tag} className="am-tag">
+                    {tag}
+                    <button className="am-tag-remove" onClick={() => removeTag(tag)}>×</button>
+                  </span>
+                ))}
+                <div className="am-tag-input-row">
+                  <input
+                    className="fg-info-input am-tag-input"
+                    placeholder="新增標籤，按 Enter"
+                    value={tagInput}
+                    onChange={e => setTagInput(e.target.value)}
+                    onKeyDown={e => e.key === 'Enter' && addTag()}
+                  />
+                  <button className="fg-btn fg-btn-ghost fg-btn-sm" onClick={addTag}>＋</button>
+                </div>
+              </div>
+            </div>
+
             <div className="am-og-section">
               <div className="am-og-title">社群分享預覽（OG Tags）</div>
               <label className="wm-meta-label">
@@ -375,6 +507,7 @@ export default function ActivityManager() {
                     )}
                   </div>
                   <input ref={ogFileRef} type="file" accept="image/*" hidden onChange={handleOgUpload} />
+                  <input ref={replaceFileRef} type="file" accept="image/*" hidden onChange={handleReplaceImage} />
                 </div>
               </label>
             </div>
@@ -451,6 +584,10 @@ export default function ActivityManager() {
                         >
                           熱區 {(item.hotspots?.length ?? 0) > 0 ? `(${item.hotspots.length})` : ''}
                         </button>
+                        <button
+                          className="fg-btn fg-btn-ghost fg-btn-sm"
+                          onClick={() => triggerReplace(i)}
+                        >換圖</button>
                       </>
                     ) : (
                       <>

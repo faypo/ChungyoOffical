@@ -6,7 +6,7 @@
       "content": [
         {
           "type": "image",
-          "file": "unnamed.jpg",
+          "file": "2.jpg",
           "hotspots": [
             {
               "id": "1778726093324",
@@ -32,12 +32,17 @@
         },
         {
           "type": "image",
-          "file": "unnamed.jpg"
+          "file": "2.jpg"
         }
       ],
       "ogTitle": "",
       "ogDescription": "",
-      "ogImage": ""
+      "ogImage": "",
+      "tags": [
+        "測試",
+        "aa",
+        "bb"
+      ]
     },
     {
       "id": "act-1779779284204",
@@ -66,6 +71,50 @@
       "ogTitle": "",
       "ogDescription": "",
       "ogImage": ""
+    },
+    {
+      "id": "act-1779862607754",
+      "title": "123（複製）",
+      "content": [
+        {
+          "type": "image",
+          "file": "2.jpg",
+          "hotspots": [
+            {
+              "id": "1778726093324",
+              "x": 6.962961832682292,
+              "y": 3.139767287991689,
+              "width": 88,
+              "height": 0.5861504907306434,
+              "url": "http://localhost:5173/food"
+            },
+            {
+              "id": "1779441819957",
+              "x": 5.629628499348958,
+              "y": 7.856234235357952,
+              "width": 90.22222222222223,
+              "height": 1.1450381679389312,
+              "url": "https://dm.chungyo.com.tw/dm"
+            }
+          ]
+        },
+        {
+          "type": "youtube",
+          "videoId": "6sNRYtT8mjo"
+        },
+        {
+          "type": "image",
+          "file": "2.jpg"
+        }
+      ],
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "tags": [
+        "測試",
+        "aa",
+        "bb"
+      ]
     }
   ]
 }

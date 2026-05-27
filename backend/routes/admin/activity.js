@@ -42,12 +42,13 @@ router.put('/:id', (req, res) => {
   const data = readJSON(FILE, { activities: [] });
   const idx = data.activities.findIndex(a => a.id === req.params.id);
   if (idx === -1) return res.status(404).json({ error: '找不到此活動頁' });
-  const { title, content, ogTitle, ogDescription, ogImage } = req.body;
+  const { title, content, ogTitle, ogDescription, ogImage, tags } = req.body;
   if (title         !== undefined) data.activities[idx].title         = title;
   if (content       !== undefined) data.activities[idx].content       = content;
   if (ogTitle       !== undefined) data.activities[idx].ogTitle       = ogTitle;
   if (ogDescription !== undefined) data.activities[idx].ogDescription = ogDescription;
   if (ogImage       !== undefined) data.activities[idx].ogImage       = ogImage;
+  if (tags          !== undefined) data.activities[idx].tags          = tags;
   writeJSON(FILE, data);
   res.json({ success: true });
 });
@@ -94,6 +95,48 @@ router.post('/:id/upload-og', uploadOg.single('ogImage'), (req, res) => {
   if (!req.file) return res.status(400).json({ error: '無效的圖片' });
   const url = `/api/images/activity-pic/${req.params.id}/${req.file.filename}`;
   res.json({ success: true, url });
+});
+
+/* POST /api/admin/activity/:id/replace-image/:index */
+router.post('/:id/replace-image/:index', upload.single('image'), (req, res) => {
+  if (!req.file) return res.status(400).json({ error: '無效的圖片' });
+  const idx = parseInt(req.params.index, 10);
+  if (isNaN(idx)) return res.status(400).json({ error: '無效的索引' });
+  const data = readJSON(FILE, { activities: [] });
+  const act  = data.activities.find(a => a.id === req.params.id);
+  if (!act) return res.status(404).json({ error: '找不到此活動頁' });
+  if (!act.content[idx] || act.content[idx].type !== 'image')
+    return res.status(400).json({ error: '指定項目不是圖片' });
+  const oldFile = act.content[idx].file;
+  if (oldFile !== req.file.filename) {
+    const oldPath = path.join(DATA_DIR, 'activity-pic', req.params.id, oldFile);
+    if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+  }
+  act.content[idx].file = req.file.filename;
+  writeJSON(FILE, data);
+  res.json({ success: true, file: req.file.filename });
+});
+
+/* POST /api/admin/activity/:id/copy */
+router.post('/:id/copy', (req, res) => {
+  const data = readJSON(FILE, { activities: [] });
+  const src  = data.activities.find(a => a.id === req.params.id);
+  if (!src) return res.status(404).json({ error: '找不到此活動頁' });
+  const newId  = `act-${Date.now()}`;
+  const newAct = JSON.parse(JSON.stringify(src));
+  newAct.id    = newId;
+  newAct.title = `${src.title}（複製）`;
+  const srcDir = path.join(DATA_DIR, 'activity-pic', req.params.id);
+  const dstDir = path.join(DATA_DIR, 'activity-pic', newId);
+  fs.mkdirSync(dstDir, { recursive: true });
+  if (fs.existsSync(srcDir)) {
+    fs.readdirSync(srcDir).forEach(file =>
+      fs.copyFileSync(path.join(srcDir, file), path.join(dstDir, file))
+    );
+  }
+  data.activities.push(newAct);
+  writeJSON(FILE, data);
+  res.json({ success: true, id: newId });
 });
 
 /* DELETE /api/admin/activity/:id/image/:file */
