@@ -91,7 +91,7 @@ const distPath = process.env.FRONTEND_DIST_PATH
 if (fs.existsSync(distPath)) {
   app.use(express.static(distPath));
   // SPA catch-all：僅限 GET，讓 React Router 處理前端路由
-  app.get('*', (req, res) => {
+  app.get('/{*path}', (req, res) => {
     res.sendFile(path.join(distPath, 'index.html'));
   });
 }
