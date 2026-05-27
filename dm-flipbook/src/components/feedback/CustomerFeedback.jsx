@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import CryptoJS from 'crypto-js';
 import './CustomerFeedback.css';
 import ConfirmModal from './ConfirmModal';
 
@@ -47,19 +46,6 @@ export default function CustomerFeedback() {
     confirmBtnStyle: 'primary'
   });
 
-  const appProfile = {
-    c1: '6368756e', c2: '67796f2d', c3: '32383431', c4: '31303236', //app_K
-    m1: '32383431', m2: '31303236', m3: '2d636875', m4: '6e67796f'  //app_V
-  };
-
-  const allocateBuffer = (p1, p2, p3, p4) => {
-    return CryptoJS.enc.Hex.parse([p1, p2, p3, p4].join(''));
-  };
-
-
-  const primaryCtx = allocateBuffer(appProfile.c1, appProfile.c2, appProfile.c3, appProfile.c4);
-  const offsetCtx = allocateBuffer(appProfile.m1, appProfile.m2, appProfile.m3, appProfile.m4);
-
   const sanitizeInput = (str) => {
     if (!str) return '';
     return str
@@ -70,16 +56,6 @@ export default function CustomerFeedback() {
       .replace(/;/g, '&#59;')       
       .replace(/--/g, '&#45;&#45;')  
       .trim();
-  };
-
-  const prepareTransportPayload = (data) => {
-    const rawStream = JSON.stringify(data);
-    const processed = CryptoJS.AES.encrypt(rawStream, primaryCtx, {
-      iv: offsetCtx,
-      mode: CryptoJS.mode.CBC,
-      padding: CryptoJS.pad.Pkcs7
-    });
-    return processed.toString(); 
   };
 
   const fetchFeedback = async (data) => {
@@ -94,18 +70,12 @@ export default function CustomerFeedback() {
       const envConfig = await envResponse.json();
       const API_URL = envConfig.api_url;
 
-      const transportData = prepareTransportPayload(data);
-
-      const requestData = { 
-        payload: transportData 
-      };
-
       const response = await fetch(API_URL, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json' 
         },
-        body: JSON.stringify(requestData)
+        body: JSON.stringify(data)
       });
       if (response.ok) { 
         return { success: true, message: '意見回饋已成功發送！感謝您的寶貴回饋。' };
@@ -114,7 +84,6 @@ export default function CustomerFeedback() {
       }
 
     } catch (error) {
-      console.log(error);
       return { success: false, message: '系統發生異常，請聯絡客服人員。' };
     }
   };
