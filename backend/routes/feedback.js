@@ -28,23 +28,31 @@ async function sendNotificationEmail() {
       text:    process.env.MAIL_SEND_TEXT,
     });
   } catch (err) {
-    if (err.response) console.error(err.response.body);
+    if (err.response) console.error('Status:', err.response.status);
   }
 }
 
 router.post('/', (req, res) => {
   const data = req.body;
 
+  // 檢查資料是否收到
   if (!data || typeof data !== 'object' || Array.isArray(data) || Object.keys(data).length === 0) {
     return res.status(400).json({ error: 'Missing data' });
   }
 
-  if (typeof data.payload !== 'string') {
-    return res.status(400).json({ error: 'payload 必須為字串' });
+  if (typeof data.payload !== 'string' && typeof data.payload !== 'undefined') {
+    return res.status(400).json({ success: false, message: 'Request Error'});
   }
 
+  // 限制傳入資料長度(設定3000字元)
+  const rawString = JSON.stringify(data);
+  if (rawString.length > 3000) {
+    return res.status(400).json({ success: false, message: 'Request Error'});
+  }
+
+  // 檢查API是否收到
   if (!process.env.API_URL) {
-    return res.status(502).json({ error: 'Bad Gateway: Feedback service not configured.' });
+    return res.status(502).json({ success: false, message: 'Request Error'});
   }
 
   const payload = prepareTransportPayload(data);
@@ -62,30 +70,30 @@ router.post('/', (req, res) => {
       let parsed    = null;
       let isSuccess = false;
 
-      if (jspRes.statusCode === 200) {
+      if (data) {
         try {
           parsed = JSON.parse(data);
-          if (parsed.status === 'success') {
-            isSuccess = true;
-            // 程式註解，暫不使用
-            //sendNotificationEmail();
-          }
-        } catch (e) {
-          console.error('無法解析回傳 JSON:', e);
+        } catch (err) {
+          console.error('無法解析回傳 JSON:', err.message); 
         }
       }
-      const finalStatusCode = isSuccess ? jspRes.statusCode : 400;
+      
+      if (jspRes.statusCode === 200 && parsed && parsed.status === 'success') {
+        isSuccess = true;
+        // 程式註解，暫不使用
+        // sendNotificationEmail();
+      }
+      const finalStatusCode = isSuccess ? 200 : (jspRes.statusCode === 200 ? 400 : jspRes.statusCode);
       res.status(finalStatusCode).json({
         success: isSuccess,
-        message: isSuccess ? 'Request success' : 'Request Error',
-        Data:    parsed || data,
+        message: isSuccess ? 'Request success' : 'Request Error'
       });
     });
   });
 
   jspReq.on('error', (err) => {
-    console.error('Error forwarding:', err);
-    res.status(502).json({ error: 'Bad Gateway: Cannot connect to server.' });
+    console.error('Error forwarding:', err.message);
+    res.status(502).json({ success: false, message: 'Request Error' });
   });
 
   jspReq.end();
