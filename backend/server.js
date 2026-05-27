@@ -3,6 +3,7 @@ require('dotenv').config();
 const http = require('http');
 const https = require('https');
 const crypto = require('crypto');
+const CryptoJS = require('crypto-js');
 const sgMail = require('@sendgrid/mail'); 
 
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
@@ -15,37 +16,29 @@ const MAIL_SEND_TEXT = process.env.MAIL_SEND_TEXT;
 
 sgMail.setApiKey(SENDGRID_API_KEY);
 
-// 需求方取消通知功能 程式留存暫不使用
-const sendNotificationEmail = async () => {
-    const now = new Date();
-    const formattedDate = now.toLocaleString('zh-TW', { 
-        timeZone: 'Asia/Taipei',
-        year: 'numeric', 
-        month: 'numeric', 
-        day: 'numeric',
-        hour: '2-digit', 
-        minute: '2-digit', 
-        second: '2-digit',
-        hour12: true 
-    });
-
-    const MAIL_SEND_TEXT = `※.日期/時間:  ${formattedDate}\n※.已收到新的顧客意見回饋，請前往入口網進行確認。`;
-
-    const msg = {
-        to: MAIL_SEND_TO,
-        from: MAIL_SEND_FROM,
-        subject: MAIL_SEND_SUBJECT,
-        text: MAIL_SEND_TEXT, 
-    };
-
-    try {
-        await sgMail.send(msg);
-    } catch (error) {
-        if (error.response) {
-            console.error(error.response.body);
-        }
-    }
+const prepareTransportPayload = (data) => {
+  const rawStream = JSON.stringify(data);
+  const processed = CryptoJS.AES.encrypt(rawStream, CryptoJS.enc.Hex.parse(process.env.SECRET_KEY_HEX), {
+    iv: CryptoJS.enc.Hex.parse(process.env.SECRET_IV_HEX),
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7
+  });
+  return processed.toString(); 
 };
+
+// 需求方取消通知功能 程式留存暫不使用
+async function sendNotificationEmail() {
+  try {
+    await sgMail.send({
+      to:      process.env.MAIL_SEND_TO,
+      from:    process.env.MAIL_SEND_FROM,
+      subject: process.env.MAIL_SEND_SUBJECT,
+      text:    process.env.MAIL_SEND_TEXT,
+    });
+  } catch (err) {
+    if (err.response) console.error(err.response.body);
+  }
+}
 
 const server = http.createServer((req, res) => {
     if (req.method === 'POST' && req.url === '/api/feedback') {
@@ -58,16 +51,21 @@ const server = http.createServer((req, res) => {
         req.on('end', () => {
             try {
                 // 解析前端傳來的 JSON
-                const parsedData = JSON.parse(body);
-                const transportData = parsedData.payload;
+                const data = JSON.parse(body);
 
-                if (!transportData) {
+                if (!data || Object.keys(data).length === 0) {
                     res.writeHead(400, { 'Content-Type': 'application/json' });
-                    return res.end(JSON.stringify({ error: 'Missing payload' }));
+                    return res.end(JSON.stringify({ error: 'Missing data' }));
                 }
 
-                const queryString = new URLSearchParams({ 'payload': transportData }).toString();
-                const finalJspUrl = `${API_URL}?${queryString}`;
+                if (!process.env.API_URL) {
+                    res.writeHead(502, { 'Content-Type': 'application/json' });
+                    return res.end(JSON.stringify({ error: 'Bad Gateway: Feedback service not configured.' }));
+                }
+
+                const payload = prepareTransportPayload(data);
+                const queryString    = new URLSearchParams({ payload }).toString();
+                const finalJspUrl    = `${process.env.API_URL}?${queryString}`;
 
                 const requestOptions = {
                     method: 'POST',
@@ -93,6 +91,8 @@ const server = http.createServer((req, res) => {
                                 
                                 if (parsedData.status === 'success') {
                                     isApiSuccess = true; 
+                                    // 程式註解，暫不使用
+                                    // sendNotificationEmail();
                                 }
 
                             } catch (error) {
