@@ -35,8 +35,12 @@ async function sendNotificationEmail() {
 router.post('/', (req, res) => {
   const data = req.body;
 
-  if (!data || Object.keys(data).length === 0) {
+  if (!data || typeof data !== 'object' || Array.isArray(data) || Object.keys(data).length === 0) {
     return res.status(400).json({ error: 'Missing data' });
+  }
+
+  if (typeof data.payload !== 'string') {
+    return res.status(400).json({ error: 'payload 必須為字串' });
   }
 
   if (!process.env.API_URL) {

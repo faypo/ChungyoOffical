@@ -19,6 +19,13 @@ app.use((req, res, next) => { res.removeHeader('Server'); next(); });
 app.use(cors());
 app.use(express.json());
 
+// Block path traversal in raw URLs (defence-in-depth for clients that don't normalise)
+app.use((req, res, next) => {
+  try { if (decodeURIComponent(req.path).includes('..')) return res.status(400).end(); }
+  catch { return res.status(400).end(); }
+  next();
+});
+
 function escAttr(s) {
   return String(s ?? '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
@@ -70,20 +77,28 @@ app.use('/api/feedback', feedbackRoutes);
 app.use('/api/admin', adminLogger);
 app.use('/api/admin', adminRoutes);
 
+// API catch-all：未匹配的 /api/* 路由回傳 404/405，避免掉到 SPA
+app.use('/api', (req, res) => {
+  res.status(req.method === 'GET' ? 404 : 405).json({
+    error: req.method === 'GET' ? 'Not found' : 'Method not allowed',
+  });
+});
+
 // 部署時服務前端打包檔案
 const distPath = process.env.FRONTEND_DIST_PATH
   || path.join(__dirname, '../html');
 
 if (fs.existsSync(distPath)) {
   app.use(express.static(distPath));
-  // SPA catch-all：其他所有路由都回傳 index.html（讓 React Router 處理）
-  app.use((req, res) => {
+  // SPA catch-all：僅限 GET，讓 React Router 處理前端路由
+  app.get('*', (req, res) => {
     res.sendFile(path.join(distPath, 'index.html'));
   });
 }
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   const hostname = require('os').hostname();
   console.log(`Local:   http://localhost:${PORT}`);
   console.log(`Network: http://${hostname}:${PORT}`);
 });
+server.headersTimeout = 2000;

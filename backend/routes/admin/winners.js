@@ -52,4 +52,24 @@ router.put('/events', (req, res) => {
   res.json({ success: true });
 });
 
+/* ── PUT /api/admin/winners/:id ── 直接以 event id 更新（需在 /events 之後避免衝突）*/
+router.put('/:id', (req, res) => {
+  const data = readJSON(FILE);
+  const idx  = data.events.findIndex(e => e.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ error: '找不到此活動' });
+  data.events[idx] = { ...data.events[idx], ...req.body, id: req.params.id };
+  writeJSON(FILE, data);
+  res.json({ success: true });
+});
+
+/* ── DELETE /api/admin/winners/:id ── 直接以 event id 刪除 */
+router.delete('/:id', (req, res) => {
+  const data = readJSON(FILE);
+  const idx  = data.events.findIndex(e => e.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ error: '找不到此活動' });
+  data.events.splice(idx, 1);
+  writeJSON(FILE, data);
+  res.json({ success: true });
+});
+
 module.exports = router;

@@ -165,7 +165,7 @@ router.put('/:id/pages/order', (req, res) => {
 router.delete('/:id/images/:file', (req, res) => {
   const id   = safeName(req.params.id);
   const file = safeName(req.params.file);
-  if (!id || id !== req.params.id || !file || file !== req.params.file)
+  if (!id || id !== req.params.id || !/^[\w-]+$/.test(id) || !file || file !== req.params.file)
     return res.status(400).json({ error: '無效的參數' });
   const filePath = path.join(DATA_DIR, 'dm-pic', id, file);
   if (!fs.existsSync(filePath)) return res.status(404).json({ error: '檔案不存在' });

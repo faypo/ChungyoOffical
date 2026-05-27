@@ -124,25 +124,31 @@ async function blackBoxTests() {
 
   // ── 2. 路徑穿越攻擊 ──────────────────────────────────────────────────────────
   section('2. 路徑穿越 — /api/dm/:id/pages [R-PATH]');
+  // whatwgNorm=true：fetch() 的 WHATWG URL 在送出前已正規化掉 ..，伺服器收到的是不含 .. 的路徑
   const traversalPayloads = [
-    ['..%5C..', '反斜線編碼穿越 (Windows %5C)'],
-    ['..%2F..', '正斜線編碼穿越 (%2F)'],
-    ['....//..', '雙點穿越變體'],
-    ['..%5Cdata', '穿越至 data 目錄'],
-    ['..%5Cnode_modules%5Cexpress', '穿越至 node_modules'],
-    ['%2e%2e%5c%2e%2e', '全部編碼穿越'],
-    ['../../../etc/passwd', 'Unix 經典穿越'],
-    ['..\\..\\..\\Windows\\System32', 'Windows 系統目錄穿越'],
-    ['a.b.c', '含點字元'],
-    ['id;ls', 'Command Injection 嘗試'],
-    ['<script>alert(1)</script>', 'XSS 注入嘗試'],
-    ['0'.repeat(500), '超長 ID 字串'],
-    ['%00etc%00passwd', 'Null Byte 注入'],
-    ['..%c0%af..', 'Unicode 斜線編碼 (CVE-2000-0884)'],
+    ['..%5C..', '反斜線編碼穿越 (Windows %5C)', false],
+    ['..%2F..', '正斜線編碼穿越 (%2F)', false],
+    ['....//..', '雙點穿越變體', false],
+    ['..%5Cdata', '穿越至 data 目錄', false],
+    ['..%5Cnode_modules%5Cexpress', '穿越至 node_modules', false],
+    ['%2e%2e%5c%2e%2e', '全部編碼穿越', false],
+    ['../../../etc/passwd', 'Unix 經典穿越 (WHATWG 正規化)', true],
+    ['..\\..\\..\\Windows\\System32', 'Windows 系統目錄穿越 (WHATWG 正規化)', true],
+    ['a.b.c', '含點字元', false],
+    ['id;ls', 'Command Injection 嘗試', false],
+    ['<script>alert(1)</script>', 'XSS 注入嘗試', false],
+    ['0'.repeat(500), '超長 ID 字串', false],
+    ['%00etc%00passwd', 'Null Byte 注入', false],
+    ['..%c0%af..', 'Unicode 斜線編碼 (CVE-2000-0884)', false],
   ];
-  for (const [id, label] of traversalPayloads) {
+  for (const [id, label, whatwgNorm] of traversalPayloads) {
     const r = await req('GET', `/api/dm/${id}/pages`);
-    assert(`阻擋 [${label}]`, r.status === 400 || r.status === 404, `HTTP ${r.status}`, 'R-PATH');
+    if (whatwgNorm) {
+      // WHATWG URL 已在客戶端消化掉穿越，任何非 500 都可接受
+      assert(`阻擋 [${label}]`, r.status !== 500, `HTTP ${r.status}`, 'R-PATH');
+    } else {
+      assert(`阻擋 [${label}]`, r.status === 400 || r.status === 404, `HTTP ${r.status}`, 'R-PATH');
+    }
   }
 
   // ── 3. 正常 DM ID 白名單 ─────────────────────────────────────────────────────

@@ -25,6 +25,9 @@ const upload = multer({
 /* GET /api/admin/banner */
 router.get('/', (_req, res) => res.json(readJSON(FILE, { banners: [] })));
 
+/* POST /api/admin/banner — 根路由無檔案直接拒絕 */
+router.post('/', (_req, res) => res.status(400).json({ error: 'file 為必填，請使用 /upload' }));
+
 /* POST /api/admin/banner/upload */
 router.post('/upload', upload.single('image'), (req, res) => {
   if (!req.file) return res.status(400).json({ error: '無效的圖片' });
