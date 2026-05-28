@@ -10,6 +10,7 @@ const feedbackRoutes = require('./routes/feedback');
 const adminRoutes    = require('./routes/admin');
 const { readJSON }   = require('./utils/json');
 const { adminLogger } = require('./utils/logger');
+const { feedbackLogger } = require('./utils/feedback-logger')
 
 const PORT = process.env.PORT || 4000;
 
@@ -73,6 +74,7 @@ app.use('/api/images', (req, res, next) => {
 }, express.static(path.join(__dirname, 'data')));
 app.use('/api/documents', express.static(path.join(__dirname, 'data', 'documents')));
 app.use('/api', dataRoutes);
+app.use('/api/feedback',feedbackLogger)
 app.use('/api/feedback', feedbackRoutes);
 app.use('/api/admin', adminLogger);
 app.use('/api/admin', adminRoutes);
