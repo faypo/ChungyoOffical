@@ -80,12 +80,12 @@
 
 .winners-table td {
   padding: 11px 14px;
-  border-bottom: 2px solid #999;
+  border-top: 2px solid #999;
   border-right: 1px solid #999;
   color: #333;
 }
 .winners-table td:last-child { border-right: none; }
-.winners-table tr:last-child td { border-bottom: none; }
+.winners-table tbody tr:first-child td { border-top: none; }
 .winners-table tr:hover td { background: #fafafa; }
 
 /* ── Notice ── */

@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
+import './FloorGuideManager.css';
 
 export default function SustainabilityManager() {
   const [currentUrl, setCurrentUrl] = useState('');
   const [uploading, setUploading]   = useState(false);
-  const [msg, setMsg]               = useState('');
+  const [msg, setMsg]               = useState(null);
+  const showMsg = (text, type = 'ok') => { setMsg({ text, type }); setTimeout(() => setMsg(null), 3000); };
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -17,7 +19,6 @@ export default function SustainabilityManager() {
     const file = e.target.files?.[0];
     if (!file) return;
     setUploading(true);
-    setMsg('');
     const form = new FormData();
     form.append('pdf', file);
     try {
@@ -25,12 +26,12 @@ export default function SustainabilityManager() {
       const data = await res.json();
       if (data.success) {
         setCurrentUrl(data.url);
-        setMsg('上傳成功');
+        showMsg('上傳成功');
       } else {
-        setMsg(data.error || '上傳失敗');
+        showMsg(data.error || '上傳失敗', 'err');
       }
     } catch {
-      setMsg('上傳失敗');
+      showMsg('上傳失敗', 'err');
     } finally {
       setUploading(false);
       if (inputRef.current) inputRef.current.value = '';
@@ -43,10 +44,10 @@ export default function SustainabilityManager() {
       const res = await fetch('/api/admin/sustainability', { method: 'DELETE' });
       if ((await res.json()).success) {
         setCurrentUrl('');
-        setMsg('已刪除');
+        showMsg('已刪除');
       }
     } catch {
-      setMsg('刪除失敗');
+      showMsg('刪除失敗', 'err');
     }
   }
 
@@ -86,12 +87,7 @@ export default function SustainabilityManager() {
         {uploading && <p style={{ marginTop: '8px', fontSize: '13px', color: '#555' }}>上傳中…</p>}
       </div>
 
-      {msg && (
-        <p style={{ marginTop: '16px', fontSize: '14px',
-                    color: msg.includes('失敗') ? '#dc3545' : '#28a745' }}>
-          {msg}
-        </p>
-      )}
+      {msg && <div className="admin-popup-overlay"><div className={`admin-popup admin-popup--${msg.type}`}>{msg.text}</div></div>}
     </div>
   );
 }

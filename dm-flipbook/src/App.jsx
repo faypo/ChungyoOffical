@@ -25,6 +25,7 @@ import HomeFBManager from './components/admin/HomeFBManager';
 import HomePromoManager from './components/admin/HomePromoManager';
 import LogoManager from './components/admin/LogoManager';
 import SustainabilityManager from './components/admin/SustainabilityManager';
+import ServiceManager from './components/admin/ServiceManager';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import './App.css';
 
@@ -49,6 +50,7 @@ export default function App() {
               <Route path="activity" element={<ActivityManager />} />
               <Route path="gallery"        element={<GalleryManager />} />
               <Route path="sustainability" element={<SustainabilityManager />} />
+              <Route path="service"        element={<ServiceManager />} />
             </Route>
 
             {/* 一般頁面 — 有 Layout */}

@@ -10,6 +10,7 @@ const OTHER_NAV = [
   { to: '/admin/activity', label: '活動頁' },
   { to: '/admin/gallery',        label: '時尚藝廊' },
   { to: '/admin/sustainability', label: '永續報告書' },
+  { to: '/admin/service',       label: '貼心服務' },
 ];
 
 const HOME_NAV = [

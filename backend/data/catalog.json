@@ -55,7 +55,10 @@
     "subtitle": "20260526-20260718",
     "type": "strip",
     "button": [],
-    "hotspots": []
+    "hotspots": [],
+    "startDate": "",
+    "endDate": "",
+    "url": ""
   },
   {
     "id": ".",

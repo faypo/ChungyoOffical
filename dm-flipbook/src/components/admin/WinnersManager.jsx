@@ -214,7 +214,7 @@ export default function WinnersManager() {
         <h1 className="fg-manager-title">得獎名單管理</h1>
       </div>
 
-      {msg && <div className={`fg-msg fg-msg--${msg.type}`}>{msg.text}</div>}
+      {msg && <div className="admin-popup-overlay"><div className={`admin-popup admin-popup--${msg.type}`}>{msg.text}</div></div>}
 
       {/* ── Event list ── */}
       <div className="fg-section">

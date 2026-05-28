@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import HotspotEditor from './HotspotEditor';
+import './FloorGuideManager.css';
 import './DMManager.css';
 
 const API = '/api/admin/catalog';
@@ -357,7 +358,7 @@ export default function DMManager() {
         <button className="btn btn-primary" onClick={openNew}>＋ 新增 DM</button>
       </div>
 
-      {msg && <div className={`dm-msg dm-msg--${msg.type}`}>{msg.text}</div>}
+      {msg && <div className="admin-popup-overlay"><div className={`admin-popup admin-popup--${msg.type}`}>{msg.text}</div></div>}
 
       {/* ── 新增/編輯表單 ── */}
       {showForm && (

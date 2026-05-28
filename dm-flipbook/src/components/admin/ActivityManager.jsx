@@ -33,6 +33,9 @@ export default function ActivityManager() {
 
   const [editTags,           setEditTags]           = useState([]);
   const [tagInput,           setTagInput]           = useState('');
+  const [selectTagInput,     setSelectTagInput]     = useState('');
+  const [showSelectDropdown, setShowSelectDropdown] = useState(false);
+  const selectTagWrapRef = useRef();
   const [filterTags,         setFilterTags]         = useState([]);
   const filterTagsRef = useRef([]);
   useEffect(() => { filterTagsRef.current = filterTags; }, [filterTags]);
@@ -54,6 +57,26 @@ export default function ActivityManager() {
 
   // 拖曳
   const dragSrc = useRef(null);
+
+  // 點擊 scroll 到編輯區
+  const editorRef    = useRef();
+  const userClickRef = useRef(false);
+
+  useEffect(() => {
+    if (!userClickRef.current) return;
+    userClickRef.current = false;
+    editorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, [activeId]);
+
+  // 回到頂部
+  const [showBackTop, setShowBackTop] = useState(false);
+  useEffect(() => {
+    const el = document.querySelector('.admin-main');
+    if (!el) return;
+    const onScroll = () => setShowBackTop(el.scrollTop > 300);
+    el.addEventListener('scroll', onScroll);
+    return () => el.removeEventListener('scroll', onScroll);
+  }, []);
 
   const showMsgFn = (text, type = 'ok') => {
     setMsg({ text, type });
@@ -251,13 +274,30 @@ export default function ActivityManager() {
   const handleDragEnd = () => { dragSrc.current = null; };
 
   /* ── 標籤管理 ── */
-  const addTag = () => {
-    const t = tagInput.trim();
+  const allExistingTags = [...new Set(activities.flatMap(a => a.tags ?? []))];
+
+  const addTag = (val) => {
+    const t = (val ?? tagInput).trim();
     if (!t || editTags.includes(t)) return;
     setEditTags(prev => [...prev, t]);
     setTagInput('');
   };
+  const selectTag = (t) => {
+    if (!t || editTags.includes(t)) return;
+    setEditTags(prev => [...prev, t]);
+    setSelectTagInput('');
+    setShowSelectDropdown(false);
+  };
   const removeTag = (tag) => setEditTags(prev => prev.filter(t => t !== tag));
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (selectTagWrapRef.current && !selectTagWrapRef.current.contains(e.target))
+        setShowSelectDropdown(false);
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
 
   /* ── 換圖 ── */
   const triggerReplace = (idx) => {
@@ -331,8 +371,8 @@ export default function ActivityManager() {
       </div>
 
       {msg && (
-        <div className="am-popup-overlay">
-          <div className={`am-popup am-popup--${msg.type}`}>{msg.text}</div>
+        <div className="admin-popup-overlay">
+          <div className={`admin-popup admin-popup--${msg.type}`}>{msg.text}</div>
         </div>
       )}
 
@@ -435,7 +475,15 @@ export default function ActivityManager() {
                     <div className="fg-table-actions-inner">
                       <button
                         className={`fg-btn fg-btn-sm ${activeId === a.id ? 'fg-btn-primary' : 'fg-btn-ghost'}`}
-                        onClick={() => { setActiveId(a.id); setShowAdd(false); }}
+                        onClick={() => {
+                          setShowAdd(false);
+                          if (a.id === activeId) {
+                            editorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                          } else {
+                            userClickRef.current = true;
+                            setActiveId(a.id);
+                          }
+                        }}
                       >
                         {activeId === a.id ? '編輯中' : '編輯'}
                       </button>
@@ -457,7 +505,7 @@ export default function ActivityManager() {
       </div>
 
       {activeActivity && (
-        <div className="wm-editor">
+        <div className="wm-editor" ref={editorRef}>
           {/* ── 基本資訊 ── */}
           <div className="fg-info-card">
             <div className="fg-info-card-title">活動頁資訊</div>
@@ -478,15 +526,42 @@ export default function ActivityManager() {
                     <button className="am-tag-remove" onClick={() => removeTag(tag)}>×</button>
                   </span>
                 ))}
-                <div className="am-tag-input-row">
-                  <input
-                    className="fg-info-input am-tag-input"
-                    placeholder="新增標籤，按 Enter"
-                    value={tagInput}
-                    onChange={e => setTagInput(e.target.value)}
-                    onKeyDown={e => e.key === 'Enter' && addTag()}
-                  />
-                  <button className="fg-btn fg-btn-ghost fg-btn-sm" onClick={addTag}>＋</button>
+                <div className="am-tag-inputs">
+                  {/* 新增自訂標籤 */}
+                  <div className="am-tag-input-row">
+                    <input
+                      className="fg-info-input am-tag-input"
+                      placeholder="新增標籤，按 Enter"
+                      value={tagInput}
+                      onChange={e => setTagInput(e.target.value)}
+                      onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addTag(); } }}
+                    />
+                    <button className="fg-btn fg-btn-ghost fg-btn-sm" onClick={() => addTag()}>＋</button>
+                  </div>
+                  {/* 從現有標籤選擇 */}
+                  <div className="am-tag-input-row" ref={selectTagWrapRef} style={{ position: 'relative' }}>
+                    <input
+                      className="fg-info-input am-tag-input"
+                      placeholder="搜尋已有標籤"
+                      value={selectTagInput}
+                      onChange={e => { setSelectTagInput(e.target.value); setShowSelectDropdown(true); }}
+                      onFocus={() => setShowSelectDropdown(true)}
+                    />
+                    {showSelectDropdown && (() => {
+                      const q = selectTagInput.trim();
+                      const suggestions = allExistingTags.filter(t =>
+                        !editTags.includes(t) &&
+                        (q === '' || t.includes(q))
+                      );
+                      return suggestions.length > 0 ? (
+                        <div className="am-tag-dropdown">
+                          {suggestions.map(t => (
+                            <div key={t} className="am-tag-dropdown-item" onMouseDown={() => selectTag(t)}>{t}</div>
+                          ))}
+                        </div>
+                      ) : <div className="am-tag-dropdown"><div className="am-tag-dropdown-empty">無符合標籤</div></div>;
+                    })()}
+                  </div>
                 </div>
               </div>
             </div>
@@ -646,6 +721,14 @@ export default function ActivityManager() {
             <button className="fg-btn fg-btn-danger" onClick={() => handleDelete(activeId)}>刪除活動頁</button>
           </div>
         </div>
+      )}
+
+      {showBackTop && (
+        <button
+          className="am-back-top"
+          onClick={() => document.querySelector('.admin-main')?.scrollTo({ top: 0, behavior: 'smooth' })}
+          aria-label="回到頂部"
+        >↑</button>
       )}
     </div>
   );

@@ -11,6 +11,7 @@ const homeFBRoutes       = require('./home-fb');
 const homePromoRoutes    = require('./home-promo');
 const logosRoutes            = require('./logos');
 const sustainabilityRoutes   = require('./sustainability');
+const serviceRoutes          = require('./service');
 
 const router = express.Router();
 
@@ -26,5 +27,6 @@ router.use('/home-fb',     homeFBRoutes);
 router.use('/home-promo',  homePromoRoutes);
 router.use('/logos',            logosRoutes);
 router.use('/sustainability',   sustainabilityRoutes);
+router.use('/service',         serviceRoutes);
 
 module.exports = router;

@@ -146,7 +146,7 @@ export default function BannerManager() {
         <h1 className="fg-manager-title">首頁 Banner 管理</h1>
       </div>
 
-      {msg && <div className={`fg-msg fg-msg--${msg.type}`}>{msg.text}</div>}
+      {msg && <div className="admin-popup-overlay"><div className={`admin-popup admin-popup--${msg.type}`}>{msg.text}</div></div>}
 
       {/* ── 拖放上傳區 ── */}
       <div
