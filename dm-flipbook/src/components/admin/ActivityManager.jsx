@@ -34,6 +34,8 @@ export default function ActivityManager() {
   const [editTags,           setEditTags]           = useState([]);
   const [tagInput,           setTagInput]           = useState('');
   const [filterTags,         setFilterTags]         = useState([]);
+  const filterTagsRef = useRef([]);
+  useEffect(() => { filterTagsRef.current = filterTags; }, [filterTags]);
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
   const [filterPanelStyle,   setFilterPanelStyle]   = useState({ top: 0, left: 0 });
   const filterDropdownRef = useRef();
@@ -65,7 +67,12 @@ export default function ActivityManager() {
       setActivities(d.activities ?? []);
       setActiveId(prev => {
         const found = d.activities?.find(a => a.id === prev);
-        return found ? prev : (d.activities?.[0]?.id ?? null);
+        if (found) return prev;
+        const tags = filterTagsRef.current;
+        const filtered = tags.length > 0
+          ? (d.activities ?? []).filter(a => tags.some(t => (a.tags ?? []).includes(t)))
+          : d.activities;
+        return filtered?.[0]?.id ?? null;
       });
     } catch {
       showMsgFn('無法連線到後端', 'err');
@@ -101,7 +108,7 @@ export default function ActivityManager() {
   /* ── 新增活動頁 ── */
   const handleAdd = async () => {
     if (!newTitle.trim()) return showMsgFn('名稱為必填', 'err');
-    const res = await apiFetch(API, { method: 'POST', body: JSON.stringify({ title: newTitle }) });
+    const res = await apiFetch(API, { method: 'POST', body: JSON.stringify({ title: newTitle, tags: filterTags.length > 0 ? [...filterTags] : [] }) });
     const d = await res.json();
     if (!res.ok) return showMsgFn(d.error || '新增失敗', 'err');
     showMsgFn('已新增');
@@ -323,7 +330,11 @@ export default function ActivityManager() {
         <h1 className="fg-manager-title">活動頁管理</h1>
       </div>
 
-      {msg && <div className={`fg-msg fg-msg--${msg.type}`}>{msg.text}</div>}
+      {msg && (
+        <div className="am-popup-overlay">
+          <div className={`am-popup am-popup--${msg.type}`}>{msg.text}</div>
+        </div>
+      )}
 
       {/* ── 活動頁列表 ── */}
       <div className="fg-section">

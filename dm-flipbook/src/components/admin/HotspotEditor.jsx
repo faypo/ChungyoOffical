@@ -198,18 +198,17 @@ export default function HotspotEditor({ dmId, imgSrc: imgSrcProp, initialHotspot
         )}
       </div>
 
-      {/* 選中熱區的 URL 輸入 */}
-      {selected && (
-        <div className="hs-url-row">
-          <span className="hs-url-label">連結 URL</span>
-          <input
-            className="hs-url-input"
-            value={selected.url}
-            onChange={e => updateHotspot(selected.id, { url: e.target.value })}
-            placeholder="https://..."
-          />
-        </div>
-      )}
+      {/* 選中熱區的 URL 輸入（永遠佔位，避免出現時推擠 canvas） */}
+      <div className="hs-url-row">
+        <span className="hs-url-label">連結 URL</span>
+        <input
+          className="hs-url-input"
+          value={selected?.url ?? ''}
+          onChange={e => selected && updateHotspot(selected.id, { url: e.target.value })}
+          placeholder={selected ? 'https://...' : '請先選取熱區'}
+          disabled={!selected}
+        />
+      </div>
 
       {/* 提示文字 */}
       <p className="hs-hint">

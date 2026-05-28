@@ -1,14 +1,45 @@
 {
   "categories": [
-    { "id": "chinese",    "label": "中式料理" },
-    { "id": "japanese",   "label": "日式料理" },
-    { "id": "thai",       "label": "泰式料理" },
-    { "id": "korean",     "label": "韓式料理" },
-    { "id": "italian",    "label": "義式料理" },
-    { "id": "american",   "label": "美式料理" },
-    { "id": "vegetarian", "label": "素食料理" },
-    { "id": "cafe",       "label": "咖啡廳" },
-    { "id": "tea",        "label": "茶飲" }
+    {
+      "id": "chinese",
+      "label": "中式料理"
+    },
+    {
+      "id": "japanese",
+      "label": "日式料理"
+    },
+    {
+      "id": "thai",
+      "label": "泰式料理"
+    },
+    {
+      "id": "korean",
+      "label": "韓式料理"
+    },
+    {
+      "id": "italian",
+      "label": "義式料理"
+    },
+    {
+      "id": "american",
+      "label": "美式料理"
+    },
+    {
+      "id": "vegetarian",
+      "label": "素食料理"
+    },
+    {
+      "id": "cafe",
+      "label": "咖啡廳"
+    },
+    {
+      "id": "tea",
+      "label": "茶飲"
+    },
+    {
+      "id": "dessert",
+      "label": "甜點"
+    }
   ],
   "restaurants": {
     "chinese": {
@@ -120,7 +151,7 @@
     },
     "thai": {
       "theme": [
-         {
+        {
           "image": "瓦城泰國料理.jpg",
           "name": "瓦城泰國料理",
           "building": "A棟",
@@ -157,7 +188,7 @@
     },
     "korean": {
       "theme": [
-         {
+        {
           "image": "bbq.jpg",
           "name": "bb.q CHICKEN",
           "building": "B棟",
@@ -204,7 +235,7 @@
     },
     "vegetarian": {
       "theme": [
-         {
+        {
           "image": "海底撈LOGO.jpg",
           "name": "海底撈",
           "building": "A棟",
@@ -220,7 +251,7 @@
           "description": "明亮的現代風餐廳，供應創意港式料理、港式飲茶和甜點。",
           "phone": "04-2223-3919"
         },
-         {
+        {
           "image": "NARALOGO.jpg",
           "name": "NARA Thai Cuisine",
           "building": "A棟",
@@ -236,7 +267,7 @@
           "description": "鮮香麻辣、讓人胃口大開的川味料理，一起開心相聚、大口吃飯。",
           "phone": "04-2223-5168"
         },
-         {
+        {
           "image": "藍象廷LOGO.jpg",
           "name": "藍象廷泰式火鍋吃到飽",
           "building": "C棟",
@@ -289,7 +320,7 @@
           "description": "特色台式麵包、精緻甜點，與咖啡結合，和您一同分享幸福。",
           "phone": "04-2228-5168"
         },
-         {
+        {
           "image": "星巴克.jpg",
           "name": "星巴克",
           "building": "C棟",
@@ -305,7 +336,7 @@
           "description": "提供高品質的咖啡與服務、獨特的空間設計，享受咖啡好時光。",
           "phone": "04-2220-0051"
         },
-         {
+        {
           "image": "莫凡彼咖啡.jpg",
           "name": "莫凡彼咖啡",
           "building": "C棟",
@@ -343,7 +374,7 @@
           "description": "「堅持做好每一杯茶，杯杯都是好茶」，以英式水果茶最為著名。",
           "phone": "04-3507-9828"
         },
-         {
+        {
           "image": "樺達奶茶.jpg",
           "name": "樺達奶茶",
           "building": "C棟",
@@ -358,6 +389,27 @@
           "floor": "B3",
           "description": "創立於台南，是「珍珠奶茶」的創始店之一，秉持「以茶會友」精神，堅持使用高品質台灣茶葉與手搖技術。",
           "phone": "04-2229-6177"
+        }
+      ]
+    },
+    "dessert": {
+      "theme": [],
+      "foodcourt": [
+        {
+          "name": "薔薇派",
+          "building": "B棟",
+          "floor": "B2",
+          "description": "測試_薔薇派",
+          "phone": "04-2223-9827",
+          "image": "/api/images/food-pic/1778828104264-èèæ´¾logo.jpg"
+        },
+        {
+          "name": "Cona's妮娜巧克力",
+          "building": "B棟",
+          "floor": "B2",
+          "description": "Come and Join Us  沉浸在巧克力的奇幻世界裡，短暫地逃離現實，盡情地享受釋放想像力的片刻。",
+          "phone": "0903-571-648",
+          "image": "/api/images/food-pic/1779087652428-Conaâs å¦®å¨å·§ååLOGO.jpg"
         }
       ]
     }

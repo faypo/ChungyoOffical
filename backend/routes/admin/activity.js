@@ -31,11 +31,11 @@ router.get('/', (_req, res) => res.json(readJSON(FILE, { activities: [] })));
 
 /* POST /api/admin/activity */
 router.post('/', (req, res) => {
-  const { title } = req.body;
+  const { title, tags } = req.body;
   if (!title) return res.status(400).json({ error: 'title 為必填' });
   const data = readJSON(FILE, { activities: [] });
   const id = `act-${Date.now()}`;
-  data.activities.push({ id, title, content: [] });
+  data.activities.push({ id, title, content: [], tags: Array.isArray(tags) ? tags : [] });
   fs.mkdirSync(path.join(DATA_DIR, 'activity-pic', id), { recursive: true });
   writeJSON(FILE, data);
   res.json({ success: true, id });
