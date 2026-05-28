@@ -25,8 +25,6 @@ function ImageWithHotspots({ src, hotspots = [] }) {
               width:  `${spot.width}%`,
               height: `${spot.height}%`,
             }}
-            target="_blank"
-            rel="noreferrer"
             aria-label="連結"
           />
         ) : null
