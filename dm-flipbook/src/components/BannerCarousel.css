@@ -1,15 +1,16 @@
+/* ===== Banner Carousel — Japanese Magazine Style ===== */
 .bc-root {
   position: relative;
   width: 100%;
   min-width: 0;
   max-width: 100%;
   overflow: hidden;
-  background: #eee;
+  background: #e8e4df;
 }
 
 .bc-track {
   display: flex;
-  transition: transform 0.5s ease;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
 }
 
@@ -35,25 +36,33 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.28);
-  color: #fff;
-  border: none;
+  background: rgba(250, 249, 247, 0.85);
+  color: #1a1a1a;
+  border: 1px solid rgba(216, 212, 207, 0.9);
   cursor: pointer;
-  font-size: 40px;
+  font-size: 18px;
   line-height: 1;
-  padding: 6px 14px;
-  border-radius: 4px;
-  transition: background 0.2s;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0;
+  transition: background 0.2s, color 0.2s;
   z-index: 10;
 }
-.bc-arrow:hover { background: rgba(0, 0, 0, 0.52); }
-.bc-arrow--prev { left: 12px; }
-.bc-arrow--next { right: 12px; }
+.bc-arrow:hover {
+  background: #5e5c5a;
+  color: #fff;
+  border-color: #5e5c5a;
+}
+.bc-arrow--prev { left: 16px; }
+.bc-arrow--next { right: 16px; }
 
 /* Dots */
 .bc-dots {
   position: absolute;
-  bottom: 12px;
+  bottom: 16px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -62,22 +71,23 @@
 }
 
 .bc-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.85);
-  background: rgba(255, 255, 255, 0.25);
+  width: 24px;
+  height: 2px;
+  border-radius: 0;
+  border: none;
+  background: rgba(255, 255, 255, 0.5);
   cursor: pointer;
   padding: 0;
-  transition: background 0.2s, border-color 0.2s;
+  transition: background 0.3s, width 0.3s;
 }
 .bc-dot.active {
   background: #fff;
-  border-color: #fff;
+  width: 36px;
 }
 
 /* Mobile */
 @media (max-width: 700px) {
-  .bc-arrow { font-size: 28px; padding: 4px 10px; }
-  .bc-dot   { width: 8px; height: 8px; }
+  .bc-arrow { display: none; }
+  .bc-dot   { width: 16px; }
+  .bc-dot.active { width: 24px; }
 }

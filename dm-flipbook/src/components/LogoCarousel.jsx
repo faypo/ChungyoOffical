@@ -32,6 +32,7 @@ export default function LogoCarousel() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
+      <p className="lc-section-label">Our Brands</p>
       <div className="lc-viewport">
         <div
           className="lc-track"

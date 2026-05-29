@@ -1,47 +1,48 @@
-/* ===== Floor Guide ===== */
+/* ===== Floor Guide — Japanese Magazine Style ===== */
 .floor-guide {
   width: 100%; height: 100%;
   display: flex;
   overflow: hidden;
 }
 
-/* Left: floor list — 1/5 width */
+/* Left: floor list */
 .floor-list {
   width: 21%;
   flex-shrink: 0;
   overflow-y: auto;
-  background: #F8F9FA;
+  background: #f2efeb;
+  border-right: 1px solid #d8d4cf;
 }
 
 .floor-list-item {
   width: 100%;
-  padding: 18px 16px;
+  padding: 16px 12px;
   border: none;
-  border-bottom: 1px solid color-mix(in srgb, var(--bc, #6E6E6E) 30%, white);
+  border-bottom: 1px solid #e0dbd5;
   background: none;
   cursor: pointer;
-  text-align: left;
-  font-size: 15px;
-  font-weight: 600;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 400;
   font-family: inherit;
-  color: #444;
-  letter-spacing: 0.5px;
-  line-height: 1.5;
+  color: #3a3533;
+  letter-spacing: 2px;
+  line-height: 1.6;
   white-space: pre-wrap;
   word-break: break-all;
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.2s, color 0.2s;
 }
-.floor-list-item:hover { background: color-mix(in srgb, var(--bc, #6E6E6E) 15%, white); color: #222; }
-.floor-list-item.active { background: #6E6E6E; color: #fff; }
+.floor-list-item:hover  { background: #e8e4df; color: #1a1a1a; }
+.floor-list-item.active { background: var(--bc, #5e5c5a); color: #fff; letter-spacing: 2px; }
 
-/* Right panel — 4/5 width */
+/* Right panel */
 .floor-right {
   flex: 1;
   display: flex;
   flex-direction: column;
   position: relative;
   padding-top: 43px;
-  background: #FFFFFF;
+  background: #faf9f7;
   overflow: hidden;
 }
 
@@ -68,25 +69,21 @@
   overflow: visible;
 }
 
-/* Background circle — only this gets clipped */
+/* Background circle */
 .floor-tab-bg {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: var(--bc, #6E6E6E);
+  background: var(--bc, #5e5c5a);
   clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
   transition: background 0.2s;
 }
-
-.floor-tab-btn.active .floor-tab-bg {
-  clip-path: none;
-}
-
+.floor-tab-btn.active .floor-tab-bg { clip-path: none; }
 .floor-tab-btn:not(.active):hover .floor-tab-bg {
-  background: color-mix(in srgb, var(--bc, #6E6E6E) 80%, black);
+  background: color-mix(in srgb, var(--bc, #5e5c5a) 80%, black);
 }
 
-/* Label: always at true centre of full circle, never clipped */
+/* Label */
 .floor-tab-label {
   position: absolute;
   left: 0; right: 0;
@@ -100,26 +97,26 @@
   gap: 1px;
   z-index: 1;
 }
-
 .floor-tab-letter {
   font-size: 34px;
   font-weight: 900;
   line-height: 1;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  text-shadow: -1px -1px 0 rgba(0,0,0,0.4), 1px -1px 0 rgba(0,0,0,0.4),
+               -1px 1px 0 rgba(0,0,0,0.4), 1px 1px 0 rgba(0,0,0,0.4);
 }
-
 .floor-tab-suffix {
   font-size: 16px;
   font-weight: 700;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  text-shadow: -1px -1px 0 rgba(0,0,0,0.4), 1px -1px 0 rgba(0,0,0,0.4),
+               -1px 1px 0 rgba(0,0,0,0.4), 1px 1px 0 rgba(0,0,0,0.4);
 }
 
 .floor-content {
   flex: 1;
   overflow-y: auto;
-  padding: 63px 20px 20px;
-  background: #fff;
-  border-top: 2px solid var(--bc, #6E6E6E);
+  padding: 63px 24px 24px;
+  background: #faf9f7;
+  border-top: 2px solid var(--bc, #5e5c5a);
 }
 
 .floor-empty {
@@ -127,34 +124,36 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #aaa;
-  font-size: 14px;
-  letter-spacing: 1px;
+  color: #9a9896;
+  font-size: 13px;
+  letter-spacing: 3px;
 }
 
 .floor-cards {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 
 .floor-card {
   display: flex;
-  gap: 16px;
+  gap: 20px;
   background: #fff;
-  border: 1px solid color-mix(in srgb, var(--bc, #6E6E6E) 25%, white);
-  border-radius: 8px;
+  border: 1px solid #e0dbd5;
+  border-left: 3px solid var(--bc, #5e5c5a);
   padding: 16px;
-  box-shadow: 0 1px 4px rgba(0,64,152,0.08);
+  transition: box-shadow 0.2s;
+}
+.floor-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
 }
 
 .floor-card-logo {
   width: 200px; height: 200px;
   flex-shrink: 0;
-  border-radius: 6px;
   overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--bc, #6E6E6E) 25%, white);
-  background: color-mix(in srgb, var(--bc, #6E6E6E) 15%, white);
+  border: 1px solid #e0dbd5;
+  background: #f2efeb;
 }
 .floor-card-logo img {
   width: 100%; height: 100%;
@@ -165,66 +164,66 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: color-mix(in srgb, var(--bc, #6E6E6E) 20%, white);
-  color: #555;
+  background: #f2efeb;
+  color: #9a9896;
   font-size: 26px;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .floor-card-info {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 6px;
 }
 .floor-card-name {
-  font-size: 20px;
-  font-weight: 700;
-  color: #222;
-  letter-spacing: 1px;
+  font-size: 18px;
+  font-weight: 400;
+  color: #1a1a1a;
+  letter-spacing: 3px;
 }
 .floor-card-phone {
-  font-size: 14px;
-  color: #1a6ed8;
-  text-decoration: underline;
-  display: inline-block;
-}
-.floor-card-phone:hover {
-  color: #0f4fa0;
-}
-.floor-card-desc {
   font-size: 13px;
-  color: #666;
-  line-height: 1.7;
+  color: var(--bc, #5e5c5a);
+  text-decoration: none;
+  letter-spacing: 1px;
+  display: inline-block;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 1px;
+  transition: opacity 0.2s;
+}
+.floor-card-phone:hover { opacity: 0.7; }
+.floor-card-desc {
+  font-size: 12px;
+  color: #6b6966;
+  line-height: 1.8;
+  letter-spacing: 0.5px;
 }
 
-/* ===== Floor intro block ===== */
+/* Floor intro */
 .floor-intro {
   margin-bottom: 20px;
-  padding: 12px 16px;
+  padding: 12px 4px 16px;
+  border-bottom: 1px solid #e0dbd5;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
-
 .floor-intro-title {
   text-align: center;
-  font-size: 18px;
-  font-weight: 800;
-  color: #222;
-  letter-spacing: 2px;
+  font-size: 15px;
+  font-weight: 400;
+  color: #1a1a1a;
+  letter-spacing: 6px;
 }
-
 .floor-intro-icons {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
   justify-content: flex-end;
 }
-
 .floor-intro-icon {
-  width: 36px;
-  height: 36px;
+  width: 36px; height: 36px;
   object-fit: contain;
 }
 
@@ -236,18 +235,15 @@
     height: calc(100dvh - var(--header-h, 0px));
   }
 
-  /* Right panel takes full width */
   .floor-right {
     width: 100%;
     flex: 1;
     padding-top: 0;
-    background: #fff;
+    background: #faf9f7;
     overflow: hidden;
     position: relative;
   }
 
-  /* Fixed tab circles header — sits below floor-menu-btn (52px)
-     bar 45px, circles 70px, padding-top 10px → circle centre at 10+35=45px = border */
   .floor-tabs {
     position: fixed;
     top: calc(var(--header-h, 0px) + 52px);
@@ -258,48 +254,30 @@
     justify-content: space-evenly;
     align-items: flex-start;
     padding-top: 10px;
-    background: var(--bc-bg, #D9D9D9);
+    background: var(--bc-bg, #f2efeb);
     z-index: 100;
     pointer-events: none;
-    border-bottom: 2px solid var(--bc, #6E6E6E);
+    border-bottom: 2px solid var(--bc, #5e5c5a);
     overflow: visible;
   }
 
-  /* Mobile circles — 70px */
-  .floor-tab-btn {
-    width: 70px; height: 70px;
-    border-width: 0;
-    pointer-events: auto;
-  }
+  .floor-tab-btn { width: 70px; height: 70px; border-width: 0; pointer-events: auto; }
+  .floor-tab-letter { font-size: 26px; }
+  .floor-tab-suffix { font-size: 20px; }
 
-  .floor-tab-letter {
-    font-size: 26px;
-  }
-
-  .floor-tab-suffix {
-    font-size: 20px;
-  }
-
-  /* Scrollable content: 52px menu + 45px bar + 2px border + 35px active circle peek = 134px */
   .floor-content {
     position: absolute;
-    top: 134px;
-    left: 0; right: 0;
-    bottom: 0;
+    top: 134px; left: 0; right: 0; bottom: 0;
     overflow-y: auto;
-    padding: 12px 12px 20px;
+    padding: 14px 14px 24px;
     border-top: none;
     margin-top: 0;
   }
 
-  /* Cards smaller on mobile */
-  .floor-card-logo {
-    width: 100px; height: 100px;
-  }
+  .floor-card-logo { width: 100px; height: 100px; }
+  .floor-card-name { font-size: 15px; }
 
-  .floor-card-name { font-size: 16px; }
-
-  /* ── Floor menu button (top full-width bar) ── */
+  /* Floor menu button */
   .floor-menu-btn {
     position: fixed;
     top: var(--header-h, 0px);
@@ -309,73 +287,55 @@
     align-items: center;
     justify-content: space-between;
     gap: 8px;
-    background: var(--bc, #6E6E6E);
+    background: var(--bc, #5e5c5a);
     color: #fff;
     border: none;
-    border-bottom: 2px solid color-mix(in srgb, var(--bc, #6E6E6E) 80%, black);
+    border-bottom: 1px solid color-mix(in srgb, var(--bc, #5e5c5a) 80%, black);
     padding: 14px 20px;
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 13px;
+    font-weight: 400;
     font-family: inherit;
     cursor: pointer;
-    letter-spacing: 1px;
+    letter-spacing: 3px;
   }
-  .floor-menu-btn-label {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .floor-menu-btn-icon { font-size: 18px; }
+  .floor-menu-btn-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .floor-menu-btn-icon { font-size: 16px; }
 
-  /* ── Floor drawer (slide in from right) ── */
+  /* Floor drawer */
   .floor-drawer {
     position: fixed;
     top: 0; right: 0; bottom: 0;
-    width: 65%;
-    max-width: 260px;
-    background: #fff;
+    width: 65%; max-width: 260px;
+    background: #faf9f7;
     z-index: 200;
     overflow-y: auto;
     transform: translateX(100%);
     transition: transform 0.28s ease;
-    box-shadow: -4px 0 20px rgba(0,0,0,0.2);
+    box-shadow: -4px 0 20px rgba(0,0,0,0.15);
   }
-  .floor-drawer.open {
-    transform: translateX(0);
-  }
+  .floor-drawer.open { transform: translateX(0); }
 
   .floor-drawer-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 14px 16px;
-    background: var(--bc, #6E6E6E);
+    background: var(--bc, #5e5c5a);
     color: #fff;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 1px;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 4px;
     position: sticky;
-    top: 0;
-    z-index: 1;
+    top: 0; z-index: 1;
   }
-
   .floor-drawer-close {
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-family: inherit;
+    background: none; border: none; color: #fff;
+    font-size: 16px; cursor: pointer; padding: 2px 6px; font-family: inherit;
   }
   .floor-drawer-close:hover { background: rgba(255,255,255,0.15); }
 
-  /* Backdrop */
   .floor-drawer-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.4);
-    z-index: 199;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.3); z-index: 199;
   }
 }

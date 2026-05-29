@@ -3,8 +3,8 @@ import './FloorGuide.css';
 
 const BUILDINGS = ['A', 'B', 'C'];
 
-const BUILDING_COLORS = { A: '#6E6E6E', B: '#6E6E6E', C: '#6E6E6E' };
-const BUILDING_BG     = { A: '#D9D9D9', B: '#D9D9D9', C: '#D9D9D9' };
+const BUILDING_COLORS = { A: '#3d3b39', B: '#3d3b39', C: '#3d3b39' };
+const BUILDING_BG     = { A: '#f2efeb', B: '#f2efeb', C: '#f2efeb' };
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(

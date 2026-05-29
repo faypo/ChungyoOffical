@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import './BannerCarousel.css';
 
 export default function BannerCarousel({ banners = [] }) {
   const [index,  setIndex]  = useState(0);
   const [paused, setPaused] = useState(false);
   const count = banners.length;
+  const touchStartX = useRef(null);
 
   const next = useCallback(() => setIndex(i => (i + 1) % count), [count]);
   const prev = useCallback(() => setIndex(i => (i - 1 + count) % count), [count]);
@@ -17,6 +18,14 @@ export default function BannerCarousel({ banners = [] }) {
 
   useEffect(() => { setIndex(0); }, [count]);
 
+  const onTouchStart = (e) => { touchStartX.current = e.touches[0].clientX; };
+  const onTouchEnd = (e) => {
+    if (touchStartX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(dx) > 40) { dx < 0 ? next() : prev(); }
+    touchStartX.current = null;
+  };
+
   if (!count) return null;
 
   return (
@@ -24,6 +33,8 @@ export default function BannerCarousel({ banners = [] }) {
       className="bc-root"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
     >
       <div
         className="bc-track"

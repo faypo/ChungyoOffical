@@ -1,5 +1,6 @@
+/* ===== Home Bottom — Japanese Magazine Style ===== */
 .hb-section {
-  padding: 0 32px 48px;
+  padding: 0 40px 56px;
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
@@ -8,7 +9,7 @@
 
 .hb-columns {
   display: flex;
-  gap: 28px;
+  gap: 40px;
   align-items: flex-start;
 }
 
@@ -20,42 +21,55 @@
 .hb-right {
   flex: 1;
   min-width: 0;
+  padding-left: 40px;
+  border-left: 1px solid #d8d4cf;
+}
+
+.hb-col-title-sub {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 400;
+  color: #6b6966;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
 }
 
 .hb-col-title {
-  font-size: 20px;
-  font-weight: 800;
-  color: #222;
-  letter-spacing: 2px;
-  margin-bottom: 16px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid #e8e8e8;
+  font-size: 18px;
+  font-weight: 400;
+  color: #1a1a1a;
+  letter-spacing: 4px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #d8d4cf;
   text-align: center;
-  min-height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.hb-fb-wrap {
-  overflow: hidden;
-  border-radius: 8px;
+  min-height: auto;
+  display: block;
 }
 
 .hb-fb-wrap iframe {
   width: 100%;
-  height: 700px;
+  height: 680px;
   display: block;
 }
 
 @media (max-width: 900px) {
-  .hb-section { padding: 0 20px 36px; }
-  .hb-fb-wrap iframe { height: 580px; }
+  .hb-section { padding: 0 24px 40px; }
+  .hb-columns { gap: 28px; }
+  .hb-right { padding-left: 28px; }
+  .hb-fb-wrap iframe { height: 560px; }
 }
 
 @media (max-width: 680px) {
-  .hb-section { padding: 0 12px 28px; }
-  .hb-columns { flex-direction: column; }
-  .hb-right { width: 100%; }
-  .hb-fb-wrap iframe { height: 500px; }
+  .hb-section { padding: 0 20px 32px; }
+  .hb-columns { flex-direction: column; gap: 36px; }
+  .hb-right {
+    width: 100%;
+    padding-left: 0;
+    border-left: none;
+    border-top: 1px solid #d8d4cf;
+    padding-top: 36px;
+  }
+  .hb-fb-wrap iframe { height: 580px; }
 }

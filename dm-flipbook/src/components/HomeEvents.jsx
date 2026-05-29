@@ -15,7 +15,10 @@ export default function HomeEvents() {
 
   return (
     <section className="he-section">
-      <h2 className="he-title">活動訊息</h2>
+      <p className="he-title">Event &amp; News</p>
+      <div className="he-title-rule">
+        <span className="he-title-rule-text">活動訊息</span>
+      </div>
       <div className="he-grid">
         {events.map(e => {
           const img = (

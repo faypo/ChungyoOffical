@@ -18,7 +18,12 @@ export default function HomePromo() {
 
   return (
     <div className="hp-root">
-      {promo.title && <h2 className="hp-title">{promo.title}</h2>}
+      {promo.title && (
+        <>
+          <p className="hp-title-sub">Promotion</p>
+          <h2 className="hp-title">{promo.title}</h2>
+        </>
+      )}
 
       {promo.heroFile && (
         <div className="hp-hero">

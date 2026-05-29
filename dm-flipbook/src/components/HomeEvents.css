@@ -1,5 +1,6 @@
+/* ===== Home Events — Japanese Magazine Style ===== */
 .he-section {
-  padding: 36px 32px 48px;
+  padding: 52px 40px 56px;
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
@@ -8,29 +9,49 @@
 
 .he-title {
   text-align: center;
-  font-size: 20px;
-  font-weight: 800;
-  color: #222;
-  letter-spacing: 3px;
-  margin-bottom: 20px;
+  font-size: 11px;
+  font-weight: 400;
+  color: #6b6966;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.he-title-rule {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.he-title-rule::before,
+.he-title-rule::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #d8d4cf;
+}
+.he-title-rule-text {
+  font-size: 18px;
+  color: #1a1a1a;
+  letter-spacing: 4px;
+  white-space: nowrap;
 }
 
 .he-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+  gap: 16px;
 }
 
 .he-card {
-  border-radius: 8px;
   overflow: hidden;
-  background: #eee;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s, box-shadow 0.2s;
+  background: #f2efeb;
+  border: 1px solid #e0dbd5;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .he-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 .he-link {
@@ -42,17 +63,22 @@
   width: 100%;
   height: auto;
   display: block;
+  transition: transform 0.4s ease;
+}
+.he-card:hover .he-img {
+  transform: scale(1.03);
 }
 
 /* 平板：2 欄 */
 @media (max-width: 900px) {
-  .he-section { padding: 24px 20px 36px; }
+  .he-section { padding: 36px 24px 40px; }
   .he-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
 }
 
 /* 手機：1 欄 */
 @media (max-width: 500px) {
-  .he-section { padding: 30px 36px 36px; }
+  .he-section { padding: 28px 20px 32px; }
   .he-grid { grid-template-columns: 1fr; gap: 10px; }
-  .he-title { font-size: 17px; }
+  .he-title { font-size: 10px; letter-spacing: 6px; }
+  .he-title-rule-text { font-size: 16px; letter-spacing: 3px; }
 }

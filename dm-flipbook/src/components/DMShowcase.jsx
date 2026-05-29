@@ -59,6 +59,11 @@ export default function DMShowcase() {
 
   return (
     <div className="showcase-wrapper">
+      <div className="showcase-header">
+        <p className="showcase-label">Digital Magazine</p>
+        <h2 className="showcase-title">電子型錄</h2>
+        <div className="showcase-rule" />
+      </div>
       <div className="showcase-grid">
         {visibleDMs.map((dm) => {
           const coverSrc = covers[dm.id] ?? '';

@@ -22,6 +22,7 @@ export default function HomeBottom() {
 
         {fbSrc && (
           <div className="hb-right">
+            <p className="hb-col-title-sub">Social</p>
             <h2 className="hb-col-title">社群活動</h2>
             <div className="hb-fb-wrap">
               <iframe

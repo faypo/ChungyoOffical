@@ -1,16 +1,16 @@
-/* ===== Site Footer ===== */
+/* ===== Site Footer — Japanese Magazine Style ===== */
 .site-footer {
   flex-shrink: 0;
   width: 100%;
-  background: #efefef;
-  border-top: 1px solid #d8d8d8;
-  padding: 20px 32px;
+  background: #f2efeb;
+  border-top: 1px solid #d8d4cf;
+  padding: 36px 40px 24px;
 }
 
 .footer-inner {
   display: flex;
-  align-items: center;
-  gap: 32px;
+  align-items: flex-start;
+  gap: 40px;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -20,21 +20,23 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
   flex-shrink: 0;
   min-width: 80px;
 }
 
 .footer-logo {
-  width: 64px;
-  height: 64px;
+  width: 56px;
+  height: 56px;
   object-fit: contain;
+  filter: grayscale(20%);
 }
 
 .footer-brand-name {
-  font-size: 11px;
-  color: #333;
-  letter-spacing: 0.5px;
+  font-size: 10px;
+  color: #6b6966;
+  letter-spacing: 3px;
+  text-transform: uppercase;
   white-space: nowrap;
 }
 
@@ -43,89 +45,119 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
+  padding-top: 4px;
 }
 
 .footer-info p {
-  font-size: 12px;
-  color: #333;
-  line-height: 1.6;
-  letter-spacing: 0.3px;
+  font-size: 11px;
+  color: #6b6966;
+  line-height: 1.8;
+  letter-spacing: 1px;
+}
+
+/* Divider between info and links */
+.footer-divider {
+  width: 1px;
+  background: #d8d4cf;
+  align-self: stretch;
+  flex-shrink: 0;
 }
 
 /* Links */
 .footer-links {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   flex-shrink: 0;
+  padding-top: 4px;
 }
 
 .footer-link {
-  font-size: 13px;
-  font-weight: 600;
-  color: #333;
+  font-size: 11px;
+  font-weight: 400;
+  color: #3a3533;
   text-decoration: none;
-  letter-spacing: 0.5px;
+  letter-spacing: 3px;
   white-space: nowrap;
-  transition: color 0.15s;
+  transition: color 0.2s;
 }
-.footer-link:hover { color: #000; text-decoration: underline; }
+.footer-link:hover { color: #5e5c5a; }
 
 /* Social */
 .footer-social {
   display: flex;
   gap: 10px;
   flex-shrink: 0;
+  padding-top: 4px;
 }
 
 .footer-social-btn {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: #222;
-  color: #fff;
+  width: 34px;
+  height: 34px;
+  border-radius: 0;
+  border: 1px solid #d8d4cf;
+  background: transparent;
+  color: #3a3533;
   display: flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  transition: background 0.15s, transform 0.15s;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
   flex-shrink: 0;
 }
-.footer-social-btn:hover { background: #444; transform: scale(1.08); }
-.footer-social-btn svg { width: 18px; height: 18px; }
+.footer-social-btn:hover {
+  background: #5e5c5a;
+  color: #fff;
+  border-color: #5e5c5a;
+}
+.footer-social-btn svg { width: 16px; height: 16px; }
+
+/* Copyright strip */
+.footer-copy {
+  margin-top: 28px;
+  padding-top: 16px;
+  border-top: 1px solid #d8d4cf;
+  text-align: center;
+  font-size: 10px;
+  color: #a09896;
+  letter-spacing: 2px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 /* ===== Mobile ===== */
 @media (max-width: 700px) {
-  .site-footer { padding: 24px 16px; }
+  .site-footer { padding: 28px 20px 20px; }
 
   .footer-inner {
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 24px;
   }
 
   .footer-brand {
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
     width: 100%;
+    align-items: center;
   }
 
-  .footer-logo { width: 56px; height: 56px; }
-  .footer-brand-name { font-size: 13px; font-weight: 600; }
+  .footer-logo { width: 48px; height: 48px; }
+
+  .footer-divider { display: none; }
 
   .footer-info {
     width: 100%;
     text-align: center;
   }
-  .footer-info p { font-size: 11px; }
+  .footer-info p { font-size: 10px; }
 
   .footer-links {
-    flex-direction: column;
-    gap: 10px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
     width: 100%;
-    align-items: flex-start;
+    justify-content: center;
   }
 
   .footer-social {
@@ -133,6 +165,4 @@
     justify-content: center;
     width: 100%;
   }
-  .footer-social-btn { width: 36px; height: 36px; }
-  .footer-social-btn svg { width: 17px; height: 17px; }
 }
