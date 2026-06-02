@@ -122,24 +122,28 @@ router.post('/', (req, res) => {
 
 /* ── PUT /api/admin/catalog/:id ── 編輯 DM */
 router.put('/:id', (req, res) => {
+  const { id } = req.params;
+  if (!id || !/^[\w-]+$/.test(id)) return res.status(400).json({ error: '無效的 DM ID' });
   const catalog = readJSON('catalog.json');
-  const idx = catalog.findIndex(d => d.id === req.params.id);
+  const idx = catalog.findIndex(d => d.id === id);
   if (idx === -1) return res.status(404).json({ error: '找不到此 DM' });
 
-  catalog[idx] = { ...catalog[idx], ...req.body, id: req.params.id };
+  catalog[idx] = { ...catalog[idx], ...req.body, id };
   writeJSON('catalog.json', catalog);
   res.json({ success: true });
 });
 
 /* ── DELETE /api/admin/catalog/:id ── 刪除 DM */
 router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+  if (!id || !/^[\w-]+$/.test(id)) return res.status(400).json({ error: '無效的 DM ID' });
   let catalog = readJSON('catalog.json');
-  if (!catalog.find(d => d.id === req.params.id)) return res.status(404).json({ error: '找不到此 DM' });
+  if (!catalog.find(d => d.id === id)) return res.status(404).json({ error: '找不到此 DM' });
 
-  catalog = catalog.filter(d => d.id !== req.params.id);
+  catalog = catalog.filter(d => d.id !== id);
   writeJSON('catalog.json', catalog);
 
-  const dmDir = path.join(DATA_DIR, 'dm-pic', safeName(req.params.id));
+  const dmDir = path.join(DATA_DIR, 'dm-pic', safeName(id));
   if (fs.existsSync(dmDir)) fs.rmSync(dmDir, { recursive: true });
 
   res.json({ success: true });
