@@ -16,9 +16,12 @@ export default function BannerManager() {
   const [endDates,    setEndDates]    = useState({});
   const [dropActive,  setDropActive]  = useState(false);
 
-  const fileRef    = useRef();
-  const dragSrc    = useRef(null);
-  const dragCounter = useRef(0); // 追蹤 dragenter/dragleave 次數，避免子元素觸發閃爍
+  const fileRef         = useRef();
+  const replaceFileRef  = useRef();
+  const replacingId     = useRef(null);
+  const dragSrc         = useRef(null);
+  const isDraggingHandle = useRef(false);
+  const dragCounter     = useRef(0); // 追蹤 dragenter/dragleave 次數，避免子元素觸發閃爍
 
   const showMsg = (text, type = 'ok') => {
     setMsg({ text, type });
@@ -103,6 +106,26 @@ export default function BannerManager() {
     if (!res.ok) showMsg(d.error || '儲存失敗', 'err');
   };
 
+  const triggerReplace = (id) => {
+    replacingId.current = id;
+    replaceFileRef.current?.click();
+  };
+
+  const handleReplaceImage = async (e) => {
+    const file = e.target.files?.[0];
+    e.target.value = '';
+    if (!file) return;
+    const id = replacingId.current;
+    replacingId.current = null;
+    const fd = new FormData();
+    fd.append('image', file);
+    const res = await fetch(`${API}/${id}/replace`, { method: 'POST', body: fd });
+    const d = await res.json();
+    if (!res.ok) return showMsg(d.error || '換圖失敗', 'err');
+    showMsg('圖片已更換');
+    load();
+  };
+
   const handleDelete = async (id) => {
     if (!window.confirm('確定刪除此 Banner？')) return;
     const res = await fetch(`${API}/${id}`, { method: 'DELETE' });
@@ -178,18 +201,27 @@ export default function BannerManager() {
         {banners.length === 0 ? (
           <div className="fg-empty">尚無 Banner，請從上方拖入或點擊上傳</div>
         ) : (
+          <>
+          <input ref={replaceFileRef} type="file" accept="image/*" hidden onChange={handleReplaceImage} />
           <div className="am-list">
             {banners.map((b, i) => (
               <div
                 key={b.id}
                 className="bm-item"
                 draggable
-                onDragStart={() => handleDragStart(i)}
+                onDragStart={(e) => {
+                  if (!isDraggingHandle.current) { e.preventDefault(); return; }
+                  handleDragStart(i);
+                }}
                 onDragOver={handleItemDragOver}
                 onDrop={e => handleDrop(e, i)}
-                onDragEnd={handleDragEnd}
+                onDragEnd={() => { isDraggingHandle.current = false; handleDragEnd(); }}
               >
-                <span className="am-drag-handle">⠿</span>
+                <span
+                  className="am-drag-handle"
+                  onMouseDown={() => { isDraggingHandle.current = true; }}
+                  onMouseUp={() => { isDraggingHandle.current = false; }}
+                >⠿</span>
                 <img
                   src={`/api/images/banner-pic/${b.file}`}
                   alt={b.file}
@@ -232,15 +264,20 @@ export default function BannerManager() {
                     </label>
                   </div>
                 </div>
-                <button
-                  className="fg-btn fg-btn-danger fg-btn-sm"
-                  onClick={() => handleDelete(b.id)}
-                >
-                  刪除
-                </button>
+                <div className="bm-item-btns">
+                  <button
+                    className="fg-btn fg-btn-ghost fg-btn-sm"
+                    onClick={() => triggerReplace(b.id)}
+                  >換圖</button>
+                  <button
+                    className="fg-btn fg-btn-danger fg-btn-sm"
+                    onClick={() => handleDelete(b.id)}
+                  >刪除</button>
+                </div>
               </div>
             ))}
           </div>
+          </>
         )}
       </div>
     </div>

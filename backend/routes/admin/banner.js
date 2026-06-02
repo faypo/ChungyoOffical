@@ -38,6 +38,23 @@ router.post('/upload', upload.single('image'), (req, res) => {
   res.json({ success: true, id, file: req.file.filename });
 });
 
+/* POST /api/admin/banner/:id/replace — 換圖 */
+router.post('/:id/replace', upload.single('image'), (req, res) => {
+  if (!req.file) return res.status(400).json({ error: '無效的圖片' });
+  const data = readJSON(FILE, { banners: [] });
+  const idx  = data.banners.findIndex(b => b.id === req.params.id);
+  if (idx === -1) {
+    fs.unlinkSync(path.join(BANNER_DIR, req.file.filename));
+    return res.status(404).json({ error: '找不到此 Banner' });
+  }
+  const oldFile = data.banners[idx].file;
+  data.banners[idx].file = req.file.filename;
+  writeJSON(FILE, data);
+  const oldPath = path.join(BANNER_DIR, oldFile);
+  if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+  res.json({ success: true, file: req.file.filename });
+});
+
 /* PUT /api/admin/banner/reorder  — 必須在 /:id 之前 */
 router.put('/reorder', (req, res) => {
   const { ids } = req.body;

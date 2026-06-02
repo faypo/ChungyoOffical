@@ -37,10 +37,21 @@
   border: 1px solid #e5e5e5;
   border-radius: 8px;
   padding: 10px 14px;
-  cursor: grab;
+  cursor: default;
   user-select: none;
 }
-.bm-item:active { cursor: grabbing; }
+
+.bm-item .am-drag-handle {
+  cursor: grab;
+}
+.bm-item .am-drag-handle:active { cursor: grabbing; }
+
+.bm-item-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-shrink: 0;
+}
 
 .bm-thumb {
   width: 150px;

@@ -1,3 +1,37 @@
+.am-date-row {
+  display: flex;
+  gap: 16px;
+}
+.am-date-row .wm-meta-label {
+  flex: 1;
+}
+
+.am-date-cell {
+  white-space: nowrap;
+  font-size: 13px;
+  color: #555;
+}
+.am-date-sep {
+  margin: 0 4px;
+  color: #999;
+}
+.am-date-none {
+  color: #bbb;
+}
+
+.am-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 8px 0;
+}
+.am-pagination-info {
+  font-size: 13px;
+  color: #666;
+}
+
 .am-og-section {
   margin-top: 16px;
   padding-top: 16px;

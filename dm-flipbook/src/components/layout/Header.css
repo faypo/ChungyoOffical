@@ -4,7 +4,7 @@
   top: 0;
   z-index: 1000;
   width: 100%;
-  background: #e8e4de;
+  background: #eeeef3;
   border-bottom: 1px solid #d4cfc9;
   flex-shrink: 0;
 }
@@ -40,10 +40,10 @@
 }
 
 .site-nav-link {
-  padding: 6px 20px;
-  font-size: 13px;
+  padding: 6px 8px;
+  font-size: 18px;
   font-weight: 400;
-  color: #3a3533;
+  color: #353535;
   text-decoration: none;
   letter-spacing: 4px;
   transition: color 0.2s;
@@ -71,7 +71,7 @@
   display: block;
   width: 20px;
   height: 1px;
-  background: #3a3533;
+  background: #353535;
   border-radius: 0;
   transition: background 0.2s;
 }
@@ -81,7 +81,7 @@
 .site-mobile-nav {
   display: none;
   flex-direction: column;
-  background: #e8e4de;
+  background: #eeeef3;
   overflow: hidden;
   max-height: 0;
   transition: max-height 0.3s ease;
@@ -93,7 +93,7 @@
   padding: 14px 24px;
   font-size: 13px;
   font-weight: 400;
-  color: #3a3533;
+  color: #353535;
   text-decoration: none;
   letter-spacing: 4px;
   border-bottom: 1px solid #e8e4df;

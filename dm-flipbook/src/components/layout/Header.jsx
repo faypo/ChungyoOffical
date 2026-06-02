@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import './Header.css';
 
-const INTERNAL_NAV = [
-  { to: '/dm',               label: '電子型錄DM' },
+const NAV_BEFORE_MEMBER = [
   { to: '/floor',            label: '樓層導覽' },
-  { to: '/food',             label: '美食導覽' },
   { to: '/service',          label: '貼心服務' },
-  { to: '/winners',          label: '得獎名單' },
+];
+
+const NAV_AFTER_MEMBER = [
+  { to: '/dm',               label: '電子型錄DM' },
+  { to: '/food',             label: '美食導覽' },
   { to: '/gallery',          label: '中友時尚藝廊' },
-  { to: '/CustomerFeedback', label: '顧客意見' },
+  { to: '/winners',          label: '得獎名單' },
 ];
 
 export default function Header() {
@@ -32,7 +34,7 @@ export default function Header() {
 
         {/* Desktop nav */}
         <nav className="site-nav">
-          {INTERNAL_NAV.map(({ to, label }) => (
+          {NAV_BEFORE_MEMBER.map(({ to, label }) => (
             <NavLink
               key={to}
               to={to}
@@ -42,13 +44,17 @@ export default function Header() {
             </NavLink>
           ))}
           {memberUrl && (
-            <a
-              href={memberUrl}
-              className="site-nav-link"
-            >
-              會員點數查詢
-            </a>
+            <a href={memberUrl} className="site-nav-link">會員點數查詢</a>
           )}
+          {NAV_AFTER_MEMBER.map(({ to, label }) => (
+            <NavLink
+              key={to}
+              to={to}
+              className={({ isActive }) => 'site-nav-link' + (isActive ? ' active' : '')}
+            >
+              {label}
+            </NavLink>
+          ))}
         </nav>
 
         {/* Mobile hamburger */}
@@ -66,7 +72,7 @@ export default function Header() {
         <div className="site-mobile-backdrop" onClick={() => setMenuOpen(false)} />
       )}
       <nav className={`site-mobile-nav${menuOpen ? ' open' : ''}`}>
-        {INTERNAL_NAV.map(({ to, label }) => (
+        {NAV_BEFORE_MEMBER.map(({ to, label }) => (
           <NavLink
             key={to}
             to={to}
@@ -77,14 +83,20 @@ export default function Header() {
           </NavLink>
         ))}
         {memberUrl && (
-          <a
-            href={memberUrl}
-            className="site-mobile-nav-link"
-            onClick={() => setMenuOpen(false)}
-          >
+          <a href={memberUrl} className="site-mobile-nav-link" onClick={() => setMenuOpen(false)}>
             會員點數查詢
           </a>
         )}
+        {NAV_AFTER_MEMBER.map(({ to, label }) => (
+          <NavLink
+            key={to}
+            to={to}
+            className={({ isActive }) => 'site-mobile-nav-link' + (isActive ? ' active' : '')}
+            onClick={() => setMenuOpen(false)}
+          >
+            {label}
+          </NavLink>
+        ))}
       </nav>
     </header>
   );

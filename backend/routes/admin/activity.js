@@ -46,13 +46,15 @@ router.put('/:id', (req, res) => {
   const data = readJSON(FILE, { activities: [] });
   const idx = data.activities.findIndex(a => a.id === req.params.id);
   if (idx === -1) return res.status(404).json({ error: '找不到此活動頁' });
-  const { title, content, ogTitle, ogDescription, ogImage, tags } = req.body;
+  const { title, content, ogTitle, ogDescription, ogImage, tags, startDate, endDate } = req.body;
   if (title         !== undefined) data.activities[idx].title         = title;
   if (content       !== undefined) data.activities[idx].content       = content;
   if (ogTitle       !== undefined) data.activities[idx].ogTitle       = ogTitle;
   if (ogDescription !== undefined) data.activities[idx].ogDescription = ogDescription;
   if (ogImage       !== undefined) data.activities[idx].ogImage       = ogImage;
   if (tags          !== undefined) data.activities[idx].tags          = tags;
+  if (startDate     !== undefined) data.activities[idx].startDate     = startDate;
+  if (endDate       !== undefined) data.activities[idx].endDate       = endDate;
   writeJSON(FILE, data);
   res.json({ success: true });
 });

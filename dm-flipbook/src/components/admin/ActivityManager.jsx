@@ -24,8 +24,12 @@ export default function ActivityManager() {
   const [saving, setSaving]         = useState(false);
   const [showAdd, setShowAdd]       = useState(false);
   const [newTitle, setNewTitle]     = useState('');
+  const [page, setPage]             = useState(1);
+  const PAGE_SIZE = 10;
 
   const [editTitle,          setEditTitle]          = useState('');
+  const [editStartDate,      setEditStartDate]      = useState('');
+  const [editEndDate,        setEditEndDate]        = useState('');
   const [editOgTitle,        setEditOgTitle]        = useState('');
   const [editOgDescription,  setEditOgDescription]  = useState('');
   const [editOgImage,        setEditOgImage]        = useState('');
@@ -118,6 +122,8 @@ export default function ActivityManager() {
     const act = activities.find(a => a.id === activeId);
     if (!act) return;
     setEditTitle(act.title ?? '');
+    setEditStartDate(act.startDate ?? '');
+    setEditEndDate(act.endDate ?? '');
     setEditOgTitle(act.ogTitle ?? '');
     setEditOgDescription(act.ogDescription ?? '');
     setEditOgImage(act.ogImage ?? '');
@@ -160,6 +166,8 @@ export default function ActivityManager() {
       method: 'PUT',
       body: JSON.stringify({
         title:          editTitle,
+        startDate:      editStartDate,
+        endDate:        editEndDate,
         content:        editContent,
         ogTitle:        editOgTitle,
         ogDescription:  editOgDescription,
@@ -244,6 +252,8 @@ export default function ActivityManager() {
       method: 'PUT',
       body: JSON.stringify({
         title:         editTitle,
+        startDate:     editStartDate,
+        endDate:       editEndDate,
         content:       newContent,
         ogTitle:       editOgTitle,
         ogDescription: editOgDescription,
@@ -334,13 +344,17 @@ export default function ActivityManager() {
   const filteredActivities = filterTags.length > 0
     ? activities.filter(a => filterTags.some(t => (a.tags ?? []).includes(t)))
     : activities;
+  const totalPages = Math.max(1, Math.ceil(filteredActivities.length / PAGE_SIZE));
+  const safePage = Math.min(page, totalPages);
+  const pagedActivities = filteredActivities.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
 
-  // 篩選條件變動時，自動選第一筆
+  // 篩選條件變動時，自動選第一筆並回到第一頁
   useEffect(() => {
     const next = filterTags.length > 0
       ? activities.filter(a => filterTags.some(t => (a.tags ?? []).includes(t)))
       : activities;
     setActiveId(next.length > 0 ? next[0].id : null);
+    setPage(1);
   }, [filterTags]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) return <p className="fg-loading">載入中…</p>;
@@ -450,57 +464,83 @@ export default function ActivityManager() {
         )}
 
         {activities.length > 0 && (
-          <table className="fg-table">
-            <thead>
-              <tr>
-                <th>名稱</th>
-                <th>標籤</th>
-                <th>前台網址</th>
-                <th>操作</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredActivities.map(a => (
-                <tr key={a.id} className={activeId === a.id ? 'fg-tr-active' : ''}>
-                  <td>{a.title}</td>
-                  <td>
-                    <div className="am-list-tags">
-                      {(a.tags ?? []).map(tag => (
-                        <span key={tag} className="am-list-tag">{tag}</span>
-                      ))}
-                    </div>
-                  </td>
-                  <td><code>/activity/{a.id}</code></td>
-                  <td className="fg-table-actions">
-                    <div className="fg-table-actions-inner">
-                      <button
-                        className={`fg-btn fg-btn-sm ${activeId === a.id ? 'fg-btn-primary' : 'fg-btn-ghost'}`}
-                        onClick={() => {
-                          setShowAdd(false);
-                          if (a.id === activeId) {
-                            editorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                          } else {
-                            userClickRef.current = true;
-                            setActiveId(a.id);
-                          }
-                        }}
-                      >
-                        {activeId === a.id ? '編輯中' : '編輯'}
-                      </button>
-                      <button
-                        className="fg-btn fg-btn-ghost fg-btn-sm"
-                        onClick={() => handleCopy(a.id)}
-                      >複製</button>
-                      <button
-                        className="fg-btn fg-btn-danger fg-btn-sm"
-                        onClick={() => handleDelete(a.id)}
-                      >刪除</button>
-                    </div>
-                  </td>
+          <>
+            <table className="fg-table">
+              <thead>
+                <tr>
+                  <th>名稱</th>
+                  <th>標籤</th>
+                  <th>前台網址</th>
+                  <th>展示期間</th>
+                  <th>操作</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {pagedActivities.map(a => (
+                  <tr key={a.id} className={activeId === a.id ? 'fg-tr-active' : ''}>
+                    <td>{a.title}</td>
+                    <td>
+                      <div className="am-list-tags">
+                        {(a.tags ?? []).map(tag => (
+                          <span key={tag} className="am-list-tag">{tag}</span>
+                        ))}
+                      </div>
+                    </td>
+                    <td><code>/activity/{a.id}</code></td>
+                    <td className="am-date-cell">
+                      {a.startDate && <span>{a.startDate}</span>}
+                      {a.startDate && a.endDate && <span className="am-date-sep">～</span>}
+                      {a.endDate && <span>{a.endDate}</span>}
+                      {!a.startDate && !a.endDate && <span className="am-date-none">—</span>}
+                    </td>
+                    <td className="fg-table-actions">
+                      <div className="fg-table-actions-inner">
+                        <button
+                          className={`fg-btn fg-btn-sm ${activeId === a.id ? 'fg-btn-primary' : 'fg-btn-ghost'}`}
+                          onClick={() => {
+                            setShowAdd(false);
+                            if (a.id === activeId) {
+                              editorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            } else {
+                              userClickRef.current = true;
+                              setActiveId(a.id);
+                            }
+                          }}
+                        >
+                          {activeId === a.id ? '編輯中' : '編輯'}
+                        </button>
+                        <button
+                          className="fg-btn fg-btn-ghost fg-btn-sm"
+                          onClick={() => handleCopy(a.id)}
+                        >複製</button>
+                        <button
+                          className="fg-btn fg-btn-danger fg-btn-sm"
+                          onClick={() => handleDelete(a.id)}
+                        >刪除</button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {totalPages > 1 && (
+              <div className="am-pagination">
+                <button
+                  className="fg-btn fg-btn-ghost fg-btn-sm"
+                  disabled={safePage <= 1}
+                  onClick={() => setPage(p => Math.max(1, p - 1))}
+                >‹ 上一頁</button>
+                <span className="am-pagination-info">
+                  第 {safePage} / {totalPages} 頁（共 {filteredActivities.length} 筆）
+                </span>
+                <button
+                  className="fg-btn fg-btn-ghost fg-btn-sm"
+                  disabled={safePage >= totalPages}
+                  onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                >下一頁 ›</button>
+              </div>
+            )}
+          </>
         )}
       </div>
 
@@ -513,6 +553,26 @@ export default function ActivityManager() {
               名稱 *
               <input className="fg-info-input" value={editTitle} onChange={e => setEditTitle(e.target.value)} />
             </label>
+            <div className="am-date-row">
+              <label className="wm-meta-label">
+                開始時間
+                <input
+                  className="fg-info-input"
+                  placeholder="例：2026/06/01"
+                  value={editStartDate}
+                  onChange={e => setEditStartDate(e.target.value)}
+                />
+              </label>
+              <label className="wm-meta-label">
+                結束時間
+                <input
+                  className="fg-info-input"
+                  placeholder="例：2026/06/30"
+                  value={editEndDate}
+                  onChange={e => setEditEndDate(e.target.value)}
+                />
+              </label>
+            </div>
             <div className="am-url-hint">
               前台網址：<code>/activity/{activeId}</code>
             </div>

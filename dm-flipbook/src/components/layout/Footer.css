@@ -2,7 +2,7 @@
 .site-footer {
   flex-shrink: 0;
   width: 100%;
-  background: #f2efeb;
+  background: #eeeef3;
   border-top: 1px solid #d8d4cf;
   padding: 36px 40px 24px;
 }
@@ -34,7 +34,7 @@
 
 .footer-brand-name {
   font-size: 10px;
-  color: #6b6966;
+  color: #353535;
   letter-spacing: 3px;
   text-transform: uppercase;
   white-space: nowrap;
@@ -51,7 +51,7 @@
 
 .footer-info p {
   font-size: 11px;
-  color: #6b6966;
+  color: #353535;
   line-height: 1.8;
   letter-spacing: 1px;
 }
@@ -76,7 +76,7 @@
 .footer-link {
   font-size: 11px;
   font-weight: 400;
-  color: #3a3533;
+  color: #353535;
   text-decoration: none;
   letter-spacing: 3px;
   white-space: nowrap;
@@ -98,7 +98,7 @@
   border-radius: 0;
   border: 1px solid #d8d4cf;
   background: transparent;
-  color: #3a3533;
+  color: #353535;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -120,7 +120,7 @@
   border-top: 1px solid #d8d4cf;
   text-align: center;
   font-size: 10px;
-  color: #a09896;
+  color: #353535;
   letter-spacing: 2px;
   max-width: 1200px;
   margin-left: auto;
