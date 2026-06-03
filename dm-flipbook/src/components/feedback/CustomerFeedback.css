@@ -139,7 +139,7 @@
 .input-box.has-error { border-color: #5e5c5a; background-color: #fdf8f8; }
 
 .error-text {
-  color: #5e5c5a;
+  color: #d32f2f;
   font-size: 12px;
   font-weight: 400;
   letter-spacing: 1px;
@@ -194,7 +194,8 @@ textarea.input-box {
   letter-spacing: 1px;
   transition: color 0.2s;
 }
-.char-counter.limit-reached { color: #5e5c5a; font-weight: 400; }
+.char-counter.limit-reached { color: #d32f2f; font-weight: 400; }
+.char-counter.has-error { background-color: #fdf8f8; }
 
 .gender-group { display: flex; gap: 6px; }
 .gender-btn {

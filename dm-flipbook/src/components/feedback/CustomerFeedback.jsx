@@ -46,18 +46,6 @@ export default function CustomerFeedback() {
     confirmBtnStyle: 'primary'
   });
 
-  const sanitizeInput = (str) => {
-    if (!str) return '';
-    return str
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/'/g, '&#x27;')     
-      .replace(/"/g, '&quot;')       
-      .replace(/;/g, '&#59;')       
-      .replace(/--/g, '&#45;&#45;')  
-      .trim();
-  };
-
   const fetchFeedback = async (data) => {
     try {
 
@@ -92,46 +80,41 @@ export default function CustomerFeedback() {
     e.preventDefault(); 
     setSubmitStatus({ message: '', type: '' });
 
-    const cleanLastName = sanitizeInput(lastName);
-    const cleanEmail = sanitizeInput(email);
-    const cleanPhone = sanitizeInput(phone);
-    const cleanContent = sanitizeInput(content);
-
     const newErrors = {};
 
     if (fieldConfig.lastName) {
       const chineseRegex = /^[\u4e00-\u9fa5]+$/;
-      if (!cleanLastName) {
+      if (!lastName) {
         newErrors.lastName = '姓氏不得為空！';
-      } else if (!chineseRegex.test(cleanLastName)) {
+      } else if (!chineseRegex.test(lastName)) {
         newErrors.lastName = '姓氏僅限輸入中文字！';
-      } else if (cleanLastName.length > 2) {
+      } else if (lastName.length > 2) {
         newErrors.lastName = '姓氏請勿超過兩個字！';
       }
     }
 
     if (fieldConfig.email) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!cleanEmail) {
+      if (!email) {
         newErrors.email = 'Email 不得為空！';
-      } else if (!emailRegex.test(cleanEmail)) {
+      } else if (!emailRegex.test(email)) {
         newErrors.email = '請輸入正確的 Email 格式！';
       }
     }
 
     if (fieldConfig.phone) {
       const phoneRegex = /^0\d{9}$/;
-      if (!cleanPhone) {
+      if (!phone) {
         newErrors.phone = '手機號碼不得為空！';
-      } else if (!phoneRegex.test(cleanPhone)) {
+      } else if (!phoneRegex.test(phone)) {
         newErrors.phone = '手機號碼必須為 10 碼數字！ 範例: 0901234567';
       }
     }
 
     if (fieldConfig.content) {
-      if (!cleanContent) {
+      if (!content) {
         newErrors.content = '意見內容不得為空！';
-      } else if (cleanContent.length > 1000) {
+      } else if (content.length > 1000) {
         newErrors.content = '意見內容請勿超過 1000 字！';
       }
     }
@@ -159,10 +142,6 @@ export default function CustomerFeedback() {
 
   const executeSubmit = async () => {
     closeModal();
-    const cleanLastName = sanitizeInput(lastName);
-    const cleanPhone = sanitizeInput(phone);
-    const cleanContent = sanitizeInput(content);
-
     const now = new Date();
     const currentMinutes = now.getMinutes();
     const remainder = currentMinutes % 10;
@@ -176,10 +155,10 @@ export default function CustomerFeedback() {
     const currentTime = `${hours}:${minutes}`;
 
     const feedbackData = {
-      Surname: cleanLastName,
+      Surname: lastName,
       sex: gender,
-      phone: cleanPhone,
-      Opinion: cleanContent,
+      phone: phone,
+      Opinion: content,
       hh: currentTime
     };
     
@@ -387,12 +366,11 @@ export default function CustomerFeedback() {
                       className={`input-box ${errors.content ? 'has-error' : ''}`}
                       value={content} 
                       onChange={handleChange(setContent, 'content')} 
-                      maxLength={1000}
                       placeholder="請輸入您的寶貴意見..."
                       disabled={isLoading}
                     />
                     {/* 顯示字數的區塊 */}
-                    <div className={`char-counter ${content.length >= 1000 ? 'limit-reached' : ''}`}>
+                    <div className={`char-counter ${content.length >= 1000 ? 'limit-reached' : ''} ${errors.content ? 'has-error' : ''}`}>
                       {content.length} / 1000
                     </div>
                   </div>
