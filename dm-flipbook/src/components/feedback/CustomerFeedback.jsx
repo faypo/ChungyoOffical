@@ -35,11 +35,11 @@ export default function CustomerFeedback() {
   const [errors, setErrors] = useState({});
   
   const [isLoading, setIsLoading] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState({ message: '', type: '' });
 
   const [modalConfig, setModalConfig] = useState({
     isOpen: false,
-    actionType: '', // submit or reset
+    type: 'confirm', // 'confirm' or 'alert'
+    actionType: '',  // submit or reset
     title: '',
     message: '',
     confirmText: '',
@@ -78,7 +78,6 @@ export default function CustomerFeedback() {
 
   const handlePreSubmit = (e) => {
     e.preventDefault(); 
-    setSubmitStatus({ message: '', type: '' });
 
     const newErrors = {};
 
@@ -132,6 +131,7 @@ export default function CustomerFeedback() {
 
     setModalConfig({
       isOpen: true,
+      type: 'confirm',
       actionType: 'submit',
       title: '確認送出',
       message: '確定要送出這份意見回饋嗎？送出後將無法修改。',
@@ -166,13 +166,18 @@ export default function CustomerFeedback() {
 
     try {
       const result = await fetchFeedback(feedbackData);
-      setSubmitStatus({ 
-        message: result.message, 
-        type: result.success ? 'success' : 'error' 
+      setModalConfig({
+        isOpen: true,
+        type: 'alert',
+        actionType: '',
+        title: result.success ? '送出成功' : '送出失敗',
+        message: result.message,
+        confirmText: '確定',
+        confirmBtnStyle: result.success ? 'primary' : 'danger'
       });
 
       if (result.success) {
-        actualReset(false);
+        actualReset();
       }
     } finally {
       setIsLoading(false);
@@ -182,6 +187,7 @@ export default function CustomerFeedback() {
   const handlePreReset = () => {
     setModalConfig({
       isOpen: true,
+      type: 'confirm',
       actionType: 'reset',
       title: '重新填寫',
       message: '確定要清除所有已填寫的資料嗎？',
@@ -192,10 +198,10 @@ export default function CustomerFeedback() {
 
   const executeReset = () => {
     closeModal();
-    actualReset(true);
+    actualReset();
   };
 
-  const actualReset = (clearStatusMessage = true) => {
+  const actualReset = () => {
     setLastName('');
     setGender('1');
     setEmail('');
@@ -203,9 +209,6 @@ export default function CustomerFeedback() {
     setContent('');
     setIsAgreed(false);
     setErrors({});
-    if (clearStatusMessage) {
-      setSubmitStatus({ message: '', type: '' });
-    }
   };
 
   const closeModal = () => {
@@ -217,6 +220,8 @@ export default function CustomerFeedback() {
       executeSubmit();
     } else if (modalConfig.actionType === 'reset') {
       executeReset();
+    } else {
+      closeModal();
     }
   };
 
@@ -224,9 +229,6 @@ export default function CustomerFeedback() {
     setter(e.target.value);
     if (errors[fieldName]) {
       setErrors(prev => ({ ...prev, [fieldName]: '' }));
-    }
-    if (submitStatus.message) {
-      setSubmitStatus({ message: '', type: '' });
     }
   };
 
@@ -241,6 +243,7 @@ export default function CustomerFeedback() {
 
       <ConfirmModal 
         isOpen={modalConfig.isOpen}
+        type={modalConfig.type}
         title={modalConfig.title}
         message={modalConfig.message}
         confirmText={modalConfig.confirmText}
@@ -258,12 +261,6 @@ export default function CustomerFeedback() {
                 <span className="form-title-sub">Customer Feedback</span>
               </div>
             </div>
-            {submitStatus.message && (
-              <div className={`status-message ${submitStatus.type}`}>
-                {submitStatus.message}
-              </div>
-            )}
-            
             { (fieldConfig.lastName || fieldConfig.gender) && (
               <div className="split-row">
                 {fieldConfig.lastName && (
@@ -297,7 +294,6 @@ export default function CustomerFeedback() {
                           onClick={() => {
                             if(!isLoading) {
                               setGender('1');
-                              setSubmitStatus({ message: '', type: '' });
                             }
                           }}
                         >男</div>
@@ -306,7 +302,6 @@ export default function CustomerFeedback() {
                           onClick={() => {
                             if(!isLoading) {
                               setGender('2');
-                              setSubmitStatus({ message: '', type: '' });
                             }
                           }}
                         >女</div>
@@ -405,13 +400,10 @@ export default function CustomerFeedback() {
                       if (errors.isAgreed) {
                         setErrors(prev => ({ ...prev, isAgreed: '' }));
                       }
-                      if (submitStatus.message) {
-                        setSubmitStatus({ message: '', type: '' });
-                      }
                     }}
                   />
                   <label>
-                    <span>本人同意將個人資料(包括但不限於姓氏、性別、手機號碼) 提供予 中友百貨 ，作為「顧客意見回饋」聯繫及回覆之用。</span>
+                    <span>本人同意將個人資料提供予 中友百貨 ，作為「顧客意見回饋」聯繫及回覆之用。</span>
                   </label>
                 </div>
                 <ErrorMessage message={errors.isAgreed} />

@@ -12,6 +12,7 @@ const NAV_AFTER_MEMBER = [
   { to: '/food',             label: '美食導覽' },
   { to: '/gallery',          label: '中友時尚藝廊' },
   { to: '/winners',          label: '得獎名單' },
+  { to: '/CustomerFeedback', label: '意見回饋'}
 ];
 
 export default function Header() {
