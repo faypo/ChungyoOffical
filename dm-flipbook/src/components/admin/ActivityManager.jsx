@@ -87,12 +87,13 @@ export default function ActivityManager() {
     setTimeout(() => setMsg(null), 3000);
   };
 
-  const load = async () => {
+  const load = async (preferredId = null) => {
     try {
       const r = await fetch(API);
       const d = await r.json();
       setActivities(d.activities ?? []);
       setActiveId(prev => {
+        if (preferredId && d.activities?.find(a => a.id === preferredId)) return preferredId;
         const found = d.activities?.find(a => a.id === prev);
         if (found) return prev;
         const tags = filterTagsRef.current;
@@ -143,7 +144,8 @@ export default function ActivityManager() {
     showMsgFn('已新增');
     setNewTitle('');
     setShowAdd(false);
-    load();
+    userClickRef.current = true;
+    load(d.id);
   };
 
   /* ── 刪除活動頁 ── */

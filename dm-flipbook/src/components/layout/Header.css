@@ -45,7 +45,7 @@
   font-weight: 400;
   color: #353535;
   text-decoration: none;
-  letter-spacing: 4px;
+  letter-spacing: 1px;
   transition: color 0.2s;
   white-space: nowrap;
   flex-shrink: 0;
@@ -95,7 +95,7 @@
   font-weight: 400;
   color: #353535;
   text-decoration: none;
-  letter-spacing: 4px;
+  letter-spacing: 1px;
   border-bottom: 1px solid #e8e4df;
   transition: color 0.2s, background 0.2s;
 }

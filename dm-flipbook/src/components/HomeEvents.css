@@ -12,7 +12,7 @@
   font-size: 11px;
   font-weight: 400;
   color: #6b6966;
-  letter-spacing: 8px;
+  letter-spacing: 2px;
   text-transform: uppercase;
   margin-bottom: 8px;
 }
@@ -33,7 +33,7 @@
 .he-title-rule-text {
   font-size: 22px;
   color: #1a1a1a;
-  letter-spacing: 4px;
+  letter-spacing: 1px;
   white-space: nowrap;
 }
 
@@ -79,6 +79,6 @@
 @media (max-width: 500px) {
   .he-section { padding: 28px 20px 32px; }
   .he-grid { grid-template-columns: 1fr; gap: 10px; }
-  .he-title { font-size: 10px; letter-spacing: 6px; }
-  .he-title-rule-text { font-size: 16px; letter-spacing: 3px; }
+  .he-title { font-size: 10px; letter-spacing: 2px; }
+  .he-title-rule-text { font-size: 16px; letter-spacing: 1px; }
 }
