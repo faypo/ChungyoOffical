@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState,useRef,useEffect } from 'react';
+import { Turnstile } from '@marsidev/react-turnstile'; 
 import './CustomerFeedback.css';
 import ConfirmModal from './ConfirmModal';
 
@@ -36,6 +37,10 @@ export default function CustomerFeedback() {
   
   const [isLoading, setIsLoading] = useState(false);
 
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const [config, setConfig] = useState({ apiUrl: '', turnstileSiteKey: '' });
+  const turnstileRef = useRef(null);
+
   const [modalConfig, setModalConfig] = useState({
     isOpen: false,
     type: 'confirm', // 'confirm' or 'alert'
@@ -46,24 +51,31 @@ export default function CustomerFeedback() {
     confirmBtnStyle: 'primary'
   });
 
-  const fetchFeedback = async (data) => {
+  useEffect(() => {
+    const fetchEnv = async () => {
+        try {
+        const res = await fetch('/env.json');
+        if (!res.ok) throw new Error('無法載入env.json');
+        const data = await res.json();
+        setConfig({ apiUrl: data.api_url, turnstileSiteKey: data.turnstile_site_key });
+        } catch (err) {
+        }
+    };
+    fetchEnv();
+  }, []);
+
+
+  const fetchFeedback = async (data,token) => {
     try {
-
-      const envResponse = await fetch('/env.json');
-
-      if (!envResponse.ok) {
-        throw new Error('無法載入env.json');
-      }
-      
-      const envConfig = await envResponse.json();
-      const API_URL = envConfig.api_url;
-
-      const response = await fetch(API_URL, {
+      const response = await fetch(config.apiUrl, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json' 
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify({
+          data:data,
+          turnstileToken: token
+        })
       });
       if (response.ok) { 
         return { success: true, message: '意見回饋已成功發送！感謝您的寶貴回饋。' };
@@ -118,6 +130,10 @@ export default function CustomerFeedback() {
       }
     }
 
+    if (!turnstileToken) {
+      newErrors.turnstile = '請完成或重新進行機器人驗證！';
+    }
+
     if (!isAgreed) {
       newErrors.isAgreed = '請務必勾選同意提供個人資料！';
     }
@@ -142,30 +158,18 @@ export default function CustomerFeedback() {
 
   const executeSubmit = async () => {
     closeModal();
-    const now = new Date();
-    const currentMinutes = now.getMinutes();
-    const remainder = currentMinutes % 10;
-    
-    if (remainder !== 0) {
-      now.setMinutes(currentMinutes + (10 - remainder));
-    }
-
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const currentTime = `${hours}:${minutes}`;
 
     const feedbackData = {
       Surname: lastName,
       sex: gender,
       phone: phone,
       Opinion: content,
-      hh: currentTime
     };
     
     setIsLoading(true);
 
     try {
-      const result = await fetchFeedback(feedbackData);
+      const result = await fetchFeedback(feedbackData, turnstileToken);
       setModalConfig({
         isOpen: true,
         type: 'alert',
@@ -178,6 +182,9 @@ export default function CustomerFeedback() {
 
       if (result.success) {
         actualReset();
+      } else {
+        turnstileRef.current?.reset();
+        setTurnstileToken('');
       }
     } finally {
       setIsLoading(false);
@@ -209,6 +216,8 @@ export default function CustomerFeedback() {
     setContent('');
     setIsAgreed(false);
     setErrors({});
+    turnstileRef.current?.reset();
+    setTurnstileToken('');
   };
 
   const closeModal = () => {
@@ -373,6 +382,31 @@ export default function CustomerFeedback() {
                 </div>
               </div>
             )}
+
+            <div className="form-row">
+              <div className="form-label">
+              </div>
+                <div className="form-control">
+                  {config.turnstileSiteKey && (
+                    <Turnstile
+                      ref={turnstileRef}
+                      siteKey={config.turnstileSiteKey}
+                      options={{ size: 'flexible' }}
+                      onSuccess={(token) => {
+                        setTurnstileToken(token);
+                        setErrors(prev => ({ ...prev, turnstile: '' }));
+                      }}
+                      onError={() => setErrors(prev => ({ ...prev, turnstile: '驗證發生錯誤，請重試' }))}
+                      onExpire={() => {
+                        setTurnstileToken('');
+                        setErrors(prev => ({ ...prev, turnstile: '驗證已過期，請重新勾選' }));
+                      }}
+                    />
+                  )}
+                  <ErrorMessage message={errors.turnstile} />
+                </div>           
+            </div>
+
 
             <div className="form-row">
               <div className="form-label btn-nbsp">

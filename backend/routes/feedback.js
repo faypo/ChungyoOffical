@@ -8,6 +8,51 @@ const router = express.Router();
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
+// cloudflare turnstile 使用者驗證
+async function turnstileMiddleware(req, res, next) {
+  const { turnstileToken } = req.body;
+  if (!turnstileToken) {
+    return res.status(400).json({ success: false, message: 'Verification failed' });
+  }
+
+  const SECRET_KEY = process.env.TURNSTILE_SECRET_KEY;
+  const formData = new URLSearchParams();
+  formData.append('secret', SECRET_KEY);
+  formData.append('response', turnstileToken);
+
+  try {
+    const verifyResponse = await fetch(process.env.TURNSTILE_API_URL, {
+      method: 'POST',
+      body: formData,
+    });
+    const verifyData = await verifyResponse.json();
+
+    if (!verifyData.success) {
+      return res.status(400).json({ success: false, message: 'Verification failed' });
+    }
+    next(); 
+
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Verification failed' });
+  }
+}
+
+// 取得hh欄位時間
+const getCurrentTime = () =>{
+    const now = new Date();
+    const currentMinutes = now.getMinutes();
+    const remainder = currentMinutes % 10;
+    
+    if (remainder !== 0) {
+      now.setMinutes(currentMinutes + (10 - remainder));
+    }
+
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`
+}
+
+// AES加密
 const prepareTransportPayload = (data) => {
   const rawStream = JSON.stringify(data);
   const processed = CryptoJS.AES.encrypt(rawStream, CryptoJS.enc.Hex.parse(process.env.SECRET_KEY_HEX), {
@@ -32,8 +77,8 @@ async function sendNotificationEmail() {
   }
 }
 
-router.post('/', (req, res) => {
-  const data = req.body;
+router.post('/', turnstileMiddleware , (req, res) => {
+  const { data } = req.body;
 
   // 檢查資料是否收到
   if (!data || typeof data !== 'object' || Array.isArray(data) || Object.keys(data).length === 0) {
@@ -55,48 +100,75 @@ router.post('/', (req, res) => {
     return res.status(502).json({ success: false, message: 'Request Error'});
   }
 
-  const payload = prepareTransportPayload(data);
+  const payload = prepareTransportPayload({...data,hh: getCurrentTime(),});
   const queryString    = new URLSearchParams({ payload }).toString();
   const finalJspUrl    = `${process.env.API_URL}?${queryString}`;
   const requestOptions = {
     method: 'POST',
+    timeout: 5000,
     secureOptions: crypto.constants.SSL_OP_LEGACY_SERVER_CONNECT,
   };
 
-  const jspReq = https.request(finalJspUrl, requestOptions, (jspRes) => {
-    let data = '';
-    jspRes.on('data', chunk => { data += chunk; });
-    jspRes.on('end', () => {
-      let parsed    = null;
-      let isSuccess = false;
+  //舊版SSL/TLS 故使用Node.js原生機制拋資料
+  try {
+    const jspReq = https.request(finalJspUrl, requestOptions, (jspRes) => {
+      let data = '';
 
-      if (data) {
-        try {
-          parsed = JSON.parse(data);
-        } catch (err) {
-          console.error('無法解析回傳 JSON:', err.message); 
+      jspRes.on('error', (err) => {
+        if (!res.headersSent) {
+          res.status(502).json({ success: false, message: 'Request Error' });
         }
-      }
-      
-      if (jspRes.statusCode === 200 && parsed && parsed.status === 'success') {
-        isSuccess = true;
-        // 程式註解，暫不使用
-        // sendNotificationEmail();
-      }
-      const finalStatusCode = isSuccess ? 200 : (jspRes.statusCode === 200 ? 400 : jspRes.statusCode);
-      res.status(finalStatusCode).json({
-        success: isSuccess,
-        message: isSuccess ? 'Request success' : 'Request Error'
+      });
+
+      jspRes.on('data', chunk => { data += chunk; });
+      jspRes.on('end', () => {
+        if (res.headersSent) return;
+
+        let parsed    = null;
+        let isSuccess = false;
+
+        if (data) {
+          try {
+            parsed = JSON.parse(data);
+          } catch (err) {
+            console.error('Unable to parse response JSON', err.message); 
+          }
+        }
+        
+        if (jspRes.statusCode === 200 && parsed && parsed.status === 'success') {
+          isSuccess = true;
+          // 程式註解，暫不使用
+          // sendNotificationEmail();
+        }
+        const finalStatusCode = isSuccess ? 200 : (jspRes.statusCode === 200 ? 400 : jspRes.statusCode);
+        res.status(finalStatusCode).json({
+          success: isSuccess,
+          message: isSuccess ? 'Request success' : 'Request Error'
+        });
       });
     });
-  });
 
-  jspReq.on('error', (err) => {
-    console.error('Error forwarding:', err.message);
-    res.status(502).json({ success: false, message: 'Request Error' });
-  });
+    jspReq.on('timeout', () => {
+      jspReq.destroy(new Error('TIMEOUT')); 
+    });
 
-  jspReq.end();
+    jspReq.on('error', (err) => {
+      if (res.headersSent) return;
+
+      if (err.message === 'TIMEOUT') {
+        return res.status(504).json({ success: false, message: 'Request Error' });
+      }
+      console.error('Error forwarding:', err.message);
+      res.status(502).json({ success: false, message: 'Request Error' });
+    });
+
+    jspReq.end();
+
+  } catch (err) {
+    if (!res.headersSent) {
+      res.status(500).json({ success: false, message: 'Request Error' });
+    }
+  }
 });
 
 module.exports = router;
