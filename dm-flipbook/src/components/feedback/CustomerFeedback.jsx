@@ -391,7 +391,7 @@ export default function CustomerFeedback() {
                     <Turnstile
                       ref={turnstileRef}
                       siteKey={config.turnstileSiteKey}
-                      options={{ size: 'flexible' }}
+                      options={{ size: 'flexible',theme: 'light' }}
                       onSuccess={(token) => {
                         setTurnstileToken(token);
                         setErrors(prev => ({ ...prev, turnstile: '' }));
