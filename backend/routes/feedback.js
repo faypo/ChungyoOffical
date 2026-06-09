@@ -1,7 +1,6 @@
 const express = require('express');
 const https   = require('https');
 const crypto  = require('crypto');
-const CryptoJS = require('crypto-js');
 const sgMail  = require('@sendgrid/mail');
 
 const router = express.Router();
@@ -55,12 +54,18 @@ const getCurrentTime = () =>{
 // AES加密
 const prepareTransportPayload = (data) => {
   const rawStream = JSON.stringify(data);
-  const processed = CryptoJS.AES.encrypt(rawStream, CryptoJS.enc.Hex.parse(process.env.SECRET_KEY_HEX), {
-    iv: CryptoJS.enc.Hex.parse(process.env.SECRET_IV_HEX),
-    mode: CryptoJS.mode.CBC,
-    padding: CryptoJS.pad.Pkcs7
-  });
-  return processed.toString(); 
+
+  const key = Buffer.from(process.env.SECRET_KEY_HEX, 'hex');
+  const iv = Buffer.from(process.env.SECRET_IV_HEX, 'hex');
+
+  const algorithm = key.length === 16 ? 'aes-128-cbc' : 'aes-256-cbc';
+  
+  const cipher = crypto.createCipheriv(algorithm, key, iv);
+  
+  let encrypted = cipher.update(rawStream, 'utf8', 'base64');
+  encrypted += cipher.final('base64');
+  
+  return encrypted; 
 };
 
 // 需求方取消通知功能，程式留存暫不使用
