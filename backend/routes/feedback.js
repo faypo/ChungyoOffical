@@ -3,6 +3,15 @@ const https   = require('https');
 const crypto  = require('crypto');
 const sgMail  = require('@sendgrid/mail');
 
+
+// 確保伺服器不會出現效能瓶頸
+const httpsAgent = new https.Agent({ 
+  keepAlive: true, 
+  maxSockets: 100,
+  secureOptions: crypto.constants.SSL_OP_LEGACY_SERVER_CONNECT
+});
+
+
 const router = express.Router();
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -111,7 +120,7 @@ router.post('/', turnstileMiddleware , (req, res) => {
   const requestOptions = {
     method: 'POST',
     timeout: 5000,
-    secureOptions: crypto.constants.SSL_OP_LEGACY_SERVER_CONNECT,
+    agent:httpsAgent
   };
 
   //舊版SSL/TLS 故使用Node.js原生機制拋資料
