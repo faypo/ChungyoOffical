@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import './FloorGuideManager.css';
 import './WinnersManager.css';
 
@@ -107,6 +107,9 @@ export default function WinnersManager() {
   const [editColumns, setEditColumns] = useState(['', '', '', '', '']);
   const [editRows,    setEditRows]    = useState([]);
 
+  const dragSrc      = useRef(null);
+  const isDragHandle = useRef(false);
+
   const showMsgFn = (text, type = 'ok') => {
     setMsg({ text, type });
     setTimeout(() => setMsg(null), 3000);
@@ -175,6 +178,23 @@ export default function WinnersManager() {
     setNewTitle('');
     setShowAddEvent(false);
     load();
+  };
+
+  // ── Reorder events ──
+  const handleReorder = async (targetIdx) => {
+    const src = dragSrc.current;
+    if (src === null || src === targetIdx) return;
+    const next = [...events];
+    const [moved] = next.splice(src, 1);
+    next.splice(targetIdx, 0, moved);
+    setEvents(next);
+    dragSrc.current = null;
+    const res = await apiFetch(`${API}/events`, {
+      method: 'PUT',
+      body: JSON.stringify(next),
+    });
+    if (!res.ok) showMsgFn('排序儲存失敗', 'err');
+    else showMsgFn('排序已更新');
   };
 
   // ── Delete event ──
@@ -250,13 +270,32 @@ export default function WinnersManager() {
           <table className="fg-table">
             <thead>
               <tr>
+                <th className="wm-drag-col"></th>
                 <th>活動名稱</th>
                 <th>操作</th>
               </tr>
             </thead>
             <tbody>
-              {events.map(e => (
-                <tr key={e.id} className={activeId === e.id ? 'fg-tr-active' : ''}>
+              {events.map((e, idx) => (
+                <tr
+                  key={e.id}
+                  className={activeId === e.id ? 'fg-tr-active' : ''}
+                  draggable
+                  onDragStart={ev => {
+                    if (!isDragHandle.current) { ev.preventDefault(); return; }
+                    dragSrc.current = idx;
+                  }}
+                  onDragEnd={() => { isDragHandle.current = false; }}
+                  onDragOver={ev => ev.preventDefault()}
+                  onDrop={ev => { ev.preventDefault(); handleReorder(idx); }}
+                >
+                  <td className="wm-drag-col">
+                    <span
+                      className="wm-drag-handle"
+                      onMouseDown={() => { isDragHandle.current = true; }}
+                      onMouseUp={() => { isDragHandle.current = false; }}
+                    >⠿</span>
+                  </td>
                   <td>{e.title}</td>
                   <td className="fg-table-actions">
                     <div className="fg-table-actions-inner">

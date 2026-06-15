@@ -21,7 +21,7 @@ export default function Layout({ children }) {
     <div className={`layout layout--browser ${isViewer ? 'layout--viewer' : 'layout--page'}`}>
       <Header />
       <main className="layout-main">{children}</main>
-      <Footer />
+      {!isViewer && <Footer />}
     </div>
   );
 }

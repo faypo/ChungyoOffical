@@ -6,7 +6,7 @@ const { DATA_DIR, readJSON, writeJSON } = require('../../utils/json');
 
 const router = express.Router();
 const FILE = 'activities.json';
-const IMAGE_EXT = /\.(jpg|jpeg|png|webp)$/i;
+const IMAGE_EXT = /\.(jpg|jpeg|png|webp|gif)$/i;
 
 const safeName = (p) => path.basename(p ?? '');
 

@@ -328,6 +328,9 @@ export default function FlipBook({ pages, type = 'double', buttons = [], onBack 
   const zoomOut = useCallback(() => setScale(s => Math.max(s - SCALE_STEP, SCALE_MIN)), []);
   const zoomReset = useCallback(() => { setScale(1); resetPan(); }, [resetPan]);
 
+  // Auto-center when scale returns to exactly 1
+  useEffect(() => { if (scale === 1) resetPan(); }, [scale, resetPan]);
+
   useEffect(() => {
     const onWheel = (e) => {
       if (!e.ctrlKey && !e.metaKey) return;
