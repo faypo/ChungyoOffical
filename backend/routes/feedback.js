@@ -32,6 +32,7 @@ async function turnstileMiddleware(req, res, next) {
     const verifyResponse = await fetch(process.env.TURNSTILE_API_URL, {
       method: 'POST',
       body: formData,
+      signal: AbortSignal.timeout(5000) 
     });
     const verifyData = await verifyResponse.json();
 
@@ -41,6 +42,9 @@ async function turnstileMiddleware(req, res, next) {
     next(); 
 
   } catch (error) {
+    if (error.name === 'AbortError' || error.name === 'TimeoutError') {
+      return res.status(504).json({ success: false, message: 'Verification timeout' });
+    }    
     return res.status(500).json({ success: false, message: 'Verification failed' });
   }
 }
@@ -59,6 +63,21 @@ const getCurrentTime = () =>{
     const minutes = String(now.getMinutes()).padStart(2, '0');
     return `${hours}:${minutes}`
 }
+
+// 基本字元跳脫處理
+const escapeHTML = (str) => {
+  if (typeof str !== 'string') return str;
+  return str.replace(/[&<>'"]/g, (tag) => {
+    const charsToReplace = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      "'": '&#39;',
+      '"': '&quot;'
+    };
+    return charsToReplace[tag] || tag;
+  });
+};
 
 // AES加密
 const prepareTransportPayload = (data) => {
@@ -99,13 +118,49 @@ router.post('/', turnstileMiddleware , (req, res) => {
     return res.status(400).json({ error: 'Missing data' });
   }
 
+  const { Surname, sex, phone, Opinion } = data;
+  if (Surname === undefined || sex === undefined || phone === undefined || Opinion === undefined) {
+    return res.status(400).json({ success: false, message: 'Invalid data format' });
+  }
+
+  if (typeof Surname !== 'string' || typeof sex !== 'string' || typeof phone !== 'string' || typeof Opinion !== 'string') {
+    return res.status(400).json({ success: false, message: 'Invalid data type' });
+  }
+
+  if (Opinion.length > 1000) {
+    return res.status(400).json({ success: false, message: 'Request Error' });
+  }
+
+  const safeData = {
+    Surname: escapeHTML(Surname),
+    sex: escapeHTML(sex),
+    phone: escapeHTML(phone),
+    Opinion: escapeHTML(Opinion)
+  };
+
+  const validationRules = {
+    Surname: /^[\u4e00-\u9fa5]{1,2}$/,
+    sex: /^[12]$/,                      
+    phone: /^0\d{9}$/,                  
+    Opinion: /^[\u4e00-\u9fa5a-zA-Z0-9\s，。？！；：「」『』（）〔〕【】《》、～…—~!@#$%^&*()_+\-=[\]{}|\\:;'"<,>.?\/`]+$/
+  };
+
+  if (
+    !validationRules.Surname.test(safeData.Surname) ||
+    !validationRules.sex.test(String(safeData.sex)) ||
+    !validationRules.phone.test(safeData.phone) ||
+    !validationRules.Opinion.test(safeData.Opinion)
+  ) {
+    return res.status(400).json({ success: false, message: 'Request Error' });
+  }
+
   if (typeof data.payload !== 'string' && typeof data.payload !== 'undefined') {
     return res.status(400).json({ success: false, message: 'Request Error'});
   }
 
-  // 限制傳入資料長度(設定3000字元)
-  const rawString = JSON.stringify(data);
-  if (rawString.length > 3000) {
+  // 限制傳入資料長度(設定4000字元)
+  const rawString = JSON.stringify(safeData);
+  if (rawString.length > 4000) {
     return res.status(400).json({ success: false, message: 'Request Error'});
   }
 
