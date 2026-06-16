@@ -123,13 +123,13 @@ export default function CustomerFeedback() {
     }
 
     if (fieldConfig.content) {
-      const contentRegex = /^[\u4e00-\u9fa5a-zA-Z0-9\s，。？！；：「」『』（）〔〕【】《》、～…—~!@#$%^&*()_+\-=[\]{}|\\:;'"<,>.?\/`]+$/;
+      const contentRegex = /^[\u4e00-\u9fa5\u3100-\u312F\s\x20-\x7E\u3000-\u303F\uFF00-\uFFEF\u2010-\u203B\u00A1-\u00FF\u20A0-\u20CF\uFE30-\uFE4F\u2200-\u22FF]+$/;
       if (!content) {
         newErrors.content = '意見內容不得為空！';
       } else if (content.length > 1000) {
         newErrors.content = '意見內容請勿超過 1000 字！';
       } else if (!contentRegex.test(content)) {
-        newErrors.content = '意見內容包含不允許的特殊符號！';
+        newErrors.content = '意見內容包含不允許的特殊符號或表情符號！';
       }
     }
 

@@ -142,7 +142,7 @@ router.post('/', turnstileMiddleware , (req, res) => {
     Surname: /^[\u4e00-\u9fa5]{1,2}$/,
     sex: /^[12]$/,                      
     phone: /^0\d{9}$/,                  
-    Opinion: /^[\u4e00-\u9fa5a-zA-Z0-9\s，。？！；：「」『』（）〔〕【】《》、～…—~!@#$%^&*()_+\-=[\]{}|\\:;'"<,>.?\/`]+$/
+    Opinion: /^[\u4e00-\u9fa5\u3100-\u312F\s\x20-\x7E\u3000-\u303F\uFF00-\uFFEF\u2010-\u203B\u00A1-\u00FF\u20A0-\u20CF\uFE30-\uFE4F\u2200-\u22FF]+$/
   };
 
   if (
