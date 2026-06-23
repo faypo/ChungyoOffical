@@ -21,7 +21,7 @@ const SOCIAL = [
 const LINKS = [
   { label: '企業入口', href: 'https://eip.chungyo.com.tw' },
   { label: '人才招募', href: 'https://reurl.cc/zDrrON' },
-  { label: '招商專區', href: '#' },
+  { label: '招商專區', href: '/leasing' },
 ];
 
 export default function Footer() {

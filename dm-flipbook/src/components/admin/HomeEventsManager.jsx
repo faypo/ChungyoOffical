@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './ActivityManager.css';
 import './HomeEventsManager.css';
 
+const isDragHandle = { current: false };
+
 const API = '/api/admin/home-event';
 
 const isFileDrag = (e) => e.dataTransfer?.types?.includes('Files');
@@ -14,9 +16,12 @@ export default function HomeEventsManager() {
   const [dropActive, setDropActive] = useState(false);
   const [fields, setFields] = useState({}); // { [id]: { url, startDate, endDate } }
 
-  const fileRef     = useRef();
-  const dragSrc     = useRef(null);
-  const dragCounter = useRef(0);
+  const fileRef        = useRef();
+  const dragSrc        = useRef(null);
+  const dragCounter    = useRef(0);
+  const isDragHandleRef = useRef(false);
+  const replaceFileRef  = useRef();
+  const replacingIdRef  = useRef(null);
 
   const showMsg = (text, type = 'ok') => {
     setMsg({ text, type });
@@ -99,6 +104,25 @@ export default function HomeEventsManager() {
     if (!res.ok) showMsg('儲存失敗', 'err');
   };
 
+  const triggerReplace = (id) => {
+    replacingIdRef.current = id;
+    replaceFileRef.current?.click();
+  };
+
+  const handleReplaceImage = async (e) => {
+    const file = e.target.files?.[0];
+    e.target.value = '';
+    if (!file || !replacingIdRef.current) return;
+    const id = replacingIdRef.current;
+    replacingIdRef.current = null;
+    const fd = new FormData();
+    fd.append('image', file);
+    const res = await fetch(`${API}/${id}/replace`, { method: 'POST', body: fd });
+    if (!res.ok) return showMsg('換圖失敗', 'err');
+    showMsg('已換圖');
+    load();
+  };
+
   const handleDelete = async (id) => {
     if (!window.confirm('確定刪除此活動卡片？')) return;
     const res = await fetch(`${API}/${id}`, { method: 'DELETE' });
@@ -161,6 +185,8 @@ export default function HomeEventsManager() {
         )}
       </div>
 
+      <input ref={replaceFileRef} type="file" accept="image/*" hidden onChange={handleReplaceImage} />
+
       {/* 卡片列表 */}
       <div className="fg-section">
         <div className="fg-section-header">
@@ -178,12 +204,19 @@ export default function HomeEventsManager() {
                   key={ev.id}
                   className="hem-item"
                   draggable
-                  onDragStart={() => handleDragStart(i)}
+                  onDragStart={e => {
+                    if (!isDragHandleRef.current) { e.preventDefault(); return; }
+                    handleDragStart(i);
+                  }}
+                  onDragEnd={() => { isDragHandleRef.current = false; handleDragEnd(); }}
                   onDragOver={handleItemDragOver}
                   onDrop={e => handleDrop(e, i)}
-                  onDragEnd={handleDragEnd}
                 >
-                  <span className="am-drag-handle">⠿</span>
+                  <span
+                    className="am-drag-handle"
+                    onMouseDown={() => { isDragHandleRef.current = true; }}
+                    onMouseUp={() => { isDragHandleRef.current = false; }}
+                  >⠿</span>
                   <img
                     src={`/api/images/home-event-pic/${ev.file}`}
                     alt={ev.file}
@@ -220,12 +253,20 @@ export default function HomeEventsManager() {
                       </label>
                     </div>
                   </div>
-                  <button
-                    className="fg-btn fg-btn-danger fg-btn-sm"
-                    onClick={() => handleDelete(ev.id)}
-                  >
-                    刪除
-                  </button>
+                  <div className="hem-actions">
+                    <button
+                      className="fg-btn fg-btn-ghost fg-btn-sm"
+                      onClick={() => triggerReplace(ev.id)}
+                    >
+                      換圖
+                    </button>
+                    <button
+                      className="fg-btn fg-btn-danger fg-btn-sm"
+                      onClick={() => handleDelete(ev.id)}
+                    >
+                      刪除
+                    </button>
+                  </div>
                 </div>
               );
             })}

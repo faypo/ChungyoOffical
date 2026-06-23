@@ -6,10 +6,16 @@
   border: 1px solid #e5e5e5;
   border-radius: 8px;
   padding: 12px 14px;
-  cursor: grab;
+  cursor: default;
   user-select: none;
 }
-.hem-item:active { cursor: grabbing; }
+
+.hem-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-shrink: 0;
+}
 
 .hem-fields {
   flex: 1;

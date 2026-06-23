@@ -27,6 +27,7 @@ import LogoManager from './components/admin/LogoManager';
 import SustainabilityManager from './components/admin/SustainabilityManager';
 import ServiceManager from './components/admin/ServiceManager';
 import PrivacyPolicy from './components/PrivacyPolicy';
+import Leasing from './components/Leasing';
 import './App.css';
 
 export default function App() {
@@ -68,6 +69,7 @@ export default function App() {
                   <Route path="/activity/:id"    element={<ActivityPage />} />
                   <Route path="/gallery"         element={<GalleryPage />} />
                   <Route path="/privacy"         element={<PrivacyPolicy />} />
+                  <Route path="/leasing"         element={<Leasing />} />
                 </Routes>
               </Layout>
             } />

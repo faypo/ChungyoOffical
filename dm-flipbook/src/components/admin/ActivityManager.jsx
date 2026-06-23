@@ -490,9 +490,9 @@ export default function ActivityManager() {
                     </td>
                     <td><code>/activity/{a.id}</code></td>
                     <td className="am-date-cell">
-                      {a.startDate && <span>{a.startDate}</span>}
+                      {a.startDate && <span>{a.startDate.replace('T', ' ')}</span>}
                       {a.startDate && a.endDate && <span className="am-date-sep">～</span>}
-                      {a.endDate && <span>{a.endDate}</span>}
+                      {a.endDate && <span>{a.endDate.replace('T', ' ')}</span>}
                       {!a.startDate && !a.endDate && <span className="am-date-none">—</span>}
                     </td>
                     <td className="fg-table-actions">
@@ -559,8 +559,8 @@ export default function ActivityManager() {
               <label className="wm-meta-label">
                 開始時間
                 <input
+                  type="datetime-local"
                   className="fg-info-input"
-                  placeholder="例：2026/06/01"
                   value={editStartDate}
                   onChange={e => setEditStartDate(e.target.value)}
                 />
@@ -568,8 +568,8 @@ export default function ActivityManager() {
               <label className="wm-meta-label">
                 結束時間
                 <input
+                  type="datetime-local"
                   className="fg-info-input"
-                  placeholder="例：2026/06/30"
                   value={editEndDate}
                   onChange={e => setEditEndDate(e.target.value)}
                 />

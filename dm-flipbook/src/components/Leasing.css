@@ -1,0 +1,66 @@
+.leasing-page {
+  width: 100%;
+  padding: 52px 60px 80px;
+}
+
+.leasing-content {
+  display: block;
+}
+
+.leasing-title {
+  font-size: 26px;
+  font-weight: 400;
+  color: #1a1a1a;
+  letter-spacing: 4px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.leasing-divider {
+  width: 48px;
+  height: 2px;
+  background: #3d3b39;
+  margin: 0 auto 36px;
+}
+
+.leasing-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 48px 0 0 20%;
+}
+
+.leasing-info p {
+  font-size: 20px;
+  color: #353535;
+  line-height: 1.8;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.leasing-label {
+  font-weight: 600;
+  color: #6b6966;
+  font-size: 13px;
+  letter-spacing: 1px;
+  min-width: 80px;
+}
+
+.leasing-email {
+  color: #353535;
+  text-decoration: none;
+  border-bottom: 1px solid #d8d4cf;
+  padding-bottom: 1px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.leasing-email:hover {
+  color: #004098;
+  border-color: #004098;
+}
+
+@media (max-width: 700px) {
+  .leasing-page { padding: 32px 24px 60px; }
+  .leasing-title { font-size: 22px; }
+  .leasing-info p { font-size: 17px; flex-direction: column; align-items: flex-start; gap: 4px; }
+}

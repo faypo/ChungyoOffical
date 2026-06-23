@@ -59,6 +59,31 @@ router.put('/:id', (req, res) => {
   res.json({ success: true });
 });
 
+/* POST /api/admin/home-event/:id/replace */
+const uploadReplace = multer({
+  storage: multer.diskStorage({
+    destination: (_req, _file, cb) => cb(null, EVENT_DIR),
+    filename:    (_req,  file, cb) => {
+      const ext = path.extname(file.originalname).toLowerCase();
+      cb(null, `${Date.now()}${ext}`);
+    },
+  }),
+  fileFilter: (_req, file, cb) => cb(null, IMAGE_EXT.test(file.originalname)),
+});
+
+router.post('/:id/replace', uploadReplace.single('image'), (req, res) => {
+  if (!req.file) return res.status(400).json({ error: '無效的圖片' });
+  const data = readJSON(FILE, { events: [] });
+  const idx  = data.events.findIndex(e => e.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ error: '找不到此活動卡片' });
+  const oldFile = data.events[idx].file;
+  data.events[idx].file = req.file.filename;
+  writeJSON(FILE, data);
+  const oldPath = path.join(EVENT_DIR, oldFile);
+  if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+  res.json({ success: true, file: req.file.filename });
+});
+
 /* DELETE /api/admin/home-event/:id */
 router.delete('/:id', (req, res) => {
   const data = readJSON(FILE, { events: [] });
