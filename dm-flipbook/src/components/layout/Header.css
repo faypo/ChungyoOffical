@@ -26,10 +26,9 @@
 .site-logo:hover { opacity: 0.7; transition: opacity 0.2s; }
 
 .site-logo-img {
-  height: 28px;
+  height: 36px;
   width: auto;
   object-fit: contain;
-  filter: invert(1);
 }
 
 /* Desktop nav */

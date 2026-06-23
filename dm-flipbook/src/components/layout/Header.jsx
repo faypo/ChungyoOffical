@@ -30,7 +30,7 @@ export default function Header() {
     <header className="site-header">
       <div className="site-header-inner">
         <NavLink to="/" className="site-logo">
-          <img src="/BN-LOGO.png" alt="中友百貨" className="site-logo-img" />
+          <img src="/CI.png" alt="中友百貨" className="site-logo-img" />
         </NavLink>
 
         {/* Desktop nav */}
