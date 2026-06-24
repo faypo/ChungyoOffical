@@ -22,7 +22,7 @@ function useIsMobile() {
 export default function FloorGuide() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [selectedBuilding, setSelectedBuilding] = useState('A');
+  const [selectedBuilding, setSelectedBuilding] = useState('B');
   const [selectedFloor, setSelectedFloor] = useState(null);
   const [floorDrawerOpen, setFloorDrawerOpen] = useState(false);
   const isMobile = useIsMobile();
@@ -34,7 +34,10 @@ export default function FloorGuide() {
       .then(r => r.json())
       .then(d => {
         setData(d);
-        if (d.floors?.length) setSelectedFloor(d.floors[0].id);
+        if (d.floors?.length) {
+          const floor1F = d.floors.find(f => f.id === '1F');
+          setSelectedFloor(floor1F ? '1F' : d.floors[0].id);
+        }
         setLoading(false);
       })
       .catch(() => setLoading(false));
