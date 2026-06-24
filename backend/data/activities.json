@@ -63,7 +63,7 @@
               "y": 71.32482764701248,
               "width": 98.44444444444444,
               "height": 11.182401466544455,
-              "url": "https://www.chungyo.com.tw/pages/event100/sub2.html"
+              "url": "/activity/act-1778725858121"
             },
             {
               "id": "1779436981638",
@@ -71,7 +71,7 @@
               "y": 84.93422972402041,
               "width": 99.55555555555556,
               "height": 10.907424381301558,
-              "url": "https://www.chungyo.com.tw/pages/event100/sub1.html"
+              "url": "/activity/act-1778725858121"
             }
           ]
         }
@@ -81,7 +81,9 @@
       "ogImage": "",
       "tags": [
         "常態活動"
-      ]
+      ],
+      "startDate": "",
+      "endDate": ""
     },
     {
       "id": "act-1779867265793",

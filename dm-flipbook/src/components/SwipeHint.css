@@ -1,0 +1,51 @@
+.swipe-hint-wrap {
+  display: none;
+  position: fixed;
+  bottom: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+
+@media (max-width: 700px) {
+  .swipe-hint-wrap { display: block; }
+}
+
+.swipe-hint-wrap--fade {
+  opacity: 0;
+}
+
+.swipe-hint-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 24px;
+  backdrop-filter: blur(4px);
+  white-space: nowrap;
+}
+
+.swipe-hint-text {
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+.swipe-hint-arrow {
+  font-size: 22px;
+  line-height: 1;
+  animation: swipe-bounce 0.8s ease-in-out infinite alternate;
+}
+
+.swipe-hint-arrow--left {
+  animation-direction: alternate-reverse;
+}
+
+@keyframes swipe-bounce {
+  from { transform: translateX(0); opacity: 0.6; }
+  to   { transform: translateX(4px); opacity: 1; }
+}

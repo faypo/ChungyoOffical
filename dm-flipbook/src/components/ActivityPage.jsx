@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
+import SwipeHint from './SwipeHint';
 import './ActivityPage.css';
 
 function extractYouTubeId(input = '') {
@@ -70,6 +71,7 @@ export default function ActivityPage() {
 
   return (
     <div className="act-page" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+      <SwipeHint />
       <div className="act-content">
         {(activity.content ?? []).map((item, i) => {
           if (item.type === 'image') {
