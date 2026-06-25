@@ -8,6 +8,7 @@ const fs      = require('fs');
 const dataRoutes     = require('./routes/data');
 const feedbackRoutes = require('./routes/feedback');
 const adminRoutes    = require('./routes/admin');
+const trackRoutes    = require('./routes/track');
 const { readJSON }   = require('./utils/json');
 const { adminLogger } = require('./utils/logger');
 const { feedbackLogger } = require('./utils/feedback-logger')
@@ -73,6 +74,7 @@ app.use('/api/images', (req, res, next) => {
   next();
 }, express.static(path.join(__dirname, 'data')));
 app.use('/api/documents', express.static(path.join(__dirname, 'data', 'documents')));
+app.use('/api', trackRoutes);
 app.use('/api', dataRoutes);
 app.use('/api/feedback',feedbackLogger)
 app.use('/api/feedback', feedbackRoutes);

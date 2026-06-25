@@ -1,0 +1,31 @@
+{
+  "home": {
+    "total": 1,
+    "daily": {
+      "2026-06-25": 1
+    }
+  },
+  "floor": {
+    "total": 1,
+    "daily": {
+      "2026-06-25": 1
+    }
+  },
+  "food": {
+    "total": 1,
+    "daily": {
+      "2026-06-25": 1
+    }
+  },
+  "service": {
+    "total": 1,
+    "daily": {
+      "2026-06-25": 1
+    }
+  },
+  "activity": {
+    "total": 0,
+    "daily": {},
+    "pages": {}
+  }
+}

@@ -43,7 +43,20 @@ export default function ActivityPage() {
   useEffect(() => {
     fetch(`/api/activity/${id}`, { cache: 'no-store' })
       .then(r => { if (!r.ok) throw new Error(); return r.json(); })
-      .then(d => { setActivity(d); setLoading(false); })
+      .then(d => {
+        setActivity(d);
+        setLoading(false);
+        // 追蹤：同一 session 同一活動只算一次
+        const ssKey = `cy_act_${id}`;
+        if (!sessionStorage.getItem(ssKey)) {
+          sessionStorage.setItem(ssKey, '1');
+          fetch('/api/track', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ page: 'activity', activityId: id, activityTitle: d.title }),
+          }).catch(() => {});
+        }
+      })
       .catch(() => { setError(true); setLoading(false); });
   }, [id]);
 

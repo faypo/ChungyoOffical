@@ -1,0 +1,99 @@
+.stats-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.stats-tab {
+  padding: 8px 20px;
+  border: 1px solid #d8d4cf;
+  background: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: inherit;
+  color: #555;
+  transition: background 0.15s, color 0.15s;
+}
+.stats-tab.active {
+  background: #3d3b39;
+  color: #fff;
+  border-color: #3d3b39;
+}
+
+.stats-day-sel {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stats-day-btn {
+  padding: 4px 12px;
+  border: 1px solid #d8d4cf;
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: inherit;
+  color: #555;
+  transition: background 0.15s;
+}
+.stats-day-btn.active {
+  background: #eeeef3;
+  border-color: #3d3b39;
+  color: #3d3b39;
+  font-weight: 600;
+}
+
+.stats-cards {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.stats-card {
+  background: #fafafa;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 16px 20px;
+  min-width: 130px;
+  flex: 1;
+}
+
+.stats-card-label {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 6px;
+}
+
+.stats-card-total {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.stats-card-today {
+  font-size: 12px;
+  color: #004098;
+}
+
+.stats-table-wrap {
+  overflow-x: auto;
+}
+
+.stats-table th,
+.stats-table td {
+  white-space: nowrap;
+}
+
+.stats-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: #333;
+}

@@ -11,6 +11,7 @@ const OTHER_NAV = [
   { to: '/admin/gallery',        label: '時尚藝廊' },
   { to: '/admin/sustainability', label: '永續報告書' },
   { to: '/admin/service',       label: '貼心服務' },
+  { to: '/admin/stats',         label: '流量統計' },
 ];
 
 const HOME_NAV = [
