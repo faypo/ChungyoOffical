@@ -36,9 +36,8 @@ CREATE TABLE role_permissions (
 -- 使用者
 CREATE TABLE users (
   id            INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  username      VARCHAR(50)  NOT NULL UNIQUE,
+  employee_id   VARCHAR(20)  NOT NULL UNIQUE COMMENT '工號，作為登入帳號',
   password_hash VARCHAR(255) NOT NULL,
-  email         VARCHAR(100),
   role_id       INT UNSIGNED NOT NULL,
   is_active     TINYINT(1)   DEFAULT 1,
   last_login_at DATETIME,
@@ -60,7 +59,22 @@ CREATE TABLE user_sessions (
 
 ---
 
-## 二、內容模組
+## 二、審計欄位慣例
+
+所有後台可編輯的內容表，一律加上以下四個欄位：
+
+```sql
+created_by  INT UNSIGNED COMMENT '新增者 users.id',
+updated_by  INT UNSIGNED COMMENT '更新者 users.id',
+created_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
+updated_at  DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL,
+FOREIGN KEY (updated_by) REFERENCES users(id) ON DELETE SET NULL
+```
+
+---
+
+## 三、內容模組
 
 ```sql
 -- ── Banner ──────────────────────────────────────────
@@ -71,7 +85,12 @@ CREATE TABLE banners (
   start_date DATETIME,
   end_date   DATETIME,
   sort_order INT UNSIGNED DEFAULT 0,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  created_by INT UNSIGNED,
+  updated_by INT UNSIGNED,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL,
+  FOREIGN KEY (updated_by) REFERENCES users(id) ON DELETE SET NULL
 );
 
 -- ── 活動頁 ──────────────────────────────────────────
@@ -84,8 +103,12 @@ CREATE TABLE activities (
   og_description TEXT,
   og_image       VARCHAR(500),
   sort_order     INT UNSIGNED DEFAULT 0,
+  created_by     INT UNSIGNED,
+  updated_by     INT UNSIGNED,
   created_at     DATETIME DEFAULT CURRENT_TIMESTAMP,
-  updated_at     DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  updated_at     DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL,
+  FOREIGN KEY (updated_by) REFERENCES users(id) ON DELETE SET NULL
 );
 
 CREATE TABLE activity_tags (
@@ -123,7 +146,12 @@ CREATE TABLE dm_catalogs (
   subtitle   VARCHAR(200),
   type       ENUM('double','single','strip') DEFAULT 'double',
   sort_order INT UNSIGNED DEFAULT 0,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  created_by INT UNSIGNED,
+  updated_by INT UNSIGNED,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL,
+  FOREIGN KEY (updated_by) REFERENCES users(id) ON DELETE SET NULL
 );
 
 CREATE TABLE dm_buttons (
@@ -138,7 +166,13 @@ CREATE TABLE dm_buttons (
 CREATE TABLE floor_floors (
   id         VARCHAR(20)  PRIMARY KEY,
   label      VARCHAR(100) NOT NULL,
-  sort_order INT UNSIGNED DEFAULT 0
+  sort_order INT UNSIGNED DEFAULT 0,
+  created_by INT UNSIGNED,
+  updated_by INT UNSIGNED,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL,
+  FOREIGN KEY (updated_by) REFERENCES users(id) ON DELETE SET NULL
 );
 
 CREATE TABLE floor_info (
@@ -174,7 +208,13 @@ CREATE TABLE floor_counters (
 CREATE TABLE food_categories (
   id         VARCHAR(50)  PRIMARY KEY,
   label      VARCHAR(100) NOT NULL,
-  sort_order INT UNSIGNED DEFAULT 0
+  sort_order INT UNSIGNED DEFAULT 0,
+  created_by INT UNSIGNED,
+  updated_by INT UNSIGNED,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL,
+  FOREIGN KEY (updated_by) REFERENCES users(id) ON DELETE SET NULL
 );
 
 CREATE TABLE food_items (
@@ -198,7 +238,12 @@ CREATE TABLE winners_events (
   subtitle2  TEXT,
   columns    JSON COMMENT '固定 5 欄名稱陣列',
   sort_order INT UNSIGNED DEFAULT 0,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  created_by INT UNSIGNED,
+  updated_by INT UNSIGNED,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL,
+  FOREIGN KEY (updated_by) REFERENCES users(id) ON DELETE SET NULL
 );
 
 CREATE TABLE winners_rows (
@@ -218,7 +263,13 @@ CREATE TABLE gallery_content (
   type       ENUM('image','youtube') NOT NULL,
   file       VARCHAR(255),
   video_id   VARCHAR(50),
-  sort_order INT UNSIGNED DEFAULT 0
+  sort_order INT UNSIGNED DEFAULT 0,
+  created_by INT UNSIGNED,
+  updated_by INT UNSIGNED,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL,
+  FOREIGN KEY (updated_by) REFERENCES users(id) ON DELETE SET NULL
 );
 
 CREATE TABLE gallery_hotspots (
@@ -239,7 +290,13 @@ CREATE TABLE home_events (
   url        VARCHAR(500),
   start_date DATETIME,
   end_date   DATETIME,
-  sort_order INT UNSIGNED DEFAULT 0
+  sort_order INT UNSIGNED DEFAULT 0,
+  created_by INT UNSIGNED,
+  updated_by INT UNSIGNED,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL,
+  FOREIGN KEY (updated_by) REFERENCES users(id) ON DELETE SET NULL
 );
 
 -- ── 首頁促銷區 ──────────────────────────────────────
@@ -249,7 +306,13 @@ CREATE TABLE home_promo (
   hero_file   VARCHAR(255),
   hero_url    VARCHAR(500),
   left_label  VARCHAR(100),
-  right_label VARCHAR(100)
+  right_label VARCHAR(100),
+  created_by  INT UNSIGNED,
+  updated_by  INT UNSIGNED,
+  created_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at  DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL,
+  FOREIGN KEY (updated_by) REFERENCES users(id) ON DELETE SET NULL
 );
 
 CREATE TABLE home_promo_cards (
@@ -264,7 +327,13 @@ CREATE TABLE home_promo_cards (
 -- ── Logo 跑馬燈 ──────────────────────────────────────
 CREATE TABLE logo_groups (
   id         VARCHAR(50) PRIMARY KEY,
-  sort_order INT UNSIGNED DEFAULT 0
+  sort_order INT UNSIGNED DEFAULT 0,
+  created_by INT UNSIGNED,
+  updated_by INT UNSIGNED,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL,
+  FOREIGN KEY (updated_by) REFERENCES users(id) ON DELETE SET NULL
 );
 
 CREATE TABLE logos (
@@ -279,7 +348,33 @@ CREATE TABLE logos (
 CREATE TABLE config (
   key_name   VARCHAR(100) PRIMARY KEY,
   value      TEXT,
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  created_by INT UNSIGNED,
+  updated_by INT UNSIGNED,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL,
+  FOREIGN KEY (updated_by) REFERENCES users(id) ON DELETE SET NULL
+);
+
+-- ── 流量統計 ────────────────────────────────────────
+-- 追蹤頁面：home | floor | food | service | winners | feedback | activity
+CREATE TABLE page_views (
+  id      INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  page    VARCHAR(50) NOT NULL COMMENT 'home|floor|food|service|winners|feedback|activity',
+  date    DATE        NOT NULL,
+  count   INT UNSIGNED DEFAULT 0,
+  UNIQUE KEY uq_page_date (page, date)
+);
+
+-- 活動頁個別瀏覽統計
+CREATE TABLE activity_views (
+  id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  activity_id VARCHAR(50)  NOT NULL,
+  title       VARCHAR(200),
+  date        DATE         NOT NULL,
+  count       INT UNSIGNED DEFAULT 0,
+  UNIQUE KEY uq_act_date (activity_id, date),
+  FOREIGN KEY (activity_id) REFERENCES activities(id) ON DELETE CASCADE
 );
 ```
 
@@ -304,6 +399,7 @@ CREATE TABLE config (
 | `sustainability` | 永續報告書     |
 | `config`       | 系統設定（super_admin 限定）|
 | `user`         | 帳號管理（super_admin 限定）|
+| `stats`        | 流量統計（super_admin 限定）|
 
 ### 預設角色權限
 
@@ -315,12 +411,12 @@ CREATE TABLE config (
 
 ---
 
-## 四、ERD 圖（Mermaid）
+## 四、ERD 圖（分組顯示）
+
+### 4-1 帳號權限系統
 
 ```mermaid
 erDiagram
-
-  %% ── 帳號權限 ──
   roles {
     int id PK
     varchar name
@@ -338,9 +434,8 @@ erDiagram
   }
   users {
     int id PK
-    varchar username
+    varchar employee_id
     varchar password_hash
-    varchar email
     int role_id FK
     tinyint is_active
     datetime last_login_at
@@ -359,8 +454,16 @@ erDiagram
   permissions ||--o{ role_permissions : "屬於"
   roles       ||--o{ users            : "套用"
   users       ||--o{ user_sessions    : "建立"
+```
 
-  %% ── 活動頁 ──
+---
+
+### 4-2 活動頁
+
+> 所有內容表均含審計欄位：`created_by FK` / `updated_by FK` / `created_at` / `updated_at`
+
+```mermaid
+erDiagram
   activities {
     varchar id PK
     varchar title
@@ -370,6 +473,10 @@ erDiagram
     text og_description
     varchar og_image
     int sort_order
+    int created_by FK
+    int updated_by FK
+    datetime created_at
+    datetime updated_at
   }
   activity_tags {
     varchar activity_id FK
@@ -396,8 +503,14 @@ erDiagram
   activities       ||--o{ activity_tags     : "有"
   activities       ||--o{ activity_content  : "包含"
   activity_content ||--o{ activity_hotspots : "有"
+```
 
-  %% ── DM ──
+---
+
+### 4-3 電子型錄 DM
+
+```mermaid
+erDiagram
   dm_catalogs {
     varchar id PK
     varchar title
@@ -413,8 +526,14 @@ erDiagram
   }
 
   dm_catalogs ||--o{ dm_buttons : "有"
+```
 
-  %% ── 樓層導覽 ──
+---
+
+### 4-4 樓層導覽
+
+```mermaid
+erDiagram
   floor_floors {
     varchar id PK
     varchar label
@@ -446,8 +565,14 @@ erDiagram
   floor_floors ||--o{ floor_info       : "有"
   floor_floors ||--o{ floor_counters   : "有"
   floor_info   ||--o{ floor_info_icons : "有"
+```
 
-  %% ── 美食導覽 ──
+---
+
+### 4-5 美食導覽
+
+```mermaid
+erDiagram
   food_categories {
     varchar id PK
     varchar label
@@ -466,8 +591,14 @@ erDiagram
   }
 
   food_categories ||--o{ food_items : "包含"
+```
 
-  %% ── 得獎名單 ──
+---
+
+### 4-6 得獎名單
+
+```mermaid
+erDiagram
   winners_events {
     varchar id PK
     varchar title
@@ -487,8 +618,14 @@ erDiagram
 
   winners_events ||--o{ winners_rows : "有"
   winners_rows   ||--o{ winners_rows : "子節點"
+```
 
-  %% ── 藝廊 ──
+---
+
+### 4-7 時尚藝廊
+
+```mermaid
+erDiagram
   gallery_content {
     int id PK
     enum type
@@ -507,8 +644,22 @@ erDiagram
   }
 
   gallery_content ||--o{ gallery_hotspots : "有"
+```
 
-  %% ── 首頁 ──
+---
+
+### 4-8 首頁模組
+
+```mermaid
+erDiagram
+  banners {
+    varchar id PK
+    varchar file
+    varchar url
+    datetime start_date
+    datetime end_date
+    int sort_order
+  }
   home_events {
     varchar id PK
     varchar file
@@ -532,10 +683,6 @@ erDiagram
     varchar file
     varchar url
   }
-
-  home_promo ||--o{ home_promo_cards : "有"
-
-  %% ── Logo ──
   logo_groups {
     varchar id PK
     int sort_order
@@ -547,20 +694,33 @@ erDiagram
     int sort_order
   }
 
-  logo_groups ||--o{ logos : "包含"
+  home_promo  ||--o{ home_promo_cards : "有"
+  logo_groups ||--o{ logos            : "包含"
+```
 
-  %% ── Banner & Config ──
-  banners {
+---
+
+### 4-9 流量統計
+
+```mermaid
+erDiagram
+  page_views {
+    int id PK
+    varchar page
+    date date
+    int count
+  }
+  activities {
     varchar id PK
-    varchar file
-    varchar url
-    datetime start_date
-    datetime end_date
-    int sort_order
+    varchar title
   }
-  config {
-    varchar key_name PK
-    text value
-    datetime updated_at
+  activity_views {
+    int id PK
+    varchar activity_id FK
+    varchar title
+    date date
+    int count
   }
+
+  activities ||--o{ activity_views : "有"
 ```
