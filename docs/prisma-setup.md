@@ -6,31 +6,33 @@
 
 ## 一、初次安裝（已完成，紀錄用）
 
+使用 **Prisma v6**（v7 的 MySQL adapter 尚未穩定，暫不升級）
+
 ```powershell
 cd backend
-npm install prisma @prisma/client
+npm install prisma@^6 @prisma/client@^6
 npx prisma init --datasource-provider mysql
 ```
 
 產生的檔案：
-- `backend/prisma/schema.prisma` — 資料模型定義
-- `backend/prisma.config.ts` — Prisma CLI 設定（連線字串在這裡）
+- `backend/prisma/schema.prisma` — 資料模型定義（含 datasource URL）
 - `backend/generated/prisma/` — 自動產生的 client（不進 git）
+
+> `prisma.config.ts` 是 Prisma v7 的設定檔，v6 不使用，可忽略
 
 ---
 
 ## 二、設定連線（`backend/.env`）
 
-```env
-DATABASE_URL="mysql://USER:PASSWORD@HOST:PORT/DATABASE"
-```
+`.env` 不進 git，請參考 `backend/.env.example` 建立。完整欄位說明見該檔案。
 
-本機開發（Docker）：
+本機開發（Docker）的 `DATABASE_URL`：
 ```env
 DATABASE_URL="mysql://cy7191:K%21ng.19960827@localhost:3306/chungyoOffical"
 ```
 
-> 注意：密碼中的特殊字元需 URL encode（`!` → `%21`）
+> 注意：密碼中的特殊字元需 URL encode（`!` → `%21`）  
+> 正式環境請換成 server 上的 MySQL 帳號密碼與 HOST
 
 ---
 

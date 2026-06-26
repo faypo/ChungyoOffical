@@ -2,10 +2,10 @@ const express = require('express');
 const multer  = require('multer');
 const fs      = require('fs');
 const path    = require('path');
-const { DATA_DIR, readJSON, writeJSON } = require('../../utils/json');
+const { DATA_DIR } = require('../../utils/json');
+const prisma        = require('../../utils/db');
 
 const router     = express.Router();
-const FILE       = 'banners.json';
 const BANNER_DIR = path.join(DATA_DIR, 'banner-pic');
 const IMAGE_EXT  = /\.(jpg|jpeg|png|webp|gif)$/i;
 
@@ -23,71 +23,69 @@ const upload = multer({
 });
 
 /* GET /api/admin/banner */
-router.get('/', (_req, res) => res.json(readJSON(FILE, { banners: [] })));
+router.get('/', async (_req, res) => {
+  const banners = await prisma.banners.findMany({ orderBy: { sort_order: 'asc' } });
+  res.json({ banners });
+});
 
 /* POST /api/admin/banner — 根路由無檔案直接拒絕 */
 router.post('/', (_req, res) => res.status(400).json({ error: 'file 為必填，請使用 /upload' }));
 
 /* POST /api/admin/banner/upload */
-router.post('/upload', upload.single('image'), (req, res) => {
+router.post('/upload', upload.single('image'), async (req, res) => {
   if (!req.file) return res.status(400).json({ error: '無效的圖片' });
-  const data = readJSON(FILE, { banners: [] });
-  const id   = `banner-${Date.now()}`;
-  data.banners.push({ id, file: req.file.filename, url: '' });
-  writeJSON(FILE, data);
+  const id    = `banner-${Date.now()}`;
+  const count = await prisma.banners.count();
+  await prisma.banners.create({ data: { id, file: req.file.filename, url: '', sort_order: count } });
   res.json({ success: true, id, file: req.file.filename });
 });
 
 /* POST /api/admin/banner/:id/replace — 換圖 */
-router.post('/:id/replace', upload.single('image'), (req, res) => {
+router.post('/:id/replace', upload.single('image'), async (req, res) => {
   if (!req.file) return res.status(400).json({ error: '無效的圖片' });
-  const data = readJSON(FILE, { banners: [] });
-  const idx  = data.banners.findIndex(b => b.id === req.params.id);
-  if (idx === -1) {
+  const banner = await prisma.banners.findUnique({ where: { id: req.params.id } });
+  if (!banner) {
     fs.unlinkSync(path.join(BANNER_DIR, req.file.filename));
     return res.status(404).json({ error: '找不到此 Banner' });
   }
-  const oldFile = data.banners[idx].file;
-  data.banners[idx].file = req.file.filename;
-  writeJSON(FILE, data);
-  const oldPath = path.join(BANNER_DIR, oldFile);
+  await prisma.banners.update({ where: { id: req.params.id }, data: { file: req.file.filename } });
+  const oldPath = path.join(BANNER_DIR, banner.file);
   if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
   res.json({ success: true, file: req.file.filename });
 });
 
-/* PUT /api/admin/banner/reorder  — 必須在 /:id 之前 */
-router.put('/reorder', (req, res) => {
+/* PUT /api/admin/banner/reorder — 必須在 /:id 之前 */
+router.put('/reorder', async (req, res) => {
   const { ids } = req.body;
   if (!Array.isArray(ids)) return res.status(400).json({ error: '無效的排序' });
-  const data = readJSON(FILE, { banners: [] });
-  const map  = Object.fromEntries(data.banners.map(b => [b.id, b]));
-  data.banners = ids.map(id => map[id]).filter(Boolean);
-  writeJSON(FILE, data);
+  await prisma.$transaction(
+    ids.map((id, i) => prisma.banners.update({ where: { id }, data: { sort_order: i } }))
+  );
   res.json({ success: true });
 });
 
 /* PUT /api/admin/banner/:id */
-router.put('/:id', (req, res) => {
-  const data = readJSON(FILE, { banners: [] });
-  const idx  = data.banners.findIndex(b => b.id === req.params.id);
-  if (idx === -1) return res.status(404).json({ error: '找不到此 Banner' });
+router.put('/:id', async (req, res) => {
+  const banner = await prisma.banners.findUnique({ where: { id: req.params.id } });
+  if (!banner) return res.status(404).json({ error: '找不到此 Banner' });
   const { url, startDate, endDate } = req.body;
-  if (url       !== undefined) data.banners[idx].url       = url;
-  if (startDate !== undefined) data.banners[idx].startDate = startDate;
-  if (endDate   !== undefined) data.banners[idx].endDate   = endDate;
-  writeJSON(FILE, data);
+  await prisma.banners.update({
+    where: { id: req.params.id },
+    data: {
+      ...(url       !== undefined && { url }),
+      ...(startDate !== undefined && { start_date: startDate ? new Date(startDate) : null }),
+      ...(endDate   !== undefined && { end_date:   endDate   ? new Date(endDate)   : null }),
+    },
+  });
   res.json({ success: true });
 });
 
 /* DELETE /api/admin/banner/:id */
-router.delete('/:id', (req, res) => {
-  const data = readJSON(FILE, { banners: [] });
-  const idx  = data.banners.findIndex(b => b.id === req.params.id);
-  if (idx === -1) return res.status(404).json({ error: '找不到此 Banner' });
-  const { file } = data.banners[idx];
-  data.banners.splice(idx, 1);
-  writeJSON(FILE, data);
-  const filePath = path.join(BANNER_DIR, file);
+router.delete('/:id', async (req, res) => {
+  const banner = await prisma.banners.findUnique({ where: { id: req.params.id } });
+  if (!banner) return res.status(404).json({ error: '找不到此 Banner' });
+  await prisma.banners.delete({ where: { id: req.params.id } });
+  const filePath = path.join(BANNER_DIR, banner.file);
   if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
   res.json({ success: true });
 });
