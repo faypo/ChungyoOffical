@@ -1,10 +1,11 @@
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../generated/prisma"
 }
 
 datasource db {
   provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
 model activities {
@@ -229,17 +230,18 @@ model food_categories {
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model food_items {
-  id              Int             @id @default(autoincrement()) @db.UnsignedInt
-  category_id     String          @db.VarChar(50)
-  name            String          @db.VarChar(200)
-  floor_id        String?         @db.VarChar(20)
-  building        String?         @db.Char(1)
-  phone           String?         @db.VarChar(50)
-  logo            String?         @db.VarChar(255)
-  description     String?         @db.Text
-  sort_order      Int?            @default(0) @db.UnsignedInt
-  food_categories food_categories @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "food_items_ibfk_1")
-  floor_floors    floor_floors?   @relation(fields: [floor_id], references: [id], onUpdate: NoAction, map: "food_items_ibfk_2")
+  id              Int                @id @default(autoincrement()) @db.UnsignedInt
+  category_id     String             @db.VarChar(50)
+  section         food_items_section @default(theme)
+  name            String             @db.VarChar(200)
+  floor_id        String?            @db.VarChar(20)
+  building        String?            @db.Char(1)
+  phone           String?            @db.VarChar(50)
+  logo            String?            @db.VarChar(255)
+  description     String?            @db.Text
+  sort_order      Int?               @default(0) @db.UnsignedInt
+  food_categories food_categories    @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "food_items_ibfk_1")
+  floor_floors    floor_floors?      @relation(fields: [floor_id], references: [id], onUpdate: NoAction, map: "food_items_ibfk_2")
 
   @@index([category_id], map: "category_id")
   @@index([floor_id], map: "floor_id")
@@ -493,4 +495,9 @@ enum dm_catalogs_type {
   single
   strip
   url
+}
+
+enum food_items_section {
+  theme
+  foodcourt
 }

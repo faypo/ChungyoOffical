@@ -94,9 +94,24 @@ try {
       }
     }
   }
+  # floor_counters
+  $cRows = @()
+  foreach ($bldg in @("A","B","C")) {
+    $bData = $fg.counters.$bldg
+    if ($null -eq $bData) { continue }
+    foreach ($fid in ($bData | Get-Member -MemberType NoteProperty).Name) {
+      $fi = 0
+      foreach ($c in $bData.$fid) {
+        $cRows += "(" + (Esc $fid) + ",'$bldg'," + (Esc $c.name) + "," + (Esc $c.phone) + "," + (Esc $c.logo) + "," + (Esc $c.description) + ",$fi)"
+        $fi++
+      }
+    }
+  }
+  if ($cRows.Count -gt 0) { $sql += "INSERT INTO floor_counters (floor_id, building, name, phone, logo, description, sort_order) VALUES " + ($cRows -join ",") + ";" + [char]10 }
+
   $sql += "SET FOREIGN_KEY_CHECKS=1;"
   Exec-SQL $sql
-  Write-Host " OK ($($fg.floors.Count) floors)" -ForegroundColor Green
+  Write-Host " OK ($($fg.floors.Count) floors, $($cRows.Count) counters)" -ForegroundColor Green
 } catch { Write-Host " FAILED: $_" -ForegroundColor Red }
 
 # 2. banners
@@ -185,16 +200,17 @@ try {
   foreach ($cat in $json.categories) {
     $rest = $json.restaurants.($cat.id)
     if ($null -eq $rest) { continue }
-    $all = @()
-    if ($rest.theme)     { $all += $rest.theme }
-    if ($rest.foodcourt) { $all += $rest.foodcourt }
-    foreach ($r in $all) {
-      $fid = if ("$($r.floor)" -ne "") { Esc $r.floor } else { "NULL" }
-      $iRows += "(" + (Esc $cat.id) + "," + (Esc $r.name) + ",$fid," + (ToBldg $r.building) + "," + (Esc $r.phone) + "," + (Esc $r.image) + "," + (Esc $r.description) + ",$ii)"
-      $ii++
+    foreach ($section in @("theme","foodcourt")) {
+      $secItems = $rest.$section
+      if ($null -eq $secItems) { continue }
+      foreach ($r in $secItems) {
+        $fid = if ("$($r.floor)" -ne "") { Esc $r.floor } else { "NULL" }
+        $iRows += "(" + (Esc $cat.id) + ",'$section'," + (Esc $r.name) + ",$fid," + (ToBldg $r.building) + "," + (Esc $r.phone) + "," + (Esc $r.image) + "," + (Esc $r.description) + ",$ii)"
+        $ii++
+      }
     }
   }
-  if ($iRows.Count -gt 0) { $sql += "INSERT INTO food_items (category_id, name, floor_id, building, phone, logo, description, sort_order) VALUES " + ($iRows -join ",") + ";" + [char]10 }
+  if ($iRows.Count -gt 0) { $sql += "INSERT INTO food_items (category_id, section, name, floor_id, building, phone, logo, description, sort_order) VALUES " + ($iRows -join ",") + ";" + [char]10 }
   $sql += "SET FOREIGN_KEY_CHECKS=1;"
   Exec-SQL $sql
   Write-Host " OK ($ii items)" -ForegroundColor Green
