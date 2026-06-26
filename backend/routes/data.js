@@ -1,7 +1,7 @@
 const express = require('express');
 const fs      = require('fs');
 const path    = require('path');
-const { DATA_DIR, readJSON } = require('../utils/json');
+const { DATA_DIR } = require('../utils/json');
 const prisma  = require('../utils/db');
 
 const IMAGE_EXT    = /\.(jpg|jpeg|png|webp)$/i;
@@ -210,8 +210,9 @@ router.get('/home-promo', async (_req, res) => {
   });
 });
 
-router.get('/home-fb', (_req, res) => {
-  res.json(readJSON('home-fb.json', { src: '' }));
+router.get('/home-fb', async (_req, res) => {
+  const row = await prisma.config.findUnique({ where: { key_name: 'home_fb_src' } });
+  res.json({ src: row?.value ?? '' });
 });
 
 router.get('/config', async (_req, res) => {
