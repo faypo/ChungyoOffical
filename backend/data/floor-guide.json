@@ -2,15 +2,15 @@
   "floors": [
     {
       "id": "15F",
-      "label": "15F  主題餐廳"
+      "label": "15F 主題餐廳"
     },
     {
       "id": "14F",
-      "label": "14F"
+      "label": "14F 海底撈火鍋"
     },
     {
       "id": "13F",
-      "label": "13F  活動大廳|服務中心|生活雜貨"
+      "label": "13F 活動大廳 | 服務中心 | 生活雜貨"
     },
     {
       "id": "12F",
@@ -18,63 +18,63 @@
     },
     {
       "id": "11F",
-      "label": "11F  廚房用品|主題餐廳|寢具|誠品書店"
+      "label": "11F 主題餐廳 | 廚房用品 | 寢具 | 誠品書店"
     },
     {
       "id": "10F",
-      "label": "10F  創意平台|家電|誠品書店"
+      "label": "10F 誠品書店 | 家電 | 創意平台"
     },
     {
       "id": "9F",
-      "label": "9F   運動服飾|休閒鞋"
+      "label": "9F 運動服飾 | 休閒鞋"
     },
     {
       "id": "8F",
-      "label": "8F   GU | 遊樂世界 | 主題餐廳"
+      "label": "8F GU | 遊樂世界 | 主題餐廳"
     },
     {
       "id": "7F",
-      "label": "7F   宜得利家居 | 婦嬰用品 | 童裝玩具"
+      "label": "7F 宜得利家居 | 婦嬰用品 | 童裝玩具"
     },
     {
       "id": "6F",
-      "label": "6F   商務西服|戶外服飾"
+      "label": "6F 商務西服 | 戶外服飾"
     },
     {
       "id": "5F",
-      "label": "5F   內睡衣 | 咖啡 | 黃金珠寶 | 都會女裝"
+      "label": "5F 內睡衣 | 咖啡 | 黃金珠寶 | 都會女裝"
     },
     {
       "id": "4F",
-      "label": "4F   流行服飾|香氛保養|韓式攝影|鐘錶"
+      "label": "4F 流行服飾 | 香氛保養 | 雜貨配件"
     },
     {
       "id": "3F",
-      "label": "3F   ABC-Mart|配件|鐘錶|MUJI|進口服飾"
+      "label": "3F ABC-Mart | 配件 | 鐘錶 | MUJI | 進口服飾"
     },
     {
       "id": "2F",
-      "label": "2F   3C|咖啡|鐘錶|珍珠飾品|服飾|香水"
+      "label": "2F 3C | 咖啡 | 鐘錶 | 珍珠飾品 | 服飾 | 香水"
     },
     {
       "id": "M2F",
-      "label": "M2F   NONSPACE"
+      "label": "M2F NONSPACE"
     },
     {
       "id": "1F",
-      "label": "1F   化妝品|名品|服飾|輕食咖啡"
+      "label": "1F 化妝品 | 名品 | 服飾 | 輕食咖啡"
     },
     {
       "id": "B1",
-      "label": "B1   UNIQLO | 流行配件 | 快速剪髮 | 女鞋 | 服飾"
+      "label": "B1 UNIQLO | 流行配件 | 快速剪髮 | 女鞋 | 服飾"
     },
     {
       "id": "B2",
-      "label": "B2   UNIQLO|藥妝保健|超市|服務台|美饌輕食"
+      "label": "B2 UNIQLO | 藥妝保健 | 超市 | 服務台 | 美饌輕食"
     },
     {
       "id": "B3",
-      "label": "B3   國際美食街|主題餐廳"
+      "label": "B3 國際美食街 | 主題餐廳"
     },
     {
       "id": "B4",
@@ -88,11 +88,14 @@
   "floorInfo": {
     "A": {
       "1F": {
-        "title": "",
-        "icons": []
+        "title": "H&M",
+        "icons": [
+          "tel.jpg",
+          "car.jpg"
+        ]
       },
       "2F": {
-        "title": "",
+        "title": "H&M",
         "icons": []
       },
       "M2F": {
@@ -100,45 +103,75 @@
         "icons": []
       },
       "3F": {
-        "title": "",
-        "icons": []
+        "title": " ABC-Mart．雜貨配件．服飾",
+        "icons": [
+          "test1.png",
+          "lady.jpg",
+          "AAA.png"
+        ]
       },
       "4F": {
-        "title": "",
-        "icons": []
-      },
-      "5F": {
-        "title": "",
-        "icons": []
-      },
-      "6F": {
-        "title": "",
-        "icons": []
-      },
-      "7F": {
-        "title": "",
-        "icons": []
-      },
-      "8F": {
-        "title": "8F   主題餐廳|遊樂世界|GU",
+        "title": "流行服飾．雜貨配件",
         "icons": [
           "toilet.png"
         ]
       },
+      "5F": {
+        "title": "內睡衣",
+        "icons": [
+          "test1.png",
+          "AAA.png",
+          "lady.jpg",
+          "2026-icon_å·¥ä½åå 1 è¤æ¬ 2.png"
+        ]
+      },
+      "6F": {
+        "title": "牛仔‧休閒服飾‧雜貨配件",
+        "icons": [
+          "2026-icon_å·¥ä½åå 1 è¤æ¬ 2.png",
+          "toilet.png"
+        ]
+      },
+      "7F": {
+        "title": "NITORI 宜得利家居",
+        "icons": [
+          "test1.png",
+          "lady.jpg",
+          "AAA.png"
+        ]
+      },
+      "8F": {
+        "title": "GU",
+        "icons": [
+          "AAA.png",
+          "car1.jpg",
+          "toilet.png",
+          "test1.png"
+        ]
+      },
       "9F": {
-        "title": "",
-        "icons": []
+        "title": "運動服飾‧休閒鞋",
+        "icons": [
+          "AAA.png",
+          "test1.png",
+          "toilet.png"
+        ]
       },
       "10F": {
-        "title": "",
-        "icons": []
+        "title": "3C‧AV音響‧按摩器材‧法雅客‧創意平台‧實演廚房",
+        "icons": [
+          "toilet.png",
+          "test1.png"
+        ]
       },
       "11F": {
-        "title": "",
-        "icons": []
+        "title": "NARA Thai Cuisine‧開飯川食堂‧廚房用品",
+        "icons": [
+          "toilet.png"
+        ]
       },
       "12F": {
-        "title": "京悅港式飲茶/瓦城泰國料理/時尚藝廊",
+        "title": "京悅港式飲茶‧瓦城泰國料理‧時尚藝廊",
         "icons": [
           "AAA.png",
           "cutlery.png",
@@ -153,24 +186,39 @@
         ]
       },
       "14F": {
-        "title": "",
-        "icons": []
+        "title": "海底撈火鍋",
+        "icons": [
+          "toilet.png",
+          "cutlery.png"
+        ]
       },
       "15F": {
         "title": "",
         "icons": []
       },
       "B1": {
-        "title": "",
-        "icons": []
+        "title": "H&M",
+        "icons": [
+          "AAA.png",
+          "test1.png",
+          "toilet.png"
+        ]
       },
       "B2": {
-        "title": "",
-        "icons": []
+        "title": " Mia C'bon Premium Market 頂級超市",
+        "icons": [
+          "toilet.png"
+        ]
       },
       "B3": {
-        "title": "",
-        "icons": []
+        "title": "大戶屋．爭鮮+．大師兄銷魂麵鋪．國際美食街",
+        "icons": [
+          "cutlery.png",
+          "car1.jpg",
+          "test1.png",
+          "toilet.png",
+          "AAA.png"
+        ]
       },
       "B4": {
         "title": "",
@@ -183,11 +231,14 @@
     },
     "B": {
       "1F": {
-        "title": "",
-        "icons": []
+        "title": "化妝品．名品",
+        "icons": [
+          "car.jpg",
+          "tel.jpg"
+        ]
       },
       "2F": {
-        "title": "",
+        "title": "時尚名品．鐘錶配件．珠寶飾品．[i]Store．SAMSUNG",
         "icons": []
       },
       "M2F": {
@@ -195,46 +246,57 @@
         "icons": []
       },
       "3F": {
-        "title": "",
+        "title": "進口服飾．配件鐘錶．無印良品",
         "icons": []
       },
       "4F": {
-        "title": "",
+        "title": "流行服飾．雜貨配件．香氛保養",
         "icons": []
       },
       "5F": {
-        "title": "",
-        "icons": []
+        "title": "設計師服飾．黃金珠寶．配件",
+        "icons": [
+          "2026-icon_å·¥ä½åå 1.png",
+          "åè£icon.png"
+        ]
       },
       "6F": {
-        "title": "",
+        "title": "休閒服飾‧高爾夫服飾‧戶外服飾‧2nd STREET",
         "icons": []
       },
       "7F": {
-        "title": "",
-        "icons": []
+        "title": "流行童裝‧童鞋雜貨‧玩具",
+        "icons": [
+          "test1.png",
+          "2026-icon_å·¥ä½åå 1.png",
+          "åè£icon.png"
+        ]
       },
       "8F": {
-        "title": "8F   主題餐廳|遊樂世界|GU",
+        "title": "湯姆熊歡樂世界",
         "icons": [
-          "cutlery.png",
-          "toilet.png"
+          "test1.png"
         ]
       },
       "9F": {
-        "title": "",
+        "title": "運動服飾‧休閒鞋",
         "icons": []
       },
       "10F": {
-        "title": "",
-        "icons": []
+        "title": "大小家電",
+        "icons": [
+          "test1.png"
+        ]
       },
       "11F": {
-        "title": "",
-        "icons": []
+        "title": "寢具床墊．家飾．餐瓷．藝品",
+        "icons": [
+          "2026-icon_å·¥ä½åå 1.png",
+          "test1.png"
+        ]
       },
       "12F": {
-        "title": "",
+        "title": "香氛．美甲．生活雜貨．傢俱．天然礦石",
         "icons": []
       },
       "13F": {
@@ -250,16 +312,29 @@
         "icons": []
       },
       "B1": {
-        "title": "",
+        "title": "UNIQLO．女鞋．流行配件．快速剪髮",
         "icons": []
       },
       "B2": {
-        "title": "",
-        "icons": []
+        "title": "UNIQLO．麵包．食品．藥妝保健．服務台．餐廳",
+        "icons": [
+          "AED.jpg",
+          "BOX.jpg",
+          "test1.png",
+          "0529.jpg",
+          "cutlery.png"
+        ]
       },
       "B3": {
-        "title": "",
-        "icons": []
+        "title": "國際美食街",
+        "icons": [
+          "cutlery.png",
+          "BOX.jpg",
+          "ATM.jpg",
+          "test1.png",
+          "AAA.png",
+          "toilet.png"
+        ]
       },
       "B4": {
         "title": "",
@@ -272,10 +347,9 @@
     },
     "C": {
       "1F": {
-        "title": "化妝品.輕食咖啡",
+        "title": "化妝品‧輕食咖啡",
         "icons": [
           "ITEM.jpg",
-          "BOX.jpg",
           "ATM.jpg",
           "car.jpg",
           "tel.jpg"
@@ -290,17 +364,17 @@
         ]
       },
       "M2F": {
-        "title": "",
+        "title": "NONSPACE",
         "icons": []
       },
       "3F": {
-        "title": "歐美服飾.雜貨配件",
+        "title": "歐美服飾‧雜貨配件",
         "icons": [
           "toilet.png"
         ]
       },
       "4F": {
-        "title": "流行服飾/飾品雜貨.香氛保養",
+        "title": "流行服飾‧飾品雜貨‧香氛保養",
         "icons": [
           "toilet.png"
         ]
@@ -310,17 +384,17 @@
         "icons": [
           "ITEM.jpg",
           "cutlery.png",
-          "lady.jpg"
+          "toilet.png"
         ]
       },
       "6F": {
-        "title": "輕商務/西服.皮件皮鞋",
+        "title": "輕商務‧西服‧皮件皮鞋",
         "icons": [
           "toilet.png"
         ]
       },
       "7F": {
-        "title": "婦嬰用品/幼兒服飾.哺集乳室",
+        "title": "婦嬰用品‧幼兒服飾‧哺集乳室",
         "icons": [
           "test1.png",
           "AAA.png",
@@ -329,7 +403,7 @@
         ]
       },
       "8F": {
-        "title": "義式屋古拉爵/瀧厚炙燒熟成牛排/克隆尼歡樂世界",
+        "title": "義式屋古拉爵‧瀧厚炙燒熟成牛排‧克隆尼歡樂世界",
         "icons": [
           "toilet.png",
           "test1.png",
@@ -338,9 +412,10 @@
         ]
       },
       "9F": {
-        "title": "運動服飾/休閒鞋.鐘錶",
+        "title": "運動服飾‧休閒鞋‧鐘錶",
         "icons": [
-          "toilet.png"
+          "toilet.png",
+          "test1.png"
         ]
       },
       "10F": {
@@ -352,7 +427,7 @@
         ]
       },
       "11F": {
-        "title": "誠品書店/生活雜貨/咖啡",
+        "title": "誠品書店‧生活雜貨‧咖啡",
         "icons": [
           "toilet.png",
           "ITEM.jpg"
@@ -396,7 +471,7 @@
         ]
       },
       "B3": {
-        "title": "北村豆腐家/大河屋燒肉丼．串燒/花月嵐拉麵/CoCo壱番屋/國際美食街",
+        "title": "北村豆腐家．大河屋燒肉丼/串燒．花月嵐拉麵．CoCo壱番屋．國際美食街",
         "icons": [
           "cutlery.png"
         ]
@@ -420,182 +495,519 @@
     "A": {
       "1F": [
         {
-          "name": "範例品牌 A",
-          "phone": "04-2227-0000",
-          "description": "品牌簡介說明文字，可填入品牌特色或服務項目。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
-        },
-        {
-          "name": "範例品牌 B",
-          "phone": "04-2227-0001",
-          "description": "品牌簡介說明文字，可填入品牌特色或服務項目。",
-          "logo": ""
+          "name": "H&M",
+          "phone": "04-37020606",
+          "description": "瑞典快時尚服裝品牌，提供男裝、女裝、休閒服飾與童裝。\n",
+          "logo": "/api/images/floor-pic/1780037398876-H&M.png"
         }
       ],
-      "2F": [],
+      "2F": [
+        {
+          "name": "H&M",
+          "phone": "04-37020606",
+          "description": "04-37020606\n",
+          "logo": "/api/images/floor-pic/1780037856113-H&M.png"
+        }
+      ],
       "M2F": [],
-      "3F": [],
-      "4F": [],
-      "5F": [],
-      "6F": [],
-      "7F": [],
+      "3F": [
+        {
+          "name": "ABC MART ",
+          "phone": "04-37047889",
+          "description": "日本鞋類專賣連鎖店，提供種類豐富、價格實惠的各式知名運動鞋、皮鞋及休閒鞋。\n",
+          "logo": "/api/images/floor-pic/1780292045592-ABC MART.jpg"
+        },
+        {
+          "name": "MOZ",
+          "phone": "無專線",
+          "description": "瑞典的國際知名家居與生活風格品牌，品牌瑞典駝鹿 (Elk)為標誌，販售時尚服飾、休閒鞋履。\n",
+          "logo": "/api/images/floor-pic/1780292080789-MOZ.jpg"
+        },
+        {
+          "name": "OWNDAYS",
+          "phone": "0800-002118",
+          "description": "日本連鎖眼鏡品牌，以快速取件及「鏡框+薄型非球面鏡片」不加價的透明化安心定價策略聞名。\n",
+          "logo": "/api/images/floor-pic/1780292166256-OWNDAYS.jpg"
+        },
+        {
+          "name": "POP MART 販賣機",
+          "phone": "無專線",
+          "description": "以盲盒形式風靡全球，擁有如Molly、Labubu、Dimoo等知名IP，致力於潮流玩具與藝術品孵化。\n",
+          "logo": "/api/images/floor-pic/1780292307432-POP MART.png"
+        },
+        {
+          "name": "分分鐘貼膜機",
+          "phone": "無專線",
+          "description": "台灣智慧科技品牌，提供無接觸的自動化手機配件服務。其主打 90秒全自動貼膜與 3分鐘客製化手機殼。\n",
+          "logo": "/api/images/floor-pic/1780292228494-ååé.png"
+        },
+        {
+          "name": "分分鐘手機殼販賣機",
+          "phone": "無專線",
+          "description": "台灣智慧科技品牌，提供無接觸的自動化手機配件服務。其主打 90秒全自動貼膜與 3分鐘客製化手機殼。\n",
+          "logo": "/api/images/floor-pic/1780292261370-ååé.png"
+        }
+      ],
+      "4F": [
+        {
+          "name": "Arnold Palmer(包)",
+          "phone": "04-22250591",
+          "description": "Arnold Palmer小雨傘包包一直努力將健康明朗的風格注入你我生活中，讓眾人感受幸福，體驗樂趣\n",
+          "logo": "/api/images/floor-pic/1780299240753-Arnold Palmeråå.jpg"
+        },
+        {
+          "name": "Dailo",
+          "phone": "04-22251395",
+          "description": "當和平鳥劃過天際，我的裝扮由我決定，在意趣味性的Dailo女孩所展現的是富有想像空間詩意並甜美，愛好和平且自由的率性穿搭。\n",
+          "logo": "/api/images/floor-pic/1780298459178-Dailo.jpg"
+        },
+        {
+          "name": "gozo",
+          "phone": "04-22233757",
+          "description": "以趣味設計的DNA翻轉日常，在個體與群體的邊界之間跨越與穿梭，呈現\"妳\"就是不同的風格態度\n",
+          "logo": "/api/images/floor-pic/1780540978706-æé£¾ 24.jpg"
+        },
+        {
+          "name": "Iris Girls",
+          "phone": "04-22252316",
+          "description": "IRIS 源自希臘神話中的彩虹女神，她連結天地，带來光與彩虹象徵靈感與希望，也象徵對美感的敏銳與對生活的熱愛。服裝，是一種讓女性在生活與自我之間自在切換的方式。\n",
+          "logo": "/api/images/floor-pic/1780298787686-iris.png"
+        },
+        {
+          "name": "iNio",
+          "phone": "0967-298029",
+          "description": "黑白之間，找回自在的自己有些衣服，是為了好看。有些衣服，是為了遮掩。但有些衣服，是為了讓妳重新喜歡現在的自己。iNio始終相信-穿著，不只是衣服。它是一種生活態度。\n",
+          "logo": "/api/images/floor-pic/1780298822610-iNio.jpg"
+        },
+        {
+          "name": "maru.a",
+          "phone": "04-22253053",
+          "description": "maru.a，一個專屬於少女的時尚樂園！在這裡，您會遇見我們可愛的吉祥物-貓咪Miru和兔子Mitu。Miru與Mitu象徵著我們品牌的雙重魅力：既有潮流的前衛感，又不失甜美的細膩。\n",
+          "logo": "/api/images/floor-pic/1780298749080-maru.a.png"
+        },
+        {
+          "name": "Midoliya",
+          "phone": "04-22259608",
+          "description": "專注於開發極致親膚的「舒棉」質料，將柔軟觸感轉化為日常的溫柔陪伴。在極簡的剪裁中，大膽玩轉色彩，打造專屬的混搭美學。在舒適中定義風格，讓美變得毫不費力。\n\n",
+          "logo": "/api/images/floor-pic/1780298620397-Midoliya.jpg"
+        },
+        {
+          "name": "MO-BO",
+          "phone": "04-22258533",
+          "description": "MO-BO 最舒適的時髦女裝品牌，以天然親肌材質融合簡約剪裁和舒適生活，替您打造自由搭配並且多變換的穿著體驗。MO-BO comfy and stylish.\n",
+          "logo": "/api/images/floor-pic/1780298649243-MO-BO.jpg"
+        },
+        {
+          "name": "olivo",
+          "phone": "04-22259357",
+          "description": "olivo在義大利文中意為橄欖樹，象徵和平與自由，以簡約與舒適為核心，打造貼近日常的穿著風格，藍綠經典格紋，延續品牌獨有的風格。\n",
+          "logo": "/api/images/floor-pic/1780298504430-olivo.jpg"
+        },
+        {
+          "name": "SECRET CASTLE秘密城堡",
+          "phone": "04-22290911",
+          "description": "長期以來秉持著創新、品質、穩定，尊重生命的理念，在產品配方研發堅持不做動物實驗，並支持動物保育與關懷動物權益，選用對人體安全的成分原料是基本經營理念。\n",
+          "logo": "/api/images/floor-pic/1780299297883-æé£¾ 18.jpg"
+        },
+        {
+          "name": "Tiara Tiara",
+          "phone": "070-10811633",
+          "description": "主打簡單舒適帶出樂活理念的森林系.山林系.消齢系的無齡穿搭，注重天然棉麻觸感質感並且融合日本生活雜貨療癒選品複合店！\n",
+          "logo": "/api/images/floor-pic/1780298411172-Tiara Tiara.jpg"
+        },
+        {
+          "name": "8happy group",
+          "phone": "04-37007328",
+          "description": "「8 h a p p y」是一個針對現代女性設計的時尚女裝品牌。8happy相信「簡約舒適的穿搭是一種追求真我意識的生活方式」。品牌精神強調「低調但別具風格、清爽精神」的穿搭態度。\n\n",
+          "logo": "/api/images/floor-pic/1780298137455-8happy.jpg"
+        }
+      ],
+      "5F": [
+        {
+          "name": "Been Teen嬪婷",
+          "phone": "04-22236834",
+          "description": "嬪婷Been Teen，用愛灌溉含苞蓓蕾的小女孩，是成長中少女的最愛!針對發育期的舒適材質，到青少女喜愛的Fun流行設計，設計最貼心，最合適的內衣與休閒家居服。\n",
+          "logo": "/api/images/floor-pic/1780038448307-å¬ªå©·.jpg"
+        },
+        {
+          "name": "Chantelle",
+          "phone": "04-22253179",
+          "description": "1876年法國創立，傳承百年織造工藝，與時俱進，掌握最新紡織工藝技術，讓內衣化身烘托完美曲線的祕方！\n",
+          "logo": "/api/images/floor-pic/1780040006020-CHANTELLE LOGO.jpg"
+        },
+        {
+          "name": "Chantelle Lab-SoftStretch",
+          "phone": "04-22253179",
+          "description": "起源法國內衣仙黛爾，每4分鐘賣出一件，全球獨創專利材質，熱銷千萬件，親膚舒適零著感！適合所有身形！",
+          "logo": "/api/images/floor-pic/1780304306281-CHANTELLE LOGO.jpg"
+        },
+        {
+          "name": "Lady",
+          "phone": "04-22258695",
+          "description": "專為台灣女性內在美而設計的內衣。只要穿上Lady猶如有第二層肌膚的輕柔觸感， 並呈現女人的迷人曲線，展露誘人的丰采。\n",
+          "logo": "/api/images/floor-pic/1780040193112-Lady.jpg"
+        },
+        {
+          "name": "sloggi",
+          "phone": "04-22259878",
+          "description": "sloggi專注舒適穿著體驗，以輕盈自在的內著設計，陪伴每個人的日常節奏。\n",
+          "logo": "/api/images/floor-pic/1780038609368-sloggi.jpg"
+        },
+        {
+          "name": "金華歌爾",
+          "phone": "04-22253633",
+          "description": "依據正值黃金年華的熟齡女性之體型和體質變化而研發，搭配日本進口含有絲蛋白的純棉材質與精緻彈性蕾絲等設計素材，享受舒適無負擔的穿衣感受，展現優雅無壓迫的身型線條。\n",
+          "logo": "/api/images/floor-pic/1780038402697-éè¯æ­ç¾.jpg"
+        },
+        {
+          "name": "思薇爾",
+          "phone": "04-22259875",
+          "description": "深耕台灣內衣品牌40週年，以「全女性守護者」為品牌使命，品牌分為「璀璨」、「經典」、「時尚」及「少女」四大系列，透過年齡層及商品風格，展現女性的自我風格與獨特魅力\n",
+          "logo": "/api/images/floor-pic/1780039958262-ä¸­åç¾è²¨-æèç¾LOGO-600X600PX.jpg"
+        },
+        {
+          "name": "曼黛瑪璉",
+          "phone": "04-22267034",
+          "description": "法式內在保養品牌\n美胸版型融入巴黎時裝設計\n打造穿的保養品 展現生活態度\n享受自信、自主、自由的內在美學\n",
+          "logo": "/api/images/floor-pic/1780038651920-æ¼é»çªç-LOGO.jpg"
+        },
+        {
+          "name": "莎薇",
+          "phone": "04-22259506",
+          "description": "莎薇著手製作讓現代女性感覺更舒服自在的內衣，滿足現代女性對內衣機能，以及搭配各種風格外衣的需求。大膽突破的運用各種繽紛亮麗的色彩，展現了現代女性獨立自主的力量。\n",
+          "logo": "/api/images/floor-pic/1780038133199-èè.jpg"
+        },
+        {
+          "name": "莎露",
+          "phone": "04-22258638",
+          "description": "Salute 莎露. 針對上班族女性喜愛的華麗浪漫古典歐風設計，呈現典雅高貴的溫柔女性美，以高級質材的使用、優良機能的研發，\n完全滿足現代女性高級精緻的穿著需求。\n",
+          "logo": "/api/images/floor-pic/1780038201696-Salute.jpg"
+        },
+        {
+          "name": "華歌爾",
+          "phone": "04-22254743",
+          "description": "創立於1960年的華歌爾適合各種女性的基礎綜合內衣 揉合東風女性與世界現代流行線條 優雅氣質自然散發，\n訴諸機能剪裁更加體貼女人美麗的初衷。\n",
+          "logo": "/api/images/floor-pic/1780038094108-è¯æ­ç¾.jpg"
+        },
+        {
+          "name": "華歌爾睡衣",
+          "phone": "04-22258638",
+          "description": "分別針對女性發展溫柔睡衣系列、男性的居家休閒服以及兒童睡衣，以絲質創造舒適觸感，棉質增進休閒活力，讓全家每一份子更加恣意感覺生命。\n",
+          "logo": "/api/images/floor-pic/1780038313197-è¯æ­ç¾ç¡è¡£.jpg"
+        },
+        {
+          "name": "菲洛米娜",
+          "phone": "04-22252689",
+          "description": "菲洛米娜貫徹真實力最美麗的理念，強調不以外力塑造一時豐滿，透過專業的調整型穿著，讓每位女人自然展現應有的美麗體態。\n",
+          "logo": "/api/images/floor-pic/1780040231099-è²æ´ç±³å¨.jpg"
+        },
+        {
+          "name": "瑪登瑪朵",
+          "phone": "04-22257721",
+          "description": "符合20世代的現代摩登風格、添加流行趨勢的時尚設計\n加上品牌核心專利機能版型，穿上集中舒適、自在性感\n",
+          "logo": "/api/images/floor-pic/1780038725509-çªç»çªæµLOGO.jpg"
+        },
+        {
+          "name": "蕾黛絲",
+          "phone": "04-22251715",
+          "description": "Ladies蕾黛絲，不只穿內衣更是穿上自信！從精選蕾絲到版型設計，細膩工藝雕琢每寸曲線，只為成就恰到好處的美麗。\n",
+          "logo": "/api/images/floor-pic/1780038536519-è¾é»çµ².JPG"
+        },
+        {
+          "name": "黛安芬",
+          "phone": "04-22255470",
+          "description": "創立於1886年的德國的黛安芬擁有近140年歷史，產品遍及全球80餘國，以精湛工藝、創新設計與永續承諾，為女性呈現舒適與優雅的極致體驗。\n",
+          "logo": "/api/images/floor-pic/1780038491314-é»å®è¬.jpg"
+        },
+        {
+          "name": "羅絲美睡衣",
+          "phone": "0903-578335",
+          "description": "金鹿服裝自1967年成立，深耕百貨專櫃逾40年。旗下品牌Rosemaid與La Felino以頂級歐洲面料結合精湛工藝，將精緻蕾絲設計為適合東方身形的「貼身藝術品」，成就高品質內睡衣指標。\n",
+          "logo": "/api/images/floor-pic/1780039001430-ç¾çµ²ç¾ç¡è¡£.jpg"
+        }
+      ],
+      "6F": [
+        {
+          "name": "AILI (Montagut皮件、NYC紐約貓)",
+          "phone": "04-22254823",
+          "description": "AILI皮包實業有限公司，主要為男士皮件、旅行箱、休閒包的設計生產及銷售，代理國際知名品牌MONTAGUT夢特嬌、NYC紐約貓、Echolac愛可樂行李箱等。",
+          "logo": "/api/images/floor-pic/1780976492340-64001-AILI (Montagutç®ä»¶ãNYCç´ç´è²).jpg"
+        },
+        {
+          "name": "BIG TRAIN / VICTORIA",
+          "phone": "04-22262312",
+          "description": "源自大阪梅田區，在傳統又充滿濃厚日式風格的街頭中融入時代進步的洪流，轉於孕育演化出的日本潮流品牌精神。",
+          "logo": "/api/images/floor-pic/1780976552573-8B001-BIG TRAIN  VICTORIA.jpg"
+        },
+        {
+          "name": "BLUE WAY",
+          "phone": "04-22298223",
+          "description": "普威成立於1980年，專注於牛仔潮流服飾，發展至今持續拓展多元化銷售，並不斷提升品牌知名度。",
+          "logo": "/api/images/floor-pic/1780976614068-8B005-BLUE WAY.jpg"
+        },
+        {
+          "name": "BOBSON",
+          "phone": "04-22236317",
+          "description": "自從1979年將日本知名牛仔服飾品牌BOBSON代理進台灣，源自日本的血統，讓品牌流露出濃厚的時尚基調，流行卻不叛逆作怪的堅持，讓品牌成為具指標性的牛仔褲品牌。",
+          "logo": "/api/images/floor-pic/1780976664228-8B004-BOBSON.png"
+        },
+        {
+          "name": "CLAID",
+          "phone": "04-22292991",
+          "description": "從不同的布料到版型再到重工藝，每一個細節為的就是讓消費者穿上的不只是件衣服，是藝術品。",
+          "logo": "/api/images/floor-pic/1780977556209-CLAID.jpg"
+        },
+        {
+          "name": "GIORDANO佐丹奴",
+          "phone": "04-22237306",
+          "description": "創立於1981年GIORDANO以簡單、明亮、舒適、自然的感覺，天然材質、簡單與自由搭配、流行趨勢、國際化的休閒品味為產品發展概念，融入流行元素詮釋較基本的款式。",
+          "logo": "/api/images/floor-pic/1780984579154-GIORDANO.jpg"
+        },
+        {
+          "name": "GLORIA 葛洛莉雅",
+          "phone": "04-22256150",
+          "description": "將世界各大品牌的精品眼鏡融入於日常生活中，將世界各大品牌的精品眼鏡融入於日常生活中，讓眼鏡不僅僅只是附屬品，使每位臨櫃的消費者均能崇尚品味贏得時尚。",
+          "logo": "/api/images/floor-pic/1780984702528-64045-GLORIA èæ´èé.png"
+        },
+        {
+          "name": "Hang Ten",
+          "phone": "0975-071721",
+          "description": "HANG TEN源自美國加州，從發明第一件衝浪褲開始。隨著時代演變，以「舒適×機能×百搭」為核⼼，賦予其新的時代意義。",
+          "logo": "/api/images/floor-pic/1780984769175-66074-Hang Ten.jpg"
+        },
+        {
+          "name": "HOM內著",
+          "phone": "04-22297623",
+          "description": "來自法國以【第二層肌膚】的舒適感聞名，專利立體剪裁與頂級面料，完美結合法式優雅與機能美學，為男性打造兼具品味與包覆感的頂級內著體驗，代理知名內著品牌及襪帕品牌。",
+          "logo": "/api/images/floor-pic/1780984850716-HOM.jpg"
+        },
+        {
+          "name": "LEE",
+          "phone": "0902-336822",
+          "description": "Lee一直保存傳統，同時不斷創新，在牛仔時尚界穩佔領導地位，與時尚的年青一代連成一線，被譽為牛仔文化的經典。 ",
+          "logo": "/api/images/floor-pic/1780984901195-8B008-LEE.jpg"
+        },
+        {
+          "name": "Levi's",
+          "phone": "04-22232245",
+          "description": "Levi’s ® 由全球第一條藍色丹寧褲為起點，150餘年來從淘金工人的搶手貨演變為經典時尚的代名詞，持續引領潮流。",
+          "logo": "/api/images/floor-pic/1780985007568-8B006-LEVIS.jpg"
+        },
+        {
+          "name": "EDWIN",
+          "phone": "04-22238427",
+          "description": "日本頂級丹寧品牌 EDWIN 創於 1961 年，以「DENIM」字母重組命名。憑藉精湛石洗工藝，專為亞洲人打造舒適牛仔褲。",
+          "logo": "/api/images/floor-pic/1780985067296-8B011-EDWIN.jpg"
+        }
+      ],
+      "7F": [
+        {
+          "name": "宜得利",
+          "phone": "04-22270021",
+          "description": "「宜得利家居」為日本國民家居品牌,全球超過1,000間門市。以「居家整體搭配」為核心,提供\n平價且多樣的日式生活提案。",
+          "logo": "/api/images/floor-pic/1781150469514-å®å¾å©å®¶å±.jpg"
+        }
+      ],
       "8F": [
         {
           "name": "GU",
-          "phone": "04-2229-0484",
-          "description": "YOUR FREEDOM  讓時尚更自由",
+          "phone": "04-22290484",
+          "description": "GU是來自日本的流行時尚服飾品牌，以「YOUR FREEDOM」為核心，提供男裝、女裝與童裝，讓每個人自在穿搭、輕鬆展現自我風格。",
           "logo": "/api/images/floor-pic/1779087152225-GULOGO.png"
         }
       ],
-      "9F": [],
+      "9F": [
+        {
+          "name": "adidas/adidas originals",
+          "phone": "04-22235100",
+          "description": "adidas為一專注於設計、開發與行銷的國際知名運動品牌，致力研發專業鞋款、服飾及配件，並以成為世界級運動專業領導品牌為目標。",
+          "logo": "/api/images/floor-pic/1781146211852-adidas.jpg"
+        },
+        {
+          "name": "BAG TO YOU百達遊",
+          "phone": "0976-008290",
+          "description": "結合多元之生活型態而規劃出，商務、休旅、都會三大主軸，為生活中之包、袋、箱的全國第一專業連鎖通路品牌。\n",
+          "logo": "/api/images/floor-pic/1781146387474-BAGTOYOU.jpg"
+        },
+        {
+          "name": "BROOKS",
+          "phone": "04-22293465",
+          "description": "BROOKS的創新精神及高科技跑步產品，旨在幫助跑者達成目標，並享受跑步的快樂與健康。穿上BROOKS，與我們一起「LET’S RUN THERE」。",
+          "logo": "/api/images/floor-pic/1781146479005-BROOKS.jpg"
+        },
+        {
+          "name": "KEEN",
+          "phone": "04-22257705",
+          "description": "美國戶外領導品牌KEEN，致力打造最具原創性、耐用及有意識創造的鞋履，引領戶外機能與風格穿搭完美結合。",
+          "logo": "/api/images/floor-pic/1781146529730-KEEN.jpg"
+        },
+        {
+          "name": "K-SWISS",
+          "phone": "0958-786915",
+          "description": "K-SWISS在近60年來一直致力於設計及製造優質的鞋款，滿足消費者在網球場上專業需求以及場外的修行風格營造。",
+          "logo": "/api/images/floor-pic/1781146591926-K-Swiss_Logo_600X600.png"
+        },
+        {
+          "name": "native",
+          "phone": "04-22252005",
+          "description": "Native Shoes，以繽紛色彩及多樣化的鞋型不斷創新，蔚為晴雨兩用的全天候休閒鞋領導品牌。",
+          "logo": "/api/images/floor-pic/1781146704953-Native.jpg"
+        },
+        {
+          "name": "PUMA",
+          "phone": "070-10160757",
+          "description": "PUMA是全球首屈一指的運動領導品牌，設計開發並銷售製造各種鞋類、服裝以及配件產品。",
+          "logo": "/api/images/floor-pic/1781146796626-PUMA.jpg"
+        }
+      ],
       "10F": [
         {
           "name": "FUJI按摩椅",
-          "phone": "04-2225-9460",
-          "description": "FUJI按摩椅。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22259460",
+          "description": "台灣AI沙發&按摩椅領導品牌，專注於按摩舒緩、及生活健康的領域發展，開創出更智能、更貼近家庭需求的產品，滿足消費者的健康生活。",
+          "logo": "/api/images/floor-pic/1781170521013-FUJIææ©æ¤.png"
         },
         {
-          "name": "LG",
-          "phone": "04-3609-3368",
-          "description": "LG。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "name": "LG｜集雅社",
+          "phone": "04-36093368",
+          "description": "集雅社精選 LG 全方位家電，以智慧科技結合專業規劃，提供頂級視聽與美型生活提案，為您打造智慧舒適家。",
+          "logo": "/api/images/floor-pic/1781170842429-ééç¤¾ â LG.jpg"
         },
         {
-          "name": "masse瑪謝律動",
-          "phone": "04-2229-3327",
-          "description": "masse瑪謝律動。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
-        },
-        {
-          "name": "OSIM",
-          "phone": "04-2226-1495",
-          "description": "OSIM。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "name": "masse瑪謝律動椅",
+          "phone": "04-22293327",
+          "description": "MASSE律動椅透過 45 年的工藝演進與醫學權威基礎，打造出獨步全球的 Alpha 專利律動，每天只需要10分鐘，就能享受輕盈不費力的律動體驗。",
+          "logo": "/api/images/floor-pic/1781170902487-MASSEçªè¬å¾åæ¤.jpg"
         },
         {
           "name": "OGAWA",
-          "phone": "04-2229-8907",
-          "description": "OGAWA。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22298907",
+          "description": "OGAWA創立於1996年，全球知名健康保健器材品牌。研發頂級智能按摩椅與舒壓設備，結合創新AI感測與人體工學設計，精準針對穴位舒緩日常疲勞，提供居家放鬆體驗。",
+          "logo": "/api/images/floor-pic/1781170967001-OGAWA.jpg"
         },
         {
-          "name": "TAKASHIMA高島",
-          "phone": "04-2229-1068",
-          "description": "TAKASHIMA高島。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "name": "OSIM",
+          "phone": "04-22261495",
+          "description": "亞洲保健第一品牌 OSIM，用心耕耘按摩保健市場，以關心全家人的身心健康為使命，為消費者開啟健康新生活，讓每個家庭都能擁有更多活力與快樂時光！",
+          "logo": "/api/images/floor-pic/1781171013088-OSIM.jpg"
         },
         {
           "name": "tokuyo",
-          "phone": "04-2225-3362",
-          "description": "tokuyo。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22253362",
+          "description": "按摩椅指標品牌，照顧每位消費者健康。tokuyo MIT自創品牌深耕台灣，已銷售十餘萬台按摩椅，近年將事業版圖擴展至世界各地，期許成為消費者心中健康家電第一品牌",
+          "logo": "/api/images/floor-pic/1781171100137-tokuyo.jpg"
+        },
+        {
+          "name": "TAKASHIMA高島",
+          "phone": "04-22291068",
+          "description": "致力於創造美好生活的按摩椅品牌，TAKASHIMA高島按摩椅，與您一起傾聽身體的聲音，希望不僅讓您懂按摩椅，更讓按摩椅懂您。",
+          "logo": "/api/images/floor-pic/1781171150566-TAKASHIMAé«å³¶.jpg"
         },
         {
           "name": "法雅客",
-          "phone": "04-2225-1605",
-          "description": "法雅客。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
-        },
-        {
-          "name": "集雅社",
-          "phone": "04-3609-3368",
-          "description": "集雅社。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22251605",
+          "description": "結合科技提供多元商品，包含專業單眼、降噪耳機、智慧手錶及遊戲主機等，打造質感生活。",
+          "logo": "/api/images/floor-pic/1781171216417-æ³éå®¢(600X600).jpg"
         },
         {
           "name": "映像音響",
-          "phone": "04-2225-1887",
-          "description": "映像音響。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22251887",
+          "description": "IMAGEAUDIO映象以專業顧問提供服務，全新空間挑選設備，既有設計注入新的家電靈感，秉持細心與用心為您的空間昇華，產品兼顧時尚美學，為家庭打造高品質的生活。",
+          "logo": "/api/images/floor-pic/1781171281124-æ è±¡é³é¿.jpg"
+        },
+        {
+          "name": "集雅社",
+          "phone": "04-36093368",
+          "description": "集雅社為百貨影音家電領導品牌，精選頂級視聽、空調與美型家電，並跨足商業工程規劃，提供全方位專業服務。",
+          "logo": "/api/images/floor-pic/1781171332329-ééç¤¾.jpg"
         }
       ],
       "11F": [
         {
+          "name": "BUFFALO牛頭牌炊具",
+          "phone": "04-22252996",
+          "description": "鋼鍋首選牛頭牌炊具，廚房到餐桌・家庭到營業・室內到戶外全方位滿足。",
+          "logo": "/api/images/floor-pic/1781175482736-çé ­ççå·.jpg"
+        },
+        {
           "name": "Fissler菲仕樂",
-          "phone": "04-2229-1912",
-          "description": "Fissler菲仕樂。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22291912",
+          "description": "德國菲仕樂Fissler以頂級工藝與卓越科技，完美結合創新創意。作為業界公認的鍋中愛馬仕，期待為亞洲消費者打造極致烹飪體驗，讓每個平凡日子，都洋溢幸福的味道。",
+          "logo": "/api/images/floor-pic/1781175528039-Fisslerè²ä»æ¨.jpg"
         },
         {
           "name": "HOMEWORKING元艇",
-          "phone": "0973-698-803",
-          "description": "HOMEWORKING元艇。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "0973-698803",
+          "description": "HOME WORKING代理各國合宜的清掃用品與環境美化產品，改善清掃工作難題並提升居家生活品質。",
+          "logo": "/api/images/floor-pic/1781175574251-HOME WORKINGåè.jpg"
         },
         {
           "name": "LE CREUSET法廚",
-          "phone": "0975-331-423",
-          "description": "LE CREUSET法廚。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "0975-331423",
+          "description": "自1925年以來，Le Creuset 以色彩繽紛的設計成為享譽全球的餐廚用品，提供卓越的烹飪表現，是烹飪愛好者的必備工具。",
+          "logo": "/api/images/floor-pic/1781175619934-LE CREUSETæ³å».jpg"
         },
         {
           "name": "NARA Thai Cuisine",
-          "phone": "04-2225-5060",
-          "description": "NARA Thai Cuisine。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22255060",
+          "description": "米其林推薦，導入泰國傳統食材及香料，體驗經典的泰式美味。",
+          "logo": "/api/images/floor-pic/1780477198913-nara.jpg"
+        },
+        {
+          "name": "Tefal",
+          "phone": "無",
+          "description": "法國特福Tefal創於1956年，為不沾鍋發明者與全球銷售第一品牌。我們承諾安全塗層、零添加有毒物，產品涵蓋頂級鍋具到智能小家電，定義現代廚房的輕鬆便利。",
+          "logo": "/api/images/floor-pic/1781175724854-Tefal.jpg"
         },
         {
           "name": "THERMOS膳魔師",
-          "phone": "04-2223-1900",
-          "description": "THERMOS膳魔師。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22231900",
+          "description": "THERMOS膳魔師，源自對於人的關懷，為生活創造無限可能，帶給您健康便利的生活，讓地球能源與資源耗損速度減緩，為了您的需要而存在的品牌THERMOS膳魔師。",
+          "logo": "/api/images/floor-pic/1781175785662-THERMOSè³é­å¸«.jpg"
         },
         {
-          "name": "Ucom益康屋",
-          "phone": "04-2229-3496",
-          "description": "Ucom益康屋。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "name": "西華名鍋SILWA",
+          "phone": "04-22237508",
+          "description": "西華名鍋自1987年深耕台灣市場，結合義式美學與本土化設計理念，致力打造兼具品質、實用與時尚感的鍋具與廚房用品，讓消費者以親民價格享受精緻料理生活。",
+          "logo": "/api/images/floor-pic/1781175859059-è¥¿è¯.jpg"
         },
         {
-          "name": "牛頭牌",
-          "phone": "04-2229-3496",
-          "description": "牛頭牌。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "name": "均岱鍋具Kitchenspring",
+          "phone": "04-22212065",
+          "description": "均岱鍋具30+年來精選世界優質品牌，從鍋具到生活選物，讓家的每個角落充滿品味與靈感。",
+          "logo": "/api/images/floor-pic/1781175931795-Kitchenspringåå²±éå·.png"
         },
         {
-          "name": "西華SILWA",
-          "phone": "04-2223-7508",
-          "description": "西華SILWA。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
-        },
-        {
-          "name": "均岱鍋具",
-          "phone": "04-2221-2065",
-          "description": "均岱鍋具。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "name": "瑞康屋",
+          "phone": "04-22293496",
+          "description": "瑞康屋為台灣頂級鍋具領導品牌，代理瑞士KUHN RIKON、Bamix料理棒及德國黑魔法不沾鍋等優質餐廚品牌，結合實用、美學與健康理念，打造質感料理生活。",
+          "logo": "/api/images/floor-pic/1781175989151-çåº·å±.jpg"
         },
         {
           "name": "開飯川食堂",
-          "phone": "04-2223-5168",
-          "description": "開飯川食堂。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22235168",
+          "description": "鮮香麻辣、讓人胃口大開的川味料理，一起開心相聚、大口吃飯。",
+          "logo": "/api/images/floor-pic/1780477289754-éé£¯_LOGO.jpg"
         },
         {
-          "name": "鼎王鵝媽媽",
-          "phone": "04-2223-9152",
-          "description": "鼎王鵝媽媽。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
-        },
-        {
-          "name": "賽博",
-          "phone": "無專線",
-          "description": "賽博。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "name": "鼎王 鵝媽媽鍋具",
+          "phone": "04-22239152",
+          "description": "1987年鼎王公司成立，在中國大城市百貨設立專櫃，成功開拓中國市場，全球華人地區奠定基礎。2005年鵝媽媽品牌設立中華營運中心；2020年鼎王鍋具故事館正式開幕",
+          "logo": "/api/images/floor-pic/1781176057418-é¼çéå·.jpg"
         }
       ],
       "12F": [
         {
           "name": "瓦城泰式料理",
-          "phone": "04-2220-5678",
+          "phone": "04-22205678",
           "description": "自1990年創立以來，已成為全台最大的泰式連鎖餐飲第一品牌，以高品質的道地美味、親切熱誠的服務，及溫馨舒適的環境，引領全台泰式餐飲風潮。",
-          "logo": "/api/images/floor-pic/1779865274715-ç¦å.png"
+          "logo": "/api/images/floor-pic/1780480618489-ç¦å.jpg"
         },
         {
           "name": "京悅港式飲茶",
-          "phone": "04-2223-3919",
-          "description": "京悅港式飲茶。",
-          "logo": "/api/images/floor-pic/1779865314948-äº¬æ.png"
+          "phone": "04-22233919",
+          "description": "明亮的現代風餐廳，供應創意港式料理、港式茶飲和甜點。",
+          "logo": "/api/images/floor-pic/1780480681398-äº¬æ.jpg"
         }
       ],
       "13F": [
@@ -609,356 +1021,1665 @@
       "14F": [
         {
           "name": "海底撈火鍋",
-          "phone": "04-2222-0515",
-          "description": "海底撈火鍋。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22220515",
+          "description": "將四川火鍋與現代潮流飲食習慣完美融合，分享鮮香美味。",
+          "logo": "/api/images/floor-pic/1780480957770-æµ·åºæ.jpg"
         }
       ],
       "15F": [],
-      "B1": [],
-      "B2": [],
-      "B3": [],
+      "B1": [
+        {
+          "name": "H&M",
+          "phone": "04-37020606",
+          "description": "瑞典快時尚服裝品牌，提供男裝、女裝、休閒服飾與童裝。\n",
+          "logo": "/api/images/floor-pic/1780037788886-H&M.png"
+        }
+      ],
+      "B2": [
+        {
+          "name": "Mia C'bon",
+          "phone": "04-22258528",
+          "description": "Mia C’bon打造全新的消費體驗，提供多元、永續且啟發人心的生活提案。\n",
+          "logo": "/api/images/floor-pic/1780046285856-è¶å¸.jpg"
+        }
+      ],
+      "B3": [
+        {
+          "name": "大戶屋",
+          "phone": "04-22296366",
+          "description": "細心提供暖心料理，使用台灣在地食材，堅持現點現做，每天都要好好吃飯！",
+          "logo": "/api/images/floor-pic/1782187213970-å¤§æ¶å±.jpg"
+        },
+        {
+          "name": "大師兄銷魂麵舖",
+          "phone": "04-22299129",
+          "description": "8小時5道精煉工法、只取10%的上層精華、多層次的口感與香氣，創造出「辣油界的愛馬仕」銷魂拌麵！",
+          "logo": "/api/images/floor-pic/1780910947547-é·é­éºµè.jpg"
+        },
+        {
+          "name": "忍者甲賀拉麵",
+          "phone": "04-22296858",
+          "description": "新台灣拉麵，主打快速、平價、美味。",
+          "logo": "/api/images/floor-pic/1780911124798-å¿èç²è³.jpg"
+        },
+        {
+          "name": "享漁鐵鍋酸菜魚",
+          "phone": "04-22286678",
+          "description": "以鮮嫩的魚片為主角，搭配辛香料及青花椒熬製的湯底，入口青花椒麻香四溢，層次豐富。享漁 享受吃魚！",
+          "logo": "/api/images/floor-pic/1781243910793-äº«æ¼.jpg"
+        },
+        {
+          "name": "爭鮮PLUS",
+          "phone": "04-22210656",
+          "description": "經典迴轉台加上雙軌列車直送服務，推出烤炸物、麵食、甜點飲品等多元日式餐點，趣味PLUS，美味PLUS！",
+          "logo": "/api/images/floor-pic/1781244024310-ç­é®®.jpg"
+        },
+        {
+          "name": "南朝鮮",
+          "phone": "04-22235808",
+          "description": "提供多種韓式豆腐鍋、石鍋拌飯等日常美味料理。",
+          "logo": "/api/images/floor-pic/1781244069152-Y7003-åæé®®.jpg"
+        },
+        {
+          "name": "麥當勞",
+          "phone": "04-22259169",
+          "description": "帶著美式熱情基因而來，數十個年頭一點一滴融入台灣在地文化，陪伴顧客走過每一段別具滋味的片刻時光！",
+          "logo": "/api/images/floor-pic/1781244141310-éº¥ç¶å.jpg"
+        },
+        {
+          "name": "菲樂果汁吧",
+          "phone": "04-22250493",
+          "description": "純天然水果的新鮮現榨果汁為招牌，主打低糖的風味飲品。",
+          "logo": "/api/images/floor-pic/1781244204221-Y7008-è²æ¨ææ±å§.jpg"
+        },
+        {
+          "name": "漢庭",
+          "phone": "04-22251501",
+          "description": "提供蛋包飯、炒飯及鐵板搭配小火鍋等日常美味料理。",
+          "logo": "/api/images/floor-pic/1781261878070-æ¼¢åº­.jpg"
+        }
+      ],
       "B4": [],
       "B5": []
     },
     "B": {
       "1F": [
         {
-          "name": "範例品牌 A",
-          "phone": "04-2227-0000",
-          "description": "品牌簡介說明文字，可填入品牌特色或服務項目。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "name": "ALBION",
+          "phone": "04-22297860",
+          "description": "ALBION為古時代大英帝國對白色峭壁，白色國土絕世之美的讚嘆，這片白色峭壁，象徵著純淨之美，即是ALBION之名的靈感來源，也是ALBION致力於發展頂級產品，打造肌膚永恆之美的初衷。\n",
+          "logo": "/api/images/floor-pic/1780047608164-ALBION LOGï¼¯.png çå¯æ¬.png"
         },
         {
-          "name": "範例品牌 B",
-          "phone": "04-2227-0001",
-          "description": "品牌簡介說明文字，可填入品牌特色或服務項目。",
-          "logo": ""
+          "name": "CHANEL",
+          "phone": "04-22251110",
+          "description": "香奈兒美妝承襲品牌優雅精髓，首款化妝品問世於 1924 年。產品涵蓋彩妝、保養與香氛，以黑、白、金經典色系與奢華質感著稱，提供柔美百搭色選、頂級修護保養服務體驗。\n",
+          "logo": "/api/images/floor-pic/1780303530488-CHANEL_logo.jpg"
+        },
+        {
+          "name": "clé de peau BEAUTé",
+          "phone": "04-22234167",
+          "description": "以尖端肌膚細胞研究、珍稀成份及光采理念著稱，致力於實現紋理、色澤、輪廓的完美狀態，創造高端貴婦奶油肌質感。匠心獨運的護膚、彩粧及底妝產品，以及無與倫比的服務。\n",
+          "logo": "/api/images/floor-pic/1780282235889-CPB golden logo.png çå¯æ¬.png"
+        },
+        {
+          "name": "CLARINS克蘭詩",
+          "phone": "04-22235497",
+          "description": "榮獲B型企業™認證。嚴選功效卓越的天然植物萃取，締造最佳效果，讓每一位女性都能展現肌膚的最美姿態。以關懷環境的原則選用每一種成份，並積極保護地球的生物多樣性。\n",
+          "logo": "/api/images/floor-pic/1780282742358-åè­è©©.jpg çå¯æ¬.jpg"
+        },
+        {
+          "name": "DECORTE ",
+          "phone": "04-22234914",
+          "description": "高絲（KOSÉ）集團旗下的頂級全方位美妝品牌，以卓越的「微脂囊技術」保濕修護聞名，其產品融合奢華美容成分與療癒香氛，提供極致的護膚與彩妝體驗。\n",
+          "logo": "/api/images/floor-pic/1780541314445-é»çlogoé.jpg"
+        },
+        {
+          "name": "DIOR",
+          "phone": "04-22238484",
+          "description": "法國精品品牌，結合高級時尚與專業彩妝概念，打造具質感、妝效與保養概念的彩妝產品。\n",
+          "logo": "/api/images/floor-pic/1780048282888-DIOR.jpeg çå¯æ¬.jpg"
+        },
+        {
+          "name": "ESTĒE LAUDER",
+          "phone": "04-22271680",
+          "description": "以科學護膚與優雅奢華著稱及抗衰修護護膚品聞名，明星商品包含特潤超導全方位修護露(小棕瓶)與年輕無敵膠原霜，產品涵蓋保養、彩妝與香氛。\n",
+          "logo": "/api/images/floor-pic/1780282200380-EL Logo-B.png çå¯æ¬.png"
+        },
+        {
+          "name": "GIORGIO ARMANI",
+          "phone": "04-23690370",
+          "description": "頂級精品彩妝傳承亞曼尼高級訂製服精神，以「去掉多餘、留下態度」的極簡優雅為核心。\n品牌結合高科技與奢華質地，打造無瑕底妝與經典唇彩，展現專屬的高級訂製精緻質感。\n\n",
+          "logo": "/api/images/floor-pic/1780047757488-ARMANI beauty Logo.png"
+        },
+        {
+          "name": "GUERLAIN",
+          "phone": "04-22250930",
+          "description": "創立於1828年，是世界上最古老且享譽盛名的香水與美容世家之一。現隸屬於LVMH集團，以極致奢華的工藝、頂級保養與訂製香氛聞名，完美體現法式優雅的美學文化。\n",
+          "logo": "/api/images/floor-pic/1780294860691-åå¦å 4.jpg"
+        },
+        {
+          "name": "Helena Rubinstein赫蓮娜",
+          "phone": "04-23696076",
+          "description": "創新科技一直居於品牌的核心地位，並不斷結合多個領域的尖端科技。現在的赫蓮娜更成為全球第一家與瑞士頂級醫學美容Laclinic-Montreux合作的美妝品牌。\n",
+          "logo": "/api/images/floor-pic/1780302471193-HR_LOGO_é»_ç¡å­.png"
+        },
+        {
+          "name": "Jo Malone London",
+          "phone": "04-22292155",
+          "description": "英國香水和香味蠟燭品牌，以其豪華蠟燭、沐浴產品和香水而聞名。\n",
+          "logo": "/api/images/floor-pic/1780047625211-Jo-Malone-London_Brand-Evo_Logo_Black.png çå¯æ¬.png"
+        },
+        {
+          "name": "KANEBO佳麗寶",
+          "phone": "04-22230216",
+          "description": "以親切、細膩、質感取向的保養彩妝品牌。\n",
+          "logo": "/api/images/floor-pic/1780048433542-ä½³éºå¯¶é»åºç½å­.jpg çå¯æ¬.jpg"
+        },
+        {
+          "name": "KOSE",
+          "phone": "04-22234210",
+          "description": "創立於1946年，是日本四大化妝品集團之一。旗下以草本植物保養聞名，涵蓋專櫃頂級保養、開架彩妝及頭髮護理等多元產品線，長年深受台日消費者喜愛。\n",
+          "logo": "/api/images/floor-pic/1780047859773-KOSE LOGO_å·¥ä½åå 1.jpg"
+        },
+        {
+          "name": "LA MER",
+          "phone": "04-22221718",
+          "description": "LA MER以傳奇的「經典乳霜」聞名於世。核心靈魂成分為萃取自深海巨藻的「奇蹟活凝金萃 (Miracle Broth™)」，具備極佳的修護與抗老功效，源自海洋，風靡全世界的頂級抗老乳霜。\n",
+          "logo": "/api/images/floor-pic/1780282877888-åå¦å 2.jpg"
+        },
+        {
+          "name": "LANCOME",
+          "phone": "04-22232831",
+          "description": "1935年創立的法國頂級美妝品牌，以高雅的法式風格聞名，產品涵蓋保養、彩妝與香水，致力於滿足全球女性對美麗的追求。\n\n",
+          "logo": "/api/images/floor-pic/1780047710495-LANCOME LOGO.png"
+        },
+        {
+          "name": "LAURA MERCIER",
+          "phone": "04-22298967",
+          "description": "「輕藝自然．無瑕透顏」，專精於底妝與色彩學，致力於打造宛如天生好膚質的法式優雅妝容。\n",
+          "logo": "/api/images/floor-pic/1780047651260-LAURA LOGO .JPG çå¯æ¬.jpg"
+        },
+        {
+          "name": "M.A.C",
+          "phone": "04-22250882",
+          "description": "以大膽前衛的街頭風格、極豐富的色彩選擇與無與倫比的專業品質聞名，秉持「不分年齡、種族、性別」的核心理念。\n",
+          "logo": "/api/images/floor-pic/1780047246448-LOGO _MACç½åºé»å­.png"
+        },
+        {
+          "name": "NARS",
+          "phone": "04-22258032",
+          "description": "美麗無需受限 (Beauty without Rules)為核心，鼓勵大膽、自信地展現自我。\n",
+          "logo": "/api/images/floor-pic/1780047637523-NARS logo.jpg çå¯æ¬.jpg"
+        },
+        {
+          "name": "OGUMA水美媒",
+          "phone": "04-22293972",
+          "description": "創立於1999年，以首創的水美媒保養噴霧引領市場風潮。品牌理念主打妝養合一與簡單保養，致力於為各年齡層與膚質提供高效的補水體驗。\n",
+          "logo": "/api/images/floor-pic/1780282560697-OGUMA-LOGOå-1.jpg çå¯æ¬.jpg"
+        },
+        {
+          "name": "SHISEIDO國際櫃",
+          "phone": "04-22262192",
+          "description": "擁有超過140年歷史的資生堂，為美麗下註定義。啟動美力能量，肌膚時時刻刻綻放美麗光采，由內而外呵護肌膚，解決肌膚問題，同時強化肌底。\n",
+          "logo": "/api/images/floor-pic/1780286175458-åå¦å 10.jpg"
+        },
+        {
+          "name": "shu uemura",
+          "phone": "04-22250931",
+          "description": "日本頂級專櫃彩妝品牌，由彩妝大師植村秀先生於 1967 年創立。品牌以「美麗妝容始於美麗肌膚」為核心理念，致力於將藝術美學與專業匠心工藝結合，為女性打造適合的彩妝及保養。\n",
+          "logo": "/api/images/floor-pic/1780302422222-SHU_LOGO_ç½.jpg"
+        },
+        {
+          "name": "Sisley",
+          "phone": "04-22267937",
+          "description": "以全球美容保養策略為核心展現其強大的獨特研發能力。集結有關肌膚的知識、生理機制、環境，以及在植物美容學領域領先市場的專業知識。\n",
+          "logo": "/api/images/floor-pic/1780371424588-Sisley.jpg"
+        },
+        {
+          "name": "SK-Ⅱ",
+          "phone": "04-22261183",
+          "description": "1980 年創立於日本，為全球高端保養品牌，現隸屬於美國寶僑集團。其核心靈魂成分為獨家專利配方 PITERA™，靈感源自清酒釀酒廠中老工匠依然細嫩的雙手，具備全方位修護與保濕功效。\n",
+          "logo": "/api/images/floor-pic/1780282305825-SK-II logo.png çå¯æ¬.png"
+        },
+        {
+          "name": "Sulwhasoo雪花秀",
+          "phone": "04-22253386",
+          "description": "1964年起，雪花秀開始研究韓國人蔘對於肌膚的好處，如今超越60年的人蔘科學研究，透過創新科學技術，開發出獨家成分，將人蔘的傳奇能量傳遞給肌膚。\n",
+          "logo": "/api/images/floor-pic/1780283112709-åå¦å 1.jpg"
+        },
+        {
+          "name": "Yves Saint Laurent；YSL",
+          "phone": "04-22290060",
+          "description": "以高端、前衛、奢華且充滿顛覆性的設計師彩妝與香氛品牌，承襲了YSL時裝的法式優雅精隨，並將「獨立、自信、大膽」的現代女性力量融入彩妝與保養中。\n",
+          "logo": "/api/images/floor-pic/1780048481224-YSL BEAUTE.jpg çå¯æ¬.jpg"
+        },
+        {
+          "name": "后",
+          "phone": "04-22281838",
+          "description": "韓國頂級奢華保養品牌，隸屬於LG生活健康旗下。品牌融合東方宮廷秘方與現代科研，以皇后的養顏智慧為核心，為亞洲女性打造頂級護膚體驗。\n",
+          "logo": "/api/images/floor-pic/1780286150034-åå¦å 13.jpg"
         }
       ],
-      "2F": [],
+      "2F": [
+        {
+          "name": "ALLSAINTS",
+          "phone": "04-22290006",
+          "description": "英國東倫敦時尚品牌ALLSAINTS，1994年創立以來引領風尚。我們以與眾不同的穿搭風格為訴求，率性騎士皮衣、原創手繪印花、個性軍靴皆是標誌性單品。\n",
+          "logo": "/api/images/floor-pic/1780031600603-ALLSANITS.png"
+        },
+        {
+          "name": "BRAND OFF",
+          "phone": "04-22251266",
+          "description": "高價收購名牌，是業界No.１的公司，其總部位於日本銀座。名牌包和名牌錢包，名牌手錶，珠寶，服飾等比其他公司高的收購價。\n",
+          "logo": "/api/images/floor-pic/1780031654448-BRAND OFF.png"
+        },
+        {
+          "name": "borsalini",
+          "phone": "04-22258146",
+          "description": "「時尚實用」為設計理念，將現代生活融入皮件設計中，堅持選用上等真皮材質，延續傳統細膩的手工製作，打造時尚品味與實用並重的多元包款和時髦皮件。\n",
+          "logo": "/api/images/floor-pic/1780031697460-borsalini.jpg"
+        },
+        {
+          "name": "belief",
+          "phone": "無專線",
+          "description": "意念國際精品有限公司專注於國際精品平行輸入，連線國際窗口輸入各大名牌精品、皮件、配件等，提供消費者最新時尚商品。\n",
+          "logo": "/api/images/floor-pic/1780031738090-belief.jpg"
+        },
+        {
+          "name": "GLORIA",
+          "phone": "04-22260953",
+          "description": "創立於1990年，以經營世界精品眼鏡品牌為主，眼鏡皆為品牌公司合法授權之公司貨，保證商品都是原廠正品，並承諾全國專櫃和網路通路享有相同保障。\n",
+          "logo": "/api/images/floor-pic/1780031871069-GLORIA.jpg"
+        },
+        {
+          "name": "iCB",
+          "phone": "04-22254235",
+          "description": "服裝設計以都會女性穿著需求為主，可因應不同場合穿著，有著質料高級、剪裁流暢、實穿性高，集優雅與流行品味的特性。簡約經典之中展現低調卻又獨具風格魅力的時尚感。\n",
+          "logo": "/api/images/floor-pic/1780032273213-ICB.png"
+        },
+        {
+          "name": "[i]Store",
+          "phone": "04-22295598",
+          "description": "為 Apple 授權優質經銷商，目前全台據點共 19 間蘋果銷售門市及 1 間 Apple 授權維修中心。\n",
+          "logo": "/api/images/floor-pic/1780032314027-[i]Store.png"
+        },
+        {
+          "name": "JNBY",
+          "phone": "04-22298779",
+          "description": "是創立於1994年的知名設計師品牌，以「Just Naturally Be Yourself」為哲學，融合現代、藝術與趣味的解構剪裁，主打材質講究且具設計感的都市女裝。\n",
+          "logo": "/api/images/floor-pic/1780032500162-JNBY.jpg"
+        },
+        {
+          "name": "Le Châtelet",
+          "phone": "0902-279650",
+          "description": "法文「城堡」之意，法式浪漫風格輕珠寶品牌，項鍊商品以 K金材質搭配真鑽與天然寶石為核心特色，風格優雅精緻、適合日常疊搭。\n",
+          "logo": "/api/images/floor-pic/1780032549692-Le ChÃ¢telet.jpg"
+        },
+        {
+          "name": "Minigold",
+          "phone": "04-22257720",
+          "description": "主打平價、精緻的輕珠寶品牌，以 14K 金和銀白K金搭配鑽石或寶石設計為主。專為輕熟女與上班族打造，商品包含氣質項鍊、耳環、戒指。\n",
+          "logo": "/api/images/floor-pic/1780032619368-Minigold.jpg"
+        },
+        {
+          "name": "odbo",
+          "phone": "04-22294384",
+          "description": "專注極簡與實用之美，odbo以黑色為核心語言，結合俐落剪裁與都會機能設計，打造前衛且具品味的限量作品。\n",
+          "logo": "/api/images/floor-pic/1780033098187-odbo.png"
+        },
+        {
+          "name": "PANDORA",
+          "phone": "04-22201186",
+          "description": "丹麥珠寶品牌，全球三大珠寶品牌之一。其明星産品Moments手鏈與串飾的自由搭配爲女性帶來了銘記重要時刻的方式，獲得了世界各地女性消費者的喜愛。\n",
+          "logo": "/api/images/floor-pic/1780033137960-PANDORA.png"
+        },
+        {
+          "name": "POLO RALPH LAUREN",
+          "phone": "04-22256028",
+          "description": "美國服裝品牌，創始人為服裝設計師雷夫·羅倫。這個品牌致力於設計和生產高端的休閒或半正式的男、女士服飾。\n",
+          "logo": "/api/images/floor-pic/1780033293797-POLO.jpg"
+        },
+        {
+          "name": "SAMSUNG",
+          "phone": "04-22281168",
+          "description": "三星體驗館提供當季最新款行動裝置，智慧穿戴與配件專區。\n",
+          "logo": "/api/images/floor-pic/1780033341879-SAMSUNG.png"
+        },
+        {
+          "name": "SWAROVSKI",
+          "phone": "04-22237160",
+          "description": "奧地利的百年奢華品牌，提供時尚首飾、配飾與奢華家飾，推出高階實驗室培育鑽石珠寶，全面落實可持續發展的環保理念。\n",
+          "logo": "/api/images/floor-pic/1780033392151-SWAROVSKI.png"
+        },
+        {
+          "name": "銀座白石",
+          "phone": "0965-410975",
+          "description": "訂製婚戒 - 專屬設計 獨一無二 — 網羅各式風格，擁有超過100種戒指款式設計。 專屬客製化服務，讓每只戒指都成為你的獨特訂製款。\n",
+          "logo": "/api/images/floor-pic/1780033450635-éåº§ç½ç³.png"
+        },
+        {
+          "name": "精光堂",
+          "phone": "04-22255706",
+          "description": "專業代理及經銷國際性知名專業品牌手錶及服飾皮件精品，例如：嚴選精品, CITIZEN, LONGINES, TISSOT, CASIO.\n",
+          "logo": "/api/images/floor-pic/1780033503283-ç²¾åå .jpg"
+        }
+      ],
       "M2F": [],
-      "3F": [],
-      "4F": [],
-      "5F": [],
-      "6F": [],
-      "7F": [],
+      "3F": [
+        {
+          "name": "ALL BLACK COLLECTION",
+          "phone": "04-22254262",
+          "description": "品牌以「設計感與實穿性」為核心，致力於打造適合日常穿著的舒適鞋履，風格簡約，深受消費者喜愛。\n",
+          "logo": "/api/images/floor-pic/1780292410690-ALL BLACK COLLECTION.png"
+        },
+        {
+          "name": "Champion",
+          "phone": "0972-007219",
+          "description": "美國紐約的經典運動品牌，。以獨家專利「橫紋編織技術」著稱，以耐穿、舒適且具復古街頭風格聞名。\n",
+          "logo": "/api/images/floor-pic/1780292457064-Champion.jpg"
+        },
+        {
+          "name": "Calvin Klein Jeans",
+          "phone": "04-22264046",
+          "description": "美國紐約的頂尖時尚生活品牌，以極簡主義、大膽性感和前衛美學聞名全球。\n",
+          "logo": "/api/images/floor-pic/1780292507009-Calvin Klein Jeans.jpg"
+        },
+        {
+          "name": "kipling",
+          "phone": "04-22258990",
+          "description": "比利時休閒包袋品牌，以經典抓皺尼龍、輕量防水、高功能性夾層及標誌性的毛絨小猴子吊飾聞名全球。\n",
+          "logo": "/api/images/floor-pic/1780295181768-å¥³é 44.jpg"
+        },
+        {
+          "name": "LeSportsac",
+          "phone": "04-22233050",
+          "description": "創立美國，以「降落傘尼龍」材質聞名，強調輕巧、防水與繽紛的花色設計，是旅行、日常通勤的經典代表。 \n",
+          "logo": "/api/images/floor-pic/1780292889389-LeSportsac.png"
+        },
+        {
+          "name": "MLB",
+          "phone": "04-22296281",
+          "description": "韓國F&F集團取得美國職棒大聯盟授權，創立的街頭生活運動品牌。風格主打年輕、活力、高端潮流。\n",
+          "logo": "/api/images/floor-pic/1780292930092-MLB.png"
+        },
+        {
+          "name": "MANGO",
+          "phone": "04-22232965",
+          "description": "西班牙流行服飾品牌，主打適合現代女性多樣生活需求的設計，產品涵蓋服飾、飾品及配件。 \n",
+          "logo": "/api/images/floor-pic/1780292967438-MANGO.png"
+        },
+        {
+          "name": "MUJI無印良品",
+          "phone": "04-22258751",
+          "description": "日本品牌，提供服飾、生活雜貨、食品等超過7,000種品項。致力於為消費者提供合理價位的「好感生活」用品。\n",
+          "logo": "/api/images/floor-pic/1780293000795-MUJIç¡å°è¯å.png"
+        },
+        {
+          "name": "PROJEXT",
+          "phone": "0937-911261",
+          "description": "北美的「綠時尚」品牌，致力於在環保與時髦之間取得平衡。主打日常的經典單品，如防水鞋款、舒適服飾\n",
+          "logo": "/api/images/floor-pic/1780295240311-å¥³é 41.jpg"
+        },
+        {
+          "name": "swatch",
+          "phone": "04-22215598",
+          "description": "瑞士時尚手錶品牌，以高品質、合理的價格、創新的塑膠材質，定位為「像襯衫一樣」可隨心情更換的時尚配件。 \n",
+          "logo": "/api/images/floor-pic/1780293096463-swatch.jpg"
+        },
+        {
+          "name": "Uniarts",
+          "phone": "無專線",
+          "description": "台灣知名的「全球實尚包包選品店」，40年來專注於設計與代理時尚包包、傘品配件。\n",
+          "logo": "/api/images/floor-pic/1780293138383-Uniarts.jpg"
+        },
+        {
+          "name": "52TOYS",
+          "phone": "無專線",
+          "description": "中國收藏玩具品牌，以「玩點有趣的」為理念，致力於將創意、藝術與收藏結合。 \n",
+          "logo": "/api/images/floor-pic/1780293188577-52TOYS.jpg"
+        },
+        {
+          "name": "趣可小姐",
+          "phone": "無專線",
+          "description": "一家質感韓國選物店，以現貨實體店為特色，品牌專注於嚴選熱銷韓國服飾，營造「一秒到首爾」的購物氛圍。\n",
+          "logo": "/api/images/floor-pic/1780295202334-å¥³é 46.jpg"
+        }
+      ],
+      "4F": [
+        {
+          "name": "0918",
+          "phone": "04-22234499",
+          "description": "來自東京的設計師引用自己生日的幸運數字為品牌定位下了完美的註解，並設定玫瑰為品牌IMAGE，並運用玫瑰花千變萬化的風情，演繹出一種甜美、特立獨行的華麗風格。\n",
+          "logo": "/api/images/floor-pic/1780300596470-0918.jpg"
+        },
+        {
+          "name": "à la sha",
+          "phone": "04-37073717",
+          "description": "à la sha(發音ㄚ拉ㄒㄧㄚ˙)為一句法文“接下來呢”\n2002年誕生於加連登集團旗下元素定位在男生陽剛與女孩細膩巧思間，帶尷尬又和諧的新路線。 \n",
+          "logo": "/api/images/floor-pic/1780300389100-a la sha.jpg"
+        },
+        {
+          "name": "Benteau",
+          "phone": "04-22259836",
+          "description": "台灣杰瑞實業公司成立於西元1988年，秉持著積極開發商品、少量多款的生產經驗，以特殊的造型風格和對時尚敏銳觸覺，研發出精致、包含著豐富文化內涵的Benteau品牌飾品。\n\n",
+          "logo": "/api/images/floor-pic/1780301021546-Benteau.png"
+        },
+        {
+          "name": "betty’s",
+          "phone": "04-22239466",
+          "description": "貝蒂斯國際服飾創立於1975年，注重生產的細節，從設計至打版製作，為了講求基本質感，我們採購日韓高級素材，堅持以最佳的價格提供時尚與品質。\n",
+          "logo": "/api/images/floor-pic/1780300664428-bettys.jpg"
+        },
+        {
+          "name": "Complit",
+          "phone": "04-22298334",
+          "description": "創立於1880年的德國VS是設計、生產各類圍巾、披肩的專業公司。悠久的歷史積澱，獨特的時尚設計，卓越的品質及先進的環保理念不斷進取開發，使產品更加系列化、全方位經營。\n",
+          "logo": "/api/images/floor-pic/1780301204503-Complit.jpg"
+        },
+        {
+          "name": "COWA",
+          "phone": "04-22298626",
+          "description": "COWA，源於1992年，從一位老師傅發跡，延伸成一種對植鞣皮革的詮釋。\nCOWA選用植鞣皮革，以對人體和環境無害的方式，感受自然融入生活的美好。\n\n",
+          "logo": "/api/images/floor-pic/1780301165941-COWA.png"
+        },
+        {
+          "name": "CUMAR(包)",
+          "phone": "04-22253968",
+          "description": "CUMAR 是源自義大利的知名專櫃品牌，在台灣由弘昌皮飾代理。其包款以高性價比、實用多夾層、優質皮革手感為核心特色，深受小資族與通勤族的喜愛。\n",
+          "logo": "/api/images/floor-pic/1780300978192-CUMAR.png"
+        },
+        {
+          "name": "earth music&ecology",
+          "phone": "04-22259550",
+          "description": "品牌誕生於1999年(Japan)我們熱衷為傳達出，地球是全人類的共同家園，透過服飾提倡我們應該攜手傳播正面能量，熱愛美好的一切事務，並勇敢冒險的精神。\n",
+          "logo": "/api/images/floor-pic/1780300865172-earth.png"
+        },
+        {
+          "name": "E-WEAR.FAVVI",
+          "phone": "04-37004290",
+          "description": "E WEAR創立於1995,E=Environmental-friendly 的環保意識為品牌創立的核心價值，是100%的台灣原創品牌。\nFAVVI創立於2012跨越風格與國家，致力於蒐集世界各地富含創意及文化特色的生活選物。\n\n",
+          "logo": "/api/images/floor-pic/1780300801535-EWAR.png"
+        },
+        {
+          "name": "F.F.F.F",
+          "phone": "04-22203957",
+          "description": "Fresh、For、Flash、Fashion\n活潑、閃亮、個性、流行的穿衣精神，\n時時刻刻貼近你我的生活中~ ",
+          "logo": "/api/images/floor-pic/1780300423418-æé£¾ 23.jpg"
+        },
+        {
+          "name": "H2O/IENA",
+          "phone": "04-22234960",
+          "description": "「H2O」自然生命之源，滋養著大地，美麗應運而生。獨具品味，打造自我風格美學Simplicity is the ultimate sophistication.\n「IENA」以女性細緻生活美學打造日常優雅休閒與獨特品味，打造適合上班 ON/OFF 時尚穿搭。\n\n",
+          "logo": "/api/images/floor-pic/1780300700332-æé£¾ 17.jpg"
+        },
+        {
+          "name": "Half half",
+          "phone": "04-22225785",
+          "description": "Half half 以女孩與女人雙重氣質為靈感，激盪出更迷人的時尚風采，無論是浪漫的妳、俏皮的妳、知性的妳、慵懶的妳，都能從一件件不做作的設計裡，找到貼近自我的那一款。\n",
+          "logo": "/api/images/floor-pic/1780300460977-half.png"
+        },
+        {
+          "name": "JUST BLOOM",
+          "phone": "04-22267579",
+          "description": "以更多元、豐富的集合品牌，完整呈現“日系”品牌所展現的細膩與柔美，讓女性更有魅力，完美詮釋女性的優雅與自信。\n365天自由的選擇、快樂的搭配。\n",
+          "logo": "/api/images/floor-pic/1780301060981-JUST BLOOM.jpg"
+        },
+        {
+          "name": "Kinloch Anderson(服飾)",
+          "phone": "04-22257713",
+          "description": "金安德森格紋（Tartan），多年來為英國皇室尊𠖥，象徵著蘇格蘭的傳統與文化。近年來，格紋元素在時尚界再度興起，成為潮流的風向標。\n",
+          "logo": "/api/images/floor-pic/1780300503512-æé£¾ 22.jpg"
+        },
+        {
+          "name": "Olivia Garden",
+          "phone": "無專線",
+          "description": "Olivia Garden的專業梳具獲得全球知名髮型師的高度青睞，使設計師能在短時間內輕鬆創造完美髮型。\n",
+          "logo": "/api/images/floor-pic/1780301483929-Olivia Garden.jpg"
+        },
+        {
+          "name": "MASTINA",
+          "phone": "04-22236728",
+          "description": "MASTINA在設計、選料及剪裁上強調Mix&Match穿衣概念，融合休閒與正裝，創造出Lady Elegant MIX Smart Casual的獨一風格，以極簡線條、舒適布料及精緻細節打造高質感商品。\n\n",
+          "logo": "/api/images/floor-pic/1780300929704-MASTINA.png"
+        },
+        {
+          "name": "MOSS CLUB",
+          "phone": "04-22238698",
+          "description": "強調生活品味，著重於天然素材和纖維讓客人有更舒適的穿著，讓服裝成為一個可穿戴的藝術，在簡單與不簡單之中創造基本不退流行的風格，為廣泛客群提供舒適感的自然品牌。\n",
+          "logo": "/api/images/floor-pic/1780300543116-mossclub. logo.jpg"
+        },
+        {
+          "name": "Norns",
+          "phone": "04-22299275",
+          "description": "Norns 樂恩仕｜卡通文創首選 × 療癒生活美學\n我們致力於結合「創意」與「生活美學」，打造療癒人心的產品與體驗。以卡通故事為核心，構築起卡通角色與消費者之間的橋樑。\n\n",
+          "logo": "/api/images/floor-pic/1780301128870-norns.jpg"
+        },
+        {
+          "name": "Tcf.大振豐",
+          "phone": "0965-470634",
+          "description": "Tcf.傘具生活方式品牌\n無論晴天、雨天，有Tcf.就是好天。\n透過兼具功能與美觀的傘具，翻轉傘具只是工具的刻板印象，讓撐傘成為正面時尚的生活態度。\nTrendy.時尚、Cheerful.愉悅、Freely.自由自在\n\n",
+          "logo": "/api/images/floor-pic/1780301436410-Tcf.jpg"
+        },
+        {
+          "name": "tiff",
+          "phone": "無專線",
+          "description": "以「簡約中見溫度」為理念，相信時尚不僅是一種外在表現，更是日常的態度。\n透過柔軟線條與層次設計，描繪屬於秋冬的靜謐與優雅，以親民價格帶來兼具質感與流行的穿搭提案。\n",
+          "logo": "/api/images/floor-pic/1780043397084-TIFF_å·¥ä½åå 1.png"
+        },
+        {
+          "name": "U’re",
+          "phone": "04-22261360",
+          "description": "U’re 希臘文為-妳就像，女性是種多樣貌的存在，是無法任人單一定義的，時而優雅迷人，時而自信動人，結合而成最知性的美麗，由內而外綻放出最極致的不凡魅力。\n",
+          "logo": "/api/images/floor-pic/1780300631772-æé£¾ 19.jpg"
+        },
+        {
+          "name": "文森先生",
+          "phone": "0916-651663",
+          "description": "真誠於你 Be Honest With You\n做一個不用說謊的品牌\n文森先生的初衷，不只是美妝，\n更做一個敢說真話的品牌。\n我們拒絕多於添加，只給肌膚最純粹的養分。\n",
+          "logo": "/api/images/floor-pic/1780301275786-ææ£®åç.jpg"
+        }
+      ],
+      "5F": [
+        {
+          "name": "& by  Tan& Luciana",
+          "phone": "04-22296826",
+          "description": "& by TAN& LUCIANA\n透過服裝述說人與\n自然間的共生尊重，以天然纖維作為設計媒材，描繪率\n性自適的生活步調。\n",
+          "logo": "/api/images/floor-pic/1780042275569-&- LOGO.jpg"
+        },
+        {
+          "name": "AnitaSu萊卡佛",
+          "phone": "04-22256328",
+          "description": "源自1979年的訂製工坊，Anita Su 秉持「Life is colorful」精神，以精緻剪裁與華麗手工，打造優雅俏麗率性的穿搭提案，讓每件作品宛如量身訂製。\n",
+          "logo": "/api/images/floor-pic/1780041763640-Anita Suèå¡ä½-LOGO.jpg"
+        },
+        {
+          "name": "D&D JEWELRY",
+          "phone": "04-22208899",
+          "description": "D&D Jewelry 成立於1999年，承繼百年珠寶店金匠工藝，以Design & Desire\n為理念，強調「設計來自內心的渴望」專注於美的審視檢核，台灣自創品牌的獨特風格。\n",
+          "logo": "/api/images/floor-pic/1780045574384-D&D LOGO.jpg"
+        },
+        {
+          "name": "Dleet 李倍",
+          "phone": "04-22295001",
+          "description": "Dleet 將現代生活感知融入抽象、實驗與實穿之間，在低調簡約的輪廓中，探索服裝與身體之間的表面張力。\n",
+          "logo": "/api/images/floor-pic/1780042505302-Dleet æå_LOGO_600x600px.jpg"
+        },
+        {
+          "name": "DR",
+          "phone": "04-22254105",
+          "description": "承襲百年珠寶工藝與國際設計視野，DR珠寶匯聚外國時尚美學，打造兼具低調奢華與當代風格的精緻珠寶作品。\n",
+          "logo": "/api/images/floor-pic/1780045777429-DR logo.jpg"
+        },
+        {
+          "name": "FREE",
+          "phone": "04-22253023",
+          "description": "深耕台灣逾50年，FREE 嚴選天然纖維與植物染，以修飾身形的知性剪裁滿足多元場景，煥發自信氣韻。\n\n",
+          "logo": "/api/images/floor-pic/1780041485643-FREE.jpg"
+        },
+        {
+          "name": "GINKOO",
+          "phone": "04-22210168",
+          "description": "取材自都會生活與時代精神，融合簡約線條與細膩剪裁，塑造典雅及獨特性，\n成為象徵品味與質感的服飾品牌。\n",
+          "logo": "/api/images/floor-pic/1780043037669-GINKOO-600x600.jpg"
+        },
+        {
+          "name": "KAOMEIFEN",
+          "phone": "04-22258848",
+          "description": "KAOMEIFEN從不是為了迎合潮流而存在， 而是為那些相信風格來自內在秩序的女性而創，穿出明確界線，也穿出溫柔張力。\n",
+          "logo": "/api/images/floor-pic/1780041714947-KAOMEIFEN LOGO.jpg"
+        },
+        {
+          "name": "La Féta",
+          "phone": "04-22253713",
+          "description": "法式優雅、低調奢華、浪漫細緻、精工質感的獨特內涵是La Féta一貫的品牌精神。\n",
+          "logo": "/api/images/floor-pic/1780042417761-La Feta.jpg"
+        },
+        {
+          "name": "LINDARICO",
+          "phone": "04-22251860",
+          "description": "自1987年創立，LINDARICO以「Affordable Luxury」為理念，嚴選歐亞精品設計。夏季以天然素材與簡約線條展現優雅，冬季則以手工外套、皮草與Cashmere針織打造兼具時尚與實用的輕奢風格。\n",
+          "logo": "/api/images/floor-pic/1780042461722-LINDARICO.jpg"
+        },
+        {
+          "name": "UUIN",
+          "phone": "0905-929930",
+          "description": "UUIN 為台灣當代設計師品牌，以文化敘事為核心，\n融合藝術聯名與永續理念，透過服裝詮釋女性的獨特姿態與生活美學。\n",
+          "logo": "/api/images/floor-pic/1780042326283-UUIN.jpg"
+        },
+        {
+          "name": "whiple",
+          "phone": "04-22255761",
+          "description": "樸質、簡約每件做工精細, 穿著時舒適、輕鬆自在，簡約風格每季皆可重複穿搭，搭配出不同層次感，讓穿搭變成一種美學。\n",
+          "logo": "/api/images/floor-pic/1780042370236-whiple.jpg"
+        },
+        {
+          "name": "Winnie",
+          "phone": "0935-692020",
+          "description": "源自婚紗飾品工藝，Winnie Accessory 全新升級！從高級日常到重要宴會，以獨特質感完美融入生活，點亮你的高光時刻。\n",
+          "logo": "/api/images/floor-pic/1780043467279-Winnie.jpg"
+        },
+        {
+          "name": "山崎隆史",
+          "phone": "04-22250381",
+          "description": "擷取摺紙藝術靈感，以不對稱剪裁對應壓摺布料，引導出服裝層次， 具備強烈風格特色，讓每個穿上皺褶衣的人表現絕對真實自信  \n",
+          "logo": "/api/images/floor-pic/1780041642336-å±±å´éå²LOGO.jpg"
+        },
+        {
+          "name": "今生金飾 ",
+          "phone": "04-22201353",
+          "description": "我們希望今生金飾的商品能真正成為人與人感情傳遞的媒介，除了商品本身價值外，還有更珍貴的品牌承諾。\n",
+          "logo": "/api/images/floor-pic/1780045830911-ä»çéé£¾.jpg"
+        },
+        {
+          "name": "克萊亞",
+          "phone": "04-22255207",
+          "description": "KERAIA 源自臺灣的高端女裝設計師品牌，以當代美學重新詮釋女性優雅。品牌透過俐落輪廓、細膩工藝與高級面料的運用，描繪現代女性自信而從容的風格姿態。\n",
+          "logo": "/api/images/floor-pic/1780041813323-ä¸­å-åèäº.jpg"
+        },
+        {
+          "name": "金鈿珠寶",
+          "phone": "04-22262106",
+          "description": "金鈿珠寶於1983年創立，以精湛工藝與設計聞名；提供高品質GIA鑽石，以及精彩絕倫的彩寶珠寶，致力發現珠寶之美。\n",
+          "logo": "/api/images/floor-pic/1780043990620-éé¿ç å¯¶.jpeg"
+        },
+        {
+          "name": "非常衣著 Fēicháng",
+          "phone": "04-22258508",
+          "description": "秉持其低調樸實之品牌精神\n堅持商品的質感及俐落剪裁線條\n充分滿足女性衣著優雅氣質\n兼具時尚和舒適的生活品味\n",
+          "logo": "/api/images/floor-pic/1780042656476-éå¸¸è¡£è.jpg"
+        },
+        {
+          "name": "穿針引線",
+          "phone": "04-22228996",
+          "description": "雅緻服裝創立於1984年，創辦人許宗麟，憑藉敏銳設計，美術指導，奠定他服裝專業平台，一針一線，合宜剪裁，熟齡時尚，隨心搭配，自創品牌，穿針引線。\n",
+          "logo": "/api/images/floor-pic/1780041594191-ç©¿éå¼ç·-logo.jpg"
+        },
+        {
+          "name": "蔡佳瑾",
+          "phone": "04-22293149",
+          "description": "凱蘿琳蔡時尚國際旗下經營-蔡佳瑾、Ashley、A of Ashley，從主牌創立至成近20年，對商品保有一貫的品質堅持秉持初心，帶給大家精緻、舒適的流行感。\n",
+          "logo": "/api/images/floor-pic/1780042547680-è¡ä½³ç¾.jpg"
+        },
+        {
+          "name": "龐吉",
+          "phone": "04-22295657",
+          "description": "以 Mix & Match 為核心精神，強調服裝不應只是單一風格的限制，而是能依照不同生活場景自由轉換、靈活搭配。\n",
+          "logo": "/api/images/floor-pic/1780043512665-é¾å.jpg"
+        }
+      ],
+      "6F": [
+        {
+          "name": "2nd STREET",
+          "phone": "04-22210299",
+          "description": "2nd STREET為日本最大二手連鎖品牌，以REUSE為核心，提供BUY＆SELL二手服飾販售與收購，延長衣物的使用，讓衣物得以再續用，實踐愛護地球的永續精神。",
+          "logo": "/api/images/floor-pic/1780985626312-2nd STAREET.jpg"
+        },
+        {
+          "name": "ATUNAS 歐都納",
+          "phone": "04-22236092",
+          "description": "歐都納戶外休閒用品系列身為戶外休閒的第一品牌，不但完成從頭到腳全方位休閒商品的專業設計與生產，除讓國人享受最舒適的戶外生活，更熱心推動國內戶外運動的發展。",
+          "logo": "/api/images/floor-pic/1780985696238-83010-æ­é½ç´.jpg"
+        },
+        {
+          "name": "CUMAR休閒",
+          "phone": "04-22255220",
+          "description": "CUMAR音義取自於日文-「熊」，設計師對熊情有獨鍾外，藉此將熊的靈活與動靜之間所展現的爆發力、野心及自主性精神融入設計元素裏，將實用與流行的平衡點完美的呈現。",
+          "logo": "/api/images/floor-pic/1780985851630-66055-CUMARä¼é.png"
+        },
+        {
+          "name": "camel active",
+          "phone": "04-22253133",
+          "description": "經典德國輕戶外品牌，遍佈全球50多個國家。每季去到世界各國旅行體驗，引領了另人嚮往的旅行生活方式。",
+          "logo": "/api/images/floor-pic/1780985914983-66049-camel active.jpg"
+        },
+        {
+          "name": "FOOTDISC 富足康",
+          "phone": "04-22255091",
+          "description": "FOOTDISC由德國與台灣共同研發，全球唯一量測足型與腿型搭配的科技足墊專利3DBS立體足弓片，材質剛韌，踩踏時具回彈緩衝效果，釋放您足底壓力，開始健康生活！",
+          "logo": "/api/images/floor-pic/1780986151548-64033-å¯è¶³åº·.JPG"
+        },
+        {
+          "name": "Hilltop 山頂鳥",
+          "phone": "04-22234968",
+          "description": "作為台灣機能服飾的先驅，40多年來從不盲從時尚潮流，致力開發符合消者需求並切合不同天氣環境的機能服飾。",
+          "logo": "/api/images/floor-pic/1780986218848-å±±é é³¥.jpg"
+        },
+        {
+          "name": "Hush Puppies服飾",
+          "phone": "04-22259638",
+          "description": "Hush Puppies創立於1958年美國,是全球第一個結合「舒適」與「時尚」的休閒品牌。",
+          "logo": "/api/images/floor-pic/1780986272542-67047-Hush Puppies.png"
+        },
+        {
+          "name": "Jack Wolfskin 飛狼",
+          "phone": "04-22236578",
+          "description": "Jack Wolfskin 傳承與自然連結的初心，以堅韌狼群精神守護探險回憶。不論親友同行或登頂時刻，我們陪你以經典機能服飾，將戶外生活化作最溫暖的傳承與連結。",
+          "logo": "/api/images/floor-pic/1780986348965-83006-é£ç¼.jpg"
+        },
+        {
+          "name": "JEEP",
+          "phone": "04-22256828",
+          "description": "自1941年Jeep®品牌創立後，從此成為「自由」與「無限潛能」的象徵。構築在與眾不同的表現與經驗，Jeep® Spirit 為擁有冒險靈魂的夢想家而創造。",
+          "logo": "/api/images/floor-pic/1780986399405-67076-JEEP.jpg"
+        },
+        {
+          "name": "Kinloch Anderson休閒",
+          "phone": "04-22220902",
+          "description": "融合蘇格蘭的獨特風味、展現英國的時尚風格，是此一品牌傳承全球的共同精神使命，而我們將連結國際多方交流的優勢資訊，並運用企劃設計的產品，來表達和完成如此的歷史任務。",
+          "logo": "/api/images/floor-pic/1780986491272-Kinloch Anderson.jpg"
+        },
+        {
+          "name": "Lynx",
+          "phone": "04-22251187",
+          "description": "Lynx品牌以『創新概念、頂級品質、維護傳統』一直以來最為重要的核心價值。產品使用精選材質，不斷創新設計推出符合消費者需求的產品，加上嚴格品質要求獲得顧客的肯定。",
+          "logo": "/api/images/floor-pic/1780986542550-66002-Lynx.jpg"
+        },
+        {
+          "name": "Marlboro Classics (MCS)",
+          "phone": "04-22151479",
+          "description": "MCS源自1978年萬寶路鄉村店，融合美式復古精神與義大利精湛工藝。經典的騎士徽章象徵自由與粗獷風格，完美融合粗獷牛仔與現代休閒美學。",
+          "logo": "/api/images/floor-pic/1780986599689-66083-MCS Marlboro Classics.png"
+        },
+        {
+          "name": "MONTAGUT休閒",
+          "phone": "04-22264557",
+          "description": "男人的品味來自於對細節的講究，始於1880年的法國時裝品牌MONTAGUT夢特嬌正是品味的最佳首選。",
+          "logo": "/api/images/floor-pic/1780986769464-66045-MONTAGUTä¼é.jpg"
+        },
+        {
+          "name": "MUNSINGWEAR",
+          "phone": "04-22236920",
+          "description": "以企鵝圖像為標誌的高爾夫服飾，走過132年在美國發跡而後在日本發揚光大。每季不斷研發新素材，以新的「科學」實現新的「舒適」。",
+          "logo": "/api/images/floor-pic/1780986844149-66004-MUNSINGWEAR.jpg"
+        },
+        {
+          "name": "NAUTICA",
+          "phone": "04-22256615",
+          "description": "NAUTICA於1983年創立，品牌以海洋為概念，商品設計以旅行及冒險挖掘潛在能量，重視細節與實用性，色彩以水為概念發想，展現品牌對生活的熱愛及與海洋緊密的聯繫。",
+          "logo": "/api/images/floor-pic/1780986942634-66006-NAUTICA.jpg"
+        },
+        {
+          "name": "pierre cardin休閒",
+          "phone": "04-22231180",
+          "description": "pierre cardin是最早洞燭先機，首創高級服飾平民化的設計師。從科學中找靈感，擅於幾何圖型營造未來感。",
+          "logo": "/api/images/floor-pic/1780987085463-Pierre Cardin.jpg"
+        },
+        {
+          "name": "PING",
+          "phone": "04-22231819",
+          "description": "PING是來自美國的頂級高爾夫球領導品牌，品牌名稱取自揮桿撞擊球時發出的「PING」聲。\n在設計上不斷創新一直是PING的品牌精神，創造流行的高爾夫服飾。",
+          "logo": "/api/images/floor-pic/1780987145007-66040-PING.jpg"
+        },
+        {
+          "name": "PLAYBOY GOLF",
+          "phone": "04-22259793",
+          "description": "PLAYBOY誕生於美國，象徵活潑俏皮兔頭logo圖騰，為世界上最具辨識度十大logo之一。時尚與趣味的設計，流行元素及高科技機能素材，打造休閒與流行高爾夫服飾。",
+          "logo": "/api/images/floor-pic/1780987198139-66066-PLAYBOY GOLF.jpg"
+        },
+        {
+          "name": "Samsonite",
+          "phone": "04-22256157",
+          "description": "美國品牌Samsonite為全球領先的旅行用品供應商，集風格、創新以及卓越品質於一身，充分滿足旅客的旅遊和生活所需。",
+          "logo": "/api/images/floor-pic/1780987261068-64046-Samsonite.jpg"
+        },
+        {
+          "name": "The North Face",
+          "phone": "04-22294493",
+          "description": "The North Face名字緣起，在山脊日照時間最短、最寒冷嚴峻及具危險與挑戰性，需要絕佳的裝備來克服，登山愛好者總能無所畏懼、迎難而上，是品牌被命名的原因。",
+          "logo": "/api/images/floor-pic/1780987316844-83089-THE NORTH FACE.jpg"
+        },
+        {
+          "name": "Timberland",
+          "phone": "04-22277931",
+          "description": "Timberland相信綠色永續將使未來更加美好，持續打造兼具環保、時尚與性能的服飾鞋履。穿上踢不爛，一起走出戶外做出改變，讓這個世界因為有你，自然不同。",
+          "logo": "/api/images/floor-pic/1780987387259-66042-Timberland.jpeg"
+        },
+        {
+          "name": "TRAVELER 旅行者",
+          "phone": "04-22237525",
+          "description": "健康機能與時尚品味，演繹全系列休閒旅遊精品的完美組合。",
+          "logo": "/api/images/floor-pic/1780987436764-83090-æè¡è.jpg"
+        }
+      ],
+      "7F": [
+        {
+          "name": "adidas Kids",
+          "phone": "04-22251821",
+          "description": "adidas，adidas kids不但具有多重時尚的元素，運動款服飾亦具備多重功能性。針對運動的孩子提供最佳的平衡功能，讓孩子的運動體驗與科技、流行接軌。",
+          "logo": "/api/images/floor-pic/1781158255421-72131 Adidas LOGO-01.jpg"
+        },
+        {
+          "name": "Crocodile 鱷魚童裝",
+          "phone": "0988-212133",
+          "description": "Crocodile Junior鱷魚童裝，打造融合歐洲流行元素與戶外運動的混搭提案，穿出自我風格，盡情享受百變搭配的樂趣。",
+          "logo": "/api/images/floor-pic/1781158315524-Crocodile.jpg"
+        },
+        {
+          "name": "DEVILCASE",
+          "phone": "0965-280694",
+          "description": "DEVILCASE惡魔防摔殼為臺灣在地手機殼品牌，以極致與創新的精神，打造兼具美感與耐用的防摔手機殼。",
+          "logo": "/api/images/floor-pic/1781158373392-DEVILCASE.jpg"
+        },
+        {
+          "name": "FUN BOX 歡樂工場",
+          "phone": "04-22259107",
+          "description": "Funbox Toys多樣化的玩具商品，涵蓋熱播卡通、收藏模型、小汽車、家家酒等，滿足各年齡層需求，提供豐富娛樂體驗。",
+          "logo": "/api/images/floor-pic/1781158464063-FUN BOX.jpg"
+        },
+        {
+          "name": "Gunze 郡是",
+          "phone": "無",
+          "description": "在日本已超過110年，堅持產品的最高品質；強調布料功能性及舒適度，更因應現代多元化需求，開發能滿足顧客需求的產品。",
+          "logo": "/api/images/floor-pic/1781247645011-GUNZE.jpg"
+        },
+        {
+          "name": "Kinloch Anderson 童裝",
+          "phone": "04-22253671",
+          "description": "1997年洛亞有限公司取得台灣區童裝總代理至今，在堅持經典與流行創新中取得平衡，致力將金‧安德森童裝打造成兒童正式服裝首選品牌，成為英倫頂級品牌的象徵。",
+          "logo": "/api/images/floor-pic/1781158885933-K A.jpg"
+        },
+        {
+          "name": "LEGO樂高",
+          "phone": "04-37023971",
+          "description": "樂高遊戲全系列產品，從6個月嬰兒、學齡前兒童及青少年，數量達2069個元件組合600種產品，樂高持續致力系統研發及新組合、特殊元素和顏色的推出，陪伴兒童一起成長。",
+          "logo": "/api/images/floor-pic/1781158951219-76067 LEGO.jpg"
+        },
+        {
+          "name": "LOGA LOGA",
+          "phone": "無",
+          "description": "集結多款可愛造型與繽紛風格的吊飾，每一款都萌感滿分、柔軟療癒，掛上包包立刻成為最吸睛的小亮點。",
+          "logo": "/api/images/floor-pic/1781159038579-ç«¥è£ 85.jpg"
+        },
+        {
+          "name": "NIKE Kids",
+          "phone": "04-22295105",
+          "description": "總公司位於美國奧勒崗州波特蘭市，產品銷售網遍及全世界五大洲，主要產品包括專業運動鞋、服飾、配件等。",
+          "logo": "/api/images/floor-pic/1781159200680-72161 NIKE.jpg"
+        },
+        {
+          "name": "PIPPY",
+          "phone": "04-22221619",
+          "description": "PIPPY相信理想的童裝是舒服、清新與和諧的 ， 天然材質為主，遵行成品後水洗程序除去不安心的物質 。",
+          "logo": "/api/images/floor-pic/1781159270801-PIPPY.jpg"
+        },
+        {
+          "name": "安妮公主",
+          "phone": "04-22296033",
+          "description": "安妮公主秉持著讓顧客一圓公主夢的初衷，堅持提供合理價位高品質商品。希望安妮公主成為一支畫筆，彩繪孩子們的美麗童年。",
+          "logo": "/api/images/floor-pic/1781159340286-å®å¦®å¬ä¸».jpg"
+        },
+        {
+          "name": "拼圖總動員",
+          "phone": "04-22295917",
+          "description": "帶您從經典動漫到藝術名畫，療癒的可愛插畫到絕美風景地標。讓雙眼藉由拼圖，看見不一樣的世界！",
+          "logo": "/api/images/floor-pic/1781159409909-76070 æ¼å.jpg"
+        },
+        {
+          "name": "星奇市",
+          "phone": "無",
+          "description": "「POP CIRCUS 星奇市」集結日本及世界各地的正版熱門角色，提供精緻生活雜貨、文具與療癒公仔。",
+          "logo": "/api/images/floor-pic/1781159526442-æå¥å¸.jpg"
+        },
+        {
+          "name": "洛特LUT",
+          "phone": "無",
+          "description": "遊戲化教育的領航者, 知名德式邏輯教具amiq的發源地, 精品教具搭配精緻繪本的絕妙組合，提供華人世界從學齡前的邏輯本能啟蒙。",
+          "logo": "/api/images/floor-pic/1781159618315-79321æ´ç¹.jpg"
+        },
+        {
+          "name": "聖荃",
+          "phone": "04-22239297",
+          "description": "聖荃童鞋，創立30多年代理品牌HELLO KITTY  自創品牌TOPU ONE 。提供消費者全客層，流行舒適的精品童鞋。",
+          "logo": "/api/images/floor-pic/1781159709150-æ­£æ¹å½¢logo,600x600.jpg"
+        },
+        {
+          "name": "鼎美玩具",
+          "phone": "04-37023971",
+          "description": "鼎美經營流行性玩具為主，並經銷國際知名品牌玩具，消費族群囊括幼兒的學齡前玩具到成年人會購買的精品收藏，店內玩具多樣、精緻，不分年齡喜愛玩具者，自用及送禮的好去處。",
+          "logo": "/api/images/floor-pic/1781159828804-76039 é¼ç¾ç©å·.jpg"
+        },
+        {
+          "name": "摩曼星創",
+          "phone": "0977-111245",
+          "description": "百貨潮流選物新地標大型扭蛋、娃娃公仔、精品飾品、質感選物一次集合，打造充滿驚喜的空間。",
+          "logo": "/api/images/floor-pic/1781159922557-79336 æ©æ¼æåµ.jpg"
+        }
+      ],
       "8F": [
         {
           "name": "湯姆熊歡樂世界Tom's world",
-          "phone": "04-2223-6271",
-          "description": "「湯姆熊歡樂世界」是台灣最具規模的室內連鎖育樂廣場，全台超過70個加盟據點，為您打造夢想中的遊樂王國。",
+          "phone": "04-22236271",
+          "description": "湯姆熊歡樂世界引進多元遊戲機台，打造全年齡都能盡情同樂的室內遊樂天堂，帶來歡樂滿滿的一站式娛樂體驗。",
           "logo": "/api/images/floor-pic/1778828653657-æ¹¯å§çlogo.jpg"
         }
       ],
-      "9F": [],
+      "9F": [
+        {
+          "name": "aPure",
+          "phone": "04-22291033",
+          "description": "台灣機能性纖維領導品牌，用黑白兩雙襪子成功改寫了台灣除臭襪歷史，並堅守最初的信念。",
+          "logo": "/api/images/floor-pic/1781147015713-aPure.jpg"
+        },
+        {
+          "name": "ASICS",
+          "phone": "04-22230201",
+          "description": "創辦人鬼塚喜八郎秉持著「健全的精神，寓於健全的身體」為所有的運動選手「生產真正的運動鞋」。",
+          "logo": "/api/images/floor-pic/1781157027137-ASICS.jpg"
+        },
+        {
+          "name": "CONVERSE",
+          "phone": "04-22235333",
+          "description": "品牌憑藉簡約百搭的帆布設計，從籃球場走向潮流界，現已成為跨越世代、展現個人風格的經典ICON。",
+          "logo": "/api/images/floor-pic/1781147695704-CONVERSE.jpg"
+        },
+        {
+          "name": "KANGOL",
+          "phone": "04-22297090",
+          "description": "奠定精品、經典商品和潮流系列。KANGOL回歸質樸初心，發展休閒系列；實穿百搭的設計元素，將品牌精神回歸生活本質。",
+          "logo": "/api/images/floor-pic/1781147759779-KANGOL  (1).jpg"
+        },
+        {
+          "name": "KAPPA",
+          "phone": "0902-002063",
+          "description": "Kappa在歐美是最具聲望的運動和休閒服裝品牌之一以其獨特的運動基因、街頭潮流風格以及標誌性的「背靠背」Logo享譽全球。",
+          "logo": "/api/images/floor-pic/1781147815466-KAPPA LOGO.jpg"
+        },
+        {
+          "name": "le coq sportif",
+          "phone": "04-22252076",
+          "description": "品牌以法國國鳥作為LOGO，打造法式運動、潮流、復古懷舊三大系列，提供大眾化更多的商品選擇。",
+          "logo": "/api/images/floor-pic/1781147888651-å°å¬é NEW LOGO-LCSç´å¼.jpg"
+        },
+        {
+          "name": "New Balance",
+          "phone": "04-22256696",
+          "description": "總部設於美國波士頓的New Balance Athletics，秉持著百年製鞋精神，高品質的全球跑鞋領導品牌。",
+          "logo": "/api/images/floor-pic/1781147942250-NB_LOGO_BK.jpg"
+        },
+        {
+          "name": "NU",
+          "phone": "無",
+          "description": "NU作為台灣唯一榮獲醫療認證的能量護具廠商，研發多款專業防護商品，是結合精密科技與健康機能的產業領導品牌。",
+          "logo": "/api/images/floor-pic/1781148053280-NU.jpg"
+        },
+        {
+          "name": "PALLADIUM",
+          "phone": "0958-786932",
+          "description": "PALLADIUM極簡而風格強烈的高辨識度設計，加上舒適且耐磨堅固的機能特性，為全球知名的軍靴品牌。",
+          "logo": "/api/images/floor-pic/1781148156223-Palladium LOGO ç½åºé»å­.jpg"
+        },
+        {
+          "name": "SKECHERS",
+          "phone": "04-22256963",
+          "description": "SKECHERS成立於1992年美國南加州,現為美國第二、全球第三大的運動鞋品牌暢銷全球超過170個國家。",
+          "logo": "/api/images/floor-pic/1781148214143-SKECHERS.jpg"
+        },
+        {
+          "name": "UNDER ARMOUR",
+          "phone": "04-36091863",
+          "description": "UA具備領先業界的科技技術，推出最具功能的運動鞋、服飾裝備，滿足運動員的使用需求、同時提升運動表現。",
+          "logo": "/api/images/floor-pic/1781148275949-UA.jpg"
+        },
+        {
+          "name": "夏之戀",
+          "phone": "無",
+          "description": "夏之戀創立於1980年，專注泳裝設計與製造，結合時尚美感、舒適剪裁與實穿機能，提供女性、男性及兒童多元泳裝選擇。",
+          "logo": "/api/images/floor-pic/1781148326321-å¤ä¹æ.jpg"
+        }
+      ],
       "10F": [
         {
           "name": "ASKO賽寧",
-          "phone": "04-2225-2953",
-          "description": "ASKO賽寧。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22252953",
+          "description": "百年琢藝臻呈恆久品質ASKO產品符合設計、功能、耐用性和環保意識高標準要求，堅持斯堪地納維亞風格，將智慧功能和創新方案融入非凡設計中，為使用者帶來高品質生活體驗",
+          "logo": "/api/images/floor-pic/1781172173219-ASKOè³½å¯§.png"
+        },
+        {
+          "name": "CLINICO科林助聽器",
+          "phone": "04-22202668",
+          "description": "科林提供全方位輔具治療與營養攝取方案，讓您展現健康自信。從聽力、睡眠、營養保健，提供一站式健康照護選擇，服務品質獲ISO SGS 國家品質雙驗證。",
+          "logo": "/api/images/floor-pic/1781172644033-ç§æå©è½å¨.jpg"
+        },
+        {
+          "name": "dyson",
+          "phone": "04-22257499",
+          "description": "專注科技體驗與專業服務的頂級展示空間，獨立專櫃匯集全系列氣流科技與數位馬達創新產品。提供實機深度體驗與專業顧問諮詢，邀您親臨感受極致工藝，定義智慧居家生活新標準",
+          "logo": "/api/images/floor-pic/1781172719291-dyson.jpg"
         },
         {
           "name": "DIKE",
           "phone": "0921-179378",
-          "description": "DIKE。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
-        },
-        {
-          "name": "dyson",
-          "phone": "04-2225-7499",
-          "description": "dyson。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "description": "DIKE秉持「待客之道，戴克知道」的品牌精神，持續優化服務與聆聽反饋，更能貼近顧客在生活家電產品上的需求。",
+          "logo": "/api/images/floor-pic/1781172778244-DIKE.png"
         },
         {
           "name": "heng style恆隆行",
-          "phone": "04-2225-5851",
-          "description": "heng style恆隆行。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22255851",
+          "description": "挖掘各國好物與良品是我們的天職，消費者樂在生活則是我們的成就。",
+          "logo": "/api/images/floor-pic/1781172831150-hengstyleæéè¡.jpg"
         },
         {
           "name": "Junior喬尼亞",
-          "phone": "04-2225-3873",
-          "description": "Junior喬尼亞",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22253873",
+          "description": "喬尼亞咖啡Junior Coffee創立於1999年，台灣首創百貨咖啡機專門店，提供精品專業咖啡機、咖啡器具及高品質精品豆，讓消費者輕鬆在家享受香醇精品咖啡時光",
+          "logo": "/api/images/floor-pic/1781173610315-Juniorå¬å°¼äº.jpg"
         },
         {
-          "name": "jura優瑞",
-          "phone": "04-2225-6233",
-          "description": "jura優瑞。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "name": "jura優瑞咖啡",
+          "phone": "04-22256233",
+          "description": "致力於推廣精品咖啡生活美學，提供專業咖啡設備、選豆體驗與完善售後服務，打造居家的高品質咖啡體驗。",
+          "logo": "/api/images/floor-pic/1781173668699-JURAåªçåå¡.png"
         },
         {
           "name": "Panasonic按摩椅",
-          "phone": "04-2229-4690",
-          "description": "Panasonic按摩椅。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
-        },
-        {
-          "name": "集雅社Panasonic",
-          "phone": "04-3609-3368",
-          "description": "集雅社Panasonic。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
-        },
-        {
-          "name": "飛利浦家電",
-          "phone": "04-2225-4405",
-          "description": "飛利浦家電。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22294690",
+          "description": "Panasonic按摩椅以創造貼近客戶的產品為座右銘，開發團隊樂於傾聽客戶的心聲，把您的需求放在最重要的位置。相信這是我們的使命，我們每天都在挑戰技術創新。",
+          "logo": "/api/images/floor-pic/1781174037062-Panasonic.jpg"
         },
         {
           "name": "佳醫",
-          "phone": "04-2225-3545",
-          "description": "佳醫。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22253545",
+          "description": "佳醫為提昇大眾生活品質設立旗下健康生活家電品牌。",
+          "logo": "/api/images/floor-pic/1781174250855-ä½³é«.jpg"
         },
         {
-          "name": "來思比irobot",
-          "phone": "04-2225-5029",
-          "description": "來思比irobot。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "name": "來思比科技",
+          "phone": "04-22255029",
+          "description": "HDC 來思比科技嚴選國際高品質家電品牌，提供智慧清潔、衣物護理、空氣調節與廚房家電，打造質感智能生活。",
+          "logo": "/api/images/floor-pic/1781174346695-ä¾ææ¯ç§æ.jpg"
         },
         {
           "name": "征利",
-          "phone": "04-2227-8468",
-          "description": "征利。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22278468",
+          "description": "提供專業解說與售後服務，嚴選HITACHI、MITSUBISHI、Fisher&Paykel、SVAGO、Beurer、VITAMIX、recolte等國際品牌",
+          "logo": "/api/images/floor-pic/1781174394969-å¾å©.png"
+        },
+        {
+          "name": "怡眾國際｜飛利浦PH",
+          "phone": "04-22293008/0902-306895",
+          "description": "「誠信、創新、服務」是我們核心的經營理念。在未來，怡眾國際將繼續與時俱進，不斷引進更多優質的產品，為客戶創造更具價值的智能生活體驗。",
+          "logo": "/api/images/floor-pic/1781174518199-æ¡ç¾åéEZONE.png"
         },
         {
           "name": "虎牌",
-          "phone": "04-2223-2185",
-          "description": "虎牌。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22232185",
+          "description": "日本虎牌創業於1923年，以保溫系列商品優越真空斷熱技術，並相繼研發電子鍋、熱水瓶、等廚房領域相關產品。虎牌也致力於美學設計，讓「美」得以延伸到餐桌上與生活中。",
+          "logo": "/api/images/floor-pic/1781174572398-èç.jpg"
         },
         {
-          "name": "科林助聽器",
-          "phone": "04-2220-2668",
-          "description": "科林助聽器。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
-        },
-        {
-          "name": "飛利浦PH",
-          "phone": "04-2229-3008",
-          "description": "飛利浦PH。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "name": "飛利浦家電",
+          "phone": "04-22254405",
+          "description": "從咖啡機到空氣清淨機，130多年來飛利浦不斷推出創新產品，創造更健康、更快樂的生活。飛利浦家電公司以深具意義的創新，提升人們的家庭生活。讓每個人的房子都能成為家",
+          "logo": "/api/images/floor-pic/1781174646846-é£å©æµ¦å®¶é».jpg"
         },
         {
           "name": "象印",
-          "phone": "04-2223-5672",
-          "description": "象印。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22235672",
+          "description": "象印1918年在日本大阪成立，商品有IH電子鍋、VE真空電熱水瓶、多種款式不銹鋼保溫瓶及舒適生活的各項製品。",
+          "logo": "/api/images/floor-pic/1781174702200-è±¡å°.jpg"
+        },
+        {
+          "name": "集雅社│Panasonic",
+          "phone": "04-36093368",
+          "description": "集雅社精選 Panasonic 全系列家電，從影音、空調到智慧廚衛，專業規劃各類需求，打造質感生活。",
+          "logo": "/api/images/floor-pic/1781174755271-ééç¤¾ â PANSONIC.jpg"
         },
         {
           "name": "嘉儀",
-          "phone": "04-2223-6049",
-          "description": "嘉儀。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22236049",
+          "description": "創立於1968年，嘉儀企業秉持著持續突破與創新的原則，生產銷售商品以良好口碑遍及世界各地，於三十餘年前進而發展專業家電代理事業，成為台灣歐美日家電品牌最大代理商",
+          "logo": "/api/images/floor-pic/1781174810657-åå.jpg"
         }
       ],
       "11F": [
         {
-          "name": "BBL Premium",
-          "phone": "04-2225-5410",
-          "description": "BBL Premium。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
-        },
-        {
           "name": "DAY&DAY",
-          "phone": "04-2225-7798",
-          "description": "DAY&DAY。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22257798",
+          "description": "MIT 台灣精製，結合機能設計與簡約美學，打造高品質不鏽鋼掛架、水龍頭等廚衛生活用品，實現質感居家生活。",
+          "logo": "/api/images/floor-pic/1781175306741-DAY&DAY.jpg"
         },
         {
           "name": "IN HOUSE",
-          "phone": "04-2229-7007",
-          "description": "IN HOUSE。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22297007",
+          "description": "以當代美學為核心，將質地、比例與空間感融入居家設計。\n",
+          "logo": "/api/images/floor-pic/1780025695300-in-house.png"
         },
         {
           "name": "La belle格蕾寢飾",
-          "phone": "04-2229-4265",
-          "description": "La belle格蕾寢飾。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22294265",
+          "description": "強調「自然樂活-充滿自信」的生活態度，採用天然純淨雅致的設計元素，體驗完美材質與肌膚之間的零距離，享受自然清新的舒眠生活。滿足您純淨，浪漫的童心。\n\n",
+          "logo": "/api/images/floor-pic/1780025776513-logo-La Belle italy.jpg"
         },
         {
           "name": "S'eduir",
-          "phone": "04-2225-9135",
-          "description": "S'eduir。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22259135",
+          "description": "講求個人品味的世紀，以柔情色調，融合清新典雅風格，除了沿襲以往的都會雅痞及恬靜明亮色彩，並將流行趥勢帶入設計理念中。\n",
+          "logo": "/api/images/floor-pic/1780025735638-seduir_600x600_center.jpg"
         },
         {
-          "name": "TENDAYs",
-          "phone": "04-2229-7317",
-          "description": "TENDAYs。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "name": "TENDAYS",
+          "phone": "04-22297317",
+          "description": "TENDAYS 致力於打造健康睡眠體驗，結合專利睡眠測試與MIT安心製造，提供量身紓壓的舒眠寢具。\n",
+          "logo": "/api/images/floor-pic/1780025876443-TENDAYS.jpg"
         },
         {
-          "name": "TEMPUR丹普",
-          "phone": "04-2225-3398",
-          "description": "TEMPUR丹普。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "name": "Tempur丹普",
+          "phone": "04-22253398",
+          "description": "獨一無二的TEMPUR丹普感溫材質 — 丹普床墊擁有穩固支撐力且順應貼合身形，讓您全然放鬆的感受睡眠時的絕佳承托，享受深層安穩好眠。\n",
+          "logo": "/api/images/floor-pic/1780025998774-ä¸¹æ®LOGO(1).png"
         },
         {
-          "name": "Tonia Nicole 東妮",
-          "phone": "04-2223-6481",
-          "description": "Tonia Nicole 東妮。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
-        },
-        {
-          "name": "生活好品2號店",
-          "phone": "04-2225-3456#5274",
-          "description": "生活好品2號店。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "name": "Tonia Nicole東妮寢飾",
+          "phone": "04-22236481",
+          "description": "遠東集團自1986年起自創的寢飾品牌，主打100%萊賽爾纖維，以大自然的元素設計，期許讓消費者感受以大自然為床為訴求，進而重視自己所生活的環境，並感受大自然共存相依的愛！\n\n",
+          "logo": "/api/images/floor-pic/1780025606083-æ±å¦®å¯¢é£¾.png"
         },
         {
           "name": "京都西川",
-          "phone": "04-2225-1864",
-          "description": "京都西川。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22251864",
+          "description": "西川集團身為擁有450年以上歷史的日本寢具製造商，為了每一位客人都能「睡得好、活得好」，努力不懈的鑽研最新技術。\n",
+          "logo": "/api/images/floor-pic/1780025651466-äº¬é½è¥¿å·.jpg"
         },
         {
-          "name": "法藍瓷",
-          "phone": "04-2225-4941",
-          "description": "法藍瓷。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "name": "法藍瓷FRANZ",
+          "phone": "04-22254941",
+          "description": "法藍瓷以大自然為主題，詮釋天地人間情感與真善美的恒遠價值，透過立體瓷藝，傳遞融合東西美學之優雅時尚。\n",
+          "logo": "/api/images/floor-pic/1780026302851-æ³èç· (1).png"
         },
         {
-          "name": "易眠床．易眠枕",
-          "phone": "04-2223-2070",
-          "description": "易眠床．易眠枕。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "name": "IMAGER-37 易眠床．易眠枕",
+          "phone": "04-22232070",
+          "description": "IMAGER-37易眠床•易眠枕專注健康睡眠，以37°C溫感釋壓科技貼合身形，帶來深層舒適好眠。\n",
+          "logo": "/api/images/floor-pic/1780025824121-æç åº.png"
         },
         {
-          "name": "金．安德森",
-          "phone": "04-2223-7637",
-          "description": "金．安德森。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "name": "金‧安德森寢具",
+          "phone": "04-22237637",
+          "description": "英國Kinloch Anderson創立於1868年，致力於紡織品的設計與品質，發展一系列生活用品。\n",
+          "logo": "/api/images/floor-pic/1780025538495-kinloch_anderson_600x600_center.jpg"
         },
         {
           "name": "金格名床",
-          "phone": "04-2225-9295",
-          "description": "金格名床。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22259295",
+          "description": "美國金格名床榮獲國際脊椎醫師協會推薦認証，授權在台灣生產銷\n售，致力讓家中成員擁有專屬自己舒適的床墊。\n",
+          "logo": "/api/images/floor-pic/1780025929132-éæ ¼ååºlogo-2026ä¸­åæ¨å±¤ä»ç´¹-60x60.jpg"
         },
         {
           "name": "陶八",
-          "phone": "04-2225-3868",
-          "description": "陶八。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22253868",
+          "description": "堅持以日本進口，實用又安全的陶瓷器皿作為陶八商品的主流，\n並加入常滑燒茶壺，南部鐵器等日本職人作品。我們提倡「安全，獨特，趣味」的食器理念\n",
+          "logo": "/api/images/floor-pic/1780026227158-touhachi_600x600_center.jpg"
         },
         {
-          "name": "瑞香 Ruei Siang",
-          "phone": "無專線",
-          "description": "瑞香 Ruei Siang。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "name": "NOVA 諾雅家具",
+          "phone": "0963-567021",
+          "description": "More for you.\nMade for you.\nMaking life better\none home at a time.\n我們強調家具不僅僅是一堆木材和棉花，\n而是一種情感的表達和生活方式的體現。\n我們追求創造一個家，而不僅僅是一個居所。\n\n\n",
+          "logo": "/api/images/floor-pic/1780026472423-Nova.jpg"
         }
       ],
       "12F": [
         {
-          "name": "Artso亞梭傢俬",
-          "phone": "04-2229-4268",
-          "description": "Artso亞梭傢俬",
-          "logo": "/floor-pic/Logo_Gift.jpg"
-        },
-        {
           "name": "BUTTER by Nail Nail",
-          "phone": "04-2229-9051",
-          "description": "BUTTER by Nail Nail。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22299051",
+          "description": "以顧客100%滿意為目標，提供最優質五星級服務。 \n",
+          "logo": "/api/images/floor-pic/1780024717203-299205051_489297106534162_1869012775247061285_n.jpg"
         },
         {
           "name": "cosmescents伊聖詩",
-          "phone": "04-2227-0229",
-          "description": "cosmescents伊聖詩。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22270229",
+          "description": "一個以芳香療法為基礎的集合式保養品牌，秉持植物、人文、藝術、環保核心理念。產品涵蓋精油、沐浴保養及居家香氛，致力於將自然能量融入日常生活。\n",
+          "logo": "/api/images/floor-pic/1780024761342-ä¼èè©© (2).jpg"
+        },
+        {
+          "name": "GACHA BOX",
+          "phone": "04-22292993",
+          "description": "以「驚喜遊樂園」為核心，提供轉蛋沈浸式體驗。讓投入硬幣、旋轉把手的過程，除了獲得驚喜，也能充滿樂趣。",
+          "logo": "/api/images/floor-pic/1781160038995-GACHA BOX.jpg"
         },
         {
           "name": "HERBOX荷柏園",
-          "phone": "04-2226-4232",
-          "description": "HERBOX荷柏園。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22264232",
+          "description": "\"堅信天然素材與大地循環耕作法作為產品原料。\n由澳洲百年精油提煉廠與現代整合概念，\n提供您最天然健康及舒適的生活保養方式。\"\n",
+          "logo": "/api/images/floor-pic/1780024801238-è·æå (1).jpg"
         },
         {
           "name": "Home.焙小日子",
-          "phone": "04-2229-7126",
-          "description": "Home.焙小日子。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22297126",
+          "description": "Home.焙小日子提供明亮整潔的DIY空間。透過平板輕鬆教學，\n讓烘焙新手也能在溫馨氛圍中，親手打造充滿溫度的幸福甜點。",
+          "logo": "/api/images/floor-pic/1780024856399-ChatGPT Image 2026å¹´5æ15æ¥ ä¸å05_22_27.png"
         },
         {
           "name": "JUST HERB香草集",
-          "phone": "04-2229-7328",
-          "description": "JUST HERB香草集。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22297328",
+          "description": "嚴選草本精華融合於茶飲、精油、沐浴保養及香氛用品中，\n透過職人調香提供專業呵護，以達身心靈健康生活\"\n",
+          "logo": "/api/images/floor-pic/1780024899649-é¦èéLOGO-600-600.jpg"
         },
         {
           "name": "L'erbolario蕾莉歐",
-          "phone": "04-2223-9153",
-          "description": "L'erbolario蕾莉歐。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22239153",
+          "description": "義大利草本保養第一品牌 –L’ERBOLARIO 蕾莉歐，\n以義式香氛樂活理念，重新演繹家族所留傳的傳統配方，同時仍秉持品牌初衷，\n產品成份萃取天然花草植物，感受植萃蘊活的美麗能量。\n\n",
+          "logo": "/api/images/floor-pic/1780024943647-lerbolario_600x600_center.jpg"
         },
         {
           "name": "Les nez香鼻子",
           "phone": "0908-879272",
-          "description": "Les nez香鼻子。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "description": "匯聚多款歐洲輕奢香氛品牌，嚴選純天然精油與香氛，給您高品質的香氛生活體驗。\n",
+          "logo": "/api/images/floor-pic/1780024973641-lesnez_é¦é¼»å­.jpg"
         },
         {
           "name": "O'right歐萊德",
-          "phone": "04-2229-5806",
-          "description": "O'right歐萊德。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22295806",
+          "description": "台灣的綠色髮妝品牌，用最天然、純淨的自然能量，守護您的每吋髮絲肌膚，提供永續的全綠生活方案。\n",
+          "logo": "/api/images/floor-pic/1780025095384-o_right_.png"
         },
         {
-          "name": "卡雅仕KYOGOKU",
-          "phone": "無專線",
-          "description": "卡雅仕KYOGOKU。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "name": "KG卡雅仕",
+          "phone": "0921-383506",
+          "description": "源自日本的頂級沙龍美髮品牌，以「養護的科學」為核心，主打世界首創「100%人髮角蛋白」專利技術，解決漂染燙後的受損髮、細軟髮與頭皮問題，在家也能達到沙龍級護理效果。\n",
+          "logo": "/api/images/floor-pic/1780025164480-1778837942158.jpg"
         },
         {
           "name": "有益帖",
-          "phone": "04-2229-2883",
-          "description": "有益帖。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22292883",
+          "description": "源自南投草藥農場的天然品牌，草本茶、保健膠囊與精油，純淨無農藥，日日安心養生\n",
+          "logo": "/api/images/floor-pic/1780025219772-thi_create_600x600_center.jpg"
         },
         {
           "name": "萬寶暄",
-          "phone": "04-2223-1685",
-          "description": "萬寶暄。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
-        },
-        {
-          "name": "歐法頌",
-          "phone": "無專線",
-          "description": "歐法頌。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22231685",
+          "description": "萬寶暄 成立於西元1995年，取其萬寶聚集之地，使人心生喜悅之意涵。我們主要是用各種天然能量礦石，如玉髓、翡翠、水晶 、碧璽……等，結合時尚潮流，設計各種不同配飾。\n",
+          "logo": "/api/images/floor-pic/1780291929213-app-LOGO 25.jpg"
         },
         {
           "name": "曜越科技",
-          "phone": "04-2252-8636",
-          "description": "曜越科技。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22528636",
+          "description": "曜越科技以曜越太陽神聞名，專業電競及電腦周邊、水冷散熱系統與賽車模擬器。跨足單車領域創立TTBIC代理多項國際品牌，將科技能量融入單車體驗，為消費者打造高端生活",
+          "logo": "/api/images/floor-pic/1781243585624-thermaltakeæè¶.jpg"
         }
       ],
       "13F": [
         {
-          "name": "生活好品1號店",
+          "name": "生活好品一店",
           "phone": "04-2225-3456#261",
-          "description": "生活好品1號店。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
-        },
-        {
-          "name": "名人/奧可那泳裝",
-          "phone": "",
-          "description": "",
-          "logo": ""
+          "description": "販售有機時蔬、3C配件及精選美妝小物",
+          "logo": "/api/images/floor-pic/1780474720922-çæ´»å¥½å13F.jpg"
         }
       ],
       "14F": [],
       "15F": [],
-      "B1": [],
-      "B2": [],
-      "B3": [],
+      "B1": [
+        {
+          "name": "ALDO",
+          "phone": "04-22292819",
+          "description": "加拿大全球知名時尚鞋履配飾品牌，主打年輕、活潑、時尚的設計風格。\n",
+          "logo": "/api/images/floor-pic/1780284890432-Aldo_Group_logo.svg.png"
+        },
+        {
+          "name": "AS",
+          "phone": "04-22257109",
+          "description": "台灣著名高階女鞋品牌，以精湛工藝、優質材料與俐落幹練的設計聞名。\n",
+          "logo": "/api/images/floor-pic/1780284922019-AS.png"
+        },
+        {
+          "name": "be;eza",
+          "phone": "04-22251500",
+          "description": "以獨特的時尚首選，集合世界多樣精緻奢華的名牌女鞋。\n",
+          "logo": "/api/images/floor-pic/1780284992830-be_eza.jpg"
+        },
+        {
+          "name": "BEN&1966",
+          "phone": "04-22255831",
+          "description": "擁有超過 30 年歷史的台灣在地精品女鞋品牌，以高品質的製作工藝著稱。\n",
+          "logo": "/api/images/floor-pic/1780285032918-BEN&1966.jpg"
+        },
+        {
+          "name": "Bo Derek",
+          "phone": "04-22251493",
+          "description": "以「義大利設計、時尚舒適並存」為核心，提供高CP值的真皮女鞋。\n",
+          "logo": "/api/images/floor-pic/1780285091770-Bo Derek.png"
+        },
+        {
+          "name": "CUMAR",
+          "phone": "04-22230567",
+          "description": "旅義日本設計師創立的鞋履品牌。品牌核心理念在於「舒適的自在態度」。\n",
+          "logo": "/api/images/floor-pic/1780285122508-CUMAR.png"
+        },
+        {
+          "name": "DeSire",
+          "phone": "04-22237930",
+          "description": "主打法式浪漫風格的台灣專櫃女鞋品牌，設計風格柔性、甜美且優雅。\n",
+          "logo": "/api/images/floor-pic/1780285155326-DeSire.png"
+        },
+        {
+          "name": "FAIR LADY",
+          "phone": "04-22233195",
+          "description": "台灣本土女鞋品牌，堅持在地設計與製造，以「舒適、高質感、經典優雅」為核心。\n",
+          "logo": "/api/images/floor-pic/1780285185147-FAIRLADY.jpg"
+        },
+        {
+          "name": "fitflop",
+          "phone": "0980-882005",
+          "description": "來自英國的知名機能鞋品牌，主打將人體工學設計與時尚流行結合。\n",
+          "logo": "/api/images/floor-pic/1780285272482-fitflop.png"
+        },
+        {
+          "name": "JINS",
+          "phone": "04-22291243",
+          "description": "源自日本眼鏡品牌，以「高品質、薄型非球面鏡片不加價、快速取件」為核心理念。\n",
+          "logo": "/api/images/floor-pic/1780286614956-JINS.png"
+        },
+        {
+          "name": "Keeley Ann",
+          "phone": "04-22234118",
+          "description": "台灣自創女鞋品牌，主打時尚 OL 風格，融合義大利浪漫與日本獨特設計。\n",
+          "logo": "/api/images/floor-pic/1780285837929-Keeley Ann.png"
+        },
+        {
+          "name": "MAGY",
+          "phone": "04-22257353",
+          "description": "台灣女鞋品牌，致力於設計出好穿、流行且合宜價位的真皮鞋款。\n",
+          "logo": "/api/images/floor-pic/1780285887979-MAGY.jpg"
+        },
+        {
+          "name": "MELROSE",
+          "phone": "04-22235810",
+          "description": "主打真皮材質與台灣MIT生產，風格定位於簡約、氣質、舒適與百搭實穿。\n",
+          "logo": "/api/images/floor-pic/1780285927105-MELROSE.png"
+        },
+        {
+          "name": "MISS 21",
+          "phone": "04-22258124",
+          "description": "主打前衛與「怪美」時尚風格，將最新潮流融入設計中，創造出獨具特色的鞋款。\n",
+          "logo": "/api/images/floor-pic/1780286825505-MISS21.jpg"
+        },
+        {
+          "name": "QB HOUSE",
+          "phone": "02-25589119",
+          "description": "日本快速剪髮品牌，核心特色為「不洗髮、不染燙、專注剪髮」，以平價、高效率著稱。\n",
+          "logo": "/api/images/floor-pic/1780286645585-QB HOUSE.jpg"
+        },
+        {
+          "name": "Simple Joy",
+          "phone": "04-22291236",
+          "description": "打造「平價中精品」的台灣飾品品牌。主打親民價格與活潑設計。\n",
+          "logo": "/api/images/floor-pic/1780541037578-æé£¾ 2ï¼.jpg"
+        },
+        {
+          "name": "SPANCONNY",
+          "phone": "無專線",
+          "description": "台灣天然水晶飾品品牌，主打將天然晶石結合現代輕珠寶設計。\n",
+          "logo": "/api/images/floor-pic/1780286861781-SPANCONNY.jpg"
+        },
+        {
+          "name": "TINO BELLINI",
+          "phone": "04-22255097",
+          "description": "義大利品牌，專注於將義大利精緻手工、流行美學與舒適機能相結合。\n",
+          "logo": "/api/images/floor-pic/1780286585773-TINO BELLINI.jpg"
+        },
+        {
+          "name": "UNIQLO",
+          "phone": "04-22200657",
+          "description": "日本知名服裝品牌，主打簡約設計、高品質、高機能性且價格親民的日常基礎服飾，定期與國際時尚設計師推出聯名系列。\n",
+          "logo": "/api/images/floor-pic/1780034198144-UNIQLO.png"
+        },
+        {
+          "name": "ZIFRIEND",
+          "phone": "0989-786952",
+          "description": "台灣的專業智慧型裝置防護品牌，強調輕鬆、快速實現手機保護貼「一蓋即貼」的安裝體驗。\n",
+          "logo": "/api/images/floor-pic/1780286813402-ZIFRIEND.jpg"
+        }
+      ],
+      "B2": [
+        {
+          "name": "bb.q CHICKEN",
+          "phone": "04-22271397",
+          "description": "主打道地的韓式炸雞、餐酒特調飲料、人氣韓食及韓式洋食等。",
+          "logo": "/api/images/floor-pic/1780903840220-bbq logo.png"
+        },
+        {
+          "name": "byebyeblues",
+          "phone": "0900-219959",
+          "description": "「用甜點揮別憂鬱」為宗旨。以細緻柔軟、入口即化的「米其林生乳捲」聞名，深受大眾喜愛。\n",
+          "logo": "/api/images/floor-pic/1780034478776-é£å 13.jpg"
+        },
+        {
+          "name": "Cona's妮娜巧克力",
+          "phone": "0903-571648",
+          "description": "妮娜主廚以活力熱情的態度發揮極具創意的設計，將巧克力與各種食材結合，香甜苦酸各味均衡，濃郁而多層次的口感堅持。\n",
+          "logo": "/api/images/floor-pic/1780034325951-é£å 10.jpg"
+        },
+        {
+          "name": "COMEME",
+          "phone": "無專線",
+          "description": "發跡於台中，以千層、可頌蛋塔紅遍全台的甜點品牌，主打純手工製作、層層酥脆的「花瓣千層蛋塔」。\n",
+          "logo": "/api/images/floor-pic/1780022045821-COMEME 02.png"
+        },
+        {
+          "name": "CREMIA",
+          "phone": "無專線",
+          "description": "來自日本的頂級霜淇淋品牌，主打極致濃郁的乳香與特色「貓舌蛋筒」。\n",
+          "logo": "/api/images/floor-pic/1780034435598-é£å 11.jpg"
+        },
+        {
+          "name": "Diva Life",
+          "phone": "04-22253328",
+          "description": "以世界排名前5%稀有的可可豆為原料，以高濃度的可可漿以及100%的可可脂而且堅持不加防腐劑。\n",
+          "logo": "/api/images/floor-pic/1780021916889-Diva Life.jpg"
+        },
+        {
+          "name": "LAC",
+          "phone": "04-22259619",
+          "description": "來自新加坡的全球著名保健食品領導品牌。\n",
+          "logo": "/api/images/floor-pic/1780023200063-LAC.png"
+        },
+        {
+          "name": "Mister Donut",
+          "phone": "04-22252647",
+          "description": "源自美國、在日本發揚光大的知名連鎖甜甜圈品牌（1956年成立），以「以顧客心為我心」為經營理念。\n",
+          "logo": "/api/images/floor-pic/1780020887473-å¤æ¿æ».jpg"
+        },
+        {
+          "name": "SAISON du SOLEIL",
+          "phone": "04-22257258",
+          "description": "店名法語意為「太陽的季節」。主打使用專用進口麵粉現烤日式麵包、新鮮三明治與咖啡，致力於打造溫暖的輕食空間。\n",
+          "logo": "/api/images/floor-pic/1780034344189-é£å 15.jpg"
+        },
+        {
+          "name": "UNIQLO",
+          "phone": "04-22200657",
+          "description": "日本知名服裝品牌，主打簡約設計、高品質、高機能性且價格親民的日常基礎服飾，定期與國際時尚設計師推出聯名系列。\n",
+          "logo": "/api/images/floor-pic/1780034241762-UNIQLO.png"
+        },
+        {
+          "name": "大心NOODLE EXPRESS",
+          "phone": "04-22216662",
+          "description": "鮮香絕妙滋味，感受泰味之魂，品味泰國麵食新風貌，就在大心。",
+          "logo": "/api/images/floor-pic/1780570563361-å¤§å¿LOGO.jpg"
+        },
+        {
+          "name": "大象山",
+          "phone": "0985-500569",
+          "description": "每一顆堅果，蘊含豐富的營養，同時散發出陽光般光芒、生生不息的能量成為健康最堅實的靠山。\n",
+          "logo": "/api/images/floor-pic/1780034280966-é£å 12.jpg"
+        },
+        {
+          "name": "大漢酵素",
+          "phone": "04-22292065",
+          "description": "專注於植物精華與微生物醱酵技術，產品致力於協助消化、調整體質及健康補養。\n",
+          "logo": "/api/images/floor-pic/1780034492411-é£å 9.jpg"
+        },
+        {
+          "name": "古典玫瑰園",
+          "phone": "04-35079938",
+          "description": "嚴選台灣南投茶園、斯里蘭卡等地最好的茶區、最高等級的茶葉，從茶園直送台灣，確保最佳品質及新鮮度。\n",
+          "logo": "/api/images/floor-pic/1780021874433-å¤å¸.jpg"
+        },
+        {
+          "name": "布莉歐經典烘焙咖啡",
+          "phone": "04-22285168",
+          "description": "透過傳遞幸福的味道，少糖、少鹽、少油為本。將麵包與西點風味傳遞給顧客。\n",
+          "logo": "/api/images/floor-pic/1780020948215-å¸èæ­.jpg"
+        },
+        {
+          "name": "老行家",
+          "phone": "04-22233875",
+          "description": "致力於提供天然純淨的燕窩、珍珠粉及相關美顏保健商品，致力將傳統食補融入現代生活。\n\n",
+          "logo": "/api/images/floor-pic/1780022710699-èè¡å®¶.webp"
+        },
+        {
+          "name": "奇華餅家",
+          "phone": "04-22235070",
+          "description": "顧客為本、以質取勝、創新求變、餅藝相傳。\n",
+          "logo": "/api/images/floor-pic/1780019946750-å¥è¯.jpg"
+        },
+        {
+          "name": "長庚生物科技",
+          "phone": "04-22256198",
+          "description": "專注於預防醫學與健康生活，以「身心靈均衡」為理念。\n",
+          "logo": "/api/images/floor-pic/1780034453769-é£å 14.jpg"
+        },
+        {
+          "name": "阿華師",
+          "phone": "04-22256067",
+          "description": "採用在地的草本植物原料，致力朝向從農場到餐桌的形式邁進。\n",
+          "logo": "/api/images/floor-pic/1780020158696-é¿è¯å¸«.jpg"
+        },
+        {
+          "name": "美珍香",
+          "phone": "04-22211889",
+          "description": "「美珍香」代表我們色香味俱全的肉乾，每一個字，皆突顯描述我們家傳秘方的肉乾精華所在。\n",
+          "logo": "/api/images/floor-pic/1780020022650-ç¾çé¦.jpg"
+        },
+        {
+          "name": "武松殿",
+          "phone": "04-22291376",
+          "description": "「肉鬆殿堂級烘焙品牌」，打造傳統並帶有創新巧思的商品，更是年節送禮人氣首選。\n",
+          "logo": "/api/images/floor-pic/1780022218386-æ­¦æ¾æ®¿.jpg"
+        },
+        {
+          "name": "康是美",
+          "phone": "04-22290796",
+          "description": "主打健康、美麗、生活三大類商品，包含醫美保養、開架彩妝、保健食品等。\n",
+          "logo": "/api/images/floor-pic/1780022602630-åº·æ¯ç¾.png"
+        },
+        {
+          "name": "雪坊優格",
+          "phone": "04-22292608",
+          "description": "菌種的比例、每道生產關卡的溫度、還有發酵的時間，經過了許多排列組合去測試出來，不加化學添加劑，自然凝固為優格。\n",
+          "logo": "/api/images/floor-pic/1780021039827-éªå.jpg"
+        },
+        {
+          "name": "華陀扶元堂",
+          "phone": "04-22251027",
+          "description": "專注於漢方養生產品，以龜鹿系列、燕窩、珍珠粉等漢方成分結合現代生物技術為特色，致力於「將漢方融入現代生活」。\n",
+          "logo": "/api/images/floor-pic/1780022956918-è¯éæ¶åå .png"
+        },
+        {
+          "name": "華齊堂",
+          "phone": "04-22207098",
+          "description": "專注於天然頂級官燕盞的製作，採用手工挑選原料並結合現代科技。\n",
+          "logo": "/api/images/floor-pic/1780022892547-è¯é½å .png"
+        },
+        {
+          "name": "黑橋牌",
+          "phone": "04-22255017",
+          "description": "黑橋牌不只是香腸的代名詞，更是台灣味的傳承與驕傲。我們將以專業、創新與熱情，讓「黑橋牌」成為全球心中最具代表性的台灣好味道。\n",
+          "logo": "/api/images/floor-pic/1780020995185-é»æ©ç.jpg"
+        },
+        {
+          "name": "德風健康館",
+          "phone": "04-22226269",
+          "description": "產品包括知名的德國百靈油、恩世蔓還原型Q10、益生菌等，強調天然原料與德國高科技製藥品質，提供全齡養生選擇。\n",
+          "logo": "/api/images/floor-pic/1780023157715-å¾·é¢¨å¥åº·é¤¨.jpg"
+        },
+        {
+          "name": "薔薇派",
+          "phone": "04-22239827",
+          "description": "「吃一塊是幸福，為家人佇立在冰箱前挑選一塊一塊的派也是幸福，希望藉由手工製作的派讓更多人『幸福在一塊』」。\n",
+          "logo": "/api/images/floor-pic/1780020072974-èèæ´¾.jpg"
+        }
+      ],
+      "B3": [
+        {
+          "name": "21Plus",
+          "phone": "04-22270521",
+          "description": "商品開發以健康速食餐飲為主題，多烘烤、少油炸，真正能享受活力、美味、價值的飲食潮流。",
+          "logo": "/api/images/floor-pic/1781244652903-Y6021-21Plus.jpg"
+        },
+        {
+          "name": "COLD STONE",
+          "phone": "04-22299316",
+          "description": "提供客製化拌冰及現烤脆餅，搭配季節性的創意口味，是「世界上最無與倫比的冰淇淋體驗」。",
+          "logo": "/api/images/floor-pic/1781244707024-Y3013-COLD-STONE-LOGO.jpg"
+        },
+        {
+          "name": "八道江山",
+          "phone": "04-22204188",
+          "description": "1991年傳承至今從未改變的醃製配方與沾醬秘方，每一口都是記憶中的味道。",
+          "logo": "/api/images/floor-pic/1781244761393-Y6050-å«éæ±å±±.jpg"
+        },
+        {
+          "name": "大長今韓國美食",
+          "phone": "04-22295066",
+          "description": "主打平價快速的韓式家常料理，特色是價格親民，份量滿足。",
+          "logo": "/api/images/floor-pic/1781244827237-å¤§é·ä».jpg"
+        },
+        {
+          "name": "本岩鐵板燒",
+          "phone": "04-22250802",
+          "description": "專注於提供適合家庭聚餐的美味鐵板燒，嚴選新鮮食材、獨家醬料，讓每一口都充滿驚喜！",
+          "logo": "/api/images/floor-pic/1781245237153-æ¬å²©.jpg"
+        },
+        {
+          "name": "岩崎家",
+          "phone": "04-22230882",
+          "description": "提供各式台味套餐，經典的麻香四溢麻油雞值得品嚐！",
+          "logo": "/api/images/floor-pic/1781245290991-Y7027-å²©å´å®¶.png"
+        },
+        {
+          "name": "胡椒廚房",
+          "phone": "04-22211238",
+          "description": "Sizzle it your way！來自日本主打DIY鐵板料理的連鎖餐廳，全球擁有超過500家分店。",
+          "logo": "/api/images/floor-pic/1782195635119-é¤å»³ 53-100.jpg"
+        },
+        {
+          "name": "得正",
+          "phone": "04-22299461",
+          "description": "三種不同焙火程度的烏龍茶：春烏龍、輕烏龍、焙烏龍，得正從一杯烏龍開始，推廣茶飲的風格計劃！",
+          "logo": "/api/images/floor-pic/1781245401069-å¾æ­£.jpg"
+        },
+        {
+          "name": "盛煎",
+          "phone": "04-22210500",
+          "description": "餡飽現煎的服務，以『手感鍋貼、溫熱款待』展現品牌精神。",
+          "logo": "/api/images/floor-pic/1781245447679-çç.jpg"
+        },
+        {
+          "name": "舞古賀mini鍋物",
+          "phone": "04-22293100",
+          "description": "讓一鍋熱湯，把你們的話題、笑聲與心情，溫柔地聚在同一張桌上，讓相聚更美好。",
+          "logo": "/api/images/floor-pic/1781245496415-Y5038-èå¤è³miniéç©.jpg"
+        },
+        {
+          "name": "翰林茶棧",
+          "phone": "04-22296177",
+          "description": "『風行世界，台灣珍珠奶茶創始店』，從翰林茶館原創配方出發，圓潤香濃的獨到風味，風靡海內外。",
+          "logo": "/api/images/floor-pic/1781245539048-ç¿°æ.jpg"
+        },
+        {
+          "name": "繼光香香雞",
+          "phone": "04-37021561",
+          "description": "『恆心、用心、創新、安心』為經營理念，落實企業文化的深耕，期望將台式炸物的美好滋味推廣到全世界。　",
+          "logo": "/api/images/floor-pic/1781245584571-Y5037ç¹¼åé¦é¦élogo_æ¹åç½åº.jpg"
+        },
+        {
+          "name": "川牛木石亭",
+          "phone": "04-22292269",
+          "description": "一碗香噴噴的白米飯，加上一大塊肥瘦兼具、令人垂涎欲滴的肉，正是台灣人最喜愛的日常美食。",
+          "logo": "/api/images/floor-pic/1781245634442-å·ç.jpg"
+        }
+      ],
       "B4": [],
       "B5": []
     },
@@ -966,211 +2687,595 @@
       "1F": [
         {
           "name": "Benefit",
-          "phone": "04-2225-1816",
-          "description": "以解決毛孔問題、創新的眉毛造型產品 與標誌性的蜜蠟修眉服務 聞名。品牌主打「幽默是最好的化妝品」，專為女性打造兼具高效與趣味的美容秘密武器。",
-          "logo": ""
+          "phone": "04-22251816",
+          "description": "高效率、充滿樂趣的專業眉妝與毛孔護理專家。\n",
+          "logo": "/api/images/floor-pic/1780047968454-Benefit_Wordmark_CMYK_BenefitPink.png çå¯æ¬.png"
+        },
+        {
+          "name": "BOBBI BROWN",
+          "phone": "04-22253749",
+          "description": "Bobbi Brown 是由美國紐約專業彩妝師創立於1991年 。品牌理念強調化妝目的是突顯個人原生之美，而非過度修飾。提供修眉、彩妝一對一教學課程服務。",
+          "logo": "/api/images/floor-pic/1780031298636-åå¦å 5.jpg"
+        },
+        {
+          "name": "Chloe'",
+          "phone": "04-22291511",
+          "description": "Chloé 香水以「優雅玫瑰」為靈魂，揉合清新花香與法式浪漫。",
+          "logo": "/api/images/floor-pic/1780304698434-Chloeé¦æ°å°è³£åºlogo.jpg çå¯æ¬.jpg"
+        },
+        {
+          "name": "CLINIQUE倩碧",
+          "phone": "04-22206805",
+          "description": "誕生於1968年，是全球第一個由皮膚科醫師創立的品牌，全產品皆通過敏感性測試。堅持百分之百不含香料，致力為各種膚質提供安全、高效的解決方案，產品銷售遍布160個國家以上。\n",
+          "logo": "/api/images/floor-pic/1780283921248-CQ-LOGO-.png"
+        },
+        {
+          "name": "Elizabeth Arden",
+          "phone": "04-22251251",
+          "description": "以創新的單劑型膠囊保養聞名，結合專業沙龍底蘊，為全球女性打造極致的護膚與香氛體驗。\n",
+          "logo": "/api/images/floor-pic/1780371454771-éé .jpg"
+        },
+        {
+          "name": "ELEMIS",
+          "phone": "0911-369887",
+          "description": "ELEMIS 創立於1990 年是英國倫敦的頂級奢華護膚品牌，結合自然活性成分、科學實證與芳療專業， 以「海洋膠原」系列聞名，並廣受名流喜愛。\n",
+          "logo": "/api/images/floor-pic/1780286406755-åå¦å 12.jpg"
+        },
+        {
+          "name": "GUCCI",
+          "phone": "04-22291511",
+          "description": "Gucci 香水以義大利奢華精品的優雅底蘊為基石，融合復古浪漫與摩登氣息。\n\n",
+          "logo": "/api/images/floor-pic/1780283662666-GUCCIé¦æ°å°è³£åºlogo.jpg çå¯æ¬.jpg"
+        },
+        {
+          "name": "ÍPSA",
+          "phone": "04-22253223",
+          "description": "以客製化保養聞名，全台專櫃皆配備專業肌膚檢測儀器，透過科學數據為消費者量身打造專屬的保養處方箋。\n",
+          "logo": "/api/images/floor-pic/1780283486345-åå¦å 3.jpg"
+        },
+        {
+          "name": "ISSEY MIYAKE三宅一生香水",
+          "phone": "04-22298192",
+          "description": "ISSEY MIYAKE三宅一生香水以「極簡」、「自然」與「水」為核心概念，清新的水生調、白花香與冷感木質香聞名。\n",
+          "logo": "/api/images/floor-pic/1780284005409-ä¸å®logo.jfif çå¯æ¬.jpg"
+        },
+        {
+          "name": "Kiehl's契爾氏",
+          "phone": "04-23690386",
+          "description": "源自於「紐約的藥房風格專櫃保養品牌，結合天然成分與藥學背景，主打高效、經典、簡約的護膚解決方案。\n",
+          "logo": "/api/images/floor-pic/1780302493162-Kiehls Logo.jpg"
+        },
+        {
+          "name": "L'OCCITANE",
+          "phone": "04-22232785",
+          "description": "秉持品牌六大理念，以天然植萃精華油、乳油木果保養品及經典護手霜聞名，致力於保護珍貴大自然，將南法的陽光、香氛與傳統工藝分享給全世界。\n",
+          "logo": "/api/images/floor-pic/1780283876499-æ­èä¸¹-3.png çå¯æ¬.png"
+        },
+        {
+          "name": "Make Up For Ever",
+          "phone": "04-22231955",
+          "description": "法國專業彩妝品牌，核心精神來自舞台、藝術、專業彩妝，強調高顯色、持妝與專業技術型彩妝。\n",
+          "logo": "/api/images/floor-pic/1780283716111-LOGO_MUFE_.png"
+        },
+        {
+          "name": "MIVUE",
+          "phone": "無專線",
+          "description": "代理引進韓國嚴選保養、化妝品的平台，傳遞「純淨而柔和」的我的美麗視角。\n",
+          "logo": "/api/images/floor-pic/1780284418920-MIVUE_åçLOGO 828_228_0 (2).png"
+        },
+        {
+          "name": "POTATO CORNER",
+          "phone": "0908-366753",
+          "description": "「薯條界天花板」，主打現點現炸的酥脆薯條，搭配起司、酸奶洋蔥、BBQ等獨家調味粉，透過快速搖勻使其風味濃郁。",
+          "logo": "/api/images/floor-pic/1780047990642-é£å 16.jpg"
+        },
+        {
+          "name": "RMK",
+          "phone": "04-22237971",
+          "description": "來自日本的頂級彩妝品牌，以「原生之美」為核心概念，強調「自然、健康、簡約」的俐落妝感。\n",
+          "logo": "/api/images/floor-pic/1780283966708-RMK .png"
+        },
+        {
+          "name": "日芙洋菓子",
+          "phone": "04-22298580",
+          "description": "堅持不添加防腐劑，種類涵蓋北海道泡芙、乳酪塔、各式千層蛋塔與日式可頌等，主打新鮮天然的口感。",
+          "logo": "/api/images/floor-pic/1780018843946-æ¥è.jpg"
+        },
+        {
+          "name": "先喝道",
+          "phone": "04-37031852",
+          "description": "「堅持做好每一杯茶，杯杯都是好茶」。",
+          "logo": "/api/images/floor-pic/1780018968054-ååé.webp"
+        },
+        {
+          "name": "星巴克",
+          "phone": "04-22235596",
+          "description": "提供高品質的咖啡與服務、獨特的空間設計，享受咖啡好時光。",
+          "logo": "/api/images/floor-pic/1780904069900-æå·´å.png"
+        },
+        {
+          "name": "資生堂東京櫃",
+          "phone": "04-22251412",
+          "description": "以微輕奢、高機能、高品質的日系專業抗老與護理專家，主打日系精緻保養概念。\n",
+          "logo": "/api/images/floor-pic/1780286388888-åå¦å 8.jpg"
         }
       ],
       "2F": [
         {
           "name": "CASETiFY",
-          "phone": "04-2225-1086",
-          "description": " 是2011年創立於香港的國際潮流電子配件品牌，以「讓手機殼成為個人化藝術品」為核心理念。主打軍規防摔保護力、豐富的客製化選項，以及與各大知名IP、藝術家及品牌的熱門聯名系列，深受全球年輕世代與名人喜愛。",
-          "logo": ""
+          "phone": "04-22251086",
+          "description": "提供智慧型手機殼及相關配件，包含Apple Watch錶帶、AirPods保護殼、MacBook電腦包、磁吸配件及無線充電系列。\n",
+          "logo": "/api/images/floor-pic/1780033908346-CASETiFY.png"
+        },
+        {
+          "name": "GISH ",
+          "phone": "04-22220880",
+          "description": "他們不單純是單一香水品牌，而是引進多款國際精品與潮流香水的選品店，旗下涵蓋了經典超跑品牌香水以及個性設計師品牌香水。\n",
+          "logo": "/api/images/floor-pic/1780284667480-GISH-LOGO.png çå¯æ¬.png"
+        },
+        {
+          "name": "STAYREAL",
+          "phone": "04-22272118",
+          "description": "由五月天阿信與藝術家不二良創立的品牌，每款設計都有其獨特意義及自己專屬的故事，希望讓消費者能夠從衣著中表現自己的性格與態度。\n",
+          "logo": "/api/images/floor-pic/1780033959152-STAYREAL.png"
+        },
+        {
+          "name": "星巴克",
+          "phone": "04-22200051",
+          "description": "提供高品質的咖啡與服務、獨特的空間設計，享受咖啡好時光。",
+          "logo": "/api/images/floor-pic/1780904205492-æå·´å.png"
+        },
+        {
+          "name": "鋒恩香水",
+          "phone": "04-22256073",
+          "description": "旗下代理近20個知名香水品牌，打造舒適無壓的maison de beauté香氛選品店。\n",
+          "logo": "/api/images/floor-pic/1780541415760-éæ©.jpg"
+        },
+        {
+          "name": "盧亞香水",
+          "phone": "04-22239624",
+          "description": "代理眾多國際知名品牌，涵蓋高端精品、設計師品牌及生活香氛。\n",
+          "logo": "/api/images/floor-pic/1780284545232-ç§äºé¦æ°´logo.png çå¯æ¬.png"
         }
       ],
       "M2F": [
         {
           "name": "NONSPACE",
-          "phone": "04-2229-2716",
-          "description": "專注於引進多個當紅的韓國街頭與設計師品牌（如 NOMANUAL、ADLV、QT8、NOT4NERD 等），提供具創新和潮流元素的服飾與配件，讓消費者輕鬆打造出具有強烈街頭感與層次感的韓系造型。",
-          "logo": ""
+          "phone": "04-22292716",
+          "description": "由台灣品牌 Life8 與韓國團隊合作引進的複合式韓系選品店。主打中性、韓系街頭風格，網羅多個韓國潮流品牌。\n",
+          "logo": "/api/images/floor-pic/1780293672120-NONSPACE.jpg"
         }
       ],
       "3F": [
         {
           "name": "BAKER STREET",
-          "phone": "0901-308-936",
-          "description": "來自英國的潮流設計品牌 英國羊駝品牌BAKER STREET 貝克街官方購物平台----關於我們，以可愛療癒的「羊駝」（草泥馬）作為原創圖騰 連貝克漢都被迷倒！BAKER STREET翻玩藝術又萌又潮讓人一 ...，結合街頭翻玩（Parody）文化 英國品牌設計師手繪-BAKER STREET之「翻玩」系列翻玩是 ...，創造出兼具趣味與潮流感的服飾配件。",
-          "logo": ""
+          "phone": "0901-308936",
+          "description": "英國的潮流品牌，以「羊駝」為品牌標誌。品牌專注於「翻玩」風格，將趣味原創設計結合高品質的柔洗有機棉。\n",
+          "logo": "/api/images/floor-pic/1780293318811-BAKER STREET.png"
+        },
+        {
+          "name": "California Republic",
+          "phone": "04-22252465",
+          "description": "加州休閒品牌，以美式西岸風情、舒適天然面料、以及經典「熊旗」圖騰為核心。\n",
+          "logo": "/api/images/floor-pic/1780293364020-California Republic.jpg"
+        },
+        {
+          "name": "Calvin Klein Sport",
+          "phone": "04-22272160",
+          "description": "美國紐約的頂尖時尚生活品牌，以極簡主義、大膽性感和前衛美學聞名全球。\n",
+          "logo": "/api/images/floor-pic/1780293398709-Calvin Klein Sport.png"
+        },
+        {
+          "name": "Calvin Klein Underwear",
+          "phone": "04-22272160",
+          "description": "美國紐約的頂尖時尚生活品牌，以極簡主義、大膽性感和前衛美學聞名全球。\n",
+          "logo": "/api/images/floor-pic/1780293440886-Calvin Klein Sport.png"
+        },
+        {
+          "name": "LACOSTE",
+          "phone": "04-22236536",
+          "description": "法國品牌，以經典綠色鱷魚標誌聞名，象徵法式休閒與運動優雅。提供兼具風格與舒適的男女裝、鞋履、皮件及香水。\n",
+          "logo": "/api/images/floor-pic/1780293472632-LACOSTE.jpg"
+        },
+        {
+          "name": "PORTER INTERNATIONAL",
+          "phone": "04-22257608",
+          "description": "主張簡約「攜帶時尚」與「實用主義」，堅持「功能齊全、設計簡潔」的理念。該品牌主打精緻製包工藝與低調設計。\n",
+          "logo": "/api/images/floor-pic/1780295268792-å¥³é 45.jpg"
+        },
+        {
+          "name": "SPORT b.",
+          "phone": "04-22258103",
+          "description": "法國時尚品牌，核心風格在於將法式簡約美學融入動感、舒適與自然活力。提供休閒服飾、配件及經典的Dino（恐龍）系列。\n",
+          "logo": "/api/images/floor-pic/1780295279583-å¥³é 43.jpg"
+        },
+        {
+          "name": "TOMMY JEANS",
+          "phone": "04-22215550",
+          "description": "美國經典品牌 Tommy Hilfiger 旗下的年輕副線，主打充滿活力的美式休閒風。\n",
+          "logo": "/api/images/floor-pic/1780293623739-TOMMY JEANS.jpg"
         }
       ],
       "4F": [
         {
           "name": "b.club",
-          "phone": "04-2223-9158",
-          "description": "創立於 1991 年的台灣流行女裝品牌，以精緻、甜美的日系穿衣風格為主軸。品牌致力於為都會女性打造兼具優雅與舒適的日常穿搭。",
-          "logo": ""
+          "phone": "04-22239158",
+          "description": "b.club (鑫揚服飾) 自1991年創立以來，致力於結合日本合作技術與精緻的甜美休閒風格，打造少女及年輕女性自信、舒適、優質的現代生活服飾。\n",
+          "logo": "/api/images/floor-pic/1780301582559-b.club.png"
+        },
+        {
+          "name": "HOMESHOP",
+          "phone": "0972-622364",
+          "description": "把時尚穿出你的樣子是我們的品牌宗旨，希望每個消費者穿上HOMESHOP ，都能把時尚穿出你的樣子。\n",
+          "logo": "/api/images/floor-pic/1780301809470-HOME SHOP.png"
+        },
+        {
+          "name": "kila kila",
+          "phone": "04-22295809",
+          "description": "時尚毫無規律、瞬息萬變。kila kila總是能夠讓消費者接近最新一季的流行飾品，成為快時尚的帶領者。每週提供大量流行新品，使消費者體驗「快時尚」的購物經驗。\n\n\n",
+          "logo": "/api/images/floor-pic/1780371379295-kilakila.jpg"
+        },
+        {
+          "name": "Kinaz",
+          "phone": "04-22238623",
+          "description": "女孩們憧憬夢幻包款為的就是展現無與倫比的美麗，Kinaz以此為目的，為每位女孩設計不同風格的包款，讓女孩們如微風般甜美優雅的隨行。\n",
+          "logo": "/api/images/floor-pic/1780302073181-Kinaz.jpg"
+        },
+        {
+          "name": "non.stop",
+          "phone": "04-22256335",
+          "description": "以自然無拘束的好感衣著作為品牌主要風格呈現，設計團隊運用簡單無造作的版型及選用舒適質感布料，再加以充滿故事故事性的創意設計出獨具特色的服飾。\n",
+          "logo": "/api/images/floor-pic/1780301655457-æé£¾ 20.jpg"
+        },
+        {
+          "name": "PLAYBOY專門店(男女包+服飾)",
+          "phone": "04-22253476",
+          "description": "PLAYBOY 於美國1953年創立，品牌形象以有趣為主。台灣深耕20多年，提供包包及服裝為主，風格多樣-年輕個性、美式休閒、都會時尚為主軸發揮，提供顧客多選擇。\n",
+          "logo": "/api/images/floor-pic/1780301845949-æé£¾ 21.jpg"
+        },
+        {
+          "name": "poone",
+          "phone": "04-22239601",
+          "description": "創立於1991年，為針對都會女性設計的「輕時尚」服飾品牌。主打柔美、細緻的微甜風格，將碎花、蕾絲與雪紡元素融入舒適剪裁，致力於打造適合全天候皆自信有型的全場景穿搭。\n",
+          "logo": "/api/images/floor-pic/1780301727110-poone.png"
+        },
+        {
+          "name": "rather",
+          "phone": "04-22258030",
+          "description": "不對稱美學；擁抱不完美，less rather than more，結合都會與自然，體現不完美美學。rather 因應多元場合與生活情境，透過創意多變的實驗性選購體驗，將時尚確實地帶入日常。\n",
+          "logo": "/api/images/floor-pic/1780301620946-rather.jpg"
+        },
+        {
+          "name": "SIMPLY YOURS",
+          "phone": "04-22296857",
+          "description": "將繁瑣的細節化為極致的精髓，留下了真正的本質。每一個設計經過精雕細琢。選用最柔軟親膚的材質，只為了讓每一位客人都能感受到極致的舒適，不受拘束輕鬆地適應各種場合。\n",
+          "logo": "/api/images/floor-pic/1780301692438-SIMPLY YOURS.jpg"
+        },
+        {
+          "name": "THE BODY SHOP美體小舖",
+          "phone": "04-22251009",
+          "description": "The Body Shop帶給您神奇珍貴的天然成份，為您持續肌膚的美麗。不僅採用地球上最天然的素材及成份，多年來使用永續經營的棕櫚油領導品牌、並堅持使用百分百的可回收包裝材質。\n",
+          "logo": "/api/images/floor-pic/1780301901300-ç¾é«å°èLOGO.jpg"
         }
       ],
       "5F": [
         {
           "name": "ANNSHOP小安的店",
-          "phone": "04-2229-0413",
-          "description": "創立於1996年，是具指標性的專業銀飾與人體穿刺品牌。主打純手工客製化飾品、設計師K金與珠寶，並以專業無痛的「手穿另類穿環」聞名，深受年輕族群與潮流人士喜愛。",
-          "logo": ""
+          "phone": "04-22290413",
+          "description": "自2003年創立至今，持續推廣創辦人的起源理念 —「愛自己」，希望帶給顧客 “專業、微笑、幸福感“，\n透過穿環和配戴飾品打造出專屬自我風格，進而展開自信閃耀、綻放生命的奇幻旅程。\n",
+          "logo": "/api/images/floor-pic/1780042223252-ANNSHOP LOGO.jpeg"
+        },
+        {
+          "name": "candace CMZ ",
+          "phone": "0933-216368",
+          "description": "都會女性“是品牌的設計靈魂所在，Candace CMZ在每一個細節中為現代女性締造一份從容自若的穿搭體驗。精緻實用的品牌風格，將法式的浪漫與東方的細膩，融匯創作每一款設計。\n",
+          "logo": "/api/images/floor-pic/1780045978640-CMZ.jpg"
+        },
+        {
+          "name": "Diffa",
+          "phone": "04-22253436",
+          "description": "Diffa意為Difference縮寫，2002年創立，以28-35歲愛好藝術與時尚知性的都會女性為主。\n",
+          "logo": "/api/images/floor-pic/1780045892994-Diffa logo-ä¸­å.jpg"
+        },
+        {
+          "name": "in",
+          "phone": "04-22236930",
+          "description": "藉由簡單及寬鬆剪裁，突顯具個性風，並帶入簡單色彩，傳達出簡約及摩登的優雅。\n",
+          "logo": "/api/images/floor-pic/1780046015788-in.jpeg"
+        },
+        {
+          "name": "Mövenpick Café莫凡彼",
+          "phone": "04-22210272",
+          "description": "提供異國經典美食與高級冰淇淋，提供溫暖而親切的用餐環境。",
+          "logo": "/api/images/floor-pic/1780904404713-è«å¡æ¯.jpg"
+        },
+        {
+          "name": "mia mia",
+          "phone": "04-22252072",
+          "description": "Mia Mia 以時尚、摩登、個性化作為品牌標誌風格，融合藝術的創意空間，以新思考的穿衣哲學，結合高質感素材與精緻化工藝。\n",
+          "logo": "/api/images/floor-pic/1780045932636-mia mia.jpg"
+        },
+        {
+          "name": "生活好品二店",
+          "phone": "04-22253456 #5274",
+          "description": "販售質感香氛、舒適寢具。",
+          "logo": "/api/images/floor-pic/1782198245935-çæ´»å¥½å11F.jpg"
+        },
+        {
+          "name": "銀穗",
+          "phone": "04-22231737",
+          "description": "打造舒適、優雅的時尚流行風格。重視女性化剪裁與細節，突顯新時代女性自信、優雅形象。有質感的服飾素材，提升氣質與品味，並以合理化價格滿足女性需求。",
+          "logo": "/api/images/floor-pic/1780042157919-éç©.jpg"
         }
       ],
       "6F": [
         {
           "name": "BRAUN BUFFEL",
-          "phone": "04-3700-1114",
-          "description": "創立於1887年德國，是享有盛譽的國際奢華皮具品牌。以精選頭層牛皮與卓越手工藝聞名，致力於打造兼具高貴質感與實用性的雋永皮件，其標誌性的金牛標誌象徵著堅固、可靠與不凡的品味。",
-          "logo": ""
+          "phone": "04-37001114",
+          "description": "BRAUN BÜFFEL創立於1887年，獲德國皮革年度大獎及米蘭MIPEL ISSMA品質與創新設計獎，德國三大皮件品牌，創造時尚潮流，實用百搭德國工藝為主流。",
+          "logo": "/api/images/floor-pic/1780987767463-69615 BRAUN BÃFFEL.jpg"
         },
         {
-          "name": "Carnival 嘉裕",
-          "phone": "04-2225-1059",
-          "description": "創立於1969年，是台灣最具代表性的老字號男裝與西服領導品牌。以卓越的剪裁工藝與半世紀的量身訂製經驗聞名，致力於為現代男士打造高品質的商務與休閒服飾。",
-          "logo": ""
+          "name": "Carnival 嘉裕西服",
+          "phone": "04-22251059",
+          "description": "職人工藝，新世代品味，憑藉著經驗傳承和穩紮穩打的職人經驗，對科技面料和時尚脈動的敏銳洞察力，創造出新世代男士專屬的服飾品牌。",
+          "logo": "/api/images/floor-pic/1780987894514-61003-åè£.jpg"
         },
         {
           "name": "CUMAR 鞋",
-          "phone": "04-2223-8201",
-          "description": "是一個融合義大利血統與日本設計理念的專櫃鞋履品牌，主打結合高級皮革與舒適機能的日常通勤、休閒鞋款",
-          "logo": ""
+          "phone": "04-22238201",
+          "description": "CUMAR 1996年誕生於義大利時尚之都米蘭，旅居義大利日本設計師，為了實現對城市休閒時尚新定義所創造，因對“熊”情有獨鍾，將日文“熊”的發音成為這個品牌名字。",
+          "logo": "/api/images/floor-pic/1780988068597-64050-CUMAR.png"
+        },
+        {
+          "name": "crocodile、VICTORINOX",
+          "phone": "04-22253015",
+          "description": "Crocodile鱷魚品牌最初在1947年創立於英國，2017年屆滿70年歷史，至今仍不斷求新變化，滿足當下精彩生活，打造美好回憶。",
+          "logo": "/api/images/floor-pic/1780988457742-64016-ç¥¥é.jpg"
+        },
+        {
+          "name": "E001 / IZABO",
+          "phone": "04-22280082",
+          "description": "E001每一季度都會從旅途中尋求靈感，設計師在這些探索過程，將之轉換為系列主題，打造出精緻中帶有舒適優雅的商品。",
+          "logo": "/api/images/floor-pic/1780988508685-E001.jpg"
+        },
+        {
+          "name": "FLYING EAGLE ／ e'sopo",
+          "phone": "04-22230081",
+          "description": "FLYING FAGLE著重在於台灣男性的需求，打造整體性，流行性及時尚性，滿足男性對於流行的需求。",
+          "logo": "/api/images/floor-pic/1780988583722-FLYING EAGLE.jpg"
+        },
+        {
+          "name": "FREED",
+          "phone": "04-22298668",
+          "description": "2018年成立FREED品牌，釋放自己靈魂忠於自己，主要為男性美好生活與品味而設計的刮鬍刀，刀柄上以英式復古造型為主軸鋁合金材質，經歷10道以上工序精心手工打造。",
+          "logo": "/api/images/floor-pic/1780988646666-64052-FREED.jpg"
+        },
+        {
+          "name": "JUN / We",
+          "phone": "04-22271222",
+          "description": "JUN men男裝以發掘和帶來時裝上無限可能性為品牌理念，定位於獨特、精緻，產品以都會休閒為主，採用自然混搭和現代感結合設計理念，簡單細節變化，表現出獨特的風貌。",
+          "logo": "/api/images/floor-pic/1780988695069-JUN.jpg"
+        },
+        {
+          "name": "Roberta di Camerino西服",
+          "phone": "04-22254709",
+          "description": "源自文藝之都義大利威尼斯的經典品牌，以紅藍綠三原色設計聞名，融合藝術與時尚，享譽全球。",
+          "logo": "/api/images/floor-pic/1780988751095-61016-Rè¥¿.png"
+        },
+        {
+          "name": "SST&C",
+          "phone": "04-22251635",
+          "description": "強調窄身合腰的修身，重視內裡的變化、襯衫領型及袖口的設計。SST&C所要創造的，不僅是一種具象的服裝類別，而是簡潔的設計SIMPLE、時尚的風格STYLE 。",
+          "logo": "/api/images/floor-pic/1780988803649-61060-SST&C.jpg"
+        },
+        {
+          "name": "TOMMY HILFIGER",
+          "phone": "04-22295562",
+          "description": "TOMMY HILFIGER全球具代表高端休閒品牌，1985年來激勵啟發消費者。品牌創立於紐約蘊含美式精神，紅、白、藍為品牌主色調，展現充滿活力、自信與大膽風格。",
+          "logo": "/api/images/floor-pic/1780988851870-66077-Tommy Hilfiger.jpg"
+        },
+        {
+          "name": "Waltz皮鞋",
+          "phone": "04-22277566",
+          "description": "華爾滋WALTZ紳士鞋義大利品牌創立於1950年，以獨特創意流行時尚感聞名。在鞋款上獨樹一格，加入專業技術讓鞋子具舒適及功能性，展現WALTZ精緻鞋的藝術精華。",
+          "logo": "/api/images/floor-pic/1780988896805-64008-Waltz.png"
         }
       ],
       "7F": [
         {
-          "name": "agapebaby(愛佳倍)",
-          "phone": "04-2223-1326",
-          "description": "agapebaby（愛佳倍）成立於 2012 年，專注於代理歐美各大知名頂級母嬰品牌。品牌名稱源自希臘文「agape」（無私的愛），旨在傳遞父母對孩子的愛，為台灣家庭提供簡約、時尚且兼具實用性的高品質育兒選品。",
+          "name": "agapebaby愛佳倍",
+          "phone": "04-22231326",
+          "description": "agape 是希臘文中無私的愛之意，我們用此來表達父母對孩子無私的愛，更是我們對消費者的用心。讓我們走進您的育兒生活，陪伴您與孩子一同健康成長。",
           "logo": "/api/images/floor-pic/1779868515664-agapebaby.jpg"
+        },
+        {
+          "name": "A88A選物店",
+          "phone": "0955-590528",
+          "description": "A88A童裝穿搭，是我和世界對話的小語言。\n清新色調，溫柔又有氣質！",
+          "logo": "/api/images/floor-pic/1781162905954-ç«¥è£ 89.jpg"
+        },
+        {
+          "name": "Baby City 娃娃城",
+          "phone": "04-22257719",
+          "description": "Babycity 為寶寶提供完整需要的高品質商店;給寶寶最好的，是娃娃城的品牌宗旨，也是永續經營目標。",
+          "logo": "/api/images/floor-pic/1781163271032-Baby City.jpg"
+        },
+        {
+          "name": "F'ees法緻",
+          "phone": "04-37074469",
+          "description": "用最好呵護最愛Fées堅持天然、低敏、溫和的優質植萃產品，守護女人、寶寶與全家人的肌膚健康。",
+          "logo": "/api/images/floor-pic/1781163390620-75031 F_ees logoå.png"
+        },
+        {
+          "name": "GENNIE'S奇妮孕哺",
+          "phone": "04-22229391",
+          "description": "奇妮孕哺是為了孕媽咪而誕生的母嬰品牌。堅持使用高品質的原料，提供最完善的孕哺諮詢與陪伴，是媽咪與爸比最適切的選擇。",
+          "logo": "/api/images/floor-pic/1781163493376-73060å¥å¦®å­åº.jpg"
+        },
+        {
+          "name": "Le Premier送子鳥童裝",
+          "phone": "04-22290281",
+          "description": "來自法國的工坊，保留著法式經典也融合了多元的設計，材質上也是嚴格把關，穿上Le Premier擁抱法式的浪漫，也給BABY多重選擇。",
+          "logo": "/api/images/floor-pic/1781163559394-79329éå­é³¥.png"
+        },
+        {
+          "name": "ONE BOX一禾玩具",
+          "phone": "無",
+          "description": "開發並帶來療癒又有趣的盒玩商品，結合創意設計與收藏樂趣，讓充滿驚喜的玩具世界陪伴你。",
+          "logo": "/api/images/floor-pic/1781163620483-79300 ä¸ç¦¾.jpg"
+        },
+        {
+          "name": "SUN UP",
+          "phone": "04-22237703",
+          "description": "Sun up baby商品多元，均符合國際安全標準。歐洲美學設計和精湛工藝為品牌特色。以機能性時尚服飾、安全推車汽座、哺育嬰幼童、洗沐清潔、兒童家居飾品為主力。",
+          "logo": "/api/images/floor-pic/1781163685244-SUN  UP.jpg"
+        },
+        {
+          "name": "奇哥",
+          "phone": "04-22259860",
+          "description": "奇哥深耕嬰幼市場逾50年，始終以「寶寶的第一個朋友」為初心，以安心品質與細膩設計，溫柔陪伴每段成長。",
+          "logo": "/api/images/floor-pic/1781162956069-å¥å¥.jpg"
+        },
+        {
+          "name": "施巴",
+          "phone": "04-22233410",
+          "description": "我們始終相信美麗來自健康肌膚是施巴最重要的信念。您的皮膚健康是我們最在意的事，我們不譁眾取寵，不標新立異，在意成份安全，合乎歐盟的所有規定，用心守護您的皮膚健康。",
+          "logo": "/api/images/floor-pic/1781163746759-æ½å·´.jpg"
+        },
+        {
+          "name": "麗嬰房",
+          "phone": "04-22234903",
+          "description": "麗嬰房創立於1971年，本著孩子是我們一輩子的事業、陪孩子做自己為理念，不斷開創婦幼食衣育樂的產業，從服飾、童鞋到用品，多樣化商品服務，提供孩童舒適高品質的商品。",
+          "logo": "/api/images/floor-pic/1781163808303-LOGO ç´å¼ï¼èï¼-RGB.png"
         }
       ],
       "8F": [
         {
           "name": "克隆尼歡樂世界",
-          "phone": "04-2223-6271",
+          "phone": "04-22236271",
           "description": "克隆尼主題門市跳脫傳統電子遊樂場的風格，融合繽紛、夢幻的裝潢設計，為孩童與家庭打造如童話森林般的遊樂環境。",
           "logo": "/api/images/floor-pic/1779867653374-clone.jpg"
         },
         {
           "name": "義式屋古拉爵",
-          "phone": "04-2223-0508",
-          "description": "義式屋古拉爵（Café Grazie）為日本雲雀餐飲集團（Skylark）旗下的知名連鎖義式餐廳。主打道地拿坡里披薩、義大利麵及多元開胃菜，以高CP值的澎湃多人套餐和豐富單點選擇聞名，是家庭聚餐與朋友約會的熱門選擇。",
-          "logo": "/api/images/floor-pic/1779867857480-grazie.jpg"
+          "phone": "04-22230508",
+          "description": "義大利麵與披薩專門店，提供口味多樣化的義大利麵與義式料理。",
+          "logo": "/api/images/floor-pic/1780904541673-å¤æçµ.jpg"
         },
         {
           "name": "瀧厚炙燒熟成牛排",
-          "phone": "04-2229-0889",
-          "description": "瀧厚炙燒熟成牛排主打平價奢華體驗，提供經獨門熟成工法處理的優質肉品。店內裝潢採全台唯一的「英倫摩登美學」風格，排餐最低 \\(\\$290\\) 起，並附設豐富的自助吧，其中真材實料的「番茄牛肉羅宋湯」更是廣受好評的招牌亮點。",
-          "logo": "/api/images/floor-pic/1779867953399-Long-Hou.jpg"
+          "phone": "04-22290889",
+          "description": "熟成牛肉第一品牌，獨門熟成工法，高溫直火炙燒鎖住肉汁。",
+          "logo": "/api/images/floor-pic/1780904755448-ç§å.jpg"
         }
       ],
       "9F": [
         {
           "name": "crocs",
-          "phone": "04-2229-8672",
-          "description": "Crocs（卡駱馳）是創立於2002年的美國休閒鞋品牌，以輕盈、防水且透氣的「洞洞鞋」（Clogs）聞名全球。憑藉專利材質與多樣化的造型，廣受各年齡層及醫護、餐飲等久站工作者喜愛。",
+          "phone": "04-22298672",
+          "description": "Crocs致力於鞋款的舒適度與創新，是休閒鞋的領導品牌，提供色彩繽紛、輕巧舒適且適合於各種場合與季節。",
           "logo": "/api/images/floor-pic/1779866376108-crocs.jpg"
         },
         {
-          "name": "NIKE",
-          "phone": "04-2223-7190",
-          "description": "Nike 是全球領先的運動品牌之一，其成功的品牌故事不僅僅是運動裝備的故事，更是關於創新、激勵和卓越的故事。",
-          "logo": "/api/images/floor-pic/1779866708279-NIKE.jpg"
-        },
-        {
           "name": "havaianas",
-          "phone": "04-2229-7311",
-          "description": "Havaianas（哈瓦仕） 於 1962 年創立於巴西，是享譽全球的經典人字拖（夾腳拖）品牌。其名稱在葡萄牙語中意為「夏威夷人」，品牌靈感源自日本傳統草履。Havaianas 以百分之百優質天然橡膠製成，防滑、防水且不易變形，被譽為「人字拖界的第一潮牌」。 ",
+          "phone": "04-22297311",
+          "description": "於1962年創建的巴西人字拖鞋品牌，品牌用優質的巴西橡膠代替了稻草，將設計為看起來更時尚。",
           "logo": "/api/images/floor-pic/1779866866607-havaianas.jpg"
         },
         {
+          "name": "NIKE",
+          "phone": "04-22237190",
+          "description": "總公司位於美國奧勒崗州波特蘭市，產品銷售網遍及全世界五大洲，主要產品包括專業運動鞋、服飾、配件等。",
+          "logo": "/api/images/floor-pic/1779866708279-NIKE.jpg"
+        },
+        {
           "name": "Paul Frank",
-          "phone": "04-2229-6673",
-          "description": "Paul Frank™ 於 1995 年誕生於美國杭廷頓海灘的一間小車庫裡，當時創辦人 Paul Frank 親手縫製了幾個訂製皮夾，送給他的朋友們作為禮物。\nPaul Frank 所傳遞的，是一種回歸純真本質的生活態度——提醒我們保持童心、快樂無懼地面對生活。不論是為朋友縫製專屬禮物、將創意絲印在 T 恤上，還是設計出全新的可愛角色，這一切的核心，只有一個詞：有趣。\n多年來，我們透過最具代表性的角色——猴子 Julius™，在全球散播歡笑與快樂。再融合我們鮮明的配色風格與中世紀復古美學，這就是 Paul Frank™ 的經典魅力！",
+          "phone": "04-22296673",
+          "description": "Paul Frank 所傳遞的，是一種回歸純真本質的生活態度——提醒我們保持童心、快樂無懼地面對生活。",
           "logo": "/api/images/floor-pic/1779867013853-Paul_Frank.jpg"
         }
       ],
       "10F": [
         {
           "name": "誠品書店",
-          "phone": "04-2221-1287",
-          "description": "誠品書店。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22211287",
+          "description": "誠品書店以「人文、藝術、創意、生活」為核心價值，其英文名稱「eslite」引用自法文古字，代表菁英之意。中友店擁有挑高環形設計，具有最美書店之稱。",
+          "logo": "/api/images/floor-pic/1780292792588-AFKPAHOC30268.jpg"
         },
         {
-          "name": "CHIC MOO",
+          "name": "CHIC MOO 起沐",
           "phone": "無專線",
-          "description": "CHIC MOO。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "description": "CHIC MOO結合敏感肌需求與紡織專業，精選韓系親膚面料，提供兼具舒適、時尚與平價特色的服飾，打造自在穿搭體驗。",
+          "logo": "/api/images/floor-pic/1782369746056-CHICMOO.jpg"
         },
         {
-          "name": "Fevrier 菲芙利",
-          "phone": "04-2225-5012",
-          "description": "Fevrier 菲芙利。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
-        },
-        {
-          "name": "Like Do",
-          "phone": "0979-705873",
-          "description": "Like Do。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "name": "Février菲芙利",
+          "phone": "04-22255012",
+          "description": "在普羅旺斯，每個角落都充滿著濃濃的藝術氣息，每樣產品都是當地居民的藝術之作。",
+          "logo": "/api/images/floor-pic/1782369848153-FEVRIER.jpg"
         },
         {
           "name": "Keizu 好鞋好設計",
-          "phone": "無專線",
-          "description": "Keizu 好鞋好設計。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "0930-020075",
+          "description": "Keizu提供您精美的手工鞋，\n更期許未來有機會能將台灣手工製的鞋推廣到全世界！",
+          "logo": "/api/images/floor-pic/1782369910061-å±è².jpg"
         },
         {
-          "name": "拿鐵小姐",
+          "name": "Like do 天然手作生活",
+          "phone": "0979-705873",
+          "description": "簡單生活．天然體驗\n提供最天然、客製化的洗沐香氛，\n只給肌膚最純淨的清潔、呵護。",
+          "logo": "/api/images/floor-pic/1782369956644-Likedo.jpg"
+        },
+        {
+          "name": "Ms.Latte 拿鐵小姐",
           "phone": "無專線",
-          "description": "拿鐵小姐。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "description": "拿鐵小姐以生活美學為核心，融合簡約療癒風格，精\n選各國特色小物與襪款，提供女性展現個性與品味的療癒選擇，打造溫暖日常生活。",
+          "logo": "/api/images/floor-pic/1782369788911-æ¿éµå°å§1.jpg"
         }
       ],
       "11F": [
         {
           "name": "誠品書店",
-          "phone": "04-2221-1287",
-          "description": "誠品書店。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22211287",
+          "description": "誠品書店以「人文、藝術、創意、生活」為核心價值，其英文名稱「eslite」引用自法文古字，代表菁英之意。中友店擁有挑高環形設計，具有最美書店之稱。書店。",
+          "logo": "/api/images/floor-pic/1780292809300-AFKPAHOC30268.jpg"
         },
         {
-          "name": "blackpages CAFE",
-          "phone": "04-2221-1287#28",
-          "description": "blackpages CAFE。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "name": "expo 誠品生活文創平台",
+          "phone": "04-22211287",
+          "description": "誠品生活expo提供台灣新創文化設計工作者及品牌，一個優質的發展交流平台，具體展現台灣文化創意品牌的力量與價值。",
+          "logo": "/api/images/floor-pic/1782370270283-expo.png"
         },
         {
-          "name": "expo誠品生活文創平台",
-          "phone": "04-2221-1287#23",
-          "description": "expo誠品生活文創平台。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
-        },
-        {
-          "name": "FeatherLeather羽革",
-          "phone": "04-2222-1568",
-          "description": "FeatherLeather羽革。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
-        },
-        {
-          "name": "PEPPER'S",
-          "phone": "04-2228-3289",
-          "description": "PEPPER'S。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "name": "PEPPER’S",
+          "phone": "04-22283289",
+          "description": "以台灣為創意設計發源基地，胡椒包希望呈現出每個人專屬的時尚風格，感受愛與祝福蘊藏心意，透過設計，調和出精采生活，建立、散發魅力與自信～",
+          "logo": "/api/images/floor-pic/1782370348542-peppers.png"
         },
         {
           "name": "Pintoo",
-          "phone": "04-2227-0158",
-          "description": "Pintoo。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22270158",
+          "description": "Pintoo 的理想是成為拼圖業界的第一把交椅，期望未\n來能改變整個拼圖世界，讓拼圖成為人人而非少數拼圖迷所喜愛的休閒活動。",
+          "logo": "/api/images/floor-pic/1782370198516-pintoo.jpg"
         },
         {
-          "name": "SOB DEALL",
-          "phone": "04-2225-3485",
-          "description": "SOB DEALL。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "name": "SOBDEALL",
+          "phone": "04-22253485",
+          "description": "創立以來，一直堅持最初的理念，以自家專屬設計師與工匠團隊的嚴謹皮革工藝，使用義大利進口，純手工上色的頂級牛皮。",
+          "logo": "/api/images/floor-pic/1782370039984-SOBDEALL.jpg"
+        },
+        {
+          "name": "羽革 Feather Leather",
+          "phone": "04-22221568",
+          "description": "每項交到客人手上的東西，堅持嚴格把關；\n也希望能夠帶給喜歡皮革創作的朋友們，更多的滿意與驚喜。",
+          "logo": "/api/images/floor-pic/1782370106341-ç¾½é©.jpg"
         }
       ],
       "12F": [
         {
           "name": "DAISO大創百貨",
-          "phone": "0928-361-675",
+          "phone": "0928-361675",
           "description": "DAISO大創百貨。",
           "logo": "/api/images/floor-pic/1779865045812-daiso.png"
         }
@@ -1180,26 +3285,80 @@
       "15F": [
         {
           "name": "藍象廷泰鍋吃到飽",
-          "phone": "04-2225-9610",
-          "description": "藍象廷火鍋吃到飽。",
-          "logo": "/floor-pic/Logo_Gift.jpg"
+          "phone": "04-22259610",
+          "description": "嚴選當季食材與特色湯品，製作出令人感動的美味。",
+          "logo": "/api/images/floor-pic/1782194310944-é¤å»³ 52-100.jpg"
         }
       ],
       "B1": [],
       "B2": [
         {
-          "name": "春水堂",
-          "phone": "04-2225-8673",
-          "description": "創立於 1983 年，為全球「珍珠奶茶」的發源地。首創以雪克器搖製茶飲，將傳統熱茶轉變為冷飲茶，成功引領劃時代的茶文化革命。結合東方飲茶美學與西式吧台風格，致力於發揚深厚的人文茶館文化。",
-          "logo": ""
+          "name": "春水堂人文茶館",
+          "phone": "04-22258673",
+          "description": "茶文化革命的先驅，發明台灣第一杯泡沫紅茶。珍珠奶茶發源店。",
+          "logo": "/api/images/floor-pic/1780904970339-æ¥æ°´å LOGOæ©«å¼-01.png"
+        },
+        {
+          "name": "靜岡勝政日式豬排",
+          "phone": "04-22200520",
+          "description": "以黃金豬排套餐為招牌特色，為人氣不墜的豬排名店。",
+          "logo": "/api/images/floor-pic/1780905059954-åæ¿.jpg"
         }
       ],
       "B3": [
         {
           "name": "CoCo壱番屋",
-          "phone": "04-2225-8132",
-          "description": "創立於1978年，是全球最大的日式咖哩連鎖餐廳，以「顧客第一」為核心，提供高達上千種客製化組合的道地咖哩。",
-          "logo": ""
+          "phone": "04-22258132",
+          "description": "咖哩飯的「飯量、辣度、配菜」都可自由選擇搭配，以微笑、敏捷、熱情的服務邀請您來品嚐！",
+          "logo": "/api/images/floor-pic/1781245857906-CoCo.jpg"
+        },
+        {
+          "name": "VegesM饗蔬職人",
+          "phone": "04-22291551",
+          "description": "獨創六種湯頭、多樣拌麵醬料，打造拉麵式滷味的新食創概念。",
+          "logo": "/api/images/floor-pic/1781245931780-é¥è¬.jpg"
+        },
+        {
+          "name": "丸亀製麵",
+          "phone": "無",
+          "description": "源自日本香川縣丸亀市，堅持現點現做及讚岐式點餐， 提供顧客最新鮮、最道地的烏龍麵。",
+          "logo": "/api/images/floor-pic/1781246004927-ä¸¸é¾.jpg"
+        },
+        {
+          "name": "大河屋",
+          "phone": "04-22298863",
+          "description": "承襲日本燒肉職人精神，一生懸命料理堅持！",
+          "logo": "/api/images/floor-pic/1781246046285-Y6052-å¤§æ²³å±.jpg"
+        },
+        {
+          "name": "元氣小當家食堂",
+          "phone": "04-22298356",
+          "description": "提供各式豪華排餐、經典鐵板燒和香濃咖哩飯，皆可自由選配白飯、鐵板麵、玉米濃湯或小火鍋。",
+          "logo": "/api/images/floor-pic/1781246098798-åæ°£å°ç¶å®¶.jpg"
+        },
+        {
+          "name": "北村豆腐家",
+          "phone": "04-22200799",
+          "description": "史上最強韓料組合，經典韓味一次享受！",
+          "logo": "/api/images/floor-pic/1781246135422-åæè±èå®¶.jpg"
+        },
+        {
+          "name": "花月嵐拉麵",
+          "phone": "04-22215252",
+          "description": "花月嵐最大的特色就是來自日本原汁原味的『大蒜拳骨湯頭』，獨一無二的自信美味，深受忠實拉麵迷喜愛。",
+          "logo": "/api/images/floor-pic/1781246179541-Y6028-è±æåµ-logo.jpg"
+        },
+        {
+          "name": "清水排骨麵",
+          "phone": "04-22260087",
+          "description": "嚴選優質豬軟骨，再依祖傳秘方醃製後，每日新鮮現炸，45年不變的骨軟肉香，念念不忘！",
+          "logo": "/api/images/floor-pic/1781246603389-Y5033-å»æ±.jpg"
+        },
+        {
+          "name": "樺達奶茶",
+          "phone": "04-22298512",
+          "description": "嚴選純紅茶調蔗糖加牛乳不加冰塊，美味與口感兼具的特色飲品",
+          "logo": "/api/images/floor-pic/1781246483909-æ¨ºé.jpg"
         }
       ],
       "B4": [],

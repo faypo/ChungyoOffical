@@ -23,14 +23,31 @@
           "type": "image",
           "file": "4.jpg",
           "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782199893314",
+              "x": 0.4444444444444444,
+              "y": 2.8089887640449436,
+              "width": 99.55555555555556,
+              "height": 97.19101123595506,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1778725858121"
+            }
+          ]
         }
       ],
       "ogTitle": "",
       "ogDescription": "",
       "ogImage": "",
       "tags": [
-        "常態活動"
-      ]
+        "常態活動",
+        "生日"
+      ],
+      "startDate": "",
+      "endDate": ""
     },
     {
       "id": "act-1779261901802",
@@ -40,38 +57,18 @@
           "type": "image",
           "file": "1.jpg",
           "hotspots": []
-        }
-      ],
-      "ogTitle": "",
-      "ogDescription": "",
-      "ogImage": "",
-      "tags": [
-        "常態活動"
-      ]
-    },
-    {
-      "id": "act-1779441037899",
-      "title": "你不知道的一中商圈",
-      "content": [
+        },
         {
           "type": "image",
-          "file": "CCC.png",
+          "file": "line-share.jpg",
           "hotspots": [
             {
-              "id": "1779436981637",
+              "id": "1782178079851",
               "x": 0,
-              "y": 71.32482764701248,
-              "width": 98.44444444444444,
-              "height": 11.182401466544455,
-              "url": "/activity/act-1778725858121"
-            },
-            {
-              "id": "1779436981638",
-              "x": 0.4444444444444444,
-              "y": 84.93422972402041,
-              "width": 99.55555555555556,
-              "height": 10.907424381301558,
-              "url": "/activity/act-1778725858121"
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1779261901802"
             }
           ]
         }
@@ -81,6 +78,96 @@
       "ogImage": "",
       "tags": [
         "常態活動"
+      ],
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1779441037899",
+      "title": "一中商圈main",
+      "content": [
+        {
+          "type": "image",
+          "file": "main_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "main_02.jpg",
+          "hotspots": [
+            {
+              "id": "1780543748249",
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "url": "/activity/act-1780544993032"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_05.jpg",
+          "hotspots": [
+            {
+              "id": "1780543748240",
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "url": "/activity/act-1780544385130"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_03.jpg",
+          "hotspots": [
+            {
+              "id": "1780543748239",
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "url": "/activity/act-1780544180442"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_04.jpg",
+          "hotspots": [
+            {
+              "id": "1780543748238",
+              "x": 0,
+              "y": 0,
+              "width": 98.66666666666667,
+              "height": 96.28378378378379,
+              "url": "/activity/act-1780544006024"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "Line.jpg",
+          "hotspots": [
+            {
+              "id": "1782178195128",
+              "x": 0.4444444444444444,
+              "y": 0,
+              "width": 99.55555555555556,
+              "height": 100,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1779441037899"
+            }
+          ]
+        }
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "你不知道的一中商圈 在地秘密大公開",
+      "ogImage": "/api/images/activity-pic/act-1779441037899/_og-image.jpg",
+      "tags": [
+        "常態活動",
+        "一中"
       ],
       "startDate": "",
       "endDate": ""
@@ -191,99 +278,98 @@
               "url": "/activity/act-1779937955471"
             }
           ]
-        }
-      ],
-      "ogTitle": "",
-      "ogDescription": "",
-      "ogImage": "",
-      "tags": [
-        "常態活動"
-      ]
-    },
-    {
-      "id": "act-1779872636167",
-      "title": "限時兌好康",
-      "content": [
+        },
         {
           "type": "image",
-          "file": "schedule1.jpg",
-          "hotspots": []
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782178079853",
+              "x": 0.2222222222222222,
+              "y": 1.1235955056179776,
+              "width": 99.77777777777777,
+              "height": 98.87640449438202,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1779867265793"
+            }
+          ]
         }
       ],
-      "ogTitle": "",
+      "ogTitle": "中友百貨公司",
       "ogDescription": "",
       "ogImage": "",
       "tags": [
-        "檔期活動"
-      ]
-    },
-    {
-      "id": "act-1779872811532",
-      "title": "夏日好時光",
-      "content": [
-        {
-          "type": "image",
-          "file": "schedule2.jpg",
-          "hotspots": []
-        }
+        "植物"
       ],
-      "ogTitle": "",
-      "ogDescription": "",
-      "ogImage": "",
-      "tags": [
-        "常態活動"
-      ]
-    },
-    {
-      "id": "act-1779875467678",
-      "title": "就業博覽會",
-      "content": [
-        {
-          "type": "image",
-          "file": "restentant.jpg",
-          "hotspots": []
-        }
-      ],
-      "ogTitle": "",
-      "ogDescription": "",
-      "ogImage": "",
-      "tags": [
-        "檔期活動"
-      ]
+      "startDate": "",
+      "endDate": ""
     },
     {
       "id": "act-1779932831672",
-      "title": "時尚藝廊介紹",
+      "title": "A10-A1",
       "content": [
         {
           "type": "image",
-          "file": "gallery1-7-1.jpg",
+          "file": "0.11.jpg",
           "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782205320052",
+              "x": 0.2222222222222222,
+              "y": 1.4981216259216994,
+              "width": 99.77777777777777,
+              "height": 98.5018783740783,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1781054078788"
+            }
+          ]
         }
       ],
-      "ogTitle": "",
+      "ogTitle": "中友百貨公司",
       "ogDescription": "",
       "ogImage": "",
       "tags": [
-        "藝廊"
-      ]
+        "藝廊",
+        "A10"
+      ],
+      "startDate": "2026/05/14",
+      "endDate": "2026/07/06"
     },
     {
       "id": "act-1779933048068",
-      "title": "藝術家介紹",
+      "title": "Gallery-藝術家介紹",
       "content": [
         {
           "type": "image",
           "file": "gallery1-1-1.jpg",
           "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782205320054",
+              "x": 0,
+              "y": 0,
+              "width": 99.55555555555556,
+              "height": 97.00373960344979,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/gallery"
+            }
+          ]
         }
       ],
-      "ogTitle": "",
-      "ogDescription": "",
-      "ogImage": "",
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "中友時尚藝廊─與藝術“不期而遇”",
+      "ogImage": "/api/images/activity-pic/act-1779933048068/_og-image.jpg",
       "tags": [
-        "藝廊"
-      ]
+        "藝廊",
+        "A12"
+      ],
+      "startDate": "",
+      "endDate": ""
     },
     {
       "id": "act-1779936549462",
@@ -293,14 +379,30 @@
           "type": "image",
           "file": "pay.png",
           "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782199893303",
+              "x": 0,
+              "y": 3.932584269662921,
+              "width": 100,
+              "height": 96.06741573033707,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1779936549462"
+            }
+          ]
         }
       ],
-      "ogTitle": "",
+      "ogTitle": "中友百貨公司",
       "ogDescription": "",
       "ogImage": "",
       "tags": [
         "優惠活動"
-      ]
+      ],
+      "startDate": "",
+      "endDate": ""
     },
     {
       "id": "act-1779936885522",
@@ -324,14 +426,30 @@
               "url": "/activity/act-1779936982113"
             }
           ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782199893304",
+              "x": 0.8888888888888888,
+              "y": 2.8089887640449436,
+              "width": 99.11111111111111,
+              "height": 97.19101123595506,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1779936885522"
+            }
+          ]
         }
       ],
-      "ogTitle": "",
+      "ogTitle": "中友百貨公司",
       "ogDescription": "",
       "ogImage": "",
       "tags": [
         "優惠活動"
-      ]
+      ],
+      "startDate": "",
+      "endDate": ""
     },
     {
       "id": "act-1779936982113",
@@ -341,14 +459,30 @@
           "type": "image",
           "file": "W13666.jpg",
           "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782199893305",
+              "x": 0.8888888888888888,
+              "y": 3.932584269662921,
+              "width": 99.11111111111111,
+              "height": 96.06741573033707,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1779936982113"
+            }
+          ]
         }
       ],
-      "ogTitle": "",
+      "ogTitle": "中友百貨公司",
       "ogDescription": "",
       "ogImage": "",
       "tags": [
         "優惠活動"
-      ]
+      ],
+      "startDate": "",
+      "endDate": ""
     },
     {
       "id": "act-1779937241080",
@@ -372,14 +506,30 @@
               "url": "/activity/act-1779867265793"
             }
           ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782205320076",
+              "x": 0,
+              "y": 0,
+              "width": 99.77777777777777,
+              "height": 98.12733510906777,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1779867265793"
+            }
+          ]
         }
       ],
-      "ogTitle": "",
+      "ogTitle": "中友百貨公司",
       "ogDescription": "",
       "ogImage": "",
       "tags": [
-        "常態活動"
-      ]
+        "植物"
+      ],
+      "startDate": "",
+      "endDate": ""
     },
     {
       "id": "act-1779937719289",
@@ -403,14 +553,30 @@
               "url": "/activity/act-1779867265793"
             }
           ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782205320077",
+              "x": 0,
+              "y": 0,
+              "width": 99.33333333333333,
+              "height": 97.00373960344979,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1779867265793"
+            }
+          ]
         }
       ],
-      "ogTitle": "",
+      "ogTitle": "中友百貨公司",
       "ogDescription": "",
       "ogImage": "",
       "tags": [
-        "常態活動"
-      ]
+        "植物"
+      ],
+      "startDate": "",
+      "endDate": ""
     },
     {
       "id": "act-1779937952603",
@@ -434,14 +600,30 @@
               "url": "/activity/act-1779867265793"
             }
           ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782205320078",
+              "x": 0,
+              "y": 0,
+              "width": 99.55555555555556,
+              "height": 98.12733510906777,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1779867265793"
+            }
+          ]
         }
       ],
-      "ogTitle": "",
+      "ogTitle": "中友百貨公司",
       "ogDescription": "",
       "ogImage": "",
       "tags": [
-        "常態活動"
-      ]
+        "植物"
+      ],
+      "startDate": "",
+      "endDate": ""
     },
     {
       "id": "act-1779937953538",
@@ -465,14 +647,30 @@
               "url": "/activity/act-1779867265793"
             }
           ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782205320079",
+              "x": 0,
+              "y": 0,
+              "width": 99.77777777777777,
+              "height": 95.88014409783182,
+              "url": ""
+            }
+          ]
         }
       ],
-      "ogTitle": "",
+      "ogTitle": "中友百貨公司",
       "ogDescription": "",
       "ogImage": "",
       "tags": [
-        "常態活動"
-      ]
+        "植物"
+      ],
+      "startDate": "",
+      "endDate": ""
     },
     {
       "id": "act-1779937954179",
@@ -496,14 +694,30 @@
               "url": "/activity/act-1779867265793"
             }
           ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782205320080",
+              "x": 0,
+              "y": 0,
+              "width": 99.77777777777777,
+              "height": 98.12733510906777,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1779867265793"
+            }
+          ]
         }
       ],
-      "ogTitle": "",
+      "ogTitle": "中友百貨公司",
       "ogDescription": "",
       "ogImage": "",
       "tags": [
-        "常態活動"
-      ]
+        "植物"
+      ],
+      "startDate": "",
+      "endDate": ""
     },
     {
       "id": "act-1779937954754",
@@ -527,14 +741,30 @@
               "url": "/activity/act-1779867265793"
             }
           ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782205320081",
+              "x": 0,
+              "y": 0,
+              "width": 99.77777777777777,
+              "height": 97.00373960344979,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1779867265793"
+            }
+          ]
         }
       ],
-      "ogTitle": "",
+      "ogTitle": "中友百貨公司",
       "ogDescription": "",
       "ogImage": "",
       "tags": [
-        "常態活動"
-      ]
+        "植物"
+      ],
+      "startDate": "",
+      "endDate": ""
     },
     {
       "id": "act-1779937955471",
@@ -558,28 +788,4474 @@
               "url": "/activity/act-1779867265793"
             }
           ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782205320082",
+              "x": 0,
+              "y": 0,
+              "width": 99.77777777777777,
+              "height": 95.88014409783182,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1779867265793"
+            }
+          ]
+        }
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "",
+      "ogImage": "",
+      "tags": [
+        "植物"
+      ],
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1780390023667",
+      "title": "Gallery-展覽介紹",
+      "content": [
+        {
+          "type": "image",
+          "file": "gallery0514-2.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782205320055",
+              "x": 0.2222222222222222,
+              "y": 0.3745261203037219,
+              "width": 99.77777777777777,
+              "height": 99.62547387969629,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/gallery"
+            }
+          ]
+        }
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "中友時尚藝廊─與藝術“不期而遇”",
+      "ogImage": "/api/images/activity-pic/act-1780390023667/_og-image.jpg",
+      "tags": [
+        "藝廊",
+        "A12"
+      ],
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1780390035475",
+      "title": "Gallery-G2",
+      "content": [
+        {
+          "type": "image",
+          "file": "gallery0514-4.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782205320056",
+              "x": 0,
+              "y": 0,
+              "width": 99.77777777777777,
+              "height": 97.00373960344979,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/gallery"
+            }
+          ]
+        }
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "中友時尚藝廊─與藝術“不期而遇”",
+      "ogImage": "/api/images/activity-pic/act-1780390035475/_og-image.jpg",
+      "tags": [
+        "藝廊",
+        "A12"
+      ],
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1780454253030",
+      "title": "0720 孤獨搖滾",
+      "content": [
+        {
+          "type": "image",
+          "file": "0.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "æé.jpg",
+          "hotspots": [
+            {
+              "id": "1782264730339",
+              "x": 0.6666666666666667,
+              "y": 21.183206106870227,
+              "width": 99.33333333333333,
+              "height": 37.786259541984734,
+              "url": "/activity/act-1782112819368"
+            },
+            {
+              "id": "1782264730340",
+              "x": 0.8888888888888888,
+              "y": 60.1145038167939,
+              "width": 99.11111111111111,
+              "height": 39.88549618320611,
+              "url": "/activity/act-1782112994609"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "æé2.jpg",
+          "hotspots": [
+            {
+              "id": "1782356918291",
+              "x": 1.7777777777777777,
+              "y": 0,
+              "width": 98.22222222222223,
+              "height": 100,
+              "url": "/activity/act-1782356955747"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782178079848",
+              "x": 1.7777777777777777,
+              "y": 5.617977528089887,
+              "width": 98.22222222222223,
+              "height": 94.3820224719101,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1780454253030"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "動漫",
+        "孤獨搖滾"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "2026孤獨搖滾7/20~8/23中友中部獨家登場，九大特色展區、限定商品，優惠門票開賣中",
+      "ogImage": "/api/images/activity-pic/act-1780454253030/_og-image.jpg",
+      "startDate": "2026/06/04",
+      "endDate": "2026/08/23"
+    },
+    {
+      "id": "act-1780454726350",
+      "title": "0626 翻轉動漫祭",
+      "content": [
+        {
+          "type": "image",
+          "file": "main_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "main_02.jpg",
+          "hotspots": [
+            {
+              "id": "1781226944918",
+              "x": 1.1111111111111112,
+              "y": 2.11864406779661,
+              "width": 98.88888888888889,
+              "height": 97.88135593220339,
+              "url": "/activity/act-1781227480007"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_03.jpg",
+          "hotspots": [
+            {
+              "id": "1781226944919",
+              "x": 1.1111111111111112,
+              "y": 1.2295081967213115,
+              "width": 98.88888888888889,
+              "height": 98.77049180327869,
+              "url": "/activity/act-1781227529013"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_04.jpg",
+          "hotspots": [
+            {
+              "id": "1781226944920",
+              "x": 0,
+              "y": 0.7485029940119761,
+              "width": 100,
+              "height": 99.25149700598801,
+              "url": "/activity/act-1781227561801"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_05.jpg",
+          "hotspots": [
+            {
+              "id": "1781226944921",
+              "x": 0.4444444444444444,
+              "y": 0.14492753623188406,
+              "width": 99.55555555555556,
+              "height": 99.85507246376811,
+              "url": "/activity/act-1781227623697"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "Line.jpg",
+          "hotspots": [
+            {
+              "id": "1782180537125",
+              "x": 2,
+              "y": 3.225806451612903,
+              "width": 98,
+              "height": 96.7741935483871,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1780454726350"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "動漫",
+        "檔期活動"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "2026最熱血翻轉動漫祭6/26~7/13中友盛大登場15大場景還原、8大限定福袋，免費入場！",
+      "ogImage": "/api/images/activity-pic/act-1780454726350/_og-image.jpg",
+      "startDate": "2026/06/30",
+      "endDate": "2026/07/13"
+    },
+    {
+      "id": "act-1780455690816",
+      "title": "Gallery-G1",
+      "content": [
+        {
+          "type": "image",
+          "file": "gallery0514-3.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782205320057",
+              "x": 0,
+              "y": 0,
+              "width": 99.77777777777777,
+              "height": 97.00373960344979,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/gallery"
+            }
+          ]
+        }
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "中友時尚藝廊─與藝術“不期而遇”",
+      "ogImage": "/api/images/activity-pic/act-1780455690816/_og-image.jpg",
+      "tags": [
+        "藝廊",
+        "A12"
+      ],
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1780455759566",
+      "title": "Gallery-G3",
+      "content": [
+        {
+          "type": "image",
+          "file": "gallery0514-5.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782205320058",
+              "x": 0,
+              "y": 0,
+              "width": 99.77777777777777,
+              "height": 97.00373960344979,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/gallery"
+            }
+          ]
+        }
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "中友時尚藝廊─與藝術“不期而遇”",
+      "ogImage": "/api/images/activity-pic/act-1780455759566/_og-image.jpg",
+      "tags": [
+        "藝廊",
+        "A12"
+      ],
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1780455781193",
+      "title": "Gallery-G4",
+      "content": [
+        {
+          "type": "image",
+          "file": "gallery0514-6.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782205320059",
+              "x": 0,
+              "y": 0,
+              "width": 99.55555555555556,
+              "height": 95.88014409783182,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/gallery"
+            }
+          ]
+        }
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "中友時尚藝廊─與藝術“不期而遇”",
+      "ogImage": "/api/images/activity-pic/act-1780455781193/_og-image.jpg",
+      "tags": [
+        "藝廊",
+        "A12"
+      ],
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1780536378554",
+      "title": "分期付款",
+      "content": [
+        {
+          "type": "image",
+          "file": "1.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782199893306",
+              "x": 0.2222222222222222,
+              "y": 2.8089887640449436,
+              "width": 99.77777777777777,
+              "height": 97.19101123595506,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1780536378554"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "優惠活動"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "",
+      "ogImage": "",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1780544006024",
+      "title": "一中-1",
+      "content": [
+        {
+          "type": "image",
+          "file": "2_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "2_02.jpg",
+          "hotspots": [
+            {
+              "id": "1780543748236",
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "url": "https://chungyo.tw/8x6m7k"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "2_03.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "2_04.jpg",
+          "hotspots": [
+            {
+              "id": "1780543748237",
+              "x": 0.2222222222222222,
+              "y": 0,
+              "width": 99.77777777777777,
+              "height": 100,
+              "url": "https://chungyo.tw/8x7a5h"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "2_05.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782199893297",
+              "x": 0.8888888888888888,
+              "y": 5.056179775280898,
+              "width": 99.11111111111111,
+              "height": 94.9438202247191,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1779441037899"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "一中",
+        "常態活動"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "你不知道的一中商圈 在地秘密大公開",
+      "ogImage": "",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1780544180442",
+      "title": "一中-2",
+      "content": [
+        {
+          "type": "image",
+          "file": "1_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "1_03.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "1_04.jpg",
+          "hotspots": [
+            {
+              "id": "1780543748237",
+              "x": 0.2222222222222222,
+              "y": 0,
+              "width": 99.77777777777777,
+              "height": 100,
+              "url": "https://chungyo.tw/8x6m6n"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "1_05.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782199893298",
+              "x": 1.1111111111111112,
+              "y": 5.056179775280898,
+              "width": 98.88888888888889,
+              "height": 94.9438202247191,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1779441037899"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "一中",
+        "常態活動"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "你不知道的一中商圈 在地秘密大公開",
+      "ogImage": "",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1780544385130",
+      "title": "一中-3",
+      "content": [
+        {
+          "type": "image",
+          "file": "3_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "3_02.jpg",
+          "hotspots": [
+            {
+              "id": "1780543748236",
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "url": "https://chungyo.tw/93bv2s"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "3_03.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839297",
+              "x": 0.8888888888888888,
+              "y": 4.140127388535031,
+              "width": 99.11111111111111,
+              "height": 89.171974522293,
+              "url": "/activity/act-1780544580864"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "3_04.jpg",
+          "hotspots": [
+            {
+              "id": "1780543748237",
+              "x": 0.2222222222222222,
+              "y": 0,
+              "width": 99.77777777777777,
+              "height": 100,
+              "url": "/activity/act-1780544793515"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "3_05.jpg",
+          "hotspots": [
+            {
+              "id": "1780543748247",
+              "x": 0.8888888888888888,
+              "y": 1.1574074074074074,
+              "width": 99.11111111111111,
+              "height": 98.8425925925926,
+              "url": "/activity/act-1780544006024"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "3_06.jpg",
+          "hotspots": [
+            {
+              "id": "1780543748248",
+              "x": 1.1111111111111112,
+              "y": 0.26455026455026454,
+              "width": 98.88888888888889,
+              "height": 99.73544973544973,
+              "url": "/activity/act-1780544180442"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782199893299",
+              "x": 1.1111111111111112,
+              "y": 0,
+              "width": 98.88888888888889,
+              "height": 100,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1779441037899"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "一中",
+        "常態活動"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "你不知道的一中商圈 在地秘密大公開",
+      "ogImage": "",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1780544580864",
+      "title": "一中-3a",
+      "content": [
+        {
+          "type": "image",
+          "file": "3a_01.jpg",
+          "hotspots": [
+            {
+              "id": "1780543748241",
+              "x": 0,
+              "y": 2.9914529914529915,
+              "width": 100,
+              "height": 97.43589743589743,
+              "url": "https://chungyo.tw/92qlbp"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "3a_02.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "3a_03.jpg",
+          "hotspots": [
+            {
+              "id": "1780543748242",
+              "x": 0.6666666666666667,
+              "y": 0.7246376811594203,
+              "width": 99.33333333333333,
+              "height": 99.27536231884058,
+              "url": "https://chungyo.tw/92qlbp"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "3a_04.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "3a_05.jpg",
+          "hotspots": [
+            {
+              "id": "1780543748244",
+              "x": 0.4444444444444444,
+              "y": 4.044117647058823,
+              "width": 99.55555555555556,
+              "height": 95.95588235294117,
+              "url": "/activity/act-1780544793515"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "3a_06.jpg",
+          "hotspots": [
+            {
+              "id": "1780543748243",
+              "x": 1.7777777777777777,
+              "y": 1.6339869281045754,
+              "width": 97.77777777777777,
+              "height": 98.69281045751634,
+              "url": "/activity/act-1780544385130"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782199893300",
+              "x": 1.3333333333333335,
+              "y": 1.6853932584269662,
+              "width": 98.66666666666667,
+              "height": 98.31460674157303,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1779441037899"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "一中",
+        "常態活動"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "你不知道的一中商圈 在地秘密大公開",
+      "ogImage": "",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1780544793515",
+      "title": "一中-3b",
+      "content": [
+        {
+          "type": "image",
+          "file": "3b_01.jpg",
+          "hotspots": [
+            {
+              "id": "1780543748241",
+              "x": 0,
+              "y": 2.9914529914529915,
+              "width": 100,
+              "height": 97.43589743589743,
+              "url": "https://chungyo.tw/92qlbp"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "3b_02.jpg",
+          "hotspots": [
+            {
+              "id": "1780543748245",
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "url": "/activity/act-1780544385130"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "3b_03.jpg",
+          "hotspots": [
+            {
+              "id": "1780543748246",
+              "x": 1.3333333333333335,
+              "y": 3.8461538461538463,
+              "width": 98.66666666666667,
+              "height": 88.16568047337277,
+              "url": "/activity/act-1780544580864"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782199893301",
+              "x": 1.1111111111111112,
+              "y": 3.932584269662921,
+              "width": 98.88888888888889,
+              "height": 96.06741573033707,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1779441037899"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "一中",
+        "常態活動"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "你不知道的一中商圈 在地秘密大公開",
+      "ogImage": "",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1780544993032",
+      "title": "一中-4",
+      "content": [
+        {
+          "type": "image",
+          "file": "4_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "4_02.jpg",
+          "hotspots": [
+            {
+              "id": "1780543748236",
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "url": "https://chungyo.tw/95yqf4"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "4_03.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "4_04.jpg",
+          "hotspots": [
+            {
+              "id": "1780543748237",
+              "x": 0.2222222222222222,
+              "y": 0,
+              "width": 99.77777777777777,
+              "height": 100,
+              "url": "/activity/act-1780544006024"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "4_05.jpg",
+          "hotspots": [
+            {
+              "id": "1780543748247",
+              "x": 0.8888888888888888,
+              "y": 1.1574074074074074,
+              "width": 99.11111111111111,
+              "height": 98.8425925925926,
+              "url": "/activity/act-1780544180442"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "4_06.jpg",
+          "hotspots": [
+            {
+              "id": "1780543748248",
+              "x": 1.1111111111111112,
+              "y": 0.26455026455026454,
+              "width": 98.88888888888889,
+              "height": 99.73544973544975,
+              "url": "/activity/act-1780544385130"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782199893302",
+              "x": 1.1111111111111112,
+              "y": 5.056179775280898,
+              "width": 98.88888888888889,
+              "height": 94.9438202247191,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1779441037899"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "一中",
+        "常態活動"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "你不知道的一中商圈 在地秘密大公開",
+      "ogImage": "",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1780888977631",
+      "title": "生日動畫",
+      "content": [
+        {
+          "type": "image",
+          "file": "4.gif",
+          "hotspots": [
+            {
+              "id": "1780967526841",
+              "x": 0,
+              "y": 48.04785894206549,
+              "width": 99.55555555555556,
+              "height": 37.405541561712845,
+              "url": "/activity/act-1778725858121"
+            }
+          ]
         }
       ],
       "ogTitle": "",
       "ogDescription": "",
       "ogImage": "",
       "tags": [
-        "常態活動"
-      ]
-    },
-    {
-      "id": "act-1779945222727",
-      "title": "aaa",
-      "content": []
-    },
-    {
-      "id": "act-1780455951724",
-      "title": "aaa",
-      "content": [],
-      "tags": [
         "常態活動",
+        "生日"
+      ],
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1781054078788",
+      "title": "A10-創意平台",
+      "content": [
+        {
+          "type": "image",
+          "file": "00.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "0.1.jpg",
+          "hotspots": [
+            {
+              "id": "1781053888689",
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 98.7878787878788,
+              "url": "/activity/act-1779932831672"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "0.2.jpg",
+          "hotspots": [
+            {
+              "id": "1781053888690",
+              "x": 1.1111111111111112,
+              "y": 2.727272727272727,
+              "width": 98.88888888888889,
+              "height": 97.27272727272728,
+              "url": "/activity/act-1781054181556"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "0.3.png",
+          "hotspots": [
+            {
+              "id": "1781053888688",
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "url": "https://www.chung-yo.com/product?goodsCode=CP04532808&goodsGid=F030020001"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782205320051",
+              "x": 0,
+              "y": 0,
+              "width": 99.55555555555556,
+              "height": 97.00373960344979,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1781054078788"
+            }
+          ]
+        }
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "",
+      "ogImage": "",
+      "tags": [
+        "藝廊",
+        "A10"
+      ],
+      "startDate": "2026/05/14",
+      "endDate": "2026/07/06"
+    },
+    {
+      "id": "act-1781054181556",
+      "title": "A10-A2",
+      "content": [
+        {
+          "type": "image",
+          "file": "0.22.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "0.33.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782205320053",
+              "x": 0.6666666666666667,
+              "y": 2.621717131539677,
+              "width": 99.33333333333333,
+              "height": 97.37828286846032,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1781054078788"
+            }
+          ]
+        }
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "",
+      "ogImage": "",
+      "tags": [
+        "藝廊",
+        "A10"
+      ],
+      "startDate": "2026/05/14",
+      "endDate": "2026/07/06"
+    },
+    {
+      "id": "act-1781227480007",
+      "title": "0626 翻轉動漫祭-1",
+      "content": [
+        {
+          "type": "image",
+          "file": "1.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782199893308",
+              "x": 2.2222222222222223,
+              "y": 5.056179775280898,
+              "width": 97.77777777777777,
+              "height": 94.9438202247191,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1780454726350"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "動漫",
         "檔期活動"
-      ]
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "2026最熱血翻轉動漫祭6/26~7/13中友盛大登場15大場景還原、8大限定福袋，免費入場！",
+      "ogImage": "/api/images/activity-pic/act-1780454726350/_og-image.jpg",
+      "startDate": "2026/06/30",
+      "endDate": "2026/07/13"
+    },
+    {
+      "id": "act-1781227529013",
+      "title": "0626 翻轉動漫祭-2",
+      "content": [
+        {
+          "type": "image",
+          "file": "2.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782199893309",
+              "x": 1.3333333333333335,
+              "y": 1.6853932584269662,
+              "width": 98.66666666666667,
+              "height": 98.31460674157303,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1780454726350"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "動漫",
+        "檔期活動"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "2026最熱血翻轉動漫祭6/26~7/13中友盛大登場15大場景還原、8大限定福袋，免費入場！",
+      "ogImage": "/api/images/activity-pic/act-1780454726350/_og-image.jpg",
+      "startDate": "2026/06/30",
+      "endDate": "2026/07/13"
+    },
+    {
+      "id": "act-1781227561801",
+      "title": "0626 翻轉動漫祭-3",
+      "content": [
+        {
+          "type": "image",
+          "file": "3.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782199893310",
+              "x": 1.5555555555555556,
+              "y": 5.056179775280898,
+              "width": 98.44444444444444,
+              "height": 94.9438202247191,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1780454726350"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "動漫",
+        "檔期活動"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "2026最熱血翻轉動漫祭6/26~7/13中友盛大登場15大場景還原、8大限定福袋，免費入場！",
+      "ogImage": "/api/images/activity-pic/act-1780454726350/_og-image.jpg",
+      "startDate": "2026/06/30",
+      "endDate": "2026/07/13"
+    },
+    {
+      "id": "act-1781227623697",
+      "title": "0626 翻轉動漫祭-4",
+      "content": [
+        {
+          "type": "image",
+          "file": "4.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782199893311",
+              "x": 1.1111111111111112,
+              "y": 1.6853932584269662,
+              "width": 98.88888888888889,
+              "height": 98.31460674157303,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1780454726350"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "動漫",
+        "檔期活動"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "2026最熱血翻轉動漫祭6/26~7/13中友盛大登場15大場景還原、8大限定福袋，免費入場！",
+      "ogImage": "/api/images/activity-pic/act-1780454726350/_og-image.jpg",
+      "startDate": "2026/06/30",
+      "endDate": "2026/07/13"
+    },
+    {
+      "id": "act-1781593998058",
+      "title": "202606打卡點-動漫",
+      "content": [
+        {
+          "type": "image",
+          "file": "2_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "2_02.jpg",
+          "hotspots": [
+            {
+              "id": "1782357576933",
+              "x": 6.222222222222222,
+              "y": 9.090909090909092,
+              "width": 88,
+              "height": 81.81818181818183,
+              "url": "/activity/act-1781594084760"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "2_03.jpg",
+          "hotspots": [
+            {
+              "id": "1782357576934",
+              "x": 4.666666666666667,
+              "y": 1.5873015873015872,
+              "width": 90.88888888888889,
+              "height": 98.4126984126984,
+              "url": "/activity/act-1781594133517"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "2_04.jpg",
+          "hotspots": [
+            {
+              "id": "1782357576935",
+              "x": 4.444444444444445,
+              "y": 2.7624309392265194,
+              "width": 94.88888888888889,
+              "height": 78.45303867403315,
+              "url": "/activity/act-1781594162281"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782178079849",
+              "x": 1.3333333333333335,
+              "y": 0,
+              "width": 98.66666666666667,
+              "height": 100,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1781593998058"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "動漫",
+        "打卡點"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "SUMMER 超級打卡點！跟著地圖尋找四大打卡點，蒐集專屬的夏日回憶",
+      "ogImage": "/api/images/activity-pic/act-1781593998058/_og-image.jpg",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1781594084760",
+      "title": "202606打卡點-蘑菇",
+      "content": [
+        {
+          "type": "image",
+          "file": "3_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "3_02.jpg",
+          "hotspots": [
+            {
+              "id": "1782357576936",
+              "x": 5.777777777777778,
+              "y": 2.3622047244094486,
+              "width": 89.33333333333333,
+              "height": 97.63779527559055,
+              "url": "/activity/act-1781593998058"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "3_03.jpg",
+          "hotspots": [
+            {
+              "id": "1782357576937",
+              "x": 4.888888888888889,
+              "y": 0.6944444444444444,
+              "width": 89.33333333333333,
+              "height": 99.30555555555556,
+              "url": "/activity/act-1781594133517"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "3_04.jpg",
+          "hotspots": [
+            {
+              "id": "1782357576938",
+              "x": 3.111111111111111,
+              "y": 0.6024096385542169,
+              "width": 92.66666666666666,
+              "height": 99.3975903614458,
+              "url": "/activity/act-1781594162281"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782193152950",
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1781593998058"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "動漫",
+        "打卡點"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "SUMMER 超級打卡點！跟著地圖尋找四大打卡點，蒐集專屬的夏日回憶",
+      "ogImage": "/api/images/activity-pic/act-1781594084760/_og-image.jpg",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1781594133517",
+      "title": "202606打卡點-打卡",
+      "content": [
+        {
+          "type": "image",
+          "file": "0_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "0_02.jpg",
+          "hotspots": [
+            {
+              "id": "1782357576939",
+              "x": 5.555555555555555,
+              "y": 1.3157894736842104,
+              "width": 92.66666666666666,
+              "height": 98.68421052631578,
+              "url": "/activity/act-1781593998058"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "0_03.jpg",
+          "hotspots": [
+            {
+              "id": "1782357576940",
+              "x": 6,
+              "y": 0.78125,
+              "width": 89.33333333333333,
+              "height": 99.21875,
+              "url": "/activity/act-1781594084760"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "0_04.jpg",
+          "hotspots": [
+            {
+              "id": "1782357576941",
+              "x": 5.777777777777778,
+              "y": 4.093567251461988,
+              "width": 94.22222222222221,
+              "height": 95.90643274853801,
+              "url": "/activity/act-1781594162281"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782193152951",
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1781593998058"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "動漫",
+        "打卡點"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "SUMMER 超級打卡點！跟著地圖尋找四大打卡點，蒐集專屬的夏日回憶",
+      "ogImage": "/api/images/activity-pic/act-1781594133517/_og-image.jpg",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1781594162281",
+      "title": "202606打卡點-廁所",
+      "content": [
+        {
+          "type": "image",
+          "file": "5_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "5_02.jpg",
+          "hotspots": [
+            {
+              "id": "1782357576942",
+              "x": 6.888888888888889,
+              "y": 0,
+              "width": 90.66666666666666,
+              "height": 100,
+              "url": "/activity/act-1781593998058"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "5_03.jpg",
+          "hotspots": [
+            {
+              "id": "1782357576943",
+              "x": 6.444444444444445,
+              "y": 1.5873015873015872,
+              "width": 87.33333333333333,
+              "height": 98.4126984126984,
+              "url": "/activity/act-1781594084760"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "5_04.jpg",
+          "hotspots": [
+            {
+              "id": "1782357576944",
+              "x": 2.888888888888889,
+              "y": 4.624277456647398,
+              "width": 95.11111111111111,
+              "height": 95.37572254335261,
+              "url": "/activity/act-1781594133517"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782187109088",
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1781593998058"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "動漫",
+        "打卡點"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "SUMMER 超級打卡點！跟著地圖尋找四大打卡點，蒐集專屬的夏日回憶",
+      "ogImage": "/api/images/activity-pic/act-1781594162281/_og-image.jpg",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1781678968805",
+      "title": "品牌總覽",
+      "content": [
+        {
+          "type": "image",
+          "file": "EC_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "EC_02.jpg",
+          "hotspots": [
+            {
+              "id": "1781677271487",
+              "x": 11.85185072157118,
+              "y": 2.322096235296699,
+              "width": 76.44444444444444,
+              "height": 15.505617977528091,
+              "url": "https://www.chung-yo.com/brandSearch?goodsGid=B"
+            },
+            {
+              "id": "1781677271488",
+              "x": 11.85185072157118,
+              "y": 22.77153443754389,
+              "width": 76.44444444444444,
+              "height": 15.056179775280897,
+              "url": "https://www.chung-yo.com/brandSearch?goodsGid=C"
+            },
+            {
+              "id": "1781677271489",
+              "x": 12.296295166015625,
+              "y": 42.77153443754389,
+              "width": 76,
+              "height": 15.505617977528091,
+              "url": "https://www.chung-yo.com/brandSearch?goodsGid=D"
+            },
+            {
+              "id": "1781677271490",
+              "x": 12.296295166015625,
+              "y": 63.445691740914675,
+              "width": 76,
+              "height": 14.831460674157304,
+              "url": "https://www.chung-yo.com/brandSearch?goodsGid=H"
+            },
+            {
+              "id": "1781677271491",
+              "x": 12.296295166015625,
+              "y": 83.67041084203827,
+              "width": 76.22222222222223,
+              "height": 14.831460674157304,
+              "url": "https://www.chung-yo.com/brandSearch?goodsGid=A"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "EC_03.jpg",
+          "hotspots": [
+            {
+              "id": "1781677271492",
+              "x": 11.85185072157118,
+              "y": 2.518517388237847,
+              "width": 76.44444444444444,
+              "height": 15.333333333333332,
+              "url": "https://www.chung-yo.com/brandSearch?goodsGid=F"
+            },
+            {
+              "id": "1781677271493",
+              "x": 12.296295166015625,
+              "y": 22.518517388237846,
+              "width": 76.44444444444444,
+              "height": 15.333333333333332,
+              "url": "https://www.chung-yo.com/brandSearch?goodsGid=G"
+            },
+            {
+              "id": "1781677271494",
+              "x": 12.518517388237846,
+              "y": 42.96296183268229,
+              "width": 76.44444444444444,
+              "height": 14.888888888888888,
+              "url": "https://www.chung-yo.com/brandSearch?goodsGid=E"
+            },
+            {
+              "id": "1781677271495",
+              "x": 12.296295166015625,
+              "y": 62.740739610460075,
+              "width": 76.88888888888889,
+              "height": 15.11111111111111,
+              "url": "https://www.chung-yo.com/productList?goodsGid=I"
+            },
+            {
+              "id": "1781677271496",
+              "x": 12.296295166015625,
+              "y": 82.9629618326823,
+              "width": 76.88888888888889,
+              "height": 15.11111111111111,
+              "url": "https://www.chung-yo.com/productList?goodsGid=F10"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "EC_04.jpg",
+          "hotspots": [
+            {
+              "id": "1781677271497",
+              "x": 12.074072943793404,
+              "y": 2.8156207757684775,
+              "width": 77.11111111111111,
+              "height": 18.256130790190735,
+              "url": "https://www.chung-yo.com/productList?goodsGid=F09"
+            },
+            {
+              "id": "1781677271498",
+              "x": 12.518517388237846,
+              "y": 27.611261102743956,
+              "width": 76.44444444444444,
+              "height": 18.256130790190735,
+              "url": "https://www.chung-yo.com/productList?goodsGid=G01"
+            },
+            {
+              "id": "1781677271499",
+              "x": 12.296295166015625,
+              "y": 51.86194230165404,
+              "width": 76.88888888888889,
+              "height": 18.52861035422343,
+              "url": "https://www.chung-yo.com/productList?goodsGid=E01001"
+            },
+            {
+              "id": "1781677271500",
+              "x": 12.296295166015625,
+              "y": 77.20254175669491,
+              "width": 77.33333333333333,
+              "height": 18.256130790190735,
+              "url": "https://www.chung-yo.com/productList?goodsGid=F01"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "常態活動"
+      ],
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1781748365871",
+      "title": "Gallery-藝廊介紹",
+      "content": [
+        {
+          "type": "image",
+          "file": "gallery0514-7.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782205320060",
+              "x": 0,
+              "y": 0,
+              "width": 99.55555555555556,
+              "height": 97.00373960344979,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/gallery"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "A12",
+        "藝廊"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "中友時尚藝廊─與藝術“不期而遇”",
+      "ogImage": "/api/images/activity-pic/act-1781748365871/_og-image.jpg",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1781750451319",
+      "title": "夏日探險營-main",
+      "content": [
+        {
+          "type": "image",
+          "file": "main_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "main_02.jpg",
+          "hotspots": [
+            {
+              "id": "1781751106352",
+              "x": 0,
+              "y": 0,
+              "width": 99.55555555555556,
+              "height": 99.36974789915966,
+              "url": "https://www.chungyo.com.tw/activity/act-1781750756457"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_03.jpg",
+          "hotspots": [
+            {
+              "id": "1781751106353",
+              "x": 0.4444444444444444,
+              "y": 0,
+              "width": 99.55555555555556,
+              "height": 98.97119341563786,
+              "url": "https://www.chungyo.com.tw/activity/act-1781750839691"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_04.jpg",
+          "hotspots": [
+            {
+              "id": "1781751106354",
+              "x": 0.6666666666666667,
+              "y": 0,
+              "width": 99.33333333333333,
+              "height": 99.79338842975206,
+              "url": "https://www.chungyo.com.tw/activity/act-1781750887913"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_05.jpg",
+          "hotspots": [
+            {
+              "id": "1781751106355",
+              "x": 0.2222222222222222,
+              "y": 0,
+              "width": 99.77777777777777,
+              "height": 99.03846153846155,
+              "url": "https://www.chungyo.com.tw/activity/act-1781750951354"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_06.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "main_07.jpg",
+          "hotspots": [
+            {
+              "id": "1781751106356",
+              "x": 30.666666666666664,
+              "y": 8.035714285714286,
+              "width": 37.111111111111114,
+              "height": 83.92857142857143,
+              "url": "https://www.chungyo.com.tw/activity/act-1781750997791"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_08.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782178195127",
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1781750451319"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "巧學堂",
+        "檔期活動"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "暑假跟著巧學堂一起玩科學、做創意、聽故事！在探索與DIY中留下精彩的成長時光。",
+      "ogImage": "/api/images/activity-pic/act-1781750451319/_og-image.jpg",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1781750756457",
+      "title": "夏日探險營-1",
+      "content": [
+        {
+          "type": "image",
+          "file": "1_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "1_02.jpg",
+          "hotspots": [
+            {
+              "id": "1781751106357",
+              "x": 32.222222222222214,
+              "y": 58.3743842364532,
+              "width": 38.22222222222222,
+              "height": 24.137931034482758,
+              "url": "https://www.chungyo.com.tw/activity/act-1781750997791"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "1_03.jpg",
+          "hotspots": [
+            {
+              "id": "1781751106362",
+              "x": 20.88888888888889,
+              "y": 0,
+              "width": 58.22222222222222,
+              "height": 100,
+              "url": "https://www.chung-yo.com/activity?id=2026050007"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "1_04.jpg",
+          "hotspots": [
+            {
+              "id": "1781751106363",
+              "x": 6.666666666666667,
+              "y": 66.34078212290503,
+              "width": 40.88888888888889,
+              "height": 13.40782122905028,
+              "url": "https://www.chung-yo.com/product?goodsCode=CP04552593"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "1_05.jpg",
+          "hotspots": [
+            {
+              "id": "1781751106364",
+              "x": 7.111111111111111,
+              "y": 67.08683473389355,
+              "width": 40.88888888888889,
+              "height": 13.725490196078432,
+              "url": "https://www.chung-yo.com/product?goodsCode=CP04552595"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "1_06.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "1_07.jpg",
+          "hotspots": [
+            {
+              "id": "1781751106366",
+              "x": 7.333333333333333,
+              "y": 68.57541899441341,
+              "width": 41.11111111111111,
+              "height": 14.24581005586592,
+              "url": "https://www.chung-yo.com/product?goodsCode=CP04552597"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "1_08.jpg",
+          "hotspots": [
+            {
+              "id": "1781751106367",
+              "x": 8.444444444444445,
+              "y": 65.49295774647888,
+              "width": 39.77777777777778,
+              "height": 14.084507042253522,
+              "url": "https://www.chung-yo.com/product?goodsCode=CP04552599"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "1_09.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782181770821",
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1781750451319"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "巧學堂",
+        "檔期活動"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "暑假跟著巧學堂一起玩科學、做創意、聽故事！在探索與DIY中留下精彩的成長時光。",
+      "ogImage": "/api/images/activity-pic/act-1781750756457/_og-image.jpg",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1781750839691",
+      "title": "夏日探險營-2",
+      "content": [
+        {
+          "type": "image",
+          "file": "2_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "2_02.jpg",
+          "hotspots": [
+            {
+              "id": "1781751106358",
+              "x": 32.222222222222214,
+              "y": 58.457711442786064,
+              "width": 38.22222222222222,
+              "height": 24.378109452736318,
+              "url": "https://www.chungyo.com.tw/activity/act-1781750997791"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "2_03.jpg",
+          "hotspots": [
+            {
+              "id": "1781751106361",
+              "x": 20.666666666666668,
+              "y": 5.147058823529411,
+              "width": 58.22222222222222,
+              "height": 94.85294117647058,
+              "url": "https://www.chung-yo.com/activity?id=2026050007"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "2_04.jpg",
+          "hotspots": [
+            {
+              "id": "1781751106368",
+              "x": 6.888888888888889,
+              "y": 69.04761904761905,
+              "width": 40.22222222222222,
+              "height": 13.165266106442578,
+              "url": "https://www.chung-yo.com/product?goodsCode=CP04552583"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "2_05.jpg",
+          "hotspots": [
+            {
+              "id": "1781751106369",
+              "x": 6.222222222222222,
+              "y": 66.06145251396647,
+              "width": 41.55555555555556,
+              "height": 15.921787709497206,
+              "url": "https://www.chung-yo.com/product?goodsCode=CP04552586"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "2_06.jpg",
+          "hotspots": [
+            {
+              "id": "1781751106370",
+              "x": 5.777777777777778,
+              "y": 68.57541899441341,
+              "width": 43.55555555555555,
+              "height": 13.687150837988826,
+              "url": "https://www.chung-yo.com/product?goodsCode=CP04552589"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "2_07.jpg",
+          "hotspots": [
+            {
+              "id": "1781751106371",
+              "x": 6.222222222222222,
+              "y": 68.66295264623955,
+              "width": 42.66666666666667,
+              "height": 13.649025069637883,
+              "url": "https://www.chung-yo.com/product?goodsCode=CP04552591"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "2_08.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782181770822",
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1781750451319"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "巧學堂",
+        "檔期活動"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "暑假跟著巧學堂一起玩科學、做創意、聽故事！在探索與DIY中留下精彩的成長時光。",
+      "ogImage": "/api/images/activity-pic/act-1781750839691/_og-image.jpg",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1781750887913",
+      "title": "夏日探險營-3",
+      "content": [
+        {
+          "type": "image",
+          "file": "3_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "3_02.jpg",
+          "hotspots": [
+            {
+              "id": "1781751106359",
+              "x": 20.444444444444446,
+              "y": 14.383561643835616,
+              "width": 58.666666666666664,
+              "height": 85.61643835616438,
+              "url": "https://www.chung-yo.com/activity?id=2026050007"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "3_03.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782181770823",
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1781750451319"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "巧學堂",
+        "檔期活動"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "暑假跟著巧學堂一起玩科學、做創意、聽故事！在探索與DIY中留下精彩的成長時光。",
+      "ogImage": "/api/images/activity-pic/act-1781750887913/_og-image.jpg",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1781750951354",
+      "title": "夏日探險營-4",
+      "content": [
+        {
+          "type": "image",
+          "file": "4_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "4_02.jpg",
+          "hotspots": [
+            {
+              "id": "1781751106360",
+              "x": 20,
+              "y": 6.61764705882353,
+              "width": 59.77777777777777,
+              "height": 93.38235294117648,
+              "url": "https://www.chung-yo.com/activity?id=2026050007"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "4_03.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782181770824",
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1781750451319"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "巧學堂",
+        "檔期活動"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "暑假跟著巧學堂一起玩科學、做創意、聽故事！在探索與DIY中留下精彩的成長時光。",
+      "ogImage": "/api/images/activity-pic/act-1781750951354/_og-image.jpg",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1781750997791",
+      "title": "夏日探險營-報名步驟",
+      "content": [
+        {
+          "type": "image",
+          "file": "5.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782181770825",
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1781750451319"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "巧學堂",
+        "檔期活動"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "暑假跟著巧學堂一起玩科學、做創意、聽故事！在探索與DIY中留下精彩的成長時光。",
+      "ogImage": "/api/images/activity-pic/act-1781750997791/_og-image.jpg",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1782106965170",
+      "title": "一中-5",
+      "content": [
+        {
+          "type": "image",
+          "file": "5_0.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "5_01.jpg",
+          "hotspots": [
+            {
+              "id": "1782106828646",
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "url": "/activity/act-1782107112046"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "5_03.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "5_04.jpg",
+          "hotspots": [
+            {
+              "id": "1782106828651",
+              "x": 0.8888888888888888,
+              "y": 1.1904761904761905,
+              "width": 99.11111111111111,
+              "height": 98.80952380952381,
+              "url": "/activity/act-1781593998058"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "5_05.jpg",
+          "hotspots": [
+            {
+              "id": "1782106828652",
+              "x": 1.3333333333333335,
+              "y": 1.6666666666666667,
+              "width": 98.66666666666667,
+              "height": 88.66666666666667,
+              "url": "/activity/act-1780454726350"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "5_06.jpg",
+          "hotspots": [
+            {
+              "id": "1782106828647",
+              "x": 0.6666666666666667,
+              "y": 1.0416666666666665,
+              "width": 99.33333333333333,
+              "height": 98.95833333333334,
+              "url": "/activity/act-1780544006024"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "5_07.jpg",
+          "hotspots": [
+            {
+              "id": "1782106828648",
+              "x": 0.6666666666666667,
+              "y": 0,
+              "width": 99.33333333333333,
+              "height": 100,
+              "url": "/activity/act-1780544180442"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "5_08.jpg",
+          "hotspots": [
+            {
+              "id": "1782106828649",
+              "x": 1.5555555555555556,
+              "y": 0.3246753246753247,
+              "width": 98.44444444444444,
+              "height": 99.67532467532467,
+              "url": "/activity/act-1780544385130"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "5_09.jpg",
+          "hotspots": [
+            {
+              "id": "1782106828650",
+              "x": 0,
+              "y": 0.33112582781456956,
+              "width": 100,
+              "height": 98.01324503311258,
+              "url": "/activity/act-1780544993032"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782178079847",
+              "x": 1.5555555555555556,
+              "y": 3.225806451612903,
+              "width": 98.44444444444444,
+              "height": 96.7741935483871,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1779441037899"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "一中",
+        "常態活動"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "你不知道的一中商圈 在地秘密大公開",
+      "ogImage": "",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1782107112046",
+      "title": "一中-5a",
+      "content": [
+        {
+          "type": "image",
+          "file": "5_02.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782205320083",
+              "x": 0,
+              "y": 0,
+              "width": 99.77777777777777,
+              "height": 97.00373960344979,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1779441037899"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "一中",
+        "常態活動"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "你不知道的一中商圈 在地秘密大公開",
+      "ogImage": "",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1782107612463",
+      "title": "0604年中慶",
+      "content": [
+        {
+          "type": "image",
+          "file": "main_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "main_02.jpg",
+          "hotspots": [
+            {
+              "id": "1782108775955",
+              "x": 0,
+              "y": 1.1961722488038278,
+              "width": 100,
+              "height": 98.80382775119617,
+              "url": "/activity/act-1782108730876"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_05.jpg",
+          "hotspots": [
+            {
+              "id": "1782108775956",
+              "x": 0,
+              "y": -0.3067484662576687,
+              "width": 100,
+              "height": 100.61349693251533,
+              "url": "/activity/act-1782108881256"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_06.jpg",
+          "hotspots": [
+            {
+              "id": "1782108775957",
+              "x": 0,
+              "y": -0.30120481927710846,
+              "width": 100,
+              "height": 100.60240963855422,
+              "url": "/activity/act-1782108975613"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_08.jpg",
+          "hotspots": [
+            {
+              "id": "1782106828654",
+              "x": 0,
+              "y": -0.16891891891891891,
+              "width": 100,
+              "height": 100.33783783783782,
+              "url": "/activity/act-1782109278875"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_10.jpg",
+          "hotspots": [
+            {
+              "id": "1782106828655",
+              "x": 0,
+              "y": -0.16666666666666669,
+              "width": 100,
+              "height": 100.33333333333334,
+              "url": "/activity/act-1782109099187"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_12.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839294",
+              "x": 1.1111111111111112,
+              "y": 2.307692307692308,
+              "width": 98.88888888888889,
+              "height": 97.6923076923077,
+              "url": "/gallery"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_13.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839295",
+              "x": 0.2222222222222222,
+              "y": 1.715686274509804,
+              "width": 99.77777777777777,
+              "height": 98.2843137254902,
+              "url": "/activity/act-1781054078788"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782178079852",
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1782107612463"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "年中慶"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "026年中慶夏日GO購！全館滿仟贈點，暑假巧學堂、翻轉動漫祭等你來參加！",
+      "ogImage": "/api/images/activity-pic/act-1782107612463/_og-image.jpg",
+      "startDate": "",
+      "endDate": "2026-06-25T23:59"
+    },
+    {
+      "id": "act-1782108730876",
+      "title": "0604年中慶1",
+      "content": [
+        {
+          "type": "image",
+          "file": "1_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "1_02.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "btn_03.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839298",
+              "x": 0,
+              "y": -0.390625,
+              "width": 100,
+              "height": 100.78125,
+              "url": "/activity/act-1782107612463"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782205320068",
+              "x": 0,
+              "y": 0,
+              "width": 99.55555555555556,
+              "height": 95.88014409783182,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1782107612463"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "年中慶"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "026年中慶夏日GO購！全館滿仟贈點，暑假巧學堂、翻轉動漫祭等你來參加！",
+      "ogImage": "/api/images/activity-pic/act-1782107612463/_og-image.jpg",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1782108881256",
+      "title": "0604年中慶2",
+      "content": [
+        {
+          "type": "image",
+          "file": "4_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "4_02.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839306",
+              "x": 0,
+              "y": 1.0869565217391304,
+              "width": 100,
+              "height": 98.91304347826086,
+              "url": "/activity/act-1779936885522"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "4_03.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "btn_03.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839299",
+              "x": 0.6666666666666667,
+              "y": 2.734375,
+              "width": 99.33333333333333,
+              "height": 97.265625,
+              "url": "/activity/act-1782107612463"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782205320069",
+              "x": 0,
+              "y": 0,
+              "width": 99.77777777777777,
+              "height": 95.88014409783182,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1782107612463"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "年中慶"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "026年中慶夏日GO購！全館滿仟贈點，暑假巧學堂、翻轉動漫祭等你來參加！",
+      "ogImage": "/api/images/activity-pic/act-1782107612463/_og-image.jpg",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1782108975613",
+      "title": "0604年中慶3",
+      "content": [
+        {
+          "type": "image",
+          "file": "5_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "5_02.jpg",
+          "hotspots": [
+            {
+              "id": "1782112984493",
+              "x": 0,
+              "y": -0.3246753246753247,
+              "width": 100,
+              "height": 100.64935064935065,
+              "url": "/activity/act-1780454726350"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "5_03.jpg",
+          "hotspots": [
+            {
+              "id": "1782112984494",
+              "x": 1.3333333333333335,
+              "y": 1.4285714285714286,
+              "width": 98.66666666666667,
+              "height": 98.57142857142858,
+              "url": "/activity/act-1781750451319"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "m29.jpg",
+          "hotspots": [
+            {
+              "id": "1782112984495",
+              "x": 1.3333333333333335,
+              "y": 2.8846153846153846,
+              "width": 98.66666666666667,
+              "height": 97.11538461538461,
+              "url": "/activity/act-1782113136091"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "m292.jpg",
+          "hotspots": [
+            {
+              "id": "1782112984496",
+              "x": 1.3333333333333335,
+              "y": 4.807692307692308,
+              "width": 98.66666666666667,
+              "height": 94.87179487179486,
+              "url": "/activity/act-1780454253030"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "btn_03.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839300",
+              "x": 1.1111111111111112,
+              "y": 1.171875,
+              "width": 98.88888888888889,
+              "height": 98.828125,
+              "url": "/activity/act-1782107612463"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782205320070",
+              "x": 0,
+              "y": 0,
+              "width": 99.55555555555556,
+              "height": 97.00373960344979,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1782107612463"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "年中慶"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "026年中慶夏日GO購！全館滿仟贈點，暑假巧學堂、翻轉動漫祭等你來參加！",
+      "ogImage": "/api/images/activity-pic/act-1782107612463/_og-image.jpg",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1782109099187",
+      "title": "0604年中慶5",
+      "content": [
+        {
+          "type": "image",
+          "file": "8_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "8_02.jpg",
+          "hotspots": [
+            {
+              "id": "1782106828656",
+              "x": 0.6666666666666667,
+              "y": 2.7950310559006213,
+              "width": 99.33333333333333,
+              "height": 97.20496894409938,
+              "url": "/activity/act-1782109366969"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "btn_03.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839301",
+              "x": 1.7777777777777777,
+              "y": 3.515625,
+              "width": 98.22222222222223,
+              "height": 96.484375,
+              "url": "/activity/act-1782107612463"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782205320071",
+              "x": 0,
+              "y": 0,
+              "width": 99.33333333333333,
+              "height": 98.12733510906777,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1782107612463"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "年中慶"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "026年中慶夏日GO購！全館滿仟贈點，暑假巧學堂、翻轉動漫祭等你來參加！",
+      "ogImage": "/api/images/activity-pic/act-1782107612463/_og-image.jpg",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1782109181704",
+      "title": "0604年中慶41",
+      "content": [
+        {
+          "type": "image",
+          "file": "62.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "btn_03.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839302",
+              "x": 0.2222222222222222,
+              "y": 5.078125,
+              "width": 96.88888888888889,
+              "height": 94.53125,
+              "url": "/activity/act-1782107612463"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782205320072",
+              "x": 0,
+              "y": 0,
+              "width": 99.55555555555556,
+              "height": 98.12733510906777,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1782107612463"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "年中慶"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "026年中慶夏日GO購！全館滿仟贈點，暑假巧學堂、翻轉動漫祭等你來參加！",
+      "ogImage": "/api/images/activity-pic/act-1782107612463/_og-image.jpg",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1782109221468",
+      "title": "0604年中慶42",
+      "content": [
+        {
+          "type": "image",
+          "file": "64.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "btn_03.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839303",
+              "x": 2.4444444444444446,
+              "y": 4.296875,
+              "width": 97.55555555555556,
+              "height": 95.703125,
+              "url": "/activity/act-1782107612463"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782205320073",
+              "x": 0,
+              "y": 0,
+              "width": 99.33333333333333,
+              "height": 95.88014409783182,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1782107612463"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "年中慶"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "026年中慶夏日GO購！全館滿仟贈點，暑假巧學堂、翻轉動漫祭等你來參加！",
+      "ogImage": "/api/images/activity-pic/act-1782107612463/_og-image.jpg",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1782109278875",
+      "title": "0604年中慶4",
+      "content": [
+        {
+          "type": "image",
+          "file": "6_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "6_02.jpg",
+          "hotspots": [
+            {
+              "id": "1782108775959",
+              "x": 0.6666666666666667,
+              "y": 0.949367088607595,
+              "width": 99.33333333333333,
+              "height": 97.46835443037975,
+              "url": "/activity/act-1782109181704"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "6_04.jpg",
+          "hotspots": [
+            {
+              "id": "1782108775960",
+              "x": 2,
+              "y": 2.8846153846153846,
+              "width": 98,
+              "height": 92.3076923076923,
+              "url": "/activity/act-1782109221468"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "btn_03.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839304",
+              "x": 0.8888888888888888,
+              "y": 2.734375,
+              "width": 99.11111111111111,
+              "height": 97.265625,
+              "url": "/activity/act-1782107612463"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782205320074",
+              "x": 0,
+              "y": 0,
+              "width": 99.77777777777777,
+              "height": 97.00373960344979,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1782107612463"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "年中慶"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "026年中慶夏日GO購！全館滿仟贈點，暑假巧學堂、翻轉動漫祭等你來參加！",
+      "ogImage": "/api/images/activity-pic/act-1782107612463/_og-image.jpg",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1782109366969",
+      "title": "0604年中慶51",
+      "content": [
+        {
+          "type": "image",
+          "file": "82.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "btn_03.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839305",
+              "x": 1.3333333333333335,
+              "y": 5.859375,
+              "width": 98.66666666666667,
+              "height": 94.140625,
+              "url": "/activity/act-1782107612463"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782205320075",
+              "x": 0,
+              "y": 0,
+              "width": 99.77777777777777,
+              "height": 97.00373960344979,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1782107612463"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "年中慶"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "026年中慶夏日GO購！全館滿仟贈點，暑假巧學堂、翻轉動漫祭等你來參加！",
+      "ogImage": "/api/images/activity-pic/act-1782107612463/_og-image.jpg",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1782112819368",
+      "title": "0720 孤獨搖滾-1",
+      "content": [
+        {
+          "type": "image",
+          "file": "1.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782205320066",
+              "x": 0,
+              "y": 0,
+              "width": 99.55555555555556,
+              "height": 97.00373960344979,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1780454253030"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "動漫",
+        "孤獨搖滾"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "2026孤獨搖滾7/20~8/23中友中部獨家登場，九大特色展區、限定商品，優惠門票開賣中",
+      "ogImage": "/api/images/activity-pic/act-1780454253030/_og-image.jpg",
+      "startDate": "2026/06/04",
+      "endDate": "2026/08/23"
+    },
+    {
+      "id": "act-1782112994609",
+      "title": "0720 孤獨搖滾-2",
+      "content": [
+        {
+          "type": "image",
+          "file": "2.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782199893313",
+              "x": 0.6666666666666667,
+              "y": 7.303370786516854,
+              "width": 99.33333333333333,
+              "height": 92.69662921348315,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1780454253030"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "動漫",
+        "孤獨搖滾"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "2026孤獨搖滾7/20~8/23中友中部獨家登場，九大特色展區、限定商品，優惠門票開賣中",
+      "ogImage": "/api/images/activity-pic/act-1780454253030/_og-image.jpg",
+      "startDate": "2026/06/04",
+      "endDate": "2026/08/23"
+    },
+    {
+      "id": "act-1782113136091",
+      "title": "0718柯南",
+      "content": [
+        {
+          "type": "image",
+          "file": "0.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782199893312",
+              "x": 0,
+              "y": 5.056179775280898,
+              "width": 100,
+              "height": 94.9438202247191,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1782113136091"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "動漫"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "2026中友名偵探柯南劇場版主題快閃店，7/18~8/23開幕，精選限定精品、角色收藏卡、立體彩鑽圖卡，柯南粉必朝聖！",
+      "ogImage": "/api/images/activity-pic/act-1782113136091/_og-image.jpg",
+      "startDate": "2026/06/22",
+      "endDate": "2026/08/23"
+    },
+    {
+      "id": "act-1782196387792",
+      "title": "0625暑假",
+      "content": [
+        {
+          "type": "image",
+          "file": "main_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "main_02.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839314",
+              "x": 1.1111111111111112,
+              "y": 3.767123287671233,
+              "width": 98.88888888888889,
+              "height": 96.23287671232876,
+              "url": "/activity/act-1782197726782"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_03.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839315",
+              "x": 0.6666666666666667,
+              "y": 0.3597122302158274,
+              "width": 99.33333333333333,
+              "height": 100,
+              "url": "\t/activity/act-1782197871441"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_04.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839316",
+              "x": 1.3333333333333335,
+              "y": 2.536231884057971,
+              "width": 98.66666666666667,
+              "height": 97.46376811594203,
+              "url": "/activity/act-1782197909022"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_05.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839317",
+              "x": 0.2222222222222222,
+              "y": 5.985915492957746,
+              "width": 99.77777777777777,
+              "height": 94.01408450704226,
+              "url": "/activity/act-1782197954872"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_06.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839318",
+              "x": 0.6666666666666667,
+              "y": 3.237410071942446,
+              "width": 99.33333333333333,
+              "height": 93.5251798561151,
+              "url": "/activity/act-1782197993257"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_07.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839307",
+              "x": 0.8888888888888888,
+              "y": 1.7605633802816902,
+              "width": 99.11111111111111,
+              "height": 98.23943661971832,
+              "url": "/activity/act-1781750451319"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_08.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839308",
+              "x": 1.1111111111111112,
+              "y": 4.044117647058823,
+              "width": 98.88888888888889,
+              "height": 94.85294117647058,
+              "url": "/activity/act-1781593998058"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_09.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839309",
+              "x": 1.3333333333333335,
+              "y": 6.390977443609022,
+              "width": 98.66666666666667,
+              "height": 93.60902255639097,
+              "url": "/activity/act-1780454726350"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_10.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839310",
+              "x": 1.7777777777777777,
+              "y": 8.80281690140845,
+              "width": 98.22222222222223,
+              "height": 91.19718309859155,
+              "url": "/activity/act-1782106965170"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_11.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839319",
+              "x": 1.1111111111111112,
+              "y": 2.980132450331126,
+              "width": 98.88888888888889,
+              "height": 97.01986754966887,
+              "url": "/activity/act-1782198059977"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_12.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839320",
+              "x": 0.6666666666666667,
+              "y": 3.308823529411765,
+              "width": 99.33333333333333,
+              "height": 96.69117647058823,
+              "url": "/activity/act-1782198107128"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_13.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839321",
+              "x": 1.3333333333333335,
+              "y": 5.434782608695652,
+              "width": 98.66666666666667,
+              "height": 94.56521739130434,
+              "url": "/activity/act-1782198136012"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_14.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839322",
+              "x": 1.3333333333333335,
+              "y": 2.5547445255474455,
+              "width": 98.66666666666667,
+              "height": 97.44525547445255,
+              "url": "/activity/act-1782198172814"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_15.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839323",
+              "x": 1.1111111111111112,
+              "y": 1.1278195488721803,
+              "width": 98.88888888888889,
+              "height": 98.87218045112782,
+              "url": "/activity/act-1782198155259"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_16.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839324",
+              "x": 3.3333333333333335,
+              "y": 1.7241379310344827,
+              "width": 96.66666666666667,
+              "height": 98.27586206896551,
+              "url": "/activity/act-1782198199108"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main_17.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839325",
+              "x": 0.4444444444444444,
+              "y": 6.418918918918918,
+              "width": 99.55555555555556,
+              "height": 91.21621621621621,
+              "url": "/activity/act-1782198238574"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839311",
+              "x": 0.6666666666666667,
+              "y": 2.8089887640449436,
+              "width": 99.33333333333333,
+              "height": 97.19101123595506,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1782196387792"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "暑假"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "避暑攻略 Level UP！全館滿仟贈點，翻轉動漫祭陪你暑假冒險展開！",
+      "ogImage": "/api/images/activity-pic/act-1782196387792/_og-image.jpg",
+      "startDate": "2026-06-26T00:00",
+      "endDate": "2026-07-15T23:59"
+    },
+    {
+      "id": "act-1782196690017",
+      "title": "06書包",
+      "content": [
+        {
+          "type": "image",
+          "file": "ä¸­åå´é¸å-0626.jpg",
+          "hotspots": [
+            {
+              "id": "1782356918292",
+              "x": 1.3333333333333335,
+              "y": 96.20619258251106,
+              "width": 98.66666666666667,
+              "height": 3.793807417488942,
+              "url": "https://www.chung-yo.com/activity?id=2026060003"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782199893307",
+              "x": 0.2222222222222222,
+              "y": 0,
+              "width": 99.77777777777777,
+              "height": 100,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1782196690017"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "會員禮"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "中友嚴選MIT迷你職人硬殼包，現正熱烈販售中！",
+      "ogImage": "/api/images/activity-pic/act-1782196690017/_og-image.jpg",
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1782197726782",
+      "title": "0625暑假1 SP",
+      "content": [
+        {
+          "type": "image",
+          "file": "1_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "btn_02.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661306",
+              "x": 2.2222222222222223,
+              "y": 9.550561797752808,
+              "width": 97.77777777777777,
+              "height": 90.4494382022472,
+              "url": "/activity/act-1782197871441"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "btn_05.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661307",
+              "x": 2.4444444444444446,
+              "y": 3.804347826086957,
+              "width": 97.55555555555556,
+              "height": 96.19565217391305,
+              "url": "/activity/act-1782197954872"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "btn_06.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661302",
+              "x": 0.8888888888888888,
+              "y": 6.043956043956044,
+              "width": 99.11111111111111,
+              "height": 93.95604395604396,
+              "url": "/activity/act-1782196387792"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "1_02.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839311",
+              "x": 0.6666666666666667,
+              "y": 2.8089887640449436,
+              "width": 99.33333333333333,
+              "height": 97.19101123595506,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1782196387792"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "暑假"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "避暑攻略 Level UP！全館滿仟贈點，翻轉動漫祭陪你暑假冒險展開！",
+      "ogImage": "/api/images/activity-pic/act-1782196387792/_og-image.jpg",
+      "startDate": "2026-06-26T00:00",
+      "endDate": "2026-07-15T23:59"
+    },
+    {
+      "id": "act-1782197871441",
+      "title": "0625暑假2 會員禮",
+      "content": [
+        {
+          "type": "image",
+          "file": "2.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "btn_01.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661298",
+              "x": 0.2222222222222222,
+              "y": 1.4851485148514851,
+              "width": 99.77777777777777,
+              "height": 98.51485148514851,
+              "url": "/activity/act-1782197726782"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "btn_05.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661299",
+              "x": 0.4444444444444444,
+              "y": 3.804347826086957,
+              "width": 99.55555555555556,
+              "height": 96.19565217391305,
+              "url": "/activity/act-1782197954872"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "btn_06.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661300",
+              "x": 0.8888888888888888,
+              "y": 4.945054945054945,
+              "width": 99.11111111111111,
+              "height": 95.05494505494505,
+              "url": "/activity/act-1782196387792"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839311",
+              "x": 0.6666666666666667,
+              "y": 2.8089887640449436,
+              "width": 99.33333333333333,
+              "height": 97.19101123595506,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1782196387792"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "暑假"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "避暑攻略 Level UP！全館滿仟贈點，翻轉動漫祭陪你暑假冒險展開！",
+      "ogImage": "/api/images/activity-pic/act-1782196387792/_og-image.jpg",
+      "startDate": "2026-06-26T00:00",
+      "endDate": "2026-07-15T23:59"
+    },
+    {
+      "id": "act-1782197909022",
+      "title": "0625暑假3 金級",
+      "content": [
+        {
+          "type": "image",
+          "file": "3.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "btn_01.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661303",
+              "x": 1.1111111111111112,
+              "y": 0.49504950495049505,
+              "width": 98.88888888888889,
+              "height": 97.02970297029702,
+              "url": "/activity/act-1782197726782"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "btn_05.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661304",
+              "x": 0.8888888888888888,
+              "y": 4.891304347826087,
+              "width": 99.11111111111111,
+              "height": 95.1086956521739,
+              "url": "/activity/act-1782197954872"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "btn_02.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661305",
+              "x": 0.8888888888888888,
+              "y": 1.6853932584269662,
+              "width": 99.11111111111111,
+              "height": 98.31460674157303,
+              "url": "/activity/act-1782197871441"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "btn_06.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661301",
+              "x": 0.8888888888888888,
+              "y": 0.5494505494505495,
+              "width": 99.11111111111111,
+              "height": 99.45054945054946,
+              "url": "/activity/act-1782196387792"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839311",
+              "x": 0.6666666666666667,
+              "y": 2.8089887640449436,
+              "width": 99.33333333333333,
+              "height": 97.19101123595506,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1782196387792"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "暑假"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "避暑攻略 Level UP！全館滿仟贈點，翻轉動漫祭陪你暑假冒險展開！",
+      "ogImage": "/api/images/activity-pic/act-1782196387792/_og-image.jpg",
+      "startDate": "2026-06-26T00:00",
+      "endDate": "2026-07-15T23:59"
+    },
+    {
+      "id": "act-1782197954872",
+      "title": "0625暑假4 玉山中友卡",
+      "content": [
+        {
+          "type": "image",
+          "file": "4.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "btn_01.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661311",
+              "x": 0.6666666666666667,
+              "y": 8.415841584158416,
+              "width": 99.33333333333333,
+              "height": 91.58415841584159,
+              "url": "/activity/act-1782197726782"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "btn_02.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661310",
+              "x": 0,
+              "y": 5.056179775280898,
+              "width": 100,
+              "height": 94.9438202247191,
+              "url": "/activity/act-1782197871441"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "btn_03.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661309",
+              "x": 1.5555555555555556,
+              "y": 6.043956043956044,
+              "width": 98.44444444444444,
+              "height": 93.95604395604396,
+              "url": "/activity/act-1782197909022"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "btn_06.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661308",
+              "x": 0,
+              "y": 3.8461538461538463,
+              "width": 100,
+              "height": 96.15384615384616,
+              "url": "/activity/act-1782196387792"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839311",
+              "x": 0.6666666666666667,
+              "y": 2.8089887640449436,
+              "width": 99.33333333333333,
+              "height": 97.19101123595506,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1782196387792"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "暑假"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "避暑攻略 Level UP！全館滿仟贈點，翻轉動漫祭陪你暑假冒險展開！",
+      "ogImage": "/api/images/activity-pic/act-1782196387792/_og-image.jpg",
+      "startDate": "2026-06-26T00:00",
+      "endDate": "2026-07-15T23:59"
+    },
+    {
+      "id": "act-1782197993257",
+      "title": "0625暑假5 兌點",
+      "content": [
+        {
+          "type": "image",
+          "file": "5.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "btn_04.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839312",
+              "x": 1.3333333333333335,
+              "y": 5.729166666666666,
+              "width": 98.66666666666667,
+              "height": 94.27083333333334,
+              "url": "/activity/act-1781750451319"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "btn_06.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661312",
+              "x": 2.4444444444444446,
+              "y": 2.7472527472527473,
+              "width": 97.55555555555556,
+              "height": 97.25274725274726,
+              "url": "/activity/act-1782196387792"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839311",
+              "x": 0.6666666666666667,
+              "y": 2.8089887640449436,
+              "width": 99.33333333333333,
+              "height": 97.19101123595506,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1782196387792"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "暑假"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "避暑攻略 Level UP！全館滿仟贈點，翻轉動漫祭陪你暑假冒險展開！",
+      "ogImage": "/api/images/activity-pic/act-1782196387792/_og-image.jpg",
+      "startDate": "2026-06-26T00:00",
+      "endDate": "2026-07-15T23:59"
+    },
+    {
+      "id": "act-1782198059977",
+      "title": "0625暑假6 沁涼美食站",
+      "content": [
+        {
+          "type": "image",
+          "file": "6.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "btn_01.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661315",
+              "x": 1.1111111111111112,
+              "y": 4.455445544554455,
+              "width": 98.88888888888889,
+              "height": 95.54455445544554,
+              "url": "/activity/act-1782197726782"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "btn_05.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661314",
+              "x": 1.3333333333333335,
+              "y": 11.41304347826087,
+              "width": 98.66666666666667,
+              "height": 88.58695652173914,
+              "url": "/activity/act-1782197954872"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "btn_06.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661313",
+              "x": 1.7777777777777777,
+              "y": 7.142857142857142,
+              "width": 98.22222222222223,
+              "height": 92.85714285714286,
+              "url": "/activity/act-1782196387792"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839311",
+              "x": 0.6666666666666667,
+              "y": 2.8089887640449436,
+              "width": 99.33333333333333,
+              "height": 97.19101123595506,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1782196387792"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "暑假"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "避暑攻略 Level UP！全館滿仟贈點，翻轉動漫祭陪你暑假冒險展開！",
+      "ogImage": "/api/images/activity-pic/act-1782196387792/_og-image.jpg",
+      "startDate": "2026-06-26T00:00",
+      "endDate": "2026-07-15T23:59"
+    },
+    {
+      "id": "act-1782198107128",
+      "title": "0625暑假7 歡聚好食光",
+      "content": [
+        {
+          "type": "image",
+          "file": "7.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "btn_01.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661316",
+              "x": 1.3333333333333335,
+              "y": 6.435643564356436,
+              "width": 98.66666666666667,
+              "height": 93.56435643564357,
+              "url": "/activity/act-1782197726782"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "btn_06.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661317",
+              "x": 1.3333333333333335,
+              "y": 4.945054945054945,
+              "width": 98.66666666666667,
+              "height": 95.05494505494505,
+              "url": "/activity/act-1782196387792"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839311",
+              "x": 0.6666666666666667,
+              "y": 2.8089887640449436,
+              "width": 99.33333333333333,
+              "height": 97.19101123595506,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1782196387792"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "暑假"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "避暑攻略 Level UP！全館滿仟贈點，翻轉動漫祭陪你暑假冒險展開！",
+      "ogImage": "/api/images/activity-pic/act-1782196387792/_og-image.jpg",
+      "startDate": "2026-06-26T00:00",
+      "endDate": "2026-07-15T23:59"
+    },
+    {
+      "id": "act-1782198136012",
+      "title": "0625暑假8 化妝品",
+      "content": [
+        {
+          "type": "image",
+          "file": "8.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "btn_01.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661318",
+              "x": 0.4444444444444444,
+              "y": 4.455445544554455,
+              "width": 99.55555555555556,
+              "height": 95.54455445544554,
+              "url": "/activity/act-1782197726782"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "btn_06.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661319",
+              "x": 0.8888888888888888,
+              "y": 7.142857142857142,
+              "width": 99.11111111111111,
+              "height": 92.85714285714286,
+              "url": "/activity/act-1782196387792"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839311",
+              "x": 0.6666666666666667,
+              "y": 2.8089887640449436,
+              "width": 99.33333333333333,
+              "height": 97.19101123595506,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1782196387792"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "暑假"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "避暑攻略 Level UP！全館滿仟贈點，翻轉動漫祭陪你暑假冒險展開！",
+      "ogImage": "/api/images/activity-pic/act-1782196387792/_og-image.jpg",
+      "startDate": "2026-06-26T00:00",
+      "endDate": "2026-07-15T23:59"
+    },
+    {
+      "id": "act-1782198155259",
+      "title": "0625暑假10 運動",
+      "content": [
+        {
+          "type": "image",
+          "file": "10.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "btn_01.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661321",
+              "x": 0.8888888888888888,
+              "y": 3.4653465346534658,
+              "width": 99.11111111111111,
+              "height": 96.53465346534654,
+              "url": "/activity/act-1782197726782"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "btn_06.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661320",
+              "x": 2,
+              "y": 6.043956043956044,
+              "width": 98,
+              "height": 91.20879120879121,
+              "url": "/activity/act-1782196387792"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839311",
+              "x": 0.6666666666666667,
+              "y": 2.8089887640449436,
+              "width": 99.33333333333333,
+              "height": 97.19101123595506,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1782196387792"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "暑假"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "避暑攻略 Level UP！全館滿仟贈點，翻轉動漫祭陪你暑假冒險展開！",
+      "ogImage": "/api/images/activity-pic/act-1782196387792/_og-image.jpg",
+      "startDate": "2026-06-26T00:00",
+      "endDate": "2026-07-15T23:59"
+    },
+    {
+      "id": "act-1782198172814",
+      "title": "0625暑假9 清爽極簡風",
+      "content": [
+        {
+          "type": "image",
+          "file": "9.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "btn_01.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661323",
+              "x": 0.8888888888888888,
+              "y": 7.425742574257425,
+              "width": 99.11111111111111,
+              "height": 92.57425742574257,
+              "url": "/activity/act-1782197726782"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "btn_06.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661322",
+              "x": 0.6666666666666667,
+              "y": 6.043956043956044,
+              "width": 99.33333333333333,
+              "height": 93.95604395604396,
+              "url": "/activity/act-1782196387792"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839311",
+              "x": 0.6666666666666667,
+              "y": 2.8089887640449436,
+              "width": 99.33333333333333,
+              "height": 97.19101123595506,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1782196387792"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "暑假"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "避暑攻略 Level UP！全館滿仟贈點，翻轉動漫祭陪你暑假冒險展開！",
+      "ogImage": "/api/images/activity-pic/act-1782196387792/_og-image.jpg",
+      "startDate": "2026-06-26T00:00",
+      "endDate": "2026-07-15T23:59"
+    },
+    {
+      "id": "act-1782198199108",
+      "title": "0625暑假11 香氛",
+      "content": [
+        {
+          "type": "image",
+          "file": "11.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "btn_01.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661324",
+              "x": 0.4444444444444444,
+              "y": 7.425742574257425,
+              "width": 99.55555555555556,
+              "height": 92.57425742574257,
+              "url": "/activity/act-1782197726782"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "btn_06.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661325",
+              "x": 1.1111111111111112,
+              "y": 15.934065934065933,
+              "width": 98.88888888888889,
+              "height": 71.42857142857143,
+              "url": "/activity/act-1782196387792"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839311",
+              "x": 0.6666666666666667,
+              "y": 2.8089887640449436,
+              "width": 99.33333333333333,
+              "height": 97.19101123595506,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1782196387792"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "暑假"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "避暑攻略 Level UP！全館滿仟贈點，翻轉動漫祭陪你暑假冒險展開！",
+      "ogImage": "/api/images/activity-pic/act-1782196387792/_og-image.jpg",
+      "startDate": "2026-06-26T00:00",
+      "endDate": "2026-07-15T23:59"
+    },
+    {
+      "id": "act-1782198238574",
+      "title": "0625暑假12 宅家玩一夏",
+      "content": [
+        {
+          "type": "image",
+          "file": "12.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "btn_01.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661326",
+              "x": 1.1111111111111112,
+              "y": 10.396039603960396,
+              "width": 98.88888888888889,
+              "height": 89.60396039603961,
+              "url": "/activity/act-1782197726782"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "btn_05.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661327",
+              "x": 1.1111111111111112,
+              "y": 7.065217391304348,
+              "width": 98.88888888888889,
+              "height": 92.93478260869566,
+              "url": "/activity/act-1782197954872"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "btn_06.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661328",
+              "x": 1.5555555555555556,
+              "y": 0.5494505494505495,
+              "width": 98.44444444444444,
+              "height": 99.45054945054946,
+              "url": "/activity/act-1782196387792"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839311",
+              "x": 0.6666666666666667,
+              "y": 2.8089887640449436,
+              "width": 99.33333333333333,
+              "height": 97.19101123595506,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1782196387792"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "暑假"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "避暑攻略 Level UP！全館滿仟贈點，翻轉動漫祭陪你暑假冒險展開！",
+      "ogImage": "/api/images/activity-pic/act-1782196387792/_og-image.jpg",
+      "startDate": "2026-06-26T00:00",
+      "endDate": "2026-07-15T23:59"
+    },
+    {
+      "id": "act-1782198260409",
+      "title": "0625暑假13 三麗鷗快閃",
+      "content": [
+        {
+          "type": "image",
+          "file": "13.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839311",
+              "x": 0.6666666666666667,
+              "y": 2.8089887640449436,
+              "width": 99.33333333333333,
+              "height": 97.19101123595506,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1782196387792"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "暑假"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "避暑攻略 Level UP！全館滿仟贈點，翻轉動漫祭陪你暑假冒險展開！",
+      "ogImage": "/api/images/activity-pic/act-1782196387792/_og-image.jpg",
+      "startDate": "2026-06-26T00:00",
+      "endDate": "2026-07-15T23:59"
+    },
+    {
+      "id": "act-1782198285578",
+      "title": "0625暑假14 再加碼",
+      "content": [
+        {
+          "type": "image",
+          "file": "14_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "14_02.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661329",
+              "x": 0.8888888888888888,
+              "y": 2,
+              "width": 99.11111111111111,
+              "height": 98,
+              "url": "/activity/act-1782198136012"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "14_03.jpg",
+          "hotspots": [
+            {
+              "id": "1782196661330",
+              "x": 2,
+              "y": 2.0930232558139537,
+              "width": 98,
+              "height": 97.90697674418605,
+              "url": "/activity/act-1782198238574"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "14_04.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "1.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839313",
+              "x": 0.6666666666666667,
+              "y": 1.5923566878980893,
+              "width": 99.33333333333333,
+              "height": 98.40764331210191,
+              "url": "/activity/act-1782197726782"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782192839311",
+              "x": 0.6666666666666667,
+              "y": 2.8089887640449436,
+              "width": 99.33333333333333,
+              "height": 97.19101123595506,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1782196387792"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "暑假"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "避暑攻略 Level UP！全館滿仟贈點，翻轉動漫祭陪你暑假冒險展開！",
+      "ogImage": "/api/images/activity-pic/act-1782196387792/_og-image.jpg",
+      "startDate": "2026-06-23T00:00",
+      "endDate": "2026-07-15T23:59"
+    },
+    {
+      "id": "act-1782283774995",
+      "title": "0626 翻轉動漫祭（黃泉版）",
+      "content": [
+        {
+          "type": "image",
+          "file": "main2_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "main2_02.jpg",
+          "hotspots": [
+            {
+              "id": "1781226944918",
+              "x": 1.1111111111111112,
+              "y": 2.11864406779661,
+              "width": 98.88888888888889,
+              "height": 97.88135593220339,
+              "url": "/activity/act-1781227480007"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main2_03.jpg",
+          "hotspots": [
+            {
+              "id": "1781226944919",
+              "x": 1.1111111111111112,
+              "y": 1.2295081967213115,
+              "width": 98.88888888888889,
+              "height": 98.77049180327869,
+              "url": "/activity/act-1781227529013"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main2_04.jpg",
+          "hotspots": [
+            {
+              "id": "1781226944920",
+              "x": 0,
+              "y": 0.7485029940119761,
+              "width": 100,
+              "height": 99.25149700598801,
+              "url": "/activity/act-1781227561801"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "main2_05.jpg",
+          "hotspots": [
+            {
+              "id": "1781226944921",
+              "x": 0.4444444444444444,
+              "y": 0.14492753623188406,
+              "width": 99.55555555555556,
+              "height": 99.85507246376811,
+              "url": "/activity/act-1781227623697"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "Line.jpg",
+          "hotspots": [
+            {
+              "id": "1782180537125",
+              "x": 2,
+              "y": 3.225806451612903,
+              "width": 98,
+              "height": 96.7741935483871,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1782283774995"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "動漫",
+        "檔期活動"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "2026最熱血翻轉動漫祭6/26~7/13中友盛大登場15大場景還原、8大限定福袋，免費入場！",
+      "ogImage": "/api/images/activity-pic/act-1780454726350/_og-image.jpg",
+      "startDate": "2026/06/30",
+      "endDate": "2026/07/13"
+    },
+    {
+      "id": "act-1782356955747",
+      "title": "0720 孤獨搖滾-3",
+      "content": [
+        {
+          "type": "image",
+          "file": "3.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "line-share.jpg",
+          "hotspots": [
+            {
+              "id": "1782199893313",
+              "x": 0.6666666666666667,
+              "y": 7.303370786516854,
+              "width": 99.33333333333333,
+              "height": 92.69662921348315,
+              "url": "https://line.me/R/share?text=https://www.chungyo.com.tw/activity/act-1780454253030"
+            }
+          ]
+        }
+      ],
+      "tags": [
+        "檔期活動",
+        "動漫",
+        "孤獨搖滾"
+      ],
+      "ogTitle": "中友百貨公司",
+      "ogDescription": "2026孤獨搖滾7/20~8/23中友中部獨家登場，九大特色展區、限定商品，優惠門票開賣中",
+      "ogImage": "/api/images/activity-pic/act-1780454253030/_og-image.jpg",
+      "startDate": "2026/06/04",
+      "endDate": "2026/08/23"
     }
   ]
 }

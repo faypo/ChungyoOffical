@@ -1,46 +1,81 @@
 {
   "banners": [
     {
-      "id": "banner-1779085459709",
-      "file": "1779085459706.jpg",
-      "url": "https://www.chungyo.com.tw/pages/event0512/main.html",
-      "startDate": "2026-05-01",
-      "endDate": "2026-12-31"
+      "id": "banner-1782264853713",
+      "file": "1782264853712.jpg",
+      "url": "/activity/act-1782196387792",
+      "startDate": "2026-06-25",
+      "endDate": "2026-07-15"
     },
     {
-      "id": "banner-1779085459701",
-      "file": "1779085459697.jpg",
-      "url": ""
+      "id": "banner-1782264860275",
+      "file": "1782264860274.jpg",
+      "url": "/activity/act-1782197909022",
+      "startDate": "2026-06-25",
+      "endDate": "2026-07-15"
     },
     {
-      "id": "banner-1779085459717",
-      "file": "1779085459714.jpg",
-      "url": ""
+      "id": "banner-1782264860240",
+      "file": "1782264860239.jpg",
+      "url": "/activity/act-1782197871441",
+      "startDate": "2026-06-26",
+      "endDate": "2026-06-28"
     },
     {
-      "id": "banner-1779085459723",
-      "file": "1779085459721.jpg",
-      "url": ""
+      "id": "banner-1782264860257",
+      "file": "1782264860255.jpg",
+      "url": "/activity/act-1780454726350",
+      "startDate": "2026-06-25",
+      "endDate": "2026-07-13"
     },
     {
-      "id": "banner-1779085459729",
-      "file": "1779085459727.jpg",
-      "url": ""
+      "id": "banner-1782264860290",
+      "file": "1782264860289.jpg",
+      "url": "/activity/act-1782197954872",
+      "startDate": "2026-06-25",
+      "endDate": "2026-06-28"
     },
     {
-      "id": "banner-1779085459734",
-      "file": "1779085459733.jpg",
-      "url": ""
+      "id": "banner-1782264860307",
+      "file": "1782264860305.jpg",
+      "url": "/activity/act-1782197954872",
+      "startDate": "2026-06-29",
+      "endDate": "2026-07-15"
     },
     {
-      "id": "banner-1779085459740",
-      "file": "1779085459739.jpg",
-      "url": ""
+      "id": "banner-1782264870822",
+      "file": "1782264870821.jpg",
+      "url": "/activity/act-1782197954872",
+      "startDate": "2026-07-04",
+      "endDate": "2026-07-05"
     },
     {
-      "id": "banner-1779677051063",
-      "file": "1779677051059.jpg",
-      "url": ""
+      "id": "banner-1782264870838",
+      "file": "1782264870837.jpg",
+      "url": "/activity/act-1782197954872",
+      "startDate": "2026-07-11",
+      "endDate": "2026-07-12"
+    },
+    {
+      "id": "banner-1782264870853",
+      "file": "1782264870852.jpg",
+      "url": "/activity/act-1782197993257",
+      "startDate": "2026-06-25",
+      "endDate": "2026-07-15"
+    },
+    {
+      "id": "banner-1782264870872",
+      "file": "1782264870870.jpg",
+      "url": "/activity/act-1781750451319",
+      "startDate": "2026-06-25",
+      "endDate": "2026-08-09"
+    },
+    {
+      "id": "banner-1782264870892",
+      "file": "1782264870891.jpg",
+      "url": "/activity/act-1781593998058",
+      "startDate": "",
+      "endDate": "2026-07-15"
     }
   ]
 }
