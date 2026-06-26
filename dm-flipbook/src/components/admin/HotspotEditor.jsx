@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Rnd } from 'react-rnd';
 import './HotspotEditor.css';
 
-let _id = Date.now();
-const genId = () => String(++_id);
+const genId = () => crypto.randomUUID();
 
 function overlaps(a, b) {
   return (

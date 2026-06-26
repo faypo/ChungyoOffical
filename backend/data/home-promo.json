@@ -2,8 +2,8 @@
   "title": "歡聚饗宴 美味上桌",
   "heroFile": "hero.jpg",
   "heroUrl": "https://dmpage.chungyo.com.tw/food",
-  "leftLabel": "玉山中友卡指定主題餐廳",
-  "rightLabel": "玉山中友卡指定美食專櫃",
+  "leftLabel": "玉山中友卡主題餐廳",
+  "rightLabel": "玉山中友卡美食專櫃",
   "cards": [
     {
       "slot": 1,

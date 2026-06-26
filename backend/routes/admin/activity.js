@@ -1,7 +1,8 @@
-const express = require('express');
-const multer  = require('multer');
-const fs      = require('fs');
-const path    = require('path');
+const express        = require('express');
+const multer         = require('multer');
+const fs             = require('fs');
+const path           = require('path');
+const { randomUUID } = require('crypto');
 const { DATA_DIR, readJSON, writeJSON } = require('../../utils/json');
 
 const router = express.Router();
@@ -134,6 +135,10 @@ router.post('/:id/copy', (req, res) => {
   const newAct = JSON.parse(JSON.stringify(src));
   newAct.id    = newId;
   newAct.title = `${src.title}（複製）`;
+  newAct.content = (newAct.content || []).map(c => ({
+    ...c,
+    hotspots: (c.hotspots || []).map(h => ({ ...h, id: randomUUID() })),
+  }));
   const srcDir = path.join(DATA_DIR, 'activity-pic', safeName(req.params.id));
   const dstDir = path.join(DATA_DIR, 'activity-pic', newId);
   fs.mkdirSync(dstDir, { recursive: true });

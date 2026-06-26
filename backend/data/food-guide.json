@@ -337,12 +337,12 @@
           "phone": "04-2220-0051"
         },
         {
-          "image": "莫凡彼咖啡.jpg",
           "name": "莫凡彼咖啡",
           "building": "C棟",
           "floor": "5F",
           "description": "提供異國經典美食與高級冰淇淋，提供溫暖而親切的用餐環境。",
-          "phone": "04-2221-0272"
+          "phone": "04-2221-0272",
+          "image": "莫凡彼咖啡.jpg"
         },
         {
           "image": "Blackpage.jpg",
@@ -399,7 +399,7 @@
           "name": "薔薇派",
           "building": "B棟",
           "floor": "B2",
-          "description": "測試_薔薇派",
+          "description": "「吃一塊是幸福，為家人佇立在冰箱前挑選一塊一塊的派也是幸福，希望藉由手工製作的派讓更多人『幸福在一塊』」。",
           "phone": "04-2223-9827",
           "image": "/api/images/food-pic/1778828104264-èèæ´¾logo.jpg"
         },

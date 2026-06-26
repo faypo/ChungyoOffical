@@ -25,11 +25,11 @@
       "hotspots": [
         {
           "id": "1779875276657",
-          "x": 0.059804280598958336,
+          "x": 0,
           "y": 6.465277420847039,
           "width": 99.94019571940103,
           "height": 87.36842105263159,
-          "url": "https://www.chungyo.com.tw/pages/gallery/sub2.html"
+          "url": "https://dmpage.chungyo.com.tw/activity/act-1780390023667"
         }
       ]
     },
@@ -43,7 +43,7 @@
           "y": 6.465277420847039,
           "width": 100,
           "height": 87.36842105263159,
-          "url": "https://www.chungyo.com.tw/pages/gallery/sub3.html"
+          "url": "/activity/act-1780455690816"
         }
       ]
     },
@@ -53,11 +53,11 @@
       "hotspots": [
         {
           "id": "1779932450077",
-          "x": 0.059804280598958336,
+          "x": 0,
           "y": 5.41264584189967,
           "width": 99.94019571940103,
           "height": 88.42105263157895,
-          "url": "https://www.chungyo.com.tw/pages/gallery/sub4.html"
+          "url": "/activity/act-1780390035475"
         }
       ]
     },
@@ -71,7 +71,7 @@
           "y": 8.570540578741777,
           "width": 99.94019571940103,
           "height": 83.15789473684211,
-          "url": "https://www.chungyo.com.tw/pages/gallery/sub5.html"
+          "url": "/activity/act-1780455759566"
         }
       ]
     },
@@ -85,7 +85,7 @@
           "y": 8.570540578741777,
           "width": 100,
           "height": 84.21052631578947,
-          "url": "https://www.chungyo.com.tw/pages/gallery/sub6.html"
+          "url": "/activity/act-1780455781193"
         }
       ]
     },
@@ -99,7 +99,21 @@
           "y": 8.262361225328956,
           "width": 99.94019571940103,
           "height": 83.15789473684211,
-          "url": "https://dmpage.chungyo.com.tw/activity/act-1779932831672"
+          "url": "https://dmpage.chungyo.com.tw/activity/act-1781748365871"
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "file": "line-share.jpg",
+      "hotspots": [
+        {
+          "id": "1782181770820",
+          "x": 0,
+          "y": 0,
+          "width": 100,
+          "height": 100,
+          "url": "https://line.me/R/share?text=https://dmpage.chungyo.com.tw/gallery"
         }
       ]
     }
