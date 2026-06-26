@@ -1,0 +1,104 @@
+/* ===== Service Page — Japanese Magazine Style ===== */
+.service-page {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  background: #faf9f7;
+}
+
+/* Left sidebar */
+.service-sidebar {
+  width: 21%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: #f2efeb;
+  border-right: 1px solid #d8d4cf;
+  overflow-y: auto;
+}
+
+.service-tab {
+  display: block;
+  width: 100%;
+  padding: 18px 12px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid #e0dbd5;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 400;
+  font-family: inherit;
+  color: #3a3533;
+  letter-spacing: 3px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+.service-tab:hover  { background: #e8e4df; color: #1a1a1a; }
+.service-tab.active { background: #5e5c5a; color: #fff; }
+
+/* Right content */
+.service-content {
+  flex: 1;
+  overflow: auto;
+  background: #faf9f7;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 32px;
+}
+
+.service-img {
+  max-width: 100%;
+  display: block;
+}
+
+.service-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: #9a9896;
+  font-size: 13px;
+  letter-spacing: 3px;
+  margin-top: 80px;
+}
+.service-empty-icon { font-size: 40px; }
+
+/* Mobile */
+@media (max-width: 700px) {
+  .service-page {
+    flex-direction: column;
+    height: calc(100dvh - var(--header-h, 0px));
+  }
+
+  .service-sidebar {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    border-right: none;
+    border-bottom: 2px solid #5e5c5a;
+  }
+
+  .service-tab {
+    flex: 1;
+    padding: 12px 4px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-bottom: 2px solid transparent;
+    border-right: 1px solid #e0dbd5;
+  }
+  .service-tab:last-child { border-right: none; }
+  .service-tab.active {
+    background: #5e5c5a;
+    border-bottom-color: transparent;
+    color: #fff;
+  }
+
+  .service-content { padding: 16px; }
+}

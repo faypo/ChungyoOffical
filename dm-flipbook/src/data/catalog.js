@@ -2,9 +2,9 @@
 
 /** 讀取全部 DM 的 metadata */
 export async function fetchCatalog() {
-  const res = await fetch('/catalog.json');
-  if (!res.ok) throw new Error('無法載入 catalog.json');
-  return res.json(); // [{ id, title, subtitle, button? }]
+  const res = await fetch('/api/catalog');
+  if (!res.ok) throw new Error('無法載入 catalog');
+  return res.json();
 }
 
 /** 讀取單一 DM 的 metadata（含 button 設定） */
@@ -15,11 +15,11 @@ export async function fetchDMMeta(dmId) {
 
 /** 讀取單一 DM 的頁面列表，回傳 pages 陣列 */
 export async function fetchDMPages(dmId) {
-  const res = await fetch(`/dm-pic/${dmId}/index.json`);
-  if (!res.ok) throw new Error(`無法載入 ${dmId}/index.json`);
-  const files = await res.json(); // ["cover.jpg", "1-2.jpg", ...]
+  const res = await fetch(`/api/dm/${dmId}/pages`);
+  if (!res.ok) throw new Error(`無法載入 ${dmId} 頁面清單`);
+  const files = await res.json();
   return files.map(file => ({
-    src: `/dm-pic/${dmId}/${file}`,
+    src: `/api/images/dm-pic/${dmId}/${file}`,
     name: file.replace('.jpg', ''),
   }));
 }

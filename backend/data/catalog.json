@@ -1,0 +1,144 @@
+[
+  {
+    "id": "dm-1",
+    "order": 2,
+    "title": "中友周年慶34th",
+    "subtitle": "檔期時間:2026/3/12~4/15",
+    "type": "double",
+    "button": [
+      {
+        "page": 7,
+        "url": "https://www.chung-yo.com/activity?id=2026020001"
+      },
+      {
+        "page": 8,
+        "url": "https://www.chung-yo.com/activity?id=2026020001"
+      },
+      {
+        "page": 9,
+        "url": "https://www.chung-yo.com/activity?id=2026020001"
+      },
+      {
+        "page": 10,
+        "url": "https://www.chung-yo.com/activity?id=2026020001"
+      }
+    ],
+    "hotspots": []
+  },
+  {
+    "id": "dm-2",
+    "order": 3,
+    "title": "中友周年慶34th化妝品香氛",
+    "subtitle": "檔期時間:2026/3/12~4/15",
+    "type": "double",
+    "button": [
+      {
+        "page": 3,
+        "url": "https://www.chung-yo.com/activity?id=2026010004"
+      }
+    ],
+    "hotspots": []
+  },
+  {
+    "id": "20260508",
+    "order": 4,
+    "title": "test",
+    "subtitle": "20260508-20260718",
+    "type": "double",
+    "button": [],
+    "hotspots": []
+  },
+  {
+    "id": "1",
+    "order": 1,
+    "title": "導入活動頁面測試",
+    "subtitle": "20260526-20260718",
+    "type": "strip",
+    "button": [],
+    "hotspots": [],
+    "startDate": "",
+    "endDate": "",
+    "url": ""
+  },
+  {
+    "id": ".",
+    "order": 5,
+    "title": "888",
+    "subtitle": "",
+    "type": "single",
+    "button": [],
+    "hotspots": []
+  },
+  {
+    "id": "20260527001",
+    "order": 2,
+    "title": "端午節 粽香推薦",
+    "subtitle": "檔期期間: 2026/05/27~2026/06/03",
+    "type": "strip",
+    "button": [],
+    "hotspots": [],
+    "cover": "cover.jpg"
+  },
+  {
+    "id": "20260527002",
+    "order": 3,
+    "title": "夏日 時尚必備",
+    "subtitle": "檔期時間: 2026/05/12~2026/06/03",
+    "type": "strip",
+    "button": [],
+    "hotspots": [
+      {
+        "id": "1779863638039",
+        "x": 0.5964898003472222,
+        "y": 44.26742711018042,
+        "width": 98.88888888888889,
+        "height": 8.109965635738831,
+        "url": "https://www.chungyo.com.tw/pages/event0512/s131.html"
+      },
+      {
+        "id": "1779863638040",
+        "x": 0.1520453559027778,
+        "y": 53.6145061479811,
+        "width": 99.77777777777777,
+        "height": 7.972508591065291,
+        "url": ""
+      },
+      {
+        "id": "1779863638041",
+        "x": 0.1520453559027778,
+        "y": 62.82412814110825,
+        "width": 99.55555555555556,
+        "height": 7.903780068728522,
+        "url": ""
+      },
+      {
+        "id": "1779863638042",
+        "x": 0.5964898003472222,
+        "y": 71.89629308956185,
+        "width": 98.44444444444444,
+        "height": 7.903780068728522,
+        "url": ""
+      },
+      {
+        "id": "1779863638043",
+        "x": 0.374267578125,
+        "y": 80.96845803801547,
+        "width": 99.625732421875,
+        "height": 7.972508591065291,
+        "url": ""
+      },
+      {
+        "id": "1779863638044",
+        "x": 0.4444444444444444,
+        "y": 90.45977720280285,
+        "width": 99.26315646701389,
+        "height": 7.903780068728522,
+        "url": "https://dmpage.chungyo.com.tw/activity/act-1779875467678"
+      }
+    ],
+    "cover": "cover.jpg",
+    "startDate": "",
+    "endDate": "",
+    "url": ""
+  }
+]

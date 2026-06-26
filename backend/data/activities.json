@@ -1,0 +1,585 @@
+{
+  "activities": [
+    {
+      "id": "act-1778725858121",
+      "title": "6月生日",
+      "content": [
+        {
+          "type": "image",
+          "file": "1.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "2.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "3.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "4.jpg",
+          "hotspots": []
+        }
+      ],
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "tags": [
+        "常態活動"
+      ]
+    },
+    {
+      "id": "act-1779261901802",
+      "title": "主題廁所",
+      "content": [
+        {
+          "type": "image",
+          "file": "1.jpg",
+          "hotspots": []
+        }
+      ],
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "tags": [
+        "常態活動"
+      ]
+    },
+    {
+      "id": "act-1779441037899",
+      "title": "你不知道的一中商圈",
+      "content": [
+        {
+          "type": "image",
+          "file": "CCC.png",
+          "hotspots": [
+            {
+              "id": "1779436981637",
+              "x": 0,
+              "y": 71.32482764701248,
+              "width": 98.44444444444444,
+              "height": 11.182401466544455,
+              "url": "/activity/act-1778725858121"
+            },
+            {
+              "id": "1779436981638",
+              "x": 0.4444444444444444,
+              "y": 84.93422972402041,
+              "width": 99.55555555555556,
+              "height": 10.907424381301558,
+              "url": "/activity/act-1778725858121"
+            }
+          ]
+        }
+      ],
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "tags": [
+        "常態活動"
+      ],
+      "startDate": "",
+      "endDate": ""
+    },
+    {
+      "id": "act-1779867265793",
+      "title": "Plants Main",
+      "content": [
+        {
+          "type": "image",
+          "file": "plants_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "plants_02.jpg",
+          "hotspots": [
+            {
+              "id": "1779863719120",
+              "x": 0,
+              "y": -58.29893867924528,
+              "width": 100,
+              "height": 158.49056603773585,
+              "url": "/activity/act-1779937241080"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "plants_03.jpg",
+          "hotspots": [
+            {
+              "id": "1779863719121",
+              "x": 0,
+              "y": -170.08312995280696,
+              "width": 100,
+              "height": 269.7247706422018,
+              "url": "/activity/act-1779937719289"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "plants_04.jpg",
+          "hotspots": [
+            {
+              "id": "1779863719122",
+              "x": 0,
+              "y": -53.27316810344828,
+              "width": 100,
+              "height": 153.44827586206898,
+              "url": "/activity/act-1779937952603"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "plants_05.jpg",
+          "hotspots": [
+            {
+              "id": "1779863719123",
+              "x": 0,
+              "y": -63.05803571428571,
+              "width": 100,
+              "height": 163.26530612244898,
+              "url": "/activity/act-1779937953538"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "plants_06.jpg",
+          "hotspots": [
+            {
+              "id": "1779863719124",
+              "x": 0.021148681640625,
+              "y": -52.206524347854874,
+              "width": 100,
+              "height": 152.54237288135593,
+              "url": "/activity/act-1779937954179"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "plants_07.jpg",
+          "hotspots": [
+            {
+              "id": "1779863719125",
+              "x": 0,
+              "y": -54.6875,
+              "width": 100,
+              "height": 154.86725663716814,
+              "url": "/activity/act-1779937954754"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "file": "plants_08.jpg",
+          "hotspots": [
+            {
+              "id": "1779863719126",
+              "x": 0,
+              "y": -54.6875,
+              "width": 100,
+              "height": 154.86725663716814,
+              "url": "/activity/act-1779937955471"
+            }
+          ]
+        }
+      ],
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "tags": [
+        "常態活動"
+      ]
+    },
+    {
+      "id": "act-1779872636167",
+      "title": "限時兌好康",
+      "content": [
+        {
+          "type": "image",
+          "file": "schedule1.jpg",
+          "hotspots": []
+        }
+      ],
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "tags": [
+        "檔期活動"
+      ]
+    },
+    {
+      "id": "act-1779872811532",
+      "title": "夏日好時光",
+      "content": [
+        {
+          "type": "image",
+          "file": "schedule2.jpg",
+          "hotspots": []
+        }
+      ],
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "tags": [
+        "常態活動"
+      ]
+    },
+    {
+      "id": "act-1779875467678",
+      "title": "就業博覽會",
+      "content": [
+        {
+          "type": "image",
+          "file": "restentant.jpg",
+          "hotspots": []
+        }
+      ],
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "tags": [
+        "檔期活動"
+      ]
+    },
+    {
+      "id": "act-1779932831672",
+      "title": "時尚藝廊介紹",
+      "content": [
+        {
+          "type": "image",
+          "file": "gallery1-7-1.jpg",
+          "hotspots": []
+        }
+      ],
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "tags": [
+        "藝廊"
+      ]
+    },
+    {
+      "id": "act-1779933048068",
+      "title": "藝術家介紹",
+      "content": [
+        {
+          "type": "image",
+          "file": "gallery1-1-1.jpg",
+          "hotspots": []
+        }
+      ],
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "tags": [
+        "藝廊"
+      ]
+    },
+    {
+      "id": "act-1779936549462",
+      "title": "行動支付",
+      "content": [
+        {
+          "type": "image",
+          "file": "pay.png",
+          "hotspots": []
+        }
+      ],
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "tags": [
+        "優惠活動"
+      ]
+    },
+    {
+      "id": "act-1779936885522",
+      "title": "W13 Main",
+      "content": [
+        {
+          "type": "image",
+          "file": "W13_01.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "W13_02.jpg",
+          "hotspots": [
+            {
+              "id": "1779936559134",
+              "x": 0.021152072482638888,
+              "y": 0,
+              "width": 99.97884792751735,
+              "height": 100,
+              "url": "/activity/act-1779936982113"
+            }
+          ]
+        }
+      ],
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "tags": [
+        "優惠活動"
+      ]
+    },
+    {
+      "id": "act-1779936982113",
+      "title": "W13-s1",
+      "content": [
+        {
+          "type": "image",
+          "file": "W13666.jpg",
+          "hotspots": []
+        }
+      ],
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "tags": [
+        "優惠活動"
+      ]
+    },
+    {
+      "id": "act-1779937241080",
+      "title": "Plants-s1",
+      "content": [
+        {
+          "type": "image",
+          "file": "a.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "0.jpg",
+          "hotspots": [
+            {
+              "id": "1779936559136",
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "url": "/activity/act-1779867265793"
+            }
+          ]
+        }
+      ],
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "tags": [
+        "常態活動"
+      ]
+    },
+    {
+      "id": "act-1779937719289",
+      "title": "Plants-s2",
+      "content": [
+        {
+          "type": "image",
+          "file": "b.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "0.jpg",
+          "hotspots": [
+            {
+              "id": "1779936559136",
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "url": "/activity/act-1779867265793"
+            }
+          ]
+        }
+      ],
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "tags": [
+        "常態活動"
+      ]
+    },
+    {
+      "id": "act-1779937952603",
+      "title": "Plants-s3",
+      "content": [
+        {
+          "type": "image",
+          "file": "c.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "0.jpg",
+          "hotspots": [
+            {
+              "id": "1779936559136",
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "url": "/activity/act-1779867265793"
+            }
+          ]
+        }
+      ],
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "tags": [
+        "常態活動"
+      ]
+    },
+    {
+      "id": "act-1779937953538",
+      "title": "Plants-s4",
+      "content": [
+        {
+          "type": "image",
+          "file": "d.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "0.jpg",
+          "hotspots": [
+            {
+              "id": "1779936559136",
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "url": "/activity/act-1779867265793"
+            }
+          ]
+        }
+      ],
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "tags": [
+        "常態活動"
+      ]
+    },
+    {
+      "id": "act-1779937954179",
+      "title": "Plants-s5",
+      "content": [
+        {
+          "type": "image",
+          "file": "e.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "0.jpg",
+          "hotspots": [
+            {
+              "id": "1779936559136",
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "url": "/activity/act-1779867265793"
+            }
+          ]
+        }
+      ],
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "tags": [
+        "常態活動"
+      ]
+    },
+    {
+      "id": "act-1779937954754",
+      "title": "Plants-s6",
+      "content": [
+        {
+          "type": "image",
+          "file": "f.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "0.jpg",
+          "hotspots": [
+            {
+              "id": "1779936559136",
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "url": "/activity/act-1779867265793"
+            }
+          ]
+        }
+      ],
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "tags": [
+        "常態活動"
+      ]
+    },
+    {
+      "id": "act-1779937955471",
+      "title": "Plants-s7",
+      "content": [
+        {
+          "type": "image",
+          "file": "g.jpg",
+          "hotspots": []
+        },
+        {
+          "type": "image",
+          "file": "0.jpg",
+          "hotspots": [
+            {
+              "id": "1779936559136",
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "url": "/activity/act-1779867265793"
+            }
+          ]
+        }
+      ],
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "tags": [
+        "常態活動"
+      ]
+    },
+    {
+      "id": "act-1779945222727",
+      "title": "aaa",
+      "content": []
+    },
+    {
+      "id": "act-1780455951724",
+      "title": "aaa",
+      "content": [],
+      "tags": [
+        "常態活動",
+        "檔期活動"
+      ]
+    }
+  ]
+}

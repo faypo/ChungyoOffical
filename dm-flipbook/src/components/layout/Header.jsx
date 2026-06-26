@@ -1,25 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import './Header.css';
 
-const NAV_ITEMS = [
-  { to: '/dm',               label: 'DM導覽' },
+const NAV_BEFORE_MEMBER = [
   { to: '/floor',            label: '樓層導覽' },
+  { to: '/service',          label: '貼心服務' },
+];
+
+const NAV_AFTER_MEMBER = [
+  { to: '/dm',               label: '電子型錄DM' },
   { to: '/food',             label: '美食導覽' },
-  { to: '/CustomerFeedback', label: '客服意見' },
+  { to: '/gallery',          label: '中友時尚藝廊' },
+  { to: '/winners',          label: '得獎名單' },
+  { to: '/CustomerFeedback', label: '意見回饋' },
 ];
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [memberUrl, setMemberUrl] = useState('');
+
+  useEffect(() => {
+    fetch('/api/config')
+      .then(r => r.ok ? r.json() : {})
+      .then(d => { if (d.memberUrl) setMemberUrl(d.memberUrl); })
+      .catch(() => {});
+  }, []);
 
   return (
     <header className="site-header">
       <div className="site-header-inner">
-        <NavLink to="/dm" className="site-logo">中友百貨</NavLink>
+        <NavLink to="/" className="site-logo">
+          <img src="/CI.png" alt="中友百貨" className="site-logo-img" />
+        </NavLink>
 
         {/* Desktop nav */}
         <nav className="site-nav">
-          {NAV_ITEMS.map(({ to, label }) => (
+          {NAV_BEFORE_MEMBER.map(({ to, label }) => (
+            <NavLink
+              key={to}
+              to={to}
+              className={({ isActive }) => 'site-nav-link' + (isActive ? ' active' : '')}
+            >
+              {label}
+            </NavLink>
+          ))}
+          {/* memberUrl && (
+            <a href={memberUrl} className="site-nav-link">會員點數查詢</a>
+          ) */}
+          {NAV_AFTER_MEMBER.map(({ to, label }) => (
             <NavLink
               key={to}
               to={to}
@@ -45,7 +73,22 @@ export default function Header() {
         <div className="site-mobile-backdrop" onClick={() => setMenuOpen(false)} />
       )}
       <nav className={`site-mobile-nav${menuOpen ? ' open' : ''}`}>
-        {NAV_ITEMS.map(({ to, label }) => (
+        {NAV_BEFORE_MEMBER.map(({ to, label }) => (
+          <NavLink
+            key={to}
+            to={to}
+            className={({ isActive }) => 'site-mobile-nav-link' + (isActive ? ' active' : '')}
+            onClick={() => setMenuOpen(false)}
+          >
+            {label}
+          </NavLink>
+        ))}
+        {/* memberUrl && (
+          <a href={memberUrl} className="site-mobile-nav-link" onClick={() => setMenuOpen(false)}>
+            會員點數查詢
+          </a>
+        ) */}
+        {NAV_AFTER_MEMBER.map(({ to, label }) => (
           <NavLink
             key={to}
             to={to}

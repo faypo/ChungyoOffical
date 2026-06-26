@@ -1,0 +1,86 @@
+/* ===== Home Promo — Japanese Magazine Style ===== */
+.hp-root {
+  width: 100%;
+}
+
+.hp-title-sub {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 400;
+  color: #6b6966;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.hp-title {
+  font-size: 22px;
+  font-weight: 400;
+  color: #1a1a1a;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #d8d4cf;
+  text-align: center;
+  min-height: auto;
+  display: block;
+}
+
+/* 大圖 */
+.hp-hero {
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.hp-hero img, .hp-hero a {
+  display: block;
+  transition: transform 0.4s ease;
+}
+.hp-hero:hover img { transform: scale(1.02); }
+
+/* 標籤列 */
+.hp-labels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.hp-label {
+  font-size: 16px;
+  font-weight: 400;
+  color: #6b6966;
+  letter-spacing: 3px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* 2×2 圖卡格 */
+.hp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.hp-card {
+  overflow: hidden;
+  background: #f2efeb;
+  border: 1px solid #e0dbd5;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hp-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.hp-link {
+  display: block;
+  line-height: 0;
+}
+
+.hp-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.hp-card:hover .hp-img { transform: scale(1.03); }

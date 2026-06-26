@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState,useRef,useEffect } from 'react';
+import { Turnstile } from '@marsidev/react-turnstile'; 
 import './CustomerFeedback.css';
 import ConfirmModal from './ConfirmModal';
 
@@ -35,47 +36,46 @@ export default function CustomerFeedback() {
   const [errors, setErrors] = useState({});
   
   const [isLoading, setIsLoading] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState({ message: '', type: '' });
+
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const [config, setConfig] = useState({ apiUrl: '', turnstileSiteKey: '' });
+  const turnstileRef = useRef(null);
 
   const [modalConfig, setModalConfig] = useState({
     isOpen: false,
-    actionType: '', // submit or reset
+    type: 'confirm', // 'confirm' or 'alert'
+    actionType: '',  // submit or reset
     title: '',
     message: '',
     confirmText: '',
     confirmBtnStyle: 'primary'
   });
 
-  const sanitizeInput = (str) => {
-    if (!str) return '';
-    return str
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/'/g, '&#x27;')     
-      .replace(/"/g, '&quot;')       
-      .replace(/;/g, '&#59;')       
-      .replace(/--/g, '&#45;&#45;')  
-      .trim();
-  };
+  useEffect(() => {
+    const fetchEnv = async () => {
+        try {
+        const res = await fetch('/env.json');
+        if (!res.ok) throw new Error('無法載入env.json');
+        const data = await res.json();
+        setConfig({ apiUrl: data.api_url, turnstileSiteKey: data.turnstile_site_key });
+        } catch (err) {
+        }
+    };
+    fetchEnv();
+  }, []);
 
-  const fetchFeedback = async (data) => {
+
+  const fetchFeedback = async (data,token) => {
     try {
-
-      const envResponse = await fetch('/env.json');
-
-      if (!envResponse.ok) {
-        throw new Error('無法載入env.json');
-      }
-      
-      const envConfig = await envResponse.json();
-      const API_URL = envConfig.api_url;
-
-      const response = await fetch(API_URL, {
+      const response = await fetch(config.apiUrl, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json' 
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify({
+          data:data,
+          turnstileToken: token
+        })
       });
       if (response.ok) { 
         return { success: true, message: '意見回饋已成功發送！感謝您的寶貴回饋。' };
@@ -90,50 +90,51 @@ export default function CustomerFeedback() {
 
   const handlePreSubmit = (e) => {
     e.preventDefault(); 
-    setSubmitStatus({ message: '', type: '' });
-
-    const cleanLastName = sanitizeInput(lastName);
-    const cleanEmail = sanitizeInput(email);
-    const cleanPhone = sanitizeInput(phone);
-    const cleanContent = sanitizeInput(content);
 
     const newErrors = {};
 
     if (fieldConfig.lastName) {
       const chineseRegex = /^[\u4e00-\u9fa5]+$/;
-      if (!cleanLastName) {
+      if (!lastName) {
         newErrors.lastName = '姓氏不得為空！';
-      } else if (!chineseRegex.test(cleanLastName)) {
+      } else if (!chineseRegex.test(lastName)) {
         newErrors.lastName = '姓氏僅限輸入中文字！';
-      } else if (cleanLastName.length > 2) {
+      } else if (lastName.length > 2) {
         newErrors.lastName = '姓氏請勿超過兩個字！';
       }
     }
 
     if (fieldConfig.email) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!cleanEmail) {
+      if (!email) {
         newErrors.email = 'Email 不得為空！';
-      } else if (!emailRegex.test(cleanEmail)) {
+      } else if (!emailRegex.test(email)) {
         newErrors.email = '請輸入正確的 Email 格式！';
       }
     }
 
     if (fieldConfig.phone) {
       const phoneRegex = /^0\d{9}$/;
-      if (!cleanPhone) {
+      if (!phone) {
         newErrors.phone = '手機號碼不得為空！';
-      } else if (!phoneRegex.test(cleanPhone)) {
+      } else if (!phoneRegex.test(phone)) {
         newErrors.phone = '手機號碼必須為 10 碼數字！ 範例: 0901234567';
       }
     }
 
     if (fieldConfig.content) {
-      if (!cleanContent) {
+      const contentRegex = /^[\u4e00-\u9fa5\u3100-\u312F\s\x20-\x7E\u3000-\u303F\uFF00-\uFFEF\u2010-\u203B\u00A1-\u00FF\u20A0-\u20CF\uFE30-\uFE4F\u2200-\u22FF]+$/;
+      if (!content) {
         newErrors.content = '意見內容不得為空！';
-      } else if (cleanContent.length > 1000) {
+      } else if (content.length > 1000) {
         newErrors.content = '意見內容請勿超過 1000 字！';
+      } else if (!contentRegex.test(content)) {
+        newErrors.content = '意見內容包含不允許的特殊符號或表情符號！';
       }
+    }
+
+    if (!turnstileToken) {
+      newErrors.turnstile = '請完成或重新進行機器人驗證！';
     }
 
     if (!isAgreed) {
@@ -149,6 +150,7 @@ export default function CustomerFeedback() {
 
     setModalConfig({
       isOpen: true,
+      type: 'confirm',
       actionType: 'submit',
       title: '確認送出',
       message: '確定要送出這份意見回饋嗎？送出後將無法修改。',
@@ -159,41 +161,33 @@ export default function CustomerFeedback() {
 
   const executeSubmit = async () => {
     closeModal();
-    const cleanLastName = sanitizeInput(lastName);
-    const cleanPhone = sanitizeInput(phone);
-    const cleanContent = sanitizeInput(content);
-
-    const now = new Date();
-    const currentMinutes = now.getMinutes();
-    const remainder = currentMinutes % 10;
-    
-    if (remainder !== 0) {
-      now.setMinutes(currentMinutes + (10 - remainder));
-    }
-
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const currentTime = `${hours}:${minutes}`;
 
     const feedbackData = {
-      Surname: cleanLastName,
+      Surname: lastName,
       sex: gender,
-      phone: cleanPhone,
-      Opinion: cleanContent,
-      hh: currentTime
+      phone: phone,
+      Opinion: content,
     };
     
     setIsLoading(true);
 
     try {
-      const result = await fetchFeedback(feedbackData);
-      setSubmitStatus({ 
-        message: result.message, 
-        type: result.success ? 'success' : 'error' 
+      const result = await fetchFeedback(feedbackData, turnstileToken);
+      setModalConfig({
+        isOpen: true,
+        type: 'alert',
+        actionType: '',
+        title: result.success ? '送出成功' : '送出失敗',
+        message: result.message,
+        confirmText: '確定',
+        confirmBtnStyle: result.success ? 'primary' : 'danger'
       });
 
       if (result.success) {
-        actualReset(false);
+        actualReset();
+      } else {
+        turnstileRef.current?.reset();
+        setTurnstileToken('');
       }
     } finally {
       setIsLoading(false);
@@ -203,6 +197,7 @@ export default function CustomerFeedback() {
   const handlePreReset = () => {
     setModalConfig({
       isOpen: true,
+      type: 'confirm',
       actionType: 'reset',
       title: '重新填寫',
       message: '確定要清除所有已填寫的資料嗎？',
@@ -213,10 +208,10 @@ export default function CustomerFeedback() {
 
   const executeReset = () => {
     closeModal();
-    actualReset(true);
+    actualReset();
   };
 
-  const actualReset = (clearStatusMessage = true) => {
+  const actualReset = () => {
     setLastName('');
     setGender('1');
     setEmail('');
@@ -224,9 +219,8 @@ export default function CustomerFeedback() {
     setContent('');
     setIsAgreed(false);
     setErrors({});
-    if (clearStatusMessage) {
-      setSubmitStatus({ message: '', type: '' });
-    }
+    turnstileRef.current?.reset();
+    setTurnstileToken('');
   };
 
   const closeModal = () => {
@@ -238,6 +232,8 @@ export default function CustomerFeedback() {
       executeSubmit();
     } else if (modalConfig.actionType === 'reset') {
       executeReset();
+    } else {
+      closeModal();
     }
   };
 
@@ -245,9 +241,6 @@ export default function CustomerFeedback() {
     setter(e.target.value);
     if (errors[fieldName]) {
       setErrors(prev => ({ ...prev, [fieldName]: '' }));
-    }
-    if (submitStatus.message) {
-      setSubmitStatus({ message: '', type: '' });
     }
   };
 
@@ -262,6 +255,7 @@ export default function CustomerFeedback() {
 
       <ConfirmModal 
         isOpen={modalConfig.isOpen}
+        type={modalConfig.type}
         title={modalConfig.title}
         message={modalConfig.message}
         confirmText={modalConfig.confirmText}
@@ -275,13 +269,10 @@ export default function CustomerFeedback() {
           <form onSubmit={handlePreSubmit} noValidate>
             <div className='form-title'>
               <h2>顧客意見回饋</h2>
-            </div>        
-            {submitStatus.message && (
-              <div className={`status-message ${submitStatus.type}`}>
-                {submitStatus.message}
+              <div className="form-title-rule">
+                <span className="form-title-sub">Customer Feedback</span>
               </div>
-            )}
-            
+            </div>
             { (fieldConfig.lastName || fieldConfig.gender) && (
               <div className="split-row">
                 {fieldConfig.lastName && (
@@ -315,7 +306,6 @@ export default function CustomerFeedback() {
                           onClick={() => {
                             if(!isLoading) {
                               setGender('1');
-                              setSubmitStatus({ message: '', type: '' });
                             }
                           }}
                         >男</div>
@@ -324,7 +314,6 @@ export default function CustomerFeedback() {
                           onClick={() => {
                             if(!isLoading) {
                               setGender('2');
-                              setSubmitStatus({ message: '', type: '' });
                             }
                           }}
                         >女</div>
@@ -384,12 +373,11 @@ export default function CustomerFeedback() {
                       className={`input-box ${errors.content ? 'has-error' : ''}`}
                       value={content} 
                       onChange={handleChange(setContent, 'content')} 
-                      maxLength={1000}
                       placeholder="請輸入您的寶貴意見..."
                       disabled={isLoading}
                     />
                     {/* 顯示字數的區塊 */}
-                    <div className={`char-counter ${content.length >= 1000 ? 'limit-reached' : ''}`}>
+                    <div className={`char-counter ${content.length > 1000 ? 'limit-reached' : ''} ${errors.content ? 'has-error' : ''}`}>
                       {content.length} / 1000
                     </div>
                   </div>
@@ -399,10 +387,36 @@ export default function CustomerFeedback() {
             )}
 
             <div className="form-row">
+              <div className="form-label">
+              </div>
+                <div className="form-control">
+                  {config.turnstileSiteKey && (
+                    <Turnstile
+                      ref={turnstileRef}
+                      siteKey={config.turnstileSiteKey}
+                      options={{ size: 'flexible',theme: 'light' }}
+                      onSuccess={(token) => {
+                        setTurnstileToken(token);
+                        setErrors(prev => ({ ...prev, turnstile: '' }));
+                      }}
+                      onError={() => setErrors(prev => ({ ...prev, turnstile: '驗證發生錯誤，請重試' }))}
+                      onExpire={() => {
+                        setTurnstileToken('');
+                        setErrors(prev => ({ ...prev, turnstile: '驗證已過期，請重新勾選' }));
+                      }}
+                    />
+                  )}
+                  <ErrorMessage message={errors.turnstile} />
+                </div>           
+            </div>
+
+
+            <div className="form-row">
               <div className="form-label btn-nbsp">
                 &nbsp;
               </div>
               <div className="form-control">
+
                 <div className="privacy-policy-box">
                   <strong className='privacy-policy-label'>顧客意見回饋個資法說明事項：</strong>
                   <p className="privacy-policy-text">
@@ -423,16 +437,14 @@ export default function CustomerFeedback() {
                       if (errors.isAgreed) {
                         setErrors(prev => ({ ...prev, isAgreed: '' }));
                       }
-                      if (submitStatus.message) {
-                        setSubmitStatus({ message: '', type: '' });
-                      }
                     }}
                   />
                   <label>
-                    <span>本人同意將個人資料(包括但不限於姓氏、性別、手機號碼) 提供予 中友百貨 ，作為「顧客意見回饋」聯繫及回覆之用。</span>
+                    <span>本人同意將個人資料提供予 中友百貨 ，作為「顧客意見回饋」聯繫及回覆之用。</span>
                   </label>
                 </div>
                 <ErrorMessage message={errors.isAgreed} />
+
               </div>
             </div>
 

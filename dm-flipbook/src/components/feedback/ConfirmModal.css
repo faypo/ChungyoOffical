@@ -36,6 +36,14 @@
   color: #333;
 }
 
+.modal-header h3.alert-title-primary {
+  color: #4c6fce; 
+}
+
+.modal-header h3.alert-title-danger {
+  color: #e60012; 
+}
+
 .modal-body {
   padding: 0 20px 20px;
   text-align: center;
@@ -58,6 +66,8 @@
   background: transparent;
   cursor: pointer;
   transition: background-color 0.2s;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .modal-cancel-btn {
@@ -75,6 +85,14 @@
 
 .modal-confirm-btn.danger {
   color: #e60012; 
+}
+
+.modal-confirm-btn.alert-black {
+  color: #333; 
+}
+
+.modal-confirm-btn.full-width {
+  border-left: none;
 }
 
 .modal-confirm-btn:active {

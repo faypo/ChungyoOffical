@@ -3,8 +3,8 @@ import './FloorGuide.css';
 
 const BUILDINGS = ['A', 'B', 'C'];
 
-const BUILDING_COLORS = { A: '#6E6E6E', B: '#6E6E6E', C: '#6E6E6E' };
-const BUILDING_BG     = { A: '#D9D9D9', B: '#D9D9D9', C: '#D9D9D9' };
+const BUILDING_COLORS = { A: '#3d3b39', B: '#3d3b39', C: '#3d3b39' };
+const BUILDING_BG     = { A: '#f2efeb', B: '#f2efeb', C: '#f2efeb' };
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(
@@ -22,7 +22,7 @@ function useIsMobile() {
 export default function FloorGuide() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [selectedBuilding, setSelectedBuilding] = useState('A');
+  const [selectedBuilding, setSelectedBuilding] = useState('B');
   const [selectedFloor, setSelectedFloor] = useState(null);
   const [floorDrawerOpen, setFloorDrawerOpen] = useState(false);
   const isMobile = useIsMobile();
@@ -30,11 +30,14 @@ export default function FloorGuide() {
   const touchStartY = useRef(null);
 
   useEffect(() => {
-    fetch('/floor-guide.json')
+    fetch('/api/floor-guide')
       .then(r => r.json())
       .then(d => {
         setData(d);
-        if (d.floors?.length) setSelectedFloor(d.floors[0].id);
+        if (d.floors?.length) {
+          const floor1F = d.floors.find(f => f.id === '1F');
+          setSelectedFloor(floor1F ? '1F' : d.floors[0].id);
+        }
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -124,8 +127,8 @@ export default function FloorGuide() {
               )}
               {floorInfo.icons?.length > 0 && (
                 <div className="floor-intro-icons">
-                  {floorInfo.icons.map((icon, i) => (
-                    <img key={i} className="floor-intro-icon" src={`/floor-pic/icon/${icon}`} alt={icon} />
+                  {floorInfo.icons.map((icon) => (
+                    <img key={icon} className="floor-intro-icon" src={`/api/images/floor-pic/icon/${icon}`} alt={icon} />
                   ))}
                 </div>
               )}
@@ -137,7 +140,7 @@ export default function FloorGuide() {
           ) : (
             <div className="floor-cards">
               {counters.map((c, i) => (
-                <div key={i} className="floor-card">
+                <div key={c.name || i} className="floor-card">
                   <div className="floor-card-logo">
                     {c.logo ? (
                       <img src={c.logo} alt={c.name} />

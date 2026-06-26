@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Footer.css';
 
 const SOCIAL = [
@@ -21,10 +21,24 @@ const SOCIAL = [
 const LINKS = [
   { label: '企業入口', href: 'https://eip.chungyo.com.tw' },
   { label: '人才招募', href: 'https://reurl.cc/zDrrON' },
-  { label: '招商專區', href: '#' },
+  { label: '招商專區', href: '/leasing' },
 ];
 
 export default function Footer() {
+  const [sustainabilityUrl, setSustainabilityUrl] = useState('');
+  const [homeTotal, setHomeTotal] = useState(null);
+
+  useEffect(() => {
+    fetch('/api/config')
+      .then(r => r.ok ? r.json() : {})
+      .then(d => { if (d.sustainabilityReportUrl) setSustainabilityUrl(d.sustainabilityReportUrl); })
+      .catch(() => {});
+    fetch('/api/stats/summary')
+      .then(r => r.ok ? r.json() : {})
+      .then(d => { if (d.homeTotal != null) setHomeTotal(d.homeTotal); })
+      .catch(() => {});
+  }, []);
+
   return (
     <footer className="site-footer">
       <div className="footer-inner">
@@ -40,6 +54,7 @@ export default function Footer() {
           <p>營業時間：週日～週四 11:00～21:30　週五六、例假日前一日 11:00～22:00</p>
           <p>電話：04-22253456</p>
           <p>統一編號：28411026</p>
+          {homeTotal != null && <p>網站瀏覽人次：{homeTotal.toLocaleString()}</p>}
         </div>
 
         {/* Links */}
@@ -47,6 +62,10 @@ export default function Footer() {
           {LINKS.map(({ label, href }) => (
             <a key={label} href={href} className="footer-link">{label}</a>
           ))}
+          <a href="/privacy" className="footer-link">隱私權政策</a>
+          {sustainabilityUrl && (
+            <a href={sustainabilityUrl} className="footer-link">中友永續報告書</a>
+          )}
         </div>
 
         {/* Social */}

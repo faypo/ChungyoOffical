@@ -1,0 +1,152 @@
+/* WinnersManager — extends FloorGuideManager.css */
+
+.wm-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ── Event meta form ── */
+.wm-meta-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.wm-meta-label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #444;
+}
+
+.wm-cols-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 8px;
+}
+
+.wm-cols-grid {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.wm-cols-grid .fg-info-input {
+  flex: 1;
+  min-width: 100px;
+}
+
+/* ── Tree ── */
+.wm-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px 0;
+}
+
+.wm-node-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.wm-node-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 5px;
+  border-left: 3px solid transparent;
+  margin-bottom: 2px;
+  transition: background 0.1s;
+}
+
+.wm-node-row[data-depth="0"] { background: #fef9f9; border-left-color: #c0392b; }
+.wm-node-row[data-depth="1"] { background: #f0f9ff; border-left-color: #2980b9; }
+.wm-node-row[data-depth="2"] { background: #f0fdf5; border-left-color: #27ae60; }
+.wm-node-row[data-depth="3"] { background: #fdf5ff; border-left-color: #8e44ad; }
+.wm-node-row[data-depth="4"] { background: #f5f5f5; border-left-color: #7f8c8d; }
+
+.wm-node-col-label {
+  font-size: 11px;
+  color: #999;
+  min-width: 54px;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.wm-node-input {
+  flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px 8px;
+  font-size: 13px;
+  outline: none;
+  background: #fff;
+}
+
+.wm-node-input:focus {
+  border-color: #c0392b;
+  box-shadow: 0 0 0 2px rgba(192, 57, 43, 0.08);
+}
+
+/* ── Node buttons ── */
+.wm-btn {
+  padding: 4px 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.1s;
+}
+
+.wm-btn-child {
+  background: #eaf4fb;
+  color: #2980b9;
+}
+
+.wm-btn-child:hover { background: #d6eaf8; }
+
+.wm-btn-del {
+  background: #fdf2f2;
+  color: #c0392b;
+}
+
+.wm-btn-del:hover { background: #fce4e4; }
+
+/* ── Drag handle ── */
+.wm-drag-col {
+  width: 32px;
+  text-align: center;
+  padding: 0 4px;
+}
+
+.wm-drag-handle {
+  display: inline-block;
+  cursor: grab;
+  color: #bbb;
+  font-size: 18px;
+  line-height: 1;
+  padding: 4px 6px;
+  border-radius: 4px;
+  user-select: none;
+  transition: color 0.15s, background 0.15s;
+}
+.wm-drag-handle:hover {
+  color: #666;
+  background: #f0f0f0;
+}
+.wm-drag-handle:active { cursor: grabbing; }
+
+/* ── Actions bar ── */
+.wm-actions {
+  display: flex;
+  gap: 10px;
+  padding-top: 8px;
+  border-top: 1px solid #f0f0f0;
+}

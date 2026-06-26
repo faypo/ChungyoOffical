@@ -4,29 +4,30 @@ import './MobileFlipBook.css';
 
 /**
  * Flatten spreads into individual mobile pages.
- *   spread 0 → right half only (cover)
- *   spread 1..N → left half, then right half
+ * double: spread 0 → right half (cover), spread N → left+right, last → left (back cover)
+ * single: each page shown in full, no splitting
  */
-function buildMobilePages(pages) {
+function buildMobilePages(pages, type) {
+  if (type === 'single') {
+    return pages.map((page, i) => ({ page, side: 'single', spreadIndex: i }));
+  }
   const result = [];
   pages.forEach((page, i) => {
     if (i === 0) {
-      // 封面（cover 右半）排第一頁
       result.push({ page, side: 'right', spreadIndex: 0 });
     } else {
       result.push({ page, side: 'left',  spreadIndex: i });
       result.push({ page, side: 'right', spreadIndex: i });
     }
   });
-  // 封底（cover 左半）排最後一頁
   if (pages.length > 0) {
     result.push({ page: pages[0], side: 'left', spreadIndex: 0 });
   }
   return result;
 }
 
-export default function MobileFlipBook({ pages, buttons = [], onBack }) {
-  const mobilePages = buildMobilePages(pages);
+export default function MobileFlipBook({ pages, type = 'double', buttons = [], onBack }) {
+  const mobilePages = buildMobilePages(pages, type);
   const TOTAL = mobilePages.length;
 
   // dragOffset: -1..1  (negative = moving toward next, positive = moving toward prev)
@@ -289,7 +290,7 @@ export default function MobileFlipBook({ pages, buttons = [], onBack }) {
             className="mobile-page"
             style={{ transform: `translateX(${currentTranslate}%)` }}
           >
-            <PageContent page={currentItem.page} side={currentItem.side} />
+            <PageContent page={currentItem.page} side={currentItem.side} pageType={type} />
           </div>
 
           {/* Adjacent page (incoming during drag / animation) */}
@@ -298,7 +299,7 @@ export default function MobileFlipBook({ pages, buttons = [], onBack }) {
               className="mobile-page"
               style={{ transform: `translateX(${adjTranslate}%)` }}
             >
-              <PageContent page={adjItem.page} side={adjItem.side} />
+              <PageContent page={adjItem.page} side={adjItem.side} pageType={type} />
             </div>
           )}
         </div>

@@ -1,0 +1,107 @@
+{
+  "content": [
+    {
+      "type": "image",
+      "file": "gallery1.jpg",
+      "hotspots": []
+    },
+    {
+      "type": "image",
+      "file": "gallery1-1.jpg",
+      "hotspots": [
+        {
+          "id": "1779875276656",
+          "x": 0.2222222222222222,
+          "y": 8.248451634457236,
+          "width": 99.77777777777777,
+          "height": 83.15789473684211,
+          "url": "https://dmpage.chungyo.com.tw/activity/act-1779933048068"
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "file": "gallery1-2.jpg",
+      "hotspots": [
+        {
+          "id": "1779875276657",
+          "x": 0.059804280598958336,
+          "y": 6.465277420847039,
+          "width": 99.94019571940103,
+          "height": 87.36842105263159,
+          "url": "https://www.chungyo.com.tw/pages/gallery/sub2.html"
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "file": "gallery1-3.jpg",
+      "hotspots": [
+        {
+          "id": "1779932450076",
+          "x": 0,
+          "y": 6.465277420847039,
+          "width": 100,
+          "height": 87.36842105263159,
+          "url": "https://www.chungyo.com.tw/pages/gallery/sub3.html"
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "file": "gallery1-4.jpg",
+      "hotspots": [
+        {
+          "id": "1779932450077",
+          "x": 0.059804280598958336,
+          "y": 5.41264584189967,
+          "width": 99.94019571940103,
+          "height": 88.42105263157895,
+          "url": "https://www.chungyo.com.tw/pages/gallery/sub4.html"
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "file": "gallery1-5.jpg",
+      "hotspots": [
+        {
+          "id": "1779932450078",
+          "x": 0.059804280598958336,
+          "y": 8.570540578741777,
+          "width": 99.94019571940103,
+          "height": 83.15789473684211,
+          "url": "https://www.chungyo.com.tw/pages/gallery/sub5.html"
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "file": "gallery1-6.jpg",
+      "hotspots": [
+        {
+          "id": "1779932450079",
+          "x": 0,
+          "y": 8.570540578741777,
+          "width": 100,
+          "height": 84.21052631578947,
+          "url": "https://www.chungyo.com.tw/pages/gallery/sub6.html"
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "file": "gallery1-7.jpg",
+      "hotspots": [
+        {
+          "id": "1779932450080",
+          "x": 0,
+          "y": 8.262361225328956,
+          "width": 99.94019571940103,
+          "height": 83.15789473684211,
+          "url": "https://dmpage.chungyo.com.tw/activity/act-1779932831672"
+        }
+      ]
+    }
+  ]
+}

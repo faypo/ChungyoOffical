@@ -1,0 +1,60 @@
+.strip-viewer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background: #f0f0f0;
+}
+
+.strip-topbar {
+  position: sticky;
+  top: var(--header-h, 0px);
+  z-index: 100;
+  padding: 10px 16px;
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  flex-shrink: 0;
+}
+
+.strip-back-btn {
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 6px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+  color: #333;
+}
+.strip-back-btn:hover { background: #f0f0f0; }
+
+.strip-scroll {
+  display: flex;
+  justify-content: center;
+  padding: 24px 16px 60px;
+}
+
+.strip-canvas {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  align-self: flex-start; /* 防止 flex stretch 把高度撐到視窗高，讓高度由圖片決定 */
+}
+
+.strip-image {
+  width: 100%;
+  display: block;
+}
+
+.strip-hotspot {
+  position: absolute;
+  display: block;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.strip-empty {
+  color: #aaa;
+  text-align: center;
+  padding: 60px;
+  font-size: 14px;
+}

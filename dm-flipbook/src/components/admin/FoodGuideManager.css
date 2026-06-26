@@ -1,0 +1,42 @@
+/* ===== Food Guide Manager (extends FloorGuideManager.css) ===== */
+
+.food-cat-tabs-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.food-cat-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  flex: 1;
+}
+
+.food-addcat-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.food-addcat-row .fg-info-input {
+  flex: 1;
+  min-width: 160px;
+}
+
+.food-form-row {
+  display: flex;
+  gap: 12px;
+}
+.food-form-row label {
+  flex: 1;
+}
+
+.fg-logo-field-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 4px;
+  display: block;
+}

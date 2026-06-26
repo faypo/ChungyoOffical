@@ -1,140 +1,108 @@
-require('dotenv').config(); 
+require('dotenv').config();
 
-const http = require('http');
-const https = require('https');
-const crypto = require('crypto');
-const CryptoJS = require('crypto-js');
-const sgMail = require('@sendgrid/mail'); 
+const express = require('express');
+const cors    = require('cors');
+const path    = require('path');
+const fs      = require('fs');
 
-const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
-const MAIL_SEND_FROM = process.env.MAIL_SEND_FROM;
-const MAIL_SEND_TO = process.env.MAIL_SEND_TO; 
-const API_URL = process.env.API_URL;
-const PORT = process.env.PORT || 4000; 
-const MAIL_SEND_SUBJECT = process.env.MAIL_SEND_SUBJECT;
-const MAIL_SEND_TEXT = process.env.MAIL_SEND_TEXT;
+const dataRoutes     = require('./routes/data');
+const feedbackRoutes = require('./routes/feedback');
+const adminRoutes    = require('./routes/admin');
+const trackRoutes    = require('./routes/track');
+const { readJSON }   = require('./utils/json');
+const { adminLogger } = require('./utils/logger');
+const { feedbackLogger } = require('./utils/feedback-logger')
 
-sgMail.setApiKey(SENDGRID_API_KEY);
+const PORT = process.env.PORT || 4000;
 
-const prepareTransportPayload = (data) => {
-  const rawStream = JSON.stringify(data);
-  const processed = CryptoJS.AES.encrypt(rawStream, CryptoJS.enc.Hex.parse(process.env.SECRET_KEY_HEX), {
-    iv: CryptoJS.enc.Hex.parse(process.env.SECRET_IV_HEX),
-    mode: CryptoJS.mode.CBC,
-    padding: CryptoJS.pad.Pkcs7
-  });
-  return processed.toString(); 
-};
+const app = express();
+app.disable('x-powered-by');
+app.use((req, res, next) => { res.removeHeader('Server'); next(); });
+app.use(cors());
+app.use(express.json());
 
-// 需求方取消通知功能 程式留存暫不使用
-async function sendNotificationEmail() {
-  try {
-    await sgMail.send({
-      to:      process.env.MAIL_SEND_TO,
-      from:    process.env.MAIL_SEND_FROM,
-      subject: process.env.MAIL_SEND_SUBJECT,
-      text:    process.env.MAIL_SEND_TEXT,
-    });
-  } catch (err) {
-    if (err.response) console.error(err.response.body);
-  }
+// Block path traversal in raw URLs (defence-in-depth for clients that don't normalise)
+app.use((req, res, next) => {
+  try { if (decodeURIComponent(req.path).includes('..')) return res.status(400).end(); }
+  catch { return res.status(400).end(); }
+  next();
+});
+
+function escAttr(s) {
+  return String(s ?? '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-const server = http.createServer((req, res) => {
-    if (req.method === 'POST' && req.url === '/api/feedback') {
-        let body = '';
+// OG 注入：爬蟲拿到 /activity/:id 時回傳帶有 og tags 的 HTML
+app.get('/activity/:id', (req, res) => {
+  const data     = readJSON('activities.json', { activities: [] });
+  const activity = data.activities.find(a => a.id === req.params.id);
 
-        req.on('data', chunk => {
-            body += chunk.toString();
-        });
+  const ogTitle       = escAttr(activity?.ogTitle       || '中友百貨公司');
+  const ogDescription = escAttr(activity?.ogDescription || '');
+  const rawOgImage    = activity?.ogImage || '';
+  const baseUrl       = (process.env.ORIGIN || `${req.protocol}://${req.get('host')}`).replace(/\/$/, '');
+  const ogImage       = escAttr(rawOgImage.startsWith('http') ? rawOgImage : (rawOgImage ? baseUrl + rawOgImage : ''));
 
-        req.on('end', () => {
-            try {
-                // 解析前端傳來的 JSON
-                const data = JSON.parse(body);
+  const htmlPath = process.env.FRONTEND_HTML_PATH
+    || path.join(__dirname, '../html/index.html');
 
-                if (!data || Object.keys(data).length === 0) {
-                    res.writeHead(400, { 'Content-Type': 'application/json' });
-                    return res.end(JSON.stringify({ error: 'Missing data' }));
-                }
+  res.set('Cache-Control', 'public, max-age=300');
 
-                if (!process.env.API_URL) {
-                    res.writeHead(502, { 'Content-Type': 'application/json' });
-                    return res.end(JSON.stringify({ error: 'Bad Gateway: Feedback service not configured.' }));
-                }
+  if (!fs.existsSync(htmlPath)) {
+    // 開發環境尚未 build，回傳最小 HTML（讓 curl / 爬蟲工具可測試 OG tags）
+    return res.type('html').send(
+      `<!DOCTYPE html><html><head>\n` +
+      `<meta charset="UTF-8">\n` +
+      `<meta property="og:title" content="${ogTitle}">\n` +
+      `<meta property="og:description" content="${ogDescription}">\n` +
+      `<meta property="og:image" content="${ogImage}">\n` +
+      `</head><body></body></html>`
+    );
+  }
 
-                const payload = prepareTransportPayload(data);
-                const queryString    = new URLSearchParams({ payload }).toString();
-                const finalJspUrl    = `${process.env.API_URL}?${queryString}`;
-
-                const requestOptions = {
-                    method: 'POST',
-                    secureOptions: crypto.constants.SSL_OP_LEGACY_SERVER_CONNECT
-                };
-
-                const Req = https.request(finalJspUrl, requestOptions, (emp_test) => {
-                    let ResponseData = '';
-
-                    emp_test.on('data', chunk => {
-                        ResponseData += chunk;
-                    });
-
-                    emp_test.on('end', () => {
-                        let isApiSuccess = false;
-                        let parsedData = null;    
-
-                        const isHttpSuccess = emp_test.statusCode === 200;
-
-                        if (isHttpSuccess) {
-                            try {
-                                parsedData = JSON.parse(ResponseData); 
-                                
-                                if (parsedData.status === 'success') {
-                                    isApiSuccess = true; 
-                                    // 程式註解，暫不使用
-                                    // sendNotificationEmail();
-                                }
-
-                            } catch (error) {
-                                console.error('無法解析回傳的 JSON 資料:', error);
-                            }
-                        }
-                        const finalStatusCode = isApiSuccess ? emp_test.statusCode : 400;
-
-                        res.writeHead(finalStatusCode, { 'Content-Type': 'application/json' });
-                        res.end(JSON.stringify({
-                            success: isApiSuccess, 
-                            message: isApiSuccess ? 'Request success' : 'Request Error',
-                            Data: parsedData || ResponseData 
-                        }));                        
-                    });
-                });
-                
-                Req.on('error', (error) => {
-                    console.error('Error forwarding:', error);
-                    res.writeHead(502, { 'Content-Type': 'application/json' });
-                    res.end(JSON.stringify({ error: 'Bad Gateway: Cannot connect to server.' }));
-                });
-
-                Req.end();
-
-            } catch (error) {
-                console.error('Error parsing frontend JSON:', error);
-                res.writeHead(400, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ error: 'Invalid JSON format' }));
-            }
-        });
-
-    } else {
-        res.writeHead(404, { 'Content-Type': 'text/plain' });
-        res.end('Not Found');
-    }
+  let html = fs.readFileSync(htmlPath, 'utf8');
+  const ogTags =
+    `\n    <meta property="og:title" content="${ogTitle}">` +
+    `\n    <meta property="og:description" content="${ogDescription}">` +
+    `\n    <meta property="og:image" content="${ogImage}">`;
+  html = html.replace('<head>', '<head>' + ogTags);
+  res.type('html').send(html);
 });
 
+app.use('/api/images', (req, res, next) => {
+  if (!/\.(jpg|jpeg|png|gif|webp|svg|ico|pdf)$/i.test(req.path)) return res.status(403).end();
+  next();
+}, express.static(path.join(__dirname, 'data')));
+app.use('/api/documents', express.static(path.join(__dirname, 'data', 'documents')));
+app.use('/api', trackRoutes);
+app.use('/api', dataRoutes);
+app.use('/api/feedback',feedbackLogger)
+app.use('/api/feedback', feedbackRoutes);
+app.use('/api/admin', adminLogger);
+app.use('/api/admin', adminRoutes);
 
-server.listen(PORT, () => {
-    const hostname = require('os').hostname();
-    console.log(`Local:   http://localhost:${PORT}`);
-    console.log(`Network: http://${hostname}:${PORT}`);
+// API catch-all：未匹配的 /api/* 路由回傳 404/405，避免掉到 SPA
+app.use('/api', (req, res) => {
+  res.status(req.method === 'GET' ? 404 : 405).json({
+    error: req.method === 'GET' ? 'Not found' : 'Method not allowed',
+  });
 });
 
+// 部署時服務前端打包檔案
+const distPath = process.env.FRONTEND_DIST_PATH
+  || path.join(__dirname, '../html');
+
+if (fs.existsSync(distPath)) {
+  app.use(express.static(distPath));
+  // SPA catch-all：僅限 GET，讓 React Router 處理前端路由
+  app.get('/{*path}', (req, res) => {
+    res.sendFile(path.join(distPath, 'index.html'));
+  });
+}
+
+const server = app.listen(PORT, () => {
+  const hostname = require('os').hostname();
+  console.log(`Local:   http://localhost:${PORT}`);
+  console.log(`Network: http://${hostname}:${PORT}`);
+});
+server.headersTimeout = 2000;

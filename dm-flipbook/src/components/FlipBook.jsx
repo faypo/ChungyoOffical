@@ -16,9 +16,14 @@ function useIsMobile() {
   return isMobile;
 }
 
-function getSpreadPages(pages, spreadIndex) {
+function getSpreadPages(pages, spreadIndex, type) {
+  if (type === 'single') {
+    return {
+      left:  pages[spreadIndex * 2]     ?? null,
+      right: pages[spreadIndex * 2 + 1] ?? null,
+    };
+  }
   const page = pages[spreadIndex] ?? null;
-  // spread 0: cover.jpg 左半=封底, 右半=封面, 完整顯示
   return { left: page, right: page };
 }
 
@@ -47,9 +52,9 @@ function leafAngles(progress, direction) {
   };
 }
 
-export default function FlipBook({ pages, buttons = [], onBack }) {
+export default function FlipBook({ pages, type = 'double', buttons = [], onBack }) {
   const isMobile      = useIsMobile();
-  const TOTAL_SPREADS = pages.length;
+  const TOTAL_SPREADS = type === 'single' ? Math.ceil(pages.length / 2) : pages.length;
 
   const [currentSpread, setCurrentSpread]   = useState(0);
   const [flipActive, setFlipActive]         = useState(false);
@@ -85,8 +90,8 @@ export default function FlipBook({ pages, buttons = [], onBack }) {
   useEffect(() => { currentSpreadRef.current = currentSpread; }, [currentSpread]);
   useEffect(() => { scaleRef.current = scale; }, [scale]);
 
-  const { left: leftPage, right: rightPage } = getSpreadPages(pages, currentSpread);
-  const pendingPages = pendingSpread !== null ? getSpreadPages(pages, pendingSpread) : null;
+  const { left: leftPage, right: rightPage } = getSpreadPages(pages, currentSpread, type);
+  const pendingPages = pendingSpread !== null ? getSpreadPages(pages, pendingSpread, type) : null;
 
   // Under the closing leaf, show the incoming page so it's revealed as the leaf rotates away
   let bgLeft  = leftPage;
@@ -323,6 +328,9 @@ export default function FlipBook({ pages, buttons = [], onBack }) {
   const zoomOut = useCallback(() => setScale(s => Math.max(s - SCALE_STEP, SCALE_MIN)), []);
   const zoomReset = useCallback(() => { setScale(1); resetPan(); }, [resetPan]);
 
+  // Auto-center when scale returns to exactly 1
+  useEffect(() => { if (scale === 1) resetPan(); }, [scale, resetPan]);
+
   useEffect(() => {
     const onWheel = (e) => {
       if (!e.ctrlKey && !e.metaKey) return;
@@ -336,7 +344,7 @@ export default function FlipBook({ pages, buttons = [], onBack }) {
 
   // ─── Mobile: delegate to single-page slider ───────────────────────────────
 
-  if (isMobile) return <MobileFlipBook pages={pages} buttons={buttons} onBack={onBack} />;
+  if (isMobile) return <MobileFlipBook pages={pages} type={type} buttons={buttons} onBack={onBack} />;
 
   // ─── Compute leaf transforms ──────────────────────────────────────────────
 
@@ -356,7 +364,7 @@ export default function FlipBook({ pages, buttons = [], onBack }) {
       )}
       <div
         className="stage"
-        style={{ cursor: scaleRef.current > 1 ? 'grab' : 'grab' }}
+        style={{ cursor: scaleRef.current > 1 ? 'grab' : 'default' }}
         onMouseDown={(e) => {
           if (e.button !== 0) return;
           e.preventDefault();
@@ -387,7 +395,7 @@ export default function FlipBook({ pages, buttons = [], onBack }) {
         <div className="book" ref={bookRef} style={{ transform: `translate(${panX}px, ${panY}px) scale(${scale})` }}>
           {/* Left page */}
           <div className="book-side book-left">
-            <PageContent page={bgLeft} side="left" />
+            <PageContent page={bgLeft} side="left" pageType={type} />
           </div>
 
           {/* Spine */}
@@ -395,7 +403,7 @@ export default function FlipBook({ pages, buttons = [], onBack }) {
 
           {/* Right page */}
           <div className="book-side book-right">
-            <PageContent page={bgRight} side="right" />
+            <PageContent page={bgRight} side="right" pageType={type} />
           </div>
 
           {/* Two-leaf drag-driven flip — lives at book level to cross the spine */}
@@ -404,13 +412,13 @@ export default function FlipBook({ pages, buttons = [], onBack }) {
               className="flip-leaf flip-next-closing"
               style={{ transform: `rotateY(${closingAngle}deg)` }}
             >
-              <PageContent page={rightPage} side="right" />
+              <PageContent page={rightPage} side="right" pageType={type} />
             </div>
             <div
               className="flip-leaf flip-next-opening"
               style={{ transform: `rotateY(${openingAngle}deg)` }}
             >
-              <PageContent page={pendingPages?.left} side="left" />
+              <PageContent page={pendingPages?.left} side="left" pageType={type} />
             </div>
           </>}
           {flipActive && flipDirection === 'prev' && <>
@@ -418,13 +426,13 @@ export default function FlipBook({ pages, buttons = [], onBack }) {
               className="flip-leaf flip-prev-closing"
               style={{ transform: `rotateY(${closingAngle}deg)` }}
             >
-              <PageContent page={leftPage} side="left" />
+              <PageContent page={leftPage} side="left" pageType={type} />
             </div>
             <div
               className="flip-leaf flip-prev-opening"
               style={{ transform: `rotateY(${openingAngle}deg)` }}
             >
-              <PageContent page={pendingPages?.right} side="right" />
+              <PageContent page={pendingPages?.right} side="right" pageType={type} />
             </div>
           </>}
         </div>

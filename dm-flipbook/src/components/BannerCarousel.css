@@ -1,0 +1,93 @@
+/* ===== Banner Carousel — Japanese Magazine Style ===== */
+.bc-root {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  background: #e8e4df;
+}
+
+.bc-track {
+  display: flex;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.bc-slide {
+  flex: 0 0 100%;
+  width: 100%;
+}
+
+.bc-link {
+  display: block;
+  line-height: 0;
+}
+
+.bc-img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Arrows */
+.bc-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(250, 249, 247, 0.85);
+  color: #1a1a1a;
+  border: 1px solid rgba(216, 212, 207, 0.9);
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0;
+  transition: background 0.2s, color 0.2s;
+  z-index: 10;
+}
+.bc-arrow:hover {
+  background: #5e5c5a;
+  color: #fff;
+  border-color: #5e5c5a;
+}
+.bc-arrow--prev { left: 16px; }
+.bc-arrow--next { right: 16px; }
+
+/* Dots */
+.bc-dots {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.bc-dot {
+  width: 24px;
+  height: 2px;
+  border-radius: 0;
+  border: none;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.3s, width 0.3s;
+}
+.bc-dot.active {
+  background: #fff;
+  width: 36px;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .bc-arrow { display: none; }
+  .bc-dot   { width: 16px; }
+  .bc-dot.active { width: 24px; }
+}

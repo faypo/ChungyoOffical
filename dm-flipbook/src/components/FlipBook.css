@@ -14,8 +14,8 @@
   display: flex;
   align-items: stretch;
   position: relative;
-  height: min(90vh, 700px);
-  width: min(130vh, 1050px);
+  height: min(calc(100dvh - var(--header-h, 0px) - 80px), 700px);
+  width: min(calc((100dvh - var(--header-h, 0px) - 80px) * 130 / 90), 1050px);
   box-shadow: 0 30px 60px rgba(0,0,0,0.8);
   transform-style: preserve-3d;
 }
@@ -149,7 +149,7 @@
 
 .float-dots {
   position: fixed;
-  bottom: 16px; left: 50%; transform: translateX(-50%);
+  bottom: calc(var(--footer-h, 0px) + 28px); left: 50%; transform: translateX(-50%);
   z-index: 50;
   display: flex; gap: 8px; align-items: center;
   background: rgba(255,255,255,0.85);
@@ -178,7 +178,7 @@
 /* ===== Zoom controls ===== */
 .zoom-controls {
   position: fixed;
-  bottom: 16px;
+  bottom: calc(var(--footer-h, 0px) + 28px);
   right: 16px;
   z-index: 50;
   display: flex;

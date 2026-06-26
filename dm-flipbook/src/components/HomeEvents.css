@@ -1,0 +1,84 @@
+/* ===== Home Events — Japanese Magazine Style ===== */
+.he-section {
+  padding: 52px 40px 56px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.he-title {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 400;
+  color: #6b6966;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.he-title-rule {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.he-title-rule::before,
+.he-title-rule::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #d8d4cf;
+}
+.he-title-rule-text {
+  font-size: 22px;
+  color: #1a1a1a;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.he-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.he-card {
+  overflow: hidden;
+  background: #f2efeb;
+  border: 1px solid #e0dbd5;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.he-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.he-link {
+  display: block;
+  line-height: 0;
+}
+
+.he-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.he-card:hover .he-img {
+  transform: scale(1.03);
+}
+
+/* 平板：2 欄 */
+@media (max-width: 900px) {
+  .he-section { padding: 36px 24px 40px; }
+  .he-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+}
+
+/* 手機：1 欄 */
+@media (max-width: 500px) {
+  .he-section { padding: 28px 20px 32px; }
+  .he-grid { grid-template-columns: 1fr; gap: 10px; }
+  .he-title { font-size: 10px; letter-spacing: 2px; }
+  .he-title-rule-text { font-size: 16px; letter-spacing: 1px; }
+}

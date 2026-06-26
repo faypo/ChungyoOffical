@@ -18,7 +18,7 @@ function RestaurantCard({ restaurant }) {
   const imgSrc = restaurant.image
     ? (restaurant.image.startsWith('/') || restaurant.image.startsWith('http')
         ? restaurant.image
-        : `/food-pic/${restaurant.image}`)
+        : `/api/images/food-pic/${restaurant.image}`)
     : null;
 
   return (
@@ -60,8 +60,8 @@ function Section({ title, restaurants }) {
     <div className="food-section">
       <div className="food-section-header">{title}</div>
       <div className="food-cards">
-        {restaurants.map((r, i) => (
-          <RestaurantCard key={i} restaurant={r} />
+        {restaurants.map((r) => (
+          <RestaurantCard key={r.name} restaurant={r} />
         ))}
       </div>
     </div>
@@ -91,7 +91,7 @@ export default function Food() {
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    fetch('/food-guide.json')
+    fetch('/api/food-guide')
       .then(r => r.json())
       .then(d => {
         setData(d);
@@ -99,7 +99,7 @@ export default function Food() {
         setLoading(false);
       })
       .catch(() => setLoading(false));
-  }, []);
+  }, [isMobile]);
 
   if (loading) return <div className="page-status">載入中…</div>;
   if (!data)   return <div className="page-status page-error">資料載入失敗</div>;

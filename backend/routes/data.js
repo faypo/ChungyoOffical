@@ -1,0 +1,108 @@
+const express = require('express');
+const fs      = require('fs');
+const path    = require('path');
+const { DATA_DIR, readJSON } = require('../utils/json');
+
+const IMAGE_EXT = /\.(jpg|jpeg|png|webp)$/i;
+const SERVICE_KEYS = ['service', 'traffic', 'parking', 'gift'];
+
+const router = express.Router();
+
+router.get('/catalog', (_req, res) => {
+  res.json(readJSON('catalog.json'));
+});
+
+router.get('/floor-guide', (_req, res) => {
+  res.json(readJSON('floor-guide.json'));
+});
+
+router.get('/food-guide', (_req, res) => {
+  res.json(readJSON('food-guide.json'));
+});
+
+router.get('/dm/:id/pages', (req, res) => {
+  if (!/^[\w-]+$/.test(req.params.id)) return res.status(400).json({ error: 'Invalid ID' });
+  const indexPath = path.join(DATA_DIR, 'dm-pic', req.params.id, 'index.json');
+  if (!fs.existsSync(indexPath)) return res.status(404).json({ error: 'DM not found' });
+  res.json(JSON.parse(fs.readFileSync(indexPath, 'utf8')));
+});
+
+router.get('/service-images', (_req, res) => {
+  const dir = path.join(DATA_DIR, 'service');
+  const result = {};
+  if (fs.existsSync(dir)) {
+    const files = fs.readdirSync(dir).filter(f => IMAGE_EXT.test(f));
+    SERVICE_KEYS.forEach(key => {
+      const found = files.find(f => f.toLowerCase().startsWith(key + '.'));
+      if (found) result[key] = `/api/images/service/${found}`;
+    });
+  }
+  res.json(result);
+});
+
+router.get('/winners', (_req, res) => {
+  res.json(readJSON('winners.json'));
+});
+
+router.get('/activity/:id', (req, res) => {
+  const data = readJSON('activities.json', { activities: [] });
+  const activity = data.activities.find(a => a.id === req.params.id);
+  if (!activity) return res.status(404).json({ error: '找不到此活動頁' });
+  res.json(activity);
+});
+
+router.get('/banners', (_req, res) => {
+  const data = readJSON('banners.json', { banners: [] });
+  const now  = new Date();
+  data.banners = data.banners.filter(b => {
+    if (b.startDate && now < new Date(b.startDate)) return false;
+    if (b.endDate) {
+      const end = new Date(b.endDate);
+      end.setHours(23, 59, 59, 999);
+      if (now > end) return false;
+    }
+    return true;
+  });
+  res.json(data);
+});
+
+router.get('/home-events', (_req, res) => {
+  const data = readJSON('home-events.json', { events: [] });
+  const now  = new Date();
+  data.events = data.events.filter(e => {
+    const start = e.startDate ? new Date(e.startDate) : null;
+    const end   = e.endDate   ? new Date(e.endDate)   : null;
+    if (start && now < start) return false;
+    if (end   && now > end)   return false;
+    return true;
+  });
+  res.json(data);
+});
+
+router.get('/gallery', (_req, res) => {
+  res.json(readJSON('gallery.json', { content: [] }));
+});
+
+router.get('/logos', (_req, res) => {
+  res.json(readJSON('logos.json', { groups: [] }));
+});
+
+router.get('/home-promo', (_req, res) => {
+  res.json(readJSON('home-promo.json', {}));
+});
+
+router.get('/home-fb', (_req, res) => {
+  res.json(readJSON('home-fb.json', { src: '' }));
+});
+
+router.get('/config', (_req, res) => {
+  res.json(readJSON('config.json', {}));
+});
+
+router.get('/privacy-policy', (_req, res) => {
+  const filePath = path.join(DATA_DIR, 'privacy-policy.html');
+  if (!fs.existsSync(filePath)) return res.status(404).send('');
+  res.type('html').send(fs.readFileSync(filePath, 'utf8'));
+});
+
+module.exports = router;

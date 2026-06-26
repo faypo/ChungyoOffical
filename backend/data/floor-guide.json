@@ -1,0 +1,1209 @@
+{
+  "floors": [
+    {
+      "id": "15F",
+      "label": "15F  主題餐廳"
+    },
+    {
+      "id": "14F",
+      "label": "14F"
+    },
+    {
+      "id": "13F",
+      "label": "13F  活動大廳|服務中心|生活雜貨"
+    },
+    {
+      "id": "12F",
+      "label": "12F 時尚藝廊 | 主題餐廳 | 家居生活館"
+    },
+    {
+      "id": "11F",
+      "label": "11F  廚房用品|主題餐廳|寢具|誠品書店"
+    },
+    {
+      "id": "10F",
+      "label": "10F  創意平台|家電|誠品書店"
+    },
+    {
+      "id": "9F",
+      "label": "9F   運動服飾|休閒鞋"
+    },
+    {
+      "id": "8F",
+      "label": "8F   GU | 遊樂世界 | 主題餐廳"
+    },
+    {
+      "id": "7F",
+      "label": "7F   宜得利家居 | 婦嬰用品 | 童裝玩具"
+    },
+    {
+      "id": "6F",
+      "label": "6F   商務西服|戶外服飾"
+    },
+    {
+      "id": "5F",
+      "label": "5F   內睡衣 | 咖啡 | 黃金珠寶 | 都會女裝"
+    },
+    {
+      "id": "4F",
+      "label": "4F   流行服飾|香氛保養|韓式攝影|鐘錶"
+    },
+    {
+      "id": "3F",
+      "label": "3F   ABC-Mart|配件|鐘錶|MUJI|進口服飾"
+    },
+    {
+      "id": "2F",
+      "label": "2F   3C|咖啡|鐘錶|珍珠飾品|服飾|香水"
+    },
+    {
+      "id": "M2F",
+      "label": "M2F   NONSPACE"
+    },
+    {
+      "id": "1F",
+      "label": "1F   化妝品|名品|服飾|輕食咖啡"
+    },
+    {
+      "id": "B1",
+      "label": "B1   UNIQLO | 流行配件 | 快速剪髮 | 女鞋 | 服飾"
+    },
+    {
+      "id": "B2",
+      "label": "B2   UNIQLO|藥妝保健|超市|服務台|美饌輕食"
+    },
+    {
+      "id": "B3",
+      "label": "B3   國際美食街|主題餐廳"
+    },
+    {
+      "id": "B4",
+      "label": "B4 地下停車場"
+    },
+    {
+      "id": "B5",
+      "label": "B5 地下停車場"
+    }
+  ],
+  "floorInfo": {
+    "A": {
+      "1F": {
+        "title": "",
+        "icons": []
+      },
+      "2F": {
+        "title": "",
+        "icons": []
+      },
+      "M2F": {
+        "title": "",
+        "icons": []
+      },
+      "3F": {
+        "title": "",
+        "icons": []
+      },
+      "4F": {
+        "title": "",
+        "icons": []
+      },
+      "5F": {
+        "title": "",
+        "icons": []
+      },
+      "6F": {
+        "title": "",
+        "icons": []
+      },
+      "7F": {
+        "title": "",
+        "icons": []
+      },
+      "8F": {
+        "title": "8F   主題餐廳|遊樂世界|GU",
+        "icons": [
+          "toilet.png"
+        ]
+      },
+      "9F": {
+        "title": "",
+        "icons": []
+      },
+      "10F": {
+        "title": "",
+        "icons": []
+      },
+      "11F": {
+        "title": "",
+        "icons": []
+      },
+      "12F": {
+        "title": "京悅港式飲茶/瓦城泰國料理/時尚藝廊",
+        "icons": [
+          "AAA.png",
+          "cutlery.png",
+          "test1.png",
+          "toilet.png"
+        ]
+      },
+      "13F": {
+        "title": "顧客服務中心",
+        "icons": [
+          "ATM.jpg"
+        ]
+      },
+      "14F": {
+        "title": "",
+        "icons": []
+      },
+      "15F": {
+        "title": "",
+        "icons": []
+      },
+      "B1": {
+        "title": "",
+        "icons": []
+      },
+      "B2": {
+        "title": "",
+        "icons": []
+      },
+      "B3": {
+        "title": "",
+        "icons": []
+      },
+      "B4": {
+        "title": "",
+        "icons": []
+      },
+      "B5": {
+        "title": "",
+        "icons": []
+      }
+    },
+    "B": {
+      "1F": {
+        "title": "",
+        "icons": []
+      },
+      "2F": {
+        "title": "",
+        "icons": []
+      },
+      "M2F": {
+        "title": "",
+        "icons": []
+      },
+      "3F": {
+        "title": "",
+        "icons": []
+      },
+      "4F": {
+        "title": "",
+        "icons": []
+      },
+      "5F": {
+        "title": "",
+        "icons": []
+      },
+      "6F": {
+        "title": "",
+        "icons": []
+      },
+      "7F": {
+        "title": "",
+        "icons": []
+      },
+      "8F": {
+        "title": "8F   主題餐廳|遊樂世界|GU",
+        "icons": [
+          "cutlery.png",
+          "toilet.png"
+        ]
+      },
+      "9F": {
+        "title": "",
+        "icons": []
+      },
+      "10F": {
+        "title": "",
+        "icons": []
+      },
+      "11F": {
+        "title": "",
+        "icons": []
+      },
+      "12F": {
+        "title": "",
+        "icons": []
+      },
+      "13F": {
+        "title": "會員服務中心,文化大廳,生活雜貨",
+        "icons": []
+      },
+      "14F": {
+        "title": "",
+        "icons": []
+      },
+      "15F": {
+        "title": "",
+        "icons": []
+      },
+      "B1": {
+        "title": "",
+        "icons": []
+      },
+      "B2": {
+        "title": "",
+        "icons": []
+      },
+      "B3": {
+        "title": "",
+        "icons": []
+      },
+      "B4": {
+        "title": "",
+        "icons": []
+      },
+      "B5": {
+        "title": "",
+        "icons": []
+      }
+    },
+    "C": {
+      "1F": {
+        "title": "化妝品.輕食咖啡",
+        "icons": [
+          "ITEM.jpg",
+          "BOX.jpg",
+          "ATM.jpg",
+          "car.jpg",
+          "tel.jpg"
+        ]
+      },
+      "2F": {
+        "title": "香水.星巴克/CASETiFY",
+        "icons": [
+          "toilet.png",
+          "cutlery.png",
+          "ITEM.jpg"
+        ]
+      },
+      "M2F": {
+        "title": "",
+        "icons": []
+      },
+      "3F": {
+        "title": "歐美服飾.雜貨配件",
+        "icons": [
+          "toilet.png"
+        ]
+      },
+      "4F": {
+        "title": "流行服飾/飾品雜貨.香氛保養",
+        "icons": [
+          "toilet.png"
+        ]
+      },
+      "5F": {
+        "title": "都會女裝/莫凡彼咖啡",
+        "icons": [
+          "ITEM.jpg",
+          "cutlery.png",
+          "lady.jpg"
+        ]
+      },
+      "6F": {
+        "title": "輕商務/西服.皮件皮鞋",
+        "icons": [
+          "toilet.png"
+        ]
+      },
+      "7F": {
+        "title": "婦嬰用品/幼兒服飾.哺集乳室",
+        "icons": [
+          "test1.png",
+          "AAA.png",
+          "AED.jpg",
+          "Nai.jpg"
+        ]
+      },
+      "8F": {
+        "title": "義式屋古拉爵/瀧厚炙燒熟成牛排/克隆尼歡樂世界",
+        "icons": [
+          "toilet.png",
+          "test1.png",
+          "cutlery.png",
+          "AAA.png"
+        ]
+      },
+      "9F": {
+        "title": "運動服飾/休閒鞋.鐘錶",
+        "icons": [
+          "toilet.png"
+        ]
+      },
+      "10F": {
+        "title": "誠品書店/文具/誠品文創",
+        "icons": [
+          "toilet.png",
+          "test1.png",
+          "AAA.png"
+        ]
+      },
+      "11F": {
+        "title": "誠品書店/生活雜貨/咖啡",
+        "icons": [
+          "toilet.png",
+          "ITEM.jpg"
+        ]
+      },
+      "12F": {
+        "title": "大創 DAISO JAPAN",
+        "icons": []
+      },
+      "13F": {
+        "title": "國際大廳",
+        "icons": [
+          "toilet.png",
+          "test1.png",
+          "AAA.png"
+        ]
+      },
+      "14F": {
+        "title": "國際大廳",
+        "icons": []
+      },
+      "15F": {
+        "title": "藍象廷泰式火鍋吃到飽",
+        "icons": [
+          "toilet.png",
+          "cutlery.png"
+        ]
+      },
+      "B1": {
+        "title": "",
+        "icons": []
+      },
+      "B2": {
+        "title": "靜岡勝政日式豬排/春水堂.輕食咖啡",
+        "icons": [
+          "cutlery.png",
+          "ITEM.jpg",
+          "test1.png",
+          "toilet.png",
+          "AAA.png"
+        ]
+      },
+      "B3": {
+        "title": "北村豆腐家/大河屋燒肉丼．串燒/花月嵐拉麵/CoCo壱番屋/國際美食街",
+        "icons": [
+          "cutlery.png"
+        ]
+      },
+      "B4": {
+        "title": "停車場",
+        "icons": [
+          "car1.jpg",
+          "AAA.png",
+          "toilet.png",
+          "park.jpg"
+        ]
+      },
+      "B5": {
+        "title": "停車場",
+        "icons": []
+      }
+    }
+  },
+  "counters": {
+    "A": {
+      "1F": [
+        {
+          "name": "範例品牌 A",
+          "phone": "04-2227-0000",
+          "description": "品牌簡介說明文字，可填入品牌特色或服務項目。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "範例品牌 B",
+          "phone": "04-2227-0001",
+          "description": "品牌簡介說明文字，可填入品牌特色或服務項目。",
+          "logo": ""
+        }
+      ],
+      "2F": [],
+      "M2F": [],
+      "3F": [],
+      "4F": [],
+      "5F": [],
+      "6F": [],
+      "7F": [],
+      "8F": [
+        {
+          "name": "GU",
+          "phone": "04-2229-0484",
+          "description": "YOUR FREEDOM  讓時尚更自由",
+          "logo": "/api/images/floor-pic/1779087152225-GULOGO.png"
+        }
+      ],
+      "9F": [],
+      "10F": [
+        {
+          "name": "FUJI按摩椅",
+          "phone": "04-2225-9460",
+          "description": "FUJI按摩椅。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "LG",
+          "phone": "04-3609-3368",
+          "description": "LG。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "masse瑪謝律動",
+          "phone": "04-2229-3327",
+          "description": "masse瑪謝律動。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "OSIM",
+          "phone": "04-2226-1495",
+          "description": "OSIM。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "OGAWA",
+          "phone": "04-2229-8907",
+          "description": "OGAWA。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "TAKASHIMA高島",
+          "phone": "04-2229-1068",
+          "description": "TAKASHIMA高島。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "tokuyo",
+          "phone": "04-2225-3362",
+          "description": "tokuyo。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "法雅客",
+          "phone": "04-2225-1605",
+          "description": "法雅客。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "集雅社",
+          "phone": "04-3609-3368",
+          "description": "集雅社。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "映像音響",
+          "phone": "04-2225-1887",
+          "description": "映像音響。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        }
+      ],
+      "11F": [
+        {
+          "name": "Fissler菲仕樂",
+          "phone": "04-2229-1912",
+          "description": "Fissler菲仕樂。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "HOMEWORKING元艇",
+          "phone": "0973-698-803",
+          "description": "HOMEWORKING元艇。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "LE CREUSET法廚",
+          "phone": "0975-331-423",
+          "description": "LE CREUSET法廚。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "NARA Thai Cuisine",
+          "phone": "04-2225-5060",
+          "description": "NARA Thai Cuisine。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "THERMOS膳魔師",
+          "phone": "04-2223-1900",
+          "description": "THERMOS膳魔師。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "Ucom益康屋",
+          "phone": "04-2229-3496",
+          "description": "Ucom益康屋。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "牛頭牌",
+          "phone": "04-2229-3496",
+          "description": "牛頭牌。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "西華SILWA",
+          "phone": "04-2223-7508",
+          "description": "西華SILWA。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "均岱鍋具",
+          "phone": "04-2221-2065",
+          "description": "均岱鍋具。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "開飯川食堂",
+          "phone": "04-2223-5168",
+          "description": "開飯川食堂。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "鼎王鵝媽媽",
+          "phone": "04-2223-9152",
+          "description": "鼎王鵝媽媽。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "賽博",
+          "phone": "無專線",
+          "description": "賽博。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        }
+      ],
+      "12F": [
+        {
+          "name": "瓦城泰式料理",
+          "phone": "04-2220-5678",
+          "description": "自1990年創立以來，已成為全台最大的泰式連鎖餐飲第一品牌，以高品質的道地美味、親切熱誠的服務，及溫馨舒適的環境，引領全台泰式餐飲風潮。",
+          "logo": "/api/images/floor-pic/1779865274715-ç¦å.png"
+        },
+        {
+          "name": "京悅港式飲茶",
+          "phone": "04-2223-3919",
+          "description": "京悅港式飲茶。",
+          "logo": "/api/images/floor-pic/1779865314948-äº¬æ.png"
+        }
+      ],
+      "13F": [
+        {
+          "name": "顧客服務中心",
+          "phone": "0800-422800",
+          "description": "顧客服務中心。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        }
+      ],
+      "14F": [
+        {
+          "name": "海底撈火鍋",
+          "phone": "04-2222-0515",
+          "description": "海底撈火鍋。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        }
+      ],
+      "15F": [],
+      "B1": [],
+      "B2": [],
+      "B3": [],
+      "B4": [],
+      "B5": []
+    },
+    "B": {
+      "1F": [
+        {
+          "name": "範例品牌 A",
+          "phone": "04-2227-0000",
+          "description": "品牌簡介說明文字，可填入品牌特色或服務項目。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "範例品牌 B",
+          "phone": "04-2227-0001",
+          "description": "品牌簡介說明文字，可填入品牌特色或服務項目。",
+          "logo": ""
+        }
+      ],
+      "2F": [],
+      "M2F": [],
+      "3F": [],
+      "4F": [],
+      "5F": [],
+      "6F": [],
+      "7F": [],
+      "8F": [
+        {
+          "name": "湯姆熊歡樂世界Tom's world",
+          "phone": "04-2223-6271",
+          "description": "「湯姆熊歡樂世界」是台灣最具規模的室內連鎖育樂廣場，全台超過70個加盟據點，為您打造夢想中的遊樂王國。",
+          "logo": "/api/images/floor-pic/1778828653657-æ¹¯å§çlogo.jpg"
+        }
+      ],
+      "9F": [],
+      "10F": [
+        {
+          "name": "ASKO賽寧",
+          "phone": "04-2225-2953",
+          "description": "ASKO賽寧。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "DIKE",
+          "phone": "0921-179378",
+          "description": "DIKE。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "dyson",
+          "phone": "04-2225-7499",
+          "description": "dyson。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "heng style恆隆行",
+          "phone": "04-2225-5851",
+          "description": "heng style恆隆行。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "Junior喬尼亞",
+          "phone": "04-2225-3873",
+          "description": "Junior喬尼亞",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "jura優瑞",
+          "phone": "04-2225-6233",
+          "description": "jura優瑞。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "Panasonic按摩椅",
+          "phone": "04-2229-4690",
+          "description": "Panasonic按摩椅。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "集雅社Panasonic",
+          "phone": "04-3609-3368",
+          "description": "集雅社Panasonic。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "飛利浦家電",
+          "phone": "04-2225-4405",
+          "description": "飛利浦家電。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "佳醫",
+          "phone": "04-2225-3545",
+          "description": "佳醫。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "來思比irobot",
+          "phone": "04-2225-5029",
+          "description": "來思比irobot。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "征利",
+          "phone": "04-2227-8468",
+          "description": "征利。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "虎牌",
+          "phone": "04-2223-2185",
+          "description": "虎牌。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "科林助聽器",
+          "phone": "04-2220-2668",
+          "description": "科林助聽器。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "飛利浦PH",
+          "phone": "04-2229-3008",
+          "description": "飛利浦PH。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "象印",
+          "phone": "04-2223-5672",
+          "description": "象印。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "嘉儀",
+          "phone": "04-2223-6049",
+          "description": "嘉儀。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        }
+      ],
+      "11F": [
+        {
+          "name": "BBL Premium",
+          "phone": "04-2225-5410",
+          "description": "BBL Premium。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "DAY&DAY",
+          "phone": "04-2225-7798",
+          "description": "DAY&DAY。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "IN HOUSE",
+          "phone": "04-2229-7007",
+          "description": "IN HOUSE。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "La belle格蕾寢飾",
+          "phone": "04-2229-4265",
+          "description": "La belle格蕾寢飾。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "S'eduir",
+          "phone": "04-2225-9135",
+          "description": "S'eduir。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "TENDAYs",
+          "phone": "04-2229-7317",
+          "description": "TENDAYs。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "TEMPUR丹普",
+          "phone": "04-2225-3398",
+          "description": "TEMPUR丹普。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "Tonia Nicole 東妮",
+          "phone": "04-2223-6481",
+          "description": "Tonia Nicole 東妮。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "生活好品2號店",
+          "phone": "04-2225-3456#5274",
+          "description": "生活好品2號店。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "京都西川",
+          "phone": "04-2225-1864",
+          "description": "京都西川。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "法藍瓷",
+          "phone": "04-2225-4941",
+          "description": "法藍瓷。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "易眠床．易眠枕",
+          "phone": "04-2223-2070",
+          "description": "易眠床．易眠枕。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "金．安德森",
+          "phone": "04-2223-7637",
+          "description": "金．安德森。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "金格名床",
+          "phone": "04-2225-9295",
+          "description": "金格名床。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "陶八",
+          "phone": "04-2225-3868",
+          "description": "陶八。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "瑞香 Ruei Siang",
+          "phone": "無專線",
+          "description": "瑞香 Ruei Siang。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        }
+      ],
+      "12F": [
+        {
+          "name": "Artso亞梭傢俬",
+          "phone": "04-2229-4268",
+          "description": "Artso亞梭傢俬",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "BUTTER by Nail Nail",
+          "phone": "04-2229-9051",
+          "description": "BUTTER by Nail Nail。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "cosmescents伊聖詩",
+          "phone": "04-2227-0229",
+          "description": "cosmescents伊聖詩。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "HERBOX荷柏園",
+          "phone": "04-2226-4232",
+          "description": "HERBOX荷柏園。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "Home.焙小日子",
+          "phone": "04-2229-7126",
+          "description": "Home.焙小日子。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "JUST HERB香草集",
+          "phone": "04-2229-7328",
+          "description": "JUST HERB香草集。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "L'erbolario蕾莉歐",
+          "phone": "04-2223-9153",
+          "description": "L'erbolario蕾莉歐。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "Les nez香鼻子",
+          "phone": "0908-879272",
+          "description": "Les nez香鼻子。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "O'right歐萊德",
+          "phone": "04-2229-5806",
+          "description": "O'right歐萊德。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "卡雅仕KYOGOKU",
+          "phone": "無專線",
+          "description": "卡雅仕KYOGOKU。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "有益帖",
+          "phone": "04-2229-2883",
+          "description": "有益帖。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "萬寶暄",
+          "phone": "04-2223-1685",
+          "description": "萬寶暄。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "歐法頌",
+          "phone": "無專線",
+          "description": "歐法頌。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "曜越科技",
+          "phone": "04-2252-8636",
+          "description": "曜越科技。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        }
+      ],
+      "13F": [
+        {
+          "name": "生活好品1號店",
+          "phone": "04-2225-3456#261",
+          "description": "生活好品1號店。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "名人/奧可那泳裝",
+          "phone": "",
+          "description": "",
+          "logo": ""
+        }
+      ],
+      "14F": [],
+      "15F": [],
+      "B1": [],
+      "B2": [],
+      "B3": [],
+      "B4": [],
+      "B5": []
+    },
+    "C": {
+      "1F": [
+        {
+          "name": "Benefit",
+          "phone": "04-2225-1816",
+          "description": "以解決毛孔問題、創新的眉毛造型產品 與標誌性的蜜蠟修眉服務 聞名。品牌主打「幽默是最好的化妝品」，專為女性打造兼具高效與趣味的美容秘密武器。",
+          "logo": ""
+        }
+      ],
+      "2F": [
+        {
+          "name": "CASETiFY",
+          "phone": "04-2225-1086",
+          "description": " 是2011年創立於香港的國際潮流電子配件品牌，以「讓手機殼成為個人化藝術品」為核心理念。主打軍規防摔保護力、豐富的客製化選項，以及與各大知名IP、藝術家及品牌的熱門聯名系列，深受全球年輕世代與名人喜愛。",
+          "logo": ""
+        }
+      ],
+      "M2F": [
+        {
+          "name": "NONSPACE",
+          "phone": "04-2229-2716",
+          "description": "專注於引進多個當紅的韓國街頭與設計師品牌（如 NOMANUAL、ADLV、QT8、NOT4NERD 等），提供具創新和潮流元素的服飾與配件，讓消費者輕鬆打造出具有強烈街頭感與層次感的韓系造型。",
+          "logo": ""
+        }
+      ],
+      "3F": [
+        {
+          "name": "BAKER STREET",
+          "phone": "0901-308-936",
+          "description": "來自英國的潮流設計品牌 英國羊駝品牌BAKER STREET 貝克街官方購物平台----關於我們，以可愛療癒的「羊駝」（草泥馬）作為原創圖騰 連貝克漢都被迷倒！BAKER STREET翻玩藝術又萌又潮讓人一 ...，結合街頭翻玩（Parody）文化 英國品牌設計師手繪-BAKER STREET之「翻玩」系列翻玩是 ...，創造出兼具趣味與潮流感的服飾配件。",
+          "logo": ""
+        }
+      ],
+      "4F": [
+        {
+          "name": "b.club",
+          "phone": "04-2223-9158",
+          "description": "創立於 1991 年的台灣流行女裝品牌，以精緻、甜美的日系穿衣風格為主軸。品牌致力於為都會女性打造兼具優雅與舒適的日常穿搭。",
+          "logo": ""
+        }
+      ],
+      "5F": [
+        {
+          "name": "ANNSHOP小安的店",
+          "phone": "04-2229-0413",
+          "description": "創立於1996年，是具指標性的專業銀飾與人體穿刺品牌。主打純手工客製化飾品、設計師K金與珠寶，並以專業無痛的「手穿另類穿環」聞名，深受年輕族群與潮流人士喜愛。",
+          "logo": ""
+        }
+      ],
+      "6F": [
+        {
+          "name": "BRAUN BUFFEL",
+          "phone": "04-3700-1114",
+          "description": "創立於1887年德國，是享有盛譽的國際奢華皮具品牌。以精選頭層牛皮與卓越手工藝聞名，致力於打造兼具高貴質感與實用性的雋永皮件，其標誌性的金牛標誌象徵著堅固、可靠與不凡的品味。",
+          "logo": ""
+        },
+        {
+          "name": "Carnival 嘉裕",
+          "phone": "04-2225-1059",
+          "description": "創立於1969年，是台灣最具代表性的老字號男裝與西服領導品牌。以卓越的剪裁工藝與半世紀的量身訂製經驗聞名，致力於為現代男士打造高品質的商務與休閒服飾。",
+          "logo": ""
+        },
+        {
+          "name": "CUMAR 鞋",
+          "phone": "04-2223-8201",
+          "description": "是一個融合義大利血統與日本設計理念的專櫃鞋履品牌，主打結合高級皮革與舒適機能的日常通勤、休閒鞋款",
+          "logo": ""
+        }
+      ],
+      "7F": [
+        {
+          "name": "agapebaby(愛佳倍)",
+          "phone": "04-2223-1326",
+          "description": "agapebaby（愛佳倍）成立於 2012 年，專注於代理歐美各大知名頂級母嬰品牌。品牌名稱源自希臘文「agape」（無私的愛），旨在傳遞父母對孩子的愛，為台灣家庭提供簡約、時尚且兼具實用性的高品質育兒選品。",
+          "logo": "/api/images/floor-pic/1779868515664-agapebaby.jpg"
+        }
+      ],
+      "8F": [
+        {
+          "name": "克隆尼歡樂世界",
+          "phone": "04-2223-6271",
+          "description": "克隆尼主題門市跳脫傳統電子遊樂場的風格，融合繽紛、夢幻的裝潢設計，為孩童與家庭打造如童話森林般的遊樂環境。",
+          "logo": "/api/images/floor-pic/1779867653374-clone.jpg"
+        },
+        {
+          "name": "義式屋古拉爵",
+          "phone": "04-2223-0508",
+          "description": "義式屋古拉爵（Café Grazie）為日本雲雀餐飲集團（Skylark）旗下的知名連鎖義式餐廳。主打道地拿坡里披薩、義大利麵及多元開胃菜，以高CP值的澎湃多人套餐和豐富單點選擇聞名，是家庭聚餐與朋友約會的熱門選擇。",
+          "logo": "/api/images/floor-pic/1779867857480-grazie.jpg"
+        },
+        {
+          "name": "瀧厚炙燒熟成牛排",
+          "phone": "04-2229-0889",
+          "description": "瀧厚炙燒熟成牛排主打平價奢華體驗，提供經獨門熟成工法處理的優質肉品。店內裝潢採全台唯一的「英倫摩登美學」風格，排餐最低 \\(\\$290\\) 起，並附設豐富的自助吧，其中真材實料的「番茄牛肉羅宋湯」更是廣受好評的招牌亮點。",
+          "logo": "/api/images/floor-pic/1779867953399-Long-Hou.jpg"
+        }
+      ],
+      "9F": [
+        {
+          "name": "crocs",
+          "phone": "04-2229-8672",
+          "description": "Crocs（卡駱馳）是創立於2002年的美國休閒鞋品牌，以輕盈、防水且透氣的「洞洞鞋」（Clogs）聞名全球。憑藉專利材質與多樣化的造型，廣受各年齡層及醫護、餐飲等久站工作者喜愛。",
+          "logo": "/api/images/floor-pic/1779866376108-crocs.jpg"
+        },
+        {
+          "name": "NIKE",
+          "phone": "04-2223-7190",
+          "description": "Nike 是全球領先的運動品牌之一，其成功的品牌故事不僅僅是運動裝備的故事，更是關於創新、激勵和卓越的故事。",
+          "logo": "/api/images/floor-pic/1779866708279-NIKE.jpg"
+        },
+        {
+          "name": "havaianas",
+          "phone": "04-2229-7311",
+          "description": "Havaianas（哈瓦仕） 於 1962 年創立於巴西，是享譽全球的經典人字拖（夾腳拖）品牌。其名稱在葡萄牙語中意為「夏威夷人」，品牌靈感源自日本傳統草履。Havaianas 以百分之百優質天然橡膠製成，防滑、防水且不易變形，被譽為「人字拖界的第一潮牌」。 ",
+          "logo": "/api/images/floor-pic/1779866866607-havaianas.jpg"
+        },
+        {
+          "name": "Paul Frank",
+          "phone": "04-2229-6673",
+          "description": "Paul Frank™ 於 1995 年誕生於美國杭廷頓海灘的一間小車庫裡，當時創辦人 Paul Frank 親手縫製了幾個訂製皮夾，送給他的朋友們作為禮物。\nPaul Frank 所傳遞的，是一種回歸純真本質的生活態度——提醒我們保持童心、快樂無懼地面對生活。不論是為朋友縫製專屬禮物、將創意絲印在 T 恤上，還是設計出全新的可愛角色，這一切的核心，只有一個詞：有趣。\n多年來，我們透過最具代表性的角色——猴子 Julius™，在全球散播歡笑與快樂。再融合我們鮮明的配色風格與中世紀復古美學，這就是 Paul Frank™ 的經典魅力！",
+          "logo": "/api/images/floor-pic/1779867013853-Paul_Frank.jpg"
+        }
+      ],
+      "10F": [
+        {
+          "name": "誠品書店",
+          "phone": "04-2221-1287",
+          "description": "誠品書店。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "CHIC MOO",
+          "phone": "無專線",
+          "description": "CHIC MOO。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "Fevrier 菲芙利",
+          "phone": "04-2225-5012",
+          "description": "Fevrier 菲芙利。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "Like Do",
+          "phone": "0979-705873",
+          "description": "Like Do。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "Keizu 好鞋好設計",
+          "phone": "無專線",
+          "description": "Keizu 好鞋好設計。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "拿鐵小姐",
+          "phone": "無專線",
+          "description": "拿鐵小姐。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        }
+      ],
+      "11F": [
+        {
+          "name": "誠品書店",
+          "phone": "04-2221-1287",
+          "description": "誠品書店。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "blackpages CAFE",
+          "phone": "04-2221-1287#28",
+          "description": "blackpages CAFE。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "expo誠品生活文創平台",
+          "phone": "04-2221-1287#23",
+          "description": "expo誠品生活文創平台。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "FeatherLeather羽革",
+          "phone": "04-2222-1568",
+          "description": "FeatherLeather羽革。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "PEPPER'S",
+          "phone": "04-2228-3289",
+          "description": "PEPPER'S。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "Pintoo",
+          "phone": "04-2227-0158",
+          "description": "Pintoo。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        },
+        {
+          "name": "SOB DEALL",
+          "phone": "04-2225-3485",
+          "description": "SOB DEALL。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        }
+      ],
+      "12F": [
+        {
+          "name": "DAISO大創百貨",
+          "phone": "0928-361-675",
+          "description": "DAISO大創百貨。",
+          "logo": "/api/images/floor-pic/1779865045812-daiso.png"
+        }
+      ],
+      "13F": [],
+      "14F": [],
+      "15F": [
+        {
+          "name": "藍象廷泰鍋吃到飽",
+          "phone": "04-2225-9610",
+          "description": "藍象廷火鍋吃到飽。",
+          "logo": "/floor-pic/Logo_Gift.jpg"
+        }
+      ],
+      "B1": [],
+      "B2": [
+        {
+          "name": "春水堂",
+          "phone": "04-2225-8673",
+          "description": "創立於 1983 年，為全球「珍珠奶茶」的發源地。首創以雪克器搖製茶飲，將傳統熱茶轉變為冷飲茶，成功引領劃時代的茶文化革命。結合東方飲茶美學與西式吧台風格，致力於發揚深厚的人文茶館文化。",
+          "logo": ""
+        }
+      ],
+      "B3": [
+        {
+          "name": "CoCo壱番屋",
+          "phone": "04-2225-8132",
+          "description": "創立於1978年，是全球最大的日式咖哩連鎖餐廳，以「顧客第一」為核心，提供高達上千種客製化組合的道地咖哩。",
+          "logo": ""
+        }
+      ],
+      "B4": [],
+      "B5": []
+    }
+  }
+}

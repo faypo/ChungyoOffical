@@ -1,0 +1,9 @@
+.home-page {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
