@@ -1,9 +1,10 @@
 require('dotenv').config();
 
-const express = require('express');
-const cors    = require('cors');
-const path    = require('path');
-const fs      = require('fs');
+const express      = require('express');
+const cors         = require('cors');
+const cookieParser = require('cookie-parser');
+const path         = require('path');
+const fs           = require('fs');
 
 const dataRoutes     = require('./routes/data');
 const feedbackRoutes = require('./routes/feedback');
@@ -19,6 +20,7 @@ const app = express();
 app.disable('x-powered-by');
 app.use((req, res, next) => { res.removeHeader('Server'); next(); });
 app.use(cors());
+app.use(cookieParser());
 app.use(express.json());
 
 // Block path traversal in raw URLs (defence-in-depth for clients that don't normalise)

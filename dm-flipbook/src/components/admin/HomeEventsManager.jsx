@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './ActivityManager.css';
 import './HomeEventsManager.css';
+import { apiFetch } from '../../utils/apiFetch';
 
 const isDragHandle = { current: false };
 
@@ -30,7 +31,7 @@ export default function HomeEventsManager() {
 
   const load = async () => {
     try {
-      const r = await fetch(API);
+      const r = await apiFetch(API);
       const d = await r.json();
       const list = d.events ?? [];
       setEvents(list);
@@ -56,7 +57,7 @@ export default function HomeEventsManager() {
     for (const file of images) {
       const fd = new FormData();
       fd.append('image', file);
-      const res = await fetch(`${API}/upload`, { method: 'POST', body: fd });
+      const res = await apiFetch(`${API}/upload`, { method: 'POST', body: fd });
       if (res.ok) count++;
     }
     setUploading(false);
@@ -96,7 +97,7 @@ export default function HomeEventsManager() {
   const handleBlur = async (id) => {
     const f = fields[id];
     if (!f) return;
-    const res = await fetch(`${API}/${id}`, {
+    const res = await apiFetch(`${API}/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ url: f.url, startDate: f.startDate, endDate: f.endDate }),
@@ -117,7 +118,7 @@ export default function HomeEventsManager() {
     replacingIdRef.current = null;
     const fd = new FormData();
     fd.append('image', file);
-    const res = await fetch(`${API}/${id}/replace`, { method: 'POST', body: fd });
+    const res = await apiFetch(`${API}/${id}/replace`, { method: 'POST', body: fd });
     if (!res.ok) return showMsg('換圖失敗', 'err');
     showMsg('已換圖');
     load();
@@ -125,7 +126,7 @@ export default function HomeEventsManager() {
 
   const handleDelete = async (id) => {
     if (!window.confirm('確定刪除此活動卡片？')) return;
-    const res = await fetch(`${API}/${id}`, { method: 'DELETE' });
+    const res = await apiFetch(`${API}/${id}`, { method: 'DELETE' });
     if (!res.ok) return showMsg('刪除失敗', 'err');
     showMsg('已刪除');
     load();
@@ -144,7 +145,7 @@ export default function HomeEventsManager() {
     next.splice(targetIdx, 0, moved);
     setEvents(next);
     dragSrc.current = null;
-    const res = await fetch(`${API}/reorder`, {
+    const res = await apiFetch(`${API}/reorder`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ids: next.map(e => e.id) }),

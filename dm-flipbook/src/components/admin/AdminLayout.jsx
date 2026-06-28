@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { NavLink, Outlet, useLocation } from 'react-router-dom';
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import './AdminLayout.css';
 
 const OTHER_NAV = [
@@ -26,6 +27,13 @@ export default function AdminLayout() {
   const { pathname } = useLocation();
   const isHomePath = HOME_NAV.some(n => pathname.startsWith(n.to));
   const [homeOpen, setHomeOpen] = useState(isHomePath);
+  const { logout, isSuperAdmin } = useAuth();
+  const navigate   = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/admin/login', { replace: true });
+  };
 
   return (
     <div className="admin-shell">
@@ -68,7 +76,26 @@ export default function AdminLayout() {
             </NavLink>
           ))}
 
+          {isSuperAdmin && (
+            <>
+              <div className="admin-nav-divider" />
+              <NavLink
+                to="/admin/users"
+                className={({ isActive }) => 'admin-nav-link' + (isActive ? ' active' : '')}
+              >
+                帳號管理
+              </NavLink>
+              <NavLink
+                to="/admin/roles"
+                className={({ isActive }) => 'admin-nav-link' + (isActive ? ' active' : '')}
+              >
+                角色管理
+              </NavLink>
+            </>
+          )}
+
         </nav>
+        <button className="admin-logout-btn" onClick={handleLogout}>登出</button>
       </aside>
       <main className="admin-main">
         <Outlet />

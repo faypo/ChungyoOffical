@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { apiFetch } from '../../utils/apiFetch';
 
 const API = '/api/admin/home-promo';
 
@@ -11,7 +12,7 @@ function ImageSlot({ label, file, slot, onUploaded }) {
   const upload = async (f) => {
     const fd = new FormData();
     fd.append('image', f);
-    const r = await fetch(endpoint, { method: 'POST', body: fd });
+    const r = await apiFetch(endpoint, { method: 'POST', body: fd });
     const d = await r.json();
     if (d.file) {
       setTs(Date.now());
@@ -49,7 +50,7 @@ export default function HomePromoManager() {
   const [saved,   setSaved]   = useState(false);
 
   useEffect(() => {
-    fetch(API).then(r => r.json()).then(setData).catch(() => {});
+    apiFetch(API).then(r => r.json()).then(setData).catch(() => {});
   }, []);
 
   if (!data) return <p>載入中…</p>;
@@ -57,7 +58,7 @@ export default function HomePromoManager() {
   const save = (patch) => {
     const next = { ...data, ...patch };
     setData(next);
-    fetch(API, {
+    apiFetch(API, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(next),
@@ -70,7 +71,7 @@ export default function HomePromoManager() {
   };
 
   const saveCardUrl = (slot) => {
-    fetch(API, {
+    apiFetch(API, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ cards: [{ slot, url: data.cards.find(c => c.slot === slot)?.url ?? '' }] }),

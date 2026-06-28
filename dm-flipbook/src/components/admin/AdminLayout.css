@@ -1,3 +1,5 @@
+.admin-nav-divider { height: 1px; background: #444; margin: .5rem .8rem; }
+
 /* ===== Admin Shell ===== */
 .admin-shell {
   display: flex;
@@ -90,6 +92,26 @@
 }
 .admin-nav-link:hover  { background: rgba(255,255,255,0.08); color: #fff; }
 .admin-nav-link.active { background: rgba(255,255,255,0.14); color: #fff; }
+
+/* ── Logout ── */
+.admin-logout-btn {
+  display: block;
+  width: 100%;
+  padding: 14px 16px;
+  background: none;
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.5);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+.admin-logout-btn:hover { background: rgba(255,255,255,0.06); color: #fff; }
 
 /* ── Main ── */
 .admin-main {

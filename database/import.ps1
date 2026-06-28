@@ -19,7 +19,11 @@ $DB_PASS = $env_vars["MYSQL_PASSWORD"]
 $DB_NAME = $env_vars["MYSQL_DATABASE"]
 
 function Exec-SQL($sql) {
-  $result = $sql | docker exec -i $Container mysql --default-character-set=utf8mb4 -u $DB_USER -p"$DB_PASS" $DB_NAME 2>&1
+  $tmp = [System.IO.Path]::GetTempFileName()
+  [System.IO.File]::WriteAllText($tmp, $sql, [System.Text.Encoding]::UTF8)
+  docker cp $tmp "${Container}:/tmp/_import.sql" | Out-Null
+  $result = docker exec $Container sh -c "mysql --default-character-set=utf8mb4 -u$DB_USER -p'$DB_PASS' $DB_NAME < /tmp/_import.sql" 2>&1
+  Remove-Item $tmp -Force -ErrorAction SilentlyContinue
   if ($LASTEXITCODE -ne 0) { throw $result }
 }
 

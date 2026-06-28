@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './FloorGuideManager.css';
+import { apiFetch } from '../../utils/apiFetch';
 
 export default function SustainabilityManager() {
   const [currentUrl, setCurrentUrl] = useState('');
@@ -9,7 +10,7 @@ export default function SustainabilityManager() {
   const inputRef = useRef(null);
 
   useEffect(() => {
-    fetch('/api/admin/sustainability')
+    apiFetch('/api/admin/sustainability')
       .then(r => r.ok ? r.json() : {})
       .then(d => setCurrentUrl(d.url || ''))
       .catch(() => {});
@@ -22,7 +23,7 @@ export default function SustainabilityManager() {
     const form = new FormData();
     form.append('pdf', file);
     try {
-      const res  = await fetch('/api/admin/sustainability/upload', { method: 'POST', body: form });
+      const res  = await apiFetch('/api/admin/sustainability/upload', { method: 'POST', body: form });
       const data = await res.json();
       if (data.success) {
         setCurrentUrl(data.url);
@@ -41,7 +42,7 @@ export default function SustainabilityManager() {
   async function handleDelete() {
     if (!confirm('確定要刪除永續報告書？')) return;
     try {
-      const res = await fetch('/api/admin/sustainability', { method: 'DELETE' });
+      const res = await apiFetch('/api/admin/sustainability', { method: 'DELETE' });
       if ((await res.json()).success) {
         setCurrentUrl('');
         showMsg('已刪除');

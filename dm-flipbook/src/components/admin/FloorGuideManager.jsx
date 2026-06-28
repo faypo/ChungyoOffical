@@ -1,13 +1,10 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { apiFetch } from '../../utils/apiFetch';
 import './FloorGuideManager.css';
 
 const API      = '/api/admin/floor-guide';
 const BUILDINGS = ['A', 'B', 'C'];
 const EMPTY_FORM = { name: '', phone: '', description: '', logo: '' };
-
-function apiFetch(url, opts = {}) {
-  return fetch(url, { headers: { 'Content-Type': 'application/json' }, ...opts });
-}
 
 export default function FloorGuideManager() {
   const [data, setData]             = useState(null);
@@ -31,7 +28,7 @@ export default function FloorGuideManager() {
 
   /* 初始載入 */
   useEffect(() => {
-    fetch(API)
+    apiFetch(API)
       .then(r => r.json())
       .then(d => {
         setData(d);
@@ -51,10 +48,10 @@ export default function FloorGuideManager() {
   }, [floor, building, data]);
 
   const reload = () =>
-    fetch(API).then(r => r.json()).then(d => setData(d)).catch(() => {});
+    apiFetch(API).then(r => r.json()).then(d => setData(d)).catch(() => {});
 
   const reloadIcons = useCallback(() =>
-    fetch(`${API}/icons`).then(r => r.json()).then(setIconLibrary).catch(() => {}), []);
+    apiFetch(`${API}/icons`).then(r => r.json()).then(setIconLibrary).catch(() => {}), []);
 
   useEffect(() => { reloadIcons(); }, [reloadIcons]);
 
@@ -144,7 +141,7 @@ export default function FloorGuideManager() {
     setLogoUploading(true);
     const fd = new FormData();
     fd.append('logo', file);
-    const res  = await fetch(`${API}/logo`, { method: 'POST', body: fd });
+    const res  = await apiFetch(`${API}/logo`, { method: 'POST', body: fd });
     const data = await res.json();
     setLogoUploading(false);
     if (!res.ok) return showMsgFn(data.error || '上傳失敗', 'err');
@@ -171,7 +168,7 @@ export default function FloorGuideManager() {
   };
 
   const handleIconDelete = async (filename) => {
-    const res  = await fetch(`${API}/icon/${encodeURIComponent(filename)}`, { method: 'DELETE' });
+    const res  = await apiFetch(`${API}/icon/${encodeURIComponent(filename)}`, { method: 'DELETE' });
     const data = await res.json();
     if (res.status === 409) {
       showMsgFn(`此圖示正在使用中：${data.usedBy.join('、')}，請先從樓層資訊移除後再刪除`, 'err');
@@ -190,7 +187,7 @@ export default function FloorGuideManager() {
     setIconUploading(true);
     const fd = new FormData();
     fd.append('icon', file);
-    const res  = await fetch(`${API}/icon`, { method: 'POST', body: fd });
+    const res  = await apiFetch(`${API}/icon`, { method: 'POST', body: fd });
     const data = await res.json();
     setIconUploading(false);
     if (!res.ok) return showMsgFn(data.error || '上傳失敗', 'err');

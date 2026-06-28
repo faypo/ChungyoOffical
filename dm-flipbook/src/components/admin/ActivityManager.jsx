@@ -1,13 +1,10 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import HotspotEditor from './HotspotEditor';
+import { apiFetch } from '../../utils/apiFetch';
 import './FloorGuideManager.css';
 import './ActivityManager.css';
 
 const API = '/api/admin/activity';
-
-function apiFetch(url, opts = {}) {
-  return fetch(url, { headers: { 'Content-Type': 'application/json' }, ...opts });
-}
 
 function extractYouTubeId(input = '') {
   const m = input.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
@@ -89,7 +86,7 @@ export default function ActivityManager() {
 
   const load = async (preferredId = null) => {
     try {
-      const r = await fetch(API);
+      const r = await apiFetch(API);
       const d = await r.json();
       setActivities(d.activities ?? []);
       setActiveId(prev => {
@@ -191,7 +188,7 @@ export default function ActivityManager() {
     setUploading(true);
     const fd = new FormData();
     files.forEach(f => fd.append('images', f));
-    const res = await fetch(`${API}/${activeId}/upload`, { method: 'POST', body: fd });
+    const res = await apiFetch(`${API}/${activeId}/upload`, { method: 'POST', body: fd });
     const d = await res.json();
     setUploading(false);
     if (!res.ok) return showMsgFn(d.error || '上傳失敗', 'err');
@@ -216,7 +213,7 @@ export default function ActivityManager() {
     if (!file) return;
     const fd = new FormData();
     fd.append('ogImage', file);
-    const res = await fetch(`${API}/${activeId}/upload-og`, { method: 'POST', body: fd });
+    const res = await apiFetch(`${API}/${activeId}/upload-og`, { method: 'POST', body: fd });
     const d = await res.json();
     if (!res.ok) return showMsgFn(d.error || 'OG 圖片上傳失敗', 'err');
     setEditOgImage(d.url);
@@ -236,7 +233,7 @@ export default function ActivityManager() {
   const handleDeleteItem = useCallback(async (idx) => {
     const item = editContent[idx];
     if (item.type === 'image') {
-      await fetch(`${API}/${activeId}/image/${item.file}`, { method: 'DELETE' });
+      await apiFetch(`${API}/${activeId}/image/${item.file}`, { method: 'DELETE' });
     }
     setEditContent(prev => prev.filter((_, i) => i !== idx));
     setHotspotIdx(null);
@@ -325,7 +322,7 @@ export default function ActivityManager() {
     if (idx === null) return;
     const fd = new FormData();
     fd.append('image', file);
-    const res = await fetch(`${API}/${activeId}/replace-image/${idx}`, { method: 'POST', body: fd });
+    const res = await apiFetch(`${API}/${activeId}/replace-image/${idx}`, { method: 'POST', body: fd });
     const d = await res.json();
     if (!res.ok) return showMsgFn(d.error || '換圖失敗', 'err');
     setEditContent(prev => prev.map((item, i) => i === idx ? { ...item, file: d.file } : item));

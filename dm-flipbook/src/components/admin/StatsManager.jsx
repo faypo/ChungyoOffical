@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './FloorGuideManager.css';
 import './StatsManager.css';
+import { apiFetch } from '../../utils/apiFetch';
 
 const PAGE_LABELS = {
   home:     '首頁進入',
@@ -23,7 +24,7 @@ export default function StatsManager() {
   const [days, setDays]       = useState(14);
 
   useEffect(() => {
-    fetch('/api/stats')
+    apiFetch('/api/stats')
       .then(r => r.json())
       .then(d => { setData(d); setLoading(false); })
       .catch(() => setLoading(false));

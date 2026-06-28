@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './FloorGuideManager.css';
+import { apiFetch } from '../../utils/apiFetch';
 
 const API = '/api/admin/service';
 const TABS = [
@@ -21,7 +22,7 @@ export default function ServiceManager() {
   };
 
   const load = () => {
-    fetch(API)
+    apiFetch(API)
       .then(r => r.json())
       .then(setImages)
       .catch(() => showMsg('無法載入', 'err'));
@@ -35,7 +36,7 @@ export default function ServiceManager() {
     const fd = new FormData();
     fd.append('image', file);
     try {
-      const res = await fetch(`${API}/${key}/upload`, { method: 'POST', body: fd });
+      const res = await apiFetch(`${API}/${key}/upload`, { method: 'POST', body: fd });
       const d   = await res.json();
       if (!res.ok) return showMsg(d.error || '上傳失敗', 'err');
       setImages(prev => ({ ...prev, [key]: d.url + '?t=' + Date.now() }));

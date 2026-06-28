@@ -1,6 +1,13 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { LayoutProvider } from './context/LayoutContext';
+import { AuthProvider } from './context/AuthContext';
+import { useAuth } from './context/AuthContext';
+import AdminGuard from './components/admin/AdminGuard';
+import LoginPage from './components/admin/LoginPage';
+import ChangePasswordPage from './components/admin/ChangePasswordPage';
+import UsersManager from './components/admin/UsersManager';
+import RolesManager from './components/admin/RolesManager';
 import Layout from './components/layout/Layout';
 import DMShowcase from './components/DMShowcase';
 import DMViewer from './components/DMViewer';
@@ -31,14 +38,26 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import Leasing from './components/Leasing';
 import './App.css';
 
+function SuperAdminOnly({ children }) {
+  const { isSuperAdmin } = useAuth();
+  return isSuperAdmin ? children : <Navigate to="/admin/banner" replace />;
+}
+
 export default function App() {
   return (
     <BrowserRouter>
+      <AuthProvider>
       <LayoutProvider>
         <div className="app">
           <Routes>
-            {/* Admin — 無 header/footer */}
-            <Route path="/admin" element={<AdminLayout />}>
+            {/* Admin 登入頁 */}
+            <Route path="/admin/login" element={<LoginPage />} />
+
+            {/* Admin 強制改密碼（需登入，但不走 AdminLayout） */}
+            <Route path="/admin/change-password" element={<AdminGuard><ChangePasswordPage /></AdminGuard>} />
+
+            {/* Admin — 無 header/footer，需登入 */}
+            <Route path="/admin" element={<AdminGuard><AdminLayout /></AdminGuard>}>
               <Route index element={<Navigate to="banner" replace />} />
               <Route path="banner"      element={<BannerManager />} />
               <Route path="home-event"  element={<HomeEventsManager />} />
@@ -54,6 +73,8 @@ export default function App() {
               <Route path="sustainability" element={<SustainabilityManager />} />
               <Route path="stats"         element={<StatsManager />} />
               <Route path="service"        element={<ServiceManager />} />
+              <Route path="users"          element={<SuperAdminOnly><UsersManager /></SuperAdminOnly>} />
+              <Route path="roles"          element={<SuperAdminOnly><RolesManager /></SuperAdminOnly>} />
             </Route>
 
             {/* 一般頁面 — 有 Layout */}
@@ -78,6 +99,7 @@ export default function App() {
           </Routes>
         </div>
       </LayoutProvider>
+      </AuthProvider>
     </BrowserRouter>
   );
 }

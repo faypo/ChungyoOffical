@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import HotspotEditor from './HotspotEditor';
+import { apiFetch } from '../../utils/apiFetch';
 import './FloorGuideManager.css';
 import './DMManager.css';
 
@@ -9,10 +10,6 @@ const EMPTY_FORM = { title: '', subtitle: '', order: '', type: 'double', startDa
 
 const TYPE_LABEL = { double: '雙頁', single: '單頁', strip: '長條', url: 'URL' };
 
-function apiFetch(url, opts = {}) {
-  return fetch(url, { headers: { 'Content-Type': 'application/json' }, ...opts });
-}
-
 /* ── 預覽 Modal ── */
 function PreviewModal({ dmId, onClose }) {
   const [pages, setPages]       = useState([]);
@@ -20,7 +17,7 @@ function PreviewModal({ dmId, onClose }) {
   const [lightbox, setLightbox] = useState(null);
 
   useEffect(() => {
-    fetch(`/api/dm/${dmId}/pages`)
+    apiFetch(`/api/dm/${dmId}/pages`)
       .then(r => r.json())
       .then(files => { setPages(Array.isArray(files) ? files : []); setLoading(false); })
       .catch(() => setLoading(false));
@@ -108,7 +105,7 @@ export default function DMManager() {
 
   const load = () => {
     setLoading(true);
-    fetch(API)
+    apiFetch(API)
       .then(r => r.json())
       .then(d => { setCatalog(d); setLoading(false); })
       .catch(() => { showMsg('無法連線到後端', 'err'); setLoading(false); });
@@ -171,7 +168,7 @@ export default function DMManager() {
     setExistingPages([]);
     setExistingPagesDirty(false);
     try {
-      const r = await fetch(`/api/dm/${id}/pages`);
+      const r = await apiFetch(`/api/dm/${id}/pages`);
       const files = await r.json();
       setExistingPages(Array.isArray(files) ? files : []);
     } catch {}
@@ -241,7 +238,7 @@ export default function DMManager() {
     if (!coverFile) return;
     const fd = new FormData();
     fd.append('cover', coverFile);
-    const res  = await fetch(`${API}/${coverDmId}/cover`, { method: 'POST', body: fd });
+    const res  = await apiFetch(`${API}/${coverDmId}/cover`, { method: 'POST', body: fd });
     const data = await res.json();
     if (!res.ok) return showMsg(data.error || '上傳失敗', 'err');
     showMsg('封面已更新');
@@ -250,7 +247,7 @@ export default function DMManager() {
   };
   const handleCoverDelete = async () => {
     if (!window.confirm('確定要刪除封面圖片？')) return;
-    const res  = await fetch(`${API}/${coverDmId}/cover`, { method: 'DELETE' });
+    const res  = await apiFetch(`${API}/${coverDmId}/cover`, { method: 'DELETE' });
     const data = await res.json();
     if (!res.ok) return showMsg(data.error || '刪除失敗', 'err');
     showMsg('封面已刪除');
@@ -290,7 +287,7 @@ export default function DMManager() {
       fd.append('images', renamed);
     });
     try {
-      const res  = await fetch(`${API}/${uploading}/upload`, { method: 'POST', body: fd });
+      const res  = await apiFetch(`${API}/${uploading}/upload`, { method: 'POST', body: fd });
       const text = await res.text();
       let data;
       try { data = JSON.parse(text); } catch {
@@ -302,7 +299,7 @@ export default function DMManager() {
       setUploadFiles([]);
       // 重新載入現有圖片列表
       try {
-        const r = await fetch(`/api/dm/${uploading}/pages`);
+        const r = await apiFetch(`/api/dm/${uploading}/pages`);
         const files = await r.json();
         setExistingPages(Array.isArray(files) ? files : []);
         setExistingPagesDirty(false);
@@ -341,7 +338,7 @@ export default function DMManager() {
 
   const handleDeleteExistingImage = async (file) => {
     if (!window.confirm(`確定刪除圖片「${file}」？`)) return;
-    const res  = await fetch(`${API}/${uploading}/images/${file}`, { method: 'DELETE' });
+    const res  = await apiFetch(`${API}/${uploading}/images/${file}`, { method: 'DELETE' });
     const data = await res.json();
     if (!res.ok) return showMsg(data.error || '刪除失敗', 'err');
     setExistingPages(prev => prev.filter(f => f !== file));
