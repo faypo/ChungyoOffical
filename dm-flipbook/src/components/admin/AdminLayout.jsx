@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import ChangePasswordModal from './ChangePasswordModal';
 import './AdminLayout.css';
 
 const OTHER_NAV = [
@@ -29,6 +30,7 @@ export default function AdminLayout() {
   const [homeOpen, setHomeOpen] = useState(isHomePath);
   const { logout, isSuperAdmin } = useAuth();
   const navigate   = useNavigate();
+  const [showChangePw, setShowChangePw] = useState(false);
 
   const handleLogout = async () => {
     await logout();
@@ -95,8 +97,10 @@ export default function AdminLayout() {
           )}
 
         </nav>
+        <button className="admin-change-pw-btn" onClick={() => setShowChangePw(true)}>更改密碼</button>
         <button className="admin-logout-btn" onClick={handleLogout}>登出</button>
       </aside>
+      {showChangePw && <ChangePasswordModal onClose={() => setShowChangePw(false)} />}
       <main className="admin-main">
         <Outlet />
       </main>

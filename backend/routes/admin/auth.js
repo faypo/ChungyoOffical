@@ -85,6 +85,9 @@ router.put('/change-password', requireAdmin, async (req, res) => {
   if (new_password.length < 8) {
     return res.status(400).json({ error: '新密碼至少需要 8 個字元' });
   }
+  if (!/[A-Z]/.test(new_password) || !/[a-z]/.test(new_password) || !/[0-9]/.test(new_password)) {
+    return res.status(400).json({ error: '新密碼須包含大寫英文、小寫英文及數字' });
+  }
 
   const user = await prisma.users.findUnique({ where: { id: req.user.id } }).catch(() => null);
   if (!user) return res.status(404).json({ error: '使用者不存在' });
