@@ -226,4 +226,57 @@ router.get('/privacy-policy', (_req, res) => {
   res.type('html').send(fs.readFileSync(filePath, 'utf8'));
 });
 
+// GET /api/faq — 根節點列表（含一層子節點）
+router.get('/faq', async (_req, res) => {
+  const nodes = await prisma.faq_nodes.findMany({
+    where: { is_active: true },
+    orderBy: { sort_order: 'asc' },
+  });
+  function buildTree(parentId) {
+    return nodes
+      .filter(n => n.parent_id === parentId)
+      .map(n => ({ ...n, children: buildTree(n.id) }));
+  }
+  res.json(buildTree(null));
+});
+
+// GET /api/faq/:id — 單一節點（含子節點）
+router.get('/faq/:id', async (req, res) => {
+  const id = Number(req.params.id);
+  const nodes = await prisma.faq_nodes.findMany({
+    where: { is_active: true },
+    orderBy: { sort_order: 'asc' },
+  });
+  const node = nodes.find(n => n.id === id);
+  if (!node) return res.status(404).json({ error: 'Not found' });
+  const children = nodes
+    .filter(n => n.parent_id === id)
+    .map(n => ({ ...n, children: [] }));
+  res.json({ ...node, children });
+});
+
+// GET /api/faq/search?q=關鍵字 — 關鍵字搜尋，回傳評分最高前 5 筆
+router.get('/faq/search', async (req, res) => {
+  const q = (req.query.q || '').trim();
+  if (!q) return res.json([]);
+
+  const terms = q.split(/\s+/).filter(Boolean);
+  const nodes = await prisma.faq_nodes.findMany({
+    where: { is_active: true },
+    orderBy: { sort_order: 'asc' },
+  });
+
+  const scored = nodes
+    .map(n => {
+      const haystack = `${n.question} ${n.keywords ?? ''}`.toLowerCase();
+      const score = terms.reduce((acc, t) => acc + (haystack.includes(t.toLowerCase()) ? 1 : 0), 0);
+      return { ...n, score };
+    })
+    .filter(n => n.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 5);
+
+  res.json(scored);
+});
+
 module.exports = router;

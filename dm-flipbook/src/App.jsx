@@ -34,6 +34,7 @@ import LogoManager from './components/admin/LogoManager';
 import SustainabilityManager from './components/admin/SustainabilityManager';
 import StatsManager from './components/admin/StatsManager';
 import ServiceManager from './components/admin/ServiceManager';
+import FaqManager from './components/admin/FaqManager';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Leasing from './components/Leasing';
 import './App.css';
@@ -73,6 +74,7 @@ export default function App() {
               <Route path="sustainability" element={<SustainabilityManager />} />
               <Route path="stats"         element={<StatsManager />} />
               <Route path="service"        element={<ServiceManager />} />
+              <Route path="faq"            element={<FaqManager />} />
               <Route path="users"          element={<SuperAdminOnly><UsersManager /></SuperAdminOnly>} />
               <Route path="roles"          element={<SuperAdminOnly><RolesManager /></SuperAdminOnly>} />
             </Route>

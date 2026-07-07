@@ -16,6 +16,7 @@ const sustainabilityRoutes   = require('./sustainability');
 const serviceRoutes          = require('./service');
 const usersRoutes            = require('./users');
 const rolesRoutes            = require('./roles');
+const faqRoutes              = require('./faq');
 
 const router = express.Router();
 
@@ -38,5 +39,6 @@ router.use('/sustainability',   sustainabilityRoutes);
 router.use('/service',         serviceRoutes);
 router.use('/users',           usersRoutes);
 router.use('/roles',           rolesRoutes);
+router.use('/faq',             faqRoutes);
 
 module.exports = router;

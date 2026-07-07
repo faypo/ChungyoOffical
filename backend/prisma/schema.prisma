@@ -502,3 +502,20 @@ enum food_items_section {
   theme
   foodcourt
 }
+
+model faq_nodes {
+  id         Int        @id @default(autoincrement()) @db.UnsignedInt
+  parent_id  Int?       @db.UnsignedInt
+  question   String     @db.VarChar(300)
+  answer     String     @db.Text
+  keywords   String?    @db.VarChar(500)
+  sort_order Int        @default(0) @db.UnsignedInt
+  is_active  Boolean    @default(true)
+  created_at DateTime   @default(now()) @db.DateTime(0)
+  updated_at DateTime   @default(now()) @db.DateTime(0)
+  parent     faq_nodes?  @relation("faq_tree", fields: [parent_id], references: [id], onDelete: Cascade)
+  children   faq_nodes[] @relation("faq_tree")
+
+  @@index([parent_id], map: "idx_parent")
+  @@index([parent_id, sort_order], map: "idx_sort")
+}

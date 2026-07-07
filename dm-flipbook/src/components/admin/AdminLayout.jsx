@@ -14,6 +14,7 @@ const OTHER_NAV = [
   { to: '/admin/sustainability', label: '永續報告書' },
   { to: '/admin/service',       label: '貼心服務' },
   { to: '/admin/stats',         label: '流量統計' },
+  { to: '/admin/faq',           label: 'FAQ 管理' },
 ];
 
 const HOME_NAV = [
