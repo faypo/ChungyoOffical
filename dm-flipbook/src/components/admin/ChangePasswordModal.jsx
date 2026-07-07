@@ -3,7 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { apiFetch } from '../../utils/apiFetch';
 
-const PW_RULE = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$/;
+function checkPwComplexity(pw) {
+  if (pw.length < 8) return false;
+  return [/[A-Z]/, /[a-z]/, /[0-9]/].filter(r => r.test(pw)).length >= 2;
+}
 
 export default function ChangePasswordModal({ onClose }) {
   const [oldPw,   setOldPw]   = useState('');
@@ -19,8 +22,8 @@ export default function ChangePasswordModal({ onClose }) {
     e.preventDefault();
     setError('');
 
-    if (!PW_RULE.test(newPw)) {
-      setError('新密碼至少 8 碼，且須包含大寫英文、小寫英文及數字');
+    if (!checkPwComplexity(newPw)) {
+      setError('新密碼至少 8 碼，且須包含大寫英文、小寫英文、數字中的至少兩種');
       return;
     }
     if (newPw !== confirm) {
@@ -79,7 +82,7 @@ export default function ChangePasswordModal({ onClose }) {
             autoComplete="new-password"
             required
           />
-          <p style={styles.hint}>至少 8 碼，須包含大寫英文、小寫英文及數字</p>
+          <p style={styles.hint}>至少 8 碼，須包含大寫英文、小寫英文、數字中的至少兩種</p>
           {error && <p style={styles.error}>{error}</p>}
           <div style={styles.actions}>
             <button type="button" style={styles.cancelBtn} onClick={onClose} disabled={loading}>取消</button>

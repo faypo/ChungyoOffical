@@ -8,6 +8,11 @@ const router = express.Router();
 
 const SESSION_HOURS = 2;
 
+function checkPwComplexity(pw) {
+  if (pw.length < 8) return false;
+  return [/[A-Z]/, /[a-z]/, /[0-9]/].filter(r => r.test(pw)).length >= 2;
+}
+
 const COOKIE_OPTIONS = {
   httpOnly: true,
   sameSite: 'strict',
@@ -82,11 +87,8 @@ router.put('/change-password', requireAdmin, async (req, res) => {
   if (!old_password || !new_password) {
     return res.status(400).json({ error: '請提供舊密碼與新密碼' });
   }
-  if (new_password.length < 8) {
-    return res.status(400).json({ error: '新密碼至少需要 8 個字元' });
-  }
-  if (!/[A-Z]/.test(new_password) || !/[a-z]/.test(new_password) || !/[0-9]/.test(new_password)) {
-    return res.status(400).json({ error: '新密碼須包含大寫英文、小寫英文及數字' });
+  if (!checkPwComplexity(new_password)) {
+    return res.status(400).json({ error: '新密碼至少 8 碼，且須包含大寫英文、小寫英文、數字中的至少兩種' });
   }
 
   const user = await prisma.users.findUnique({ where: { id: req.user.id } }).catch(() => null);
@@ -111,8 +113,8 @@ router.put('/change-password', requireAdmin, async (req, res) => {
 router.put('/force-change-password', requireAdmin, async (req, res) => {
   const { new_password } = req.body;
 
-  if (!new_password || new_password.length < 8) {
-    return res.status(400).json({ error: '新密碼至少需要 8 個字元' });
+  if (!new_password || !checkPwComplexity(new_password)) {
+    return res.status(400).json({ error: '新密碼至少 8 碼，且須包含大寫英文、小寫英文、數字中的至少兩種' });
   }
 
   const password_hash = await bcrypt.hash(new_password, 12);

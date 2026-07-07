@@ -17,8 +17,8 @@ export default function ChangePasswordPage() {
     e.preventDefault();
     setError('');
 
-    if (newPw.length < 8) {
-      setError('密碼至少需要 8 個字元');
+    if (newPw.length < 8 || [/[A-Z]/, /[a-z]/, /[0-9]/].filter(r => r.test(newPw)).length < 2) {
+      setError('密碼至少 8 碼，且須包含大寫英文、小寫英文、數字中的至少兩種');
       return;
     }
     if (newPw !== confirm) {
@@ -54,7 +54,7 @@ export default function ChangePasswordPage() {
           請設定您的新密碼以繼續使用後台
         </p>
         <form onSubmit={handleSubmit} className="login-form">
-          <label className="login-label">新密碼（至少 8 個字元）</label>
+          <label className="login-label">新密碼（至少 8 碼，大寫／小寫／數字擇二）</label>
           <input
             className="login-input"
             type="password"
