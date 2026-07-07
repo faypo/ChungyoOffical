@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import HotspotEditor from './HotspotEditor';
 import './FloorGuideManager.css';
 import './ActivityManager.css';
+import { apiFetch } from '../../utils/apiFetch';
 
 const API = '/api/admin/gallery';
 
@@ -32,7 +33,7 @@ export default function GalleryManager() {
 
   const load = async () => {
     try {
-      const r = await fetch(API);
+      const r = await apiFetch(API);
       const d = await r.json();
       setContent(d.content ?? []);
     } catch {
@@ -45,7 +46,7 @@ export default function GalleryManager() {
 
   const handleSave = async () => {
     setSaving(true);
-    const res = await fetch(API, {
+    const res = await apiFetch(API, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ content }),
@@ -62,7 +63,7 @@ export default function GalleryManager() {
     setUploading(true);
     const fd = new FormData();
     files.forEach(f => fd.append('images', f));
-    const res = await fetch(`${API}/upload`, { method: 'POST', body: fd });
+    const res = await apiFetch(`${API}/upload`, { method: 'POST', body: fd });
     const d = await res.json();
     setUploading(false);
     if (!res.ok) return showMsgFn(d.error || '上傳失敗', 'err');
@@ -82,7 +83,7 @@ export default function GalleryManager() {
   const handleDeleteItem = useCallback(async (idx) => {
     const item = content[idx];
     if (item.type === 'image') {
-      await fetch(`${API}/image/${item.file}`, { method: 'DELETE' });
+      await apiFetch(`${API}/image/${item.file}`, { method: 'DELETE' });
     }
     setContent(prev => prev.filter((_, i) => i !== idx));
     setHotspotIdx(null);

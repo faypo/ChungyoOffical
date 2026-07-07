@@ -1,4 +1,6 @@
 const express            = require('express');
+const authRoutes         = require('./auth');
+const requireAdmin       = require('../../middleware/auth');
 const catalogRoutes      = require('./catalog');
 const floorGuideRoutes   = require('./floor-guide');
 const foodGuideRoutes    = require('./food-guide');
@@ -12,8 +14,14 @@ const homePromoRoutes    = require('./home-promo');
 const logosRoutes            = require('./logos');
 const sustainabilityRoutes   = require('./sustainability');
 const serviceRoutes          = require('./service');
+const usersRoutes            = require('./users');
+const rolesRoutes            = require('./roles');
 
 const router = express.Router();
+
+router.use('/auth', authRoutes);
+
+router.use(requireAdmin);
 
 router.use('/catalog',     catalogRoutes);
 router.use('/floor-guide', floorGuideRoutes);
@@ -28,5 +36,7 @@ router.use('/home-promo',  homePromoRoutes);
 router.use('/logos',            logosRoutes);
 router.use('/sustainability',   sustainabilityRoutes);
 router.use('/service',         serviceRoutes);
+router.use('/users',           usersRoutes);
+router.use('/roles',           rolesRoutes);
 
 module.exports = router;

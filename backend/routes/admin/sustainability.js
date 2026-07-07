@@ -2,10 +2,12 @@ const express = require('express');
 const multer  = require('multer');
 const fs      = require('fs');
 const path    = require('path');
-const { DATA_DIR, readJSON, writeJSON } = require('../../utils/json');
+const { DATA_DIR } = require('../../utils/json');
+const prisma  = require('../../utils/db');
 
 const router  = express.Router();
 const DOC_DIR = path.join(DATA_DIR, 'documents');
+const KEY     = 'sustainabilityReportUrl';
 fs.mkdirSync(DOC_DIR, { recursive: true });
 
 const upload = multer({
@@ -20,29 +22,28 @@ const upload = multer({
   limits: { fileSize: 50 * 1024 * 1024 },
 });
 
-router.get('/', (_req, res) => {
-  const config = readJSON('config.json', {});
-  res.json({ url: config.sustainabilityReportUrl || '' });
+router.get('/', async (_req, res) => {
+  const row = await prisma.config.findUnique({ where: { key_name: KEY } });
+  res.json({ url: row?.value || '' });
 });
 
-router.post('/upload', upload.single('pdf'), (req, res) => {
+router.post('/upload', upload.single('pdf'), async (req, res) => {
   if (!req.file) return res.status(400).json({ error: '請上傳 PDF 檔案' });
-  const url    = `/api/documents/${req.file.filename}`;
-  const config = readJSON('config.json', {});
-  config.sustainabilityReportUrl = url;
-  writeJSON('config.json', config);
+  const url = `/api/documents/${req.file.filename}`;
+  await prisma.config.upsert({
+    where:  { key_name: KEY },
+    update: { value: url },
+    create: { key_name: KEY, value: url },
+  });
   res.json({ success: true, url });
 });
 
-router.delete('/', (_req, res) => {
-  const config = readJSON('config.json', {});
-  const url    = config.sustainabilityReportUrl || '';
-  if (url) {
-    const filename = path.basename(url);
-    const filepath = path.join(DOC_DIR, filename);
+router.delete('/', async (_req, res) => {
+  const row = await prisma.config.findUnique({ where: { key_name: KEY } });
+  if (row?.value) {
+    const filepath = path.join(DOC_DIR, path.basename(row.value));
     if (fs.existsSync(filepath)) fs.unlinkSync(filepath);
-    delete config.sustainabilityReportUrl;
-    writeJSON('config.json', config);
+    await prisma.config.update({ where: { key_name: KEY }, data: { value: '' } });
   }
   res.json({ success: true });
 });

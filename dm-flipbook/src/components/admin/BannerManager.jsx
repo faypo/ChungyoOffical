@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './ActivityManager.css';
 import './BannerManager.css';
+import { apiFetch } from '../../utils/apiFetch';
 
 const API = '/api/admin/banner';
 
@@ -30,7 +31,7 @@ export default function BannerManager() {
 
   const load = async () => {
     try {
-      const r = await fetch(API);
+      const r = await apiFetch(API);
       const d = await r.json();
       const list = d.banners ?? [];
       setBanners(list);
@@ -54,7 +55,7 @@ export default function BannerManager() {
     for (const file of images) {
       const fd = new FormData();
       fd.append('image', file);
-      const res = await fetch(`${API}/upload`, { method: 'POST', body: fd });
+      const res = await apiFetch(`${API}/upload`, { method: 'POST', body: fd });
       if (res.ok) successCount++;
     }
     setUploading(false);
@@ -93,7 +94,7 @@ export default function BannerManager() {
 
   /* ── 欄位自動儲存（overrides 用來傳剛剛 onChange 的值，避免 React batching 讀到舊 state）── */
   const handleFieldSave = async (id, overrides = {}) => {
-    const res = await fetch(`${API}/${id}`, {
+    const res = await apiFetch(`${API}/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -119,7 +120,7 @@ export default function BannerManager() {
     replacingId.current = null;
     const fd = new FormData();
     fd.append('image', file);
-    const res = await fetch(`${API}/${id}/replace`, { method: 'POST', body: fd });
+    const res = await apiFetch(`${API}/${id}/replace`, { method: 'POST', body: fd });
     const d = await res.json();
     if (!res.ok) return showMsg(d.error || '換圖失敗', 'err');
     showMsg('圖片已更換');
@@ -128,7 +129,7 @@ export default function BannerManager() {
 
   const handleDelete = async (id) => {
     if (!window.confirm('確定刪除此 Banner？')) return;
-    const res = await fetch(`${API}/${id}`, { method: 'DELETE' });
+    const res = await apiFetch(`${API}/${id}`, { method: 'DELETE' });
     const d   = await res.json();
     if (!res.ok) return showMsg(d.error || '刪除失敗', 'err');
     showMsg('已刪除');
@@ -151,7 +152,7 @@ export default function BannerManager() {
     next.splice(targetIdx, 0, moved);
     setBanners(next);
     dragSrc.current = null;
-    const res = await fetch(`${API}/reorder`, {
+    const res = await apiFetch(`${API}/reorder`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ids: next.map(b => b.id) }),

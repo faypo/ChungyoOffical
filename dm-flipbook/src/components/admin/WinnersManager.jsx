@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { apiFetch } from '../../utils/apiFetch';
 import './FloorGuideManager.css';
 import './WinnersManager.css';
 
 const API = '/api/admin/winners';
-
-function apiFetch(url, opts = {}) {
-  return fetch(url, { headers: { 'Content-Type': 'application/json' }, ...opts });
-}
 
 // ── Immutable tree path operations ──
 function pathUpdate(nodes, path, value) {
@@ -117,7 +114,7 @@ export default function WinnersManager() {
 
   const load = async () => {
     try {
-      const r = await fetch(API);
+      const r = await apiFetch(API);
       const d = await r.json();
       setEvents(d.events ?? []);
       setActiveId(prev => {

@@ -1,0 +1,4 @@
+{"time":"2026-06-27T18:00:33.130+08:00","ip":"::1","method":"POST","path":"/auth/login","body":{"employee_id":"admin","password":"changeme"}}
+{"time":"2026-06-27T18:24:03.614+08:00","ip":"::1","method":"POST","path":"/auth/login","body":{"employee_id":"admin","password":"wrong"}}
+{"time":"2026-06-27T18:43:29.470+08:00","ip":"::1","method":"POST","path":"/auth/login","body":{"employee_id":"admin","password":"changeme"}}
+{"time":"2026-06-27T18:43:29.724+08:00","ip":"::1","method":"POST","path":"/auth/logout"}

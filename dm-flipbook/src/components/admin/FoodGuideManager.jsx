@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { apiFetch } from '../../utils/apiFetch';
 import './FloorGuideManager.css';
 import './FoodGuideManager.css';
 
@@ -13,10 +14,6 @@ const resolveImg = (img) =>
   !img ? null
   : (img.startsWith('/') || img.startsWith('http')) ? img
   : `/api/images/food-pic/${img}`;
-
-function apiFetch(url, opts = {}) {
-  return fetch(url, { headers: { 'Content-Type': 'application/json' }, ...opts });
-}
 
 export default function FoodGuideManager() {
   const [data, setData]               = useState(null);
@@ -37,7 +34,7 @@ export default function FoodGuideManager() {
   const dragOverRef  = useRef(null);
 
   const load = () =>
-    fetch(API).then(r => r.json()).then(d => {
+    apiFetch(API).then(r => r.json()).then(d => {
       setData(d);
       setActiveCat(prev => {
         const firstId = d.categories?.[0]?.id ?? '';
@@ -133,7 +130,7 @@ export default function FoodGuideManager() {
     setImgUploading(true);
     const fd = new FormData();
     fd.append('image', file);
-    const res  = await fetch(`${API}/image`, { method: 'POST', body: fd });
+    const res  = await apiFetch(`${API}/image`, { method: 'POST', body: fd });
     const json = await res.json();
     setImgUploading(false);
     if (!res.ok) return showMsgFn(json.error || '上傳失敗', 'err');

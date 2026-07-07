@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Rnd } from 'react-rnd';
 import './HotspotEditor.css';
+import { apiFetch } from '../../utils/apiFetch';
 
 const genId = () => crypto.randomUUID();
 
@@ -30,7 +31,7 @@ export default function HotspotEditor({ dmId, imgSrc: imgSrcProp, initialHotspot
   /* ── 載入圖片（只在沒有外部 imgSrc 時才 fetch DM 圖片）── */
   useEffect(() => {
     if (imgSrcProp || !dmId) return;
-    fetch(`/api/dm/${dmId}/pages`)
+    apiFetch(`/api/dm/${dmId}/pages`)
       .then(r => r.json())
       .then(files => {
         if (files[0]) setImgSrc(`/api/images/dm-pic/${dmId}/${files[0]}`);

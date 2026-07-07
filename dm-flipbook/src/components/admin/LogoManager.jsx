@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { apiFetch } from '../../utils/apiFetch';
 
 const API = '/api/admin/logos';
 
@@ -143,26 +144,26 @@ export default function LogoManager() {
   const [groups, setGroups] = useState([]);
 
   useEffect(() => {
-    fetch(API).then(r => r.json()).then(d => setGroups(d.groups ?? []));
+    apiFetch(API).then(r => r.json()).then(d => setGroups(d.groups ?? []));
   }, []);
 
-  const reload = () => fetch(API).then(r => r.json()).then(d => setGroups(d.groups ?? []));
+  const reload = () => apiFetch(API).then(r => r.json()).then(d => setGroups(d.groups ?? []));
 
   const addGroup = async () => {
-    const r = await fetch(`${API}/group`, { method: 'POST' });
+    const r = await apiFetch(`${API}/group`, { method: 'POST' });
     const d = await r.json();
     if (d.id) setGroups(prev => [...prev, { id: d.id, logos: [] }]);
   };
 
   const deleteGroup = async (gid) => {
-    await fetch(`${API}/group/${gid}`, { method: 'DELETE' });
+    await apiFetch(`${API}/group/${gid}`, { method: 'DELETE' });
     setGroups(prev => prev.filter(g => g.id !== gid));
   };
 
   const uploadLogo = async (gid, file) => {
     const fd = new FormData();
     fd.append('image', file);
-    const r = await fetch(`${API}/group/${gid}/upload`, { method: 'POST', body: fd });
+    const r = await apiFetch(`${API}/group/${gid}/upload`, { method: 'POST', body: fd });
     const d = await r.json();
     if (d.id) {
       setGroups(prev => prev.map(g =>
@@ -174,7 +175,7 @@ export default function LogoManager() {
   };
 
   const deleteLogo = async (gid, lid) => {
-    await fetch(`${API}/group/${gid}/${lid}`, { method: 'DELETE' });
+    await apiFetch(`${API}/group/${gid}/${lid}`, { method: 'DELETE' });
     setGroups(prev => prev.map(g =>
       g.id === gid ? { ...g, logos: g.logos.filter(l => l.id !== lid) } : g
     ));
@@ -186,7 +187,7 @@ export default function LogoManager() {
         ? { ...g, logos: ids.map(id => g.logos.find(l => l.id === id)).filter(Boolean) }
         : g
     ));
-    await fetch(`${API}/group/${gid}/reorder`, {
+    await apiFetch(`${API}/group/${gid}/reorder`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ids }),

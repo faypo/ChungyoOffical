@@ -1,0 +1,3 @@
+{"time":"2026-06-29T10:22:10.970+08:00","ip":"::1","method":"PUT","path":"/roles/3","body":{"name":"看","description":"所有模組唯讀","permission_ids":"[array:16]"}}
+{"time":"2026-06-29T10:22:18.329+08:00","ip":"::1","method":"PUT","path":"/roles/2","body":{"name":"可編輯","description":"一般編輯：除帳號管理與系統設定外，所有模組讀寫","permission_ids":"[array:37]"}}
+{"time":"2026-06-29T10:23:00.320+08:00","ip":"::1","method":"POST","path":"/roles","body":{"name":"可讀可寫不可刪","description":"可讀可寫不可刪","permission_ids":"[array:32]"}}

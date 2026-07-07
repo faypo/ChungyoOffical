@@ -1,15 +1,16 @@
 require('dotenv').config();
 
-const express = require('express');
-const cors    = require('cors');
-const path    = require('path');
-const fs      = require('fs');
+const express      = require('express');
+const cors         = require('cors');
+const cookieParser = require('cookie-parser');
+const path         = require('path');
+const fs           = require('fs');
 
 const dataRoutes     = require('./routes/data');
 const feedbackRoutes = require('./routes/feedback');
 const adminRoutes    = require('./routes/admin');
 const trackRoutes    = require('./routes/track');
-const { readJSON }   = require('./utils/json');
+const prisma         = require('./utils/db');
 const { adminLogger } = require('./utils/logger');
 const { feedbackLogger } = require('./utils/feedback-logger')
 
@@ -19,6 +20,7 @@ const app = express();
 app.disable('x-powered-by');
 app.use((req, res, next) => { res.removeHeader('Server'); next(); });
 app.use(cors());
+app.use(cookieParser());
 app.use(express.json());
 
 // Block path traversal in raw URLs (defence-in-depth for clients that don't normalise)
@@ -33,13 +35,12 @@ function escAttr(s) {
 }
 
 // OG 注入：爬蟲拿到 /activity/:id 時回傳帶有 og tags 的 HTML
-app.get('/activity/:id', (req, res) => {
-  const data     = readJSON('activities.json', { activities: [] });
-  const activity = data.activities.find(a => a.id === req.params.id);
+app.get('/activity/:id', async (req, res) => {
+  const activity = await prisma.activities.findUnique({ where: { id: req.params.id } }).catch(() => null);
 
-  const ogTitle       = escAttr(activity?.ogTitle       || '中友百貨公司');
-  const ogDescription = escAttr(activity?.ogDescription || '');
-  const rawOgImage    = activity?.ogImage || '';
+  const ogTitle       = escAttr(activity?.og_title       || '中友百貨公司');
+  const ogDescription = escAttr(activity?.og_description || '');
+  const rawOgImage    = activity?.og_image || '';
   const baseUrl       = (process.env.ORIGIN || `${req.protocol}://${req.get('host')}`).replace(/\/$/, '');
   const ogImage       = escAttr(rawOgImage.startsWith('http') ? rawOgImage : (rawOgImage ? baseUrl + rawOgImage : ''));
 

@@ -1,0 +1,504 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model activities {
+  id                                 String             @id @db.VarChar(50)
+  title                              String             @db.VarChar(200)
+  start_date                         DateTime?          @db.DateTime(0)
+  end_date                           DateTime?          @db.DateTime(0)
+  og_title                           String?            @db.VarChar(200)
+  og_description                     String?            @db.Text
+  og_image                           String?            @db.VarChar(500)
+  sort_order                         Int?               @default(0) @db.UnsignedInt
+  created_by                         Int?               @db.UnsignedInt
+  updated_by                         Int?               @db.UnsignedInt
+  created_at                         DateTime?          @default(now()) @db.DateTime(0)
+  updated_at                         DateTime?          @default(now()) @db.DateTime(0)
+  users_activities_created_byTousers users?             @relation("activities_created_byTousers", fields: [created_by], references: [id], onUpdate: NoAction, map: "activities_ibfk_1")
+  users_activities_updated_byTousers users?             @relation("activities_updated_byTousers", fields: [updated_by], references: [id], onUpdate: NoAction, map: "activities_ibfk_2")
+  activity_content                   activity_content[]
+  activity_tags                      activity_tags[]
+  activity_views                     activity_views[]
+
+  @@index([created_by], map: "created_by")
+  @@index([updated_by], map: "updated_by")
+}
+
+model activity_content {
+  id                Int                   @id @default(autoincrement()) @db.UnsignedInt
+  activity_id       String                @db.VarChar(50)
+  type              activity_content_type
+  file              String?               @db.VarChar(255)
+  video_id          String?               @db.VarChar(50)
+  sort_order        Int?                  @default(0) @db.UnsignedInt
+  activities        activities            @relation(fields: [activity_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "activity_content_ibfk_1")
+  activity_hotspots activity_hotspots[]
+
+  @@index([activity_id], map: "activity_id")
+}
+
+model activity_hotspots {
+  id                  String           @id @db.VarChar(50)
+  activity_content_id Int              @db.UnsignedInt
+  x                   Decimal          @db.Decimal(10, 6)
+  y                   Decimal          @db.Decimal(10, 6)
+  width               Decimal          @db.Decimal(10, 6)
+  height              Decimal          @db.Decimal(10, 6)
+  url                 String?          @db.VarChar(500)
+  activity_content    activity_content @relation(fields: [activity_content_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "activity_hotspots_ibfk_1")
+
+  @@index([activity_content_id], map: "activity_content_id")
+}
+
+model activity_tags {
+  activity_id String     @db.VarChar(50)
+  tag         String     @db.VarChar(100)
+  activities  activities @relation(fields: [activity_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "activity_tags_ibfk_1")
+
+  @@id([activity_id, tag])
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model activity_views {
+  id          Int        @id @default(autoincrement()) @db.UnsignedInt
+  activity_id String     @db.VarChar(50)
+  title       String?    @db.VarChar(200)
+  date        DateTime   @db.Date
+  hour        Int?       @db.UnsignedTinyInt
+  count       Int?       @default(0) @db.UnsignedInt
+  activities  activities @relation(fields: [activity_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "activity_views_ibfk_1")
+
+  @@unique([activity_id, date], map: "uq_act_date")
+}
+
+model banners {
+  id                              String    @id @db.VarChar(50)
+  file                            String    @db.VarChar(255)
+  url                             String?   @db.VarChar(500)
+  is_active                       Boolean?  @default(true)
+  start_date                      DateTime? @db.DateTime(0)
+  end_date                        DateTime? @db.DateTime(0)
+  sort_order                      Int?      @default(0) @db.UnsignedInt
+  created_by                      Int?      @db.UnsignedInt
+  updated_by                      Int?      @db.UnsignedInt
+  created_at                      DateTime? @default(now()) @db.DateTime(0)
+  updated_at                      DateTime? @default(now()) @db.DateTime(0)
+  users_banners_created_byTousers users?    @relation("banners_created_byTousers", fields: [created_by], references: [id], onUpdate: NoAction, map: "banners_ibfk_1")
+  users_banners_updated_byTousers users?    @relation("banners_updated_byTousers", fields: [updated_by], references: [id], onUpdate: NoAction, map: "banners_ibfk_2")
+
+  @@index([created_by], map: "created_by")
+  @@index([updated_by], map: "updated_by")
+}
+
+model config {
+  key_name                       String    @id @db.VarChar(100)
+  value                          String?   @db.Text
+  created_by                     Int?      @db.UnsignedInt
+  updated_by                     Int?      @db.UnsignedInt
+  created_at                     DateTime? @default(now()) @db.DateTime(0)
+  updated_at                     DateTime? @default(now()) @db.DateTime(0)
+  users_config_created_byTousers users?    @relation("config_created_byTousers", fields: [created_by], references: [id], onUpdate: NoAction, map: "config_ibfk_1")
+  users_config_updated_byTousers users?    @relation("config_updated_byTousers", fields: [updated_by], references: [id], onUpdate: NoAction, map: "config_ibfk_2")
+
+  @@index([created_by], map: "created_by")
+  @@index([updated_by], map: "updated_by")
+}
+
+model dm_buttons {
+  id          Int         @id @default(autoincrement()) @db.UnsignedInt
+  catalog_id  String      @db.VarChar(50)
+  page        Int         @db.UnsignedInt
+  url         String?     @db.VarChar(500)
+  dm_catalogs dm_catalogs @relation(fields: [catalog_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "dm_buttons_ibfk_1")
+
+  @@index([catalog_id], map: "catalog_id")
+}
+
+model dm_catalogs {
+  id                                  String            @id @db.VarChar(50)
+  title                               String?           @db.VarChar(200)
+  subtitle                            String?           @db.VarChar(200)
+  type                                dm_catalogs_type? @default(double)
+  cover                               String?           @db.VarChar(255)
+  url                                 String?           @db.VarChar(500)
+  start_date                          DateTime?         @db.DateTime(0)
+  end_date                            DateTime?         @db.DateTime(0)
+  sort_order                          Int?              @default(0) @db.UnsignedInt
+  created_by                          Int?              @db.UnsignedInt
+  updated_by                          Int?              @db.UnsignedInt
+  created_at                          DateTime?         @default(now()) @db.DateTime(0)
+  updated_at                          DateTime?         @default(now()) @db.DateTime(0)
+  dm_buttons                          dm_buttons[]
+  users_dm_catalogs_created_byTousers users?            @relation("dm_catalogs_created_byTousers", fields: [created_by], references: [id], onUpdate: NoAction, map: "dm_catalogs_ibfk_1")
+  users_dm_catalogs_updated_byTousers users?            @relation("dm_catalogs_updated_byTousers", fields: [updated_by], references: [id], onUpdate: NoAction, map: "dm_catalogs_ibfk_2")
+  dm_hotspots                         dm_hotspots[]
+
+  @@index([created_by], map: "created_by")
+  @@index([updated_by], map: "updated_by")
+}
+
+model dm_hotspots {
+  id          String      @id @db.VarChar(50)
+  catalog_id  String      @db.VarChar(50)
+  x           Decimal     @db.Decimal(10, 6)
+  y           Decimal     @db.Decimal(10, 6)
+  width       Decimal     @db.Decimal(10, 6)
+  height      Decimal     @db.Decimal(10, 6)
+  url         String?     @db.VarChar(500)
+  dm_catalogs dm_catalogs @relation(fields: [catalog_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "dm_hotspots_ibfk_1")
+
+  @@index([catalog_id], map: "catalog_id")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model floor_counters {
+  id           Int          @id @default(autoincrement()) @db.UnsignedInt
+  floor_id     String       @db.VarChar(20)
+  building     String       @db.Char(1)
+  name         String?      @db.VarChar(100)
+  phone        String?      @db.VarChar(50)
+  logo         String?      @db.VarChar(255)
+  description  String?      @db.Text
+  sort_order   Int?         @default(0) @db.UnsignedInt
+  floor_floors floor_floors @relation(fields: [floor_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "floor_counters_ibfk_1")
+
+  @@index([floor_id], map: "floor_id")
+}
+
+model floor_floors {
+  id                                   String           @id @db.VarChar(20)
+  label                                String           @db.VarChar(100)
+  sort_order                           Int?             @default(0) @db.UnsignedInt
+  created_by                           Int?             @db.UnsignedInt
+  updated_by                           Int?             @db.UnsignedInt
+  created_at                           DateTime?        @default(now()) @db.DateTime(0)
+  updated_at                           DateTime?        @default(now()) @db.DateTime(0)
+  floor_counters                       floor_counters[]
+  users_floor_floors_created_byTousers users?           @relation("floor_floors_created_byTousers", fields: [created_by], references: [id], onUpdate: NoAction, map: "floor_floors_ibfk_1")
+  users_floor_floors_updated_byTousers users?           @relation("floor_floors_updated_byTousers", fields: [updated_by], references: [id], onUpdate: NoAction, map: "floor_floors_ibfk_2")
+  floor_info                           floor_info[]
+  food_items                           food_items[]
+
+  @@index([created_by], map: "created_by")
+  @@index([updated_by], map: "updated_by")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model floor_info {
+  id               Int                @id @default(autoincrement()) @db.UnsignedInt
+  floor_id         String             @db.VarChar(20)
+  building         String             @db.Char(1)
+  title            String?            @db.VarChar(200)
+  floor_floors     floor_floors       @relation(fields: [floor_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "floor_info_ibfk_1")
+  floor_info_icons floor_info_icons[]
+
+  @@unique([floor_id, building], map: "uq_floor_info")
+}
+
+model floor_info_icons {
+  id            Int        @id @default(autoincrement()) @db.UnsignedInt
+  floor_info_id Int        @db.UnsignedInt
+  file          String     @db.VarChar(255)
+  sort_order    Int?       @default(0) @db.UnsignedInt
+  floor_info    floor_info @relation(fields: [floor_info_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "floor_info_icons_ibfk_1")
+
+  @@index([floor_info_id], map: "floor_info_id")
+}
+
+model food_categories {
+  id                                      String       @id @db.VarChar(50)
+  label                                   String       @db.VarChar(100)
+  sort_order                              Int?         @default(0) @db.UnsignedInt
+  created_by                              Int?         @db.UnsignedInt
+  updated_by                              Int?         @db.UnsignedInt
+  created_at                              DateTime?    @default(now()) @db.DateTime(0)
+  updated_at                              DateTime?    @default(now()) @db.DateTime(0)
+  users_food_categories_created_byTousers users?       @relation("food_categories_created_byTousers", fields: [created_by], references: [id], onUpdate: NoAction, map: "food_categories_ibfk_1")
+  users_food_categories_updated_byTousers users?       @relation("food_categories_updated_byTousers", fields: [updated_by], references: [id], onUpdate: NoAction, map: "food_categories_ibfk_2")
+  food_items                              food_items[]
+
+  @@index([created_by], map: "created_by")
+  @@index([updated_by], map: "updated_by")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model food_items {
+  id              Int                @id @default(autoincrement()) @db.UnsignedInt
+  category_id     String             @db.VarChar(50)
+  section         food_items_section @default(theme)
+  name            String             @db.VarChar(200)
+  floor_id        String?            @db.VarChar(20)
+  building        String?            @db.Char(1)
+  phone           String?            @db.VarChar(50)
+  logo            String?            @db.VarChar(255)
+  description     String?            @db.Text
+  sort_order      Int?               @default(0) @db.UnsignedInt
+  food_categories food_categories    @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "food_items_ibfk_1")
+  floor_floors    floor_floors?      @relation(fields: [floor_id], references: [id], onUpdate: NoAction, map: "food_items_ibfk_2")
+
+  @@index([category_id], map: "category_id")
+  @@index([floor_id], map: "floor_id")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model gallery_content {
+  id                                      Int                  @id @default(autoincrement()) @db.UnsignedInt
+  type                                    gallery_content_type
+  file                                    String?              @db.VarChar(255)
+  video_id                                String?              @db.VarChar(50)
+  page_id                                 Int?                 @db.UnsignedInt
+  sort_order                              Int?                 @default(0) @db.UnsignedInt
+  created_by                              Int?                 @db.UnsignedInt
+  updated_by                              Int?                 @db.UnsignedInt
+  created_at                              DateTime?            @default(now()) @db.DateTime(0)
+  updated_at                              DateTime?            @default(now()) @db.DateTime(0)
+  users_gallery_content_created_byTousers users?               @relation("gallery_content_created_byTousers", fields: [created_by], references: [id], onUpdate: NoAction, map: "gallery_content_ibfk_1")
+  users_gallery_content_updated_byTousers users?               @relation("gallery_content_updated_byTousers", fields: [updated_by], references: [id], onUpdate: NoAction, map: "gallery_content_ibfk_2")
+  gallery_hotspots                        gallery_hotspots[]
+
+  @@index([created_by], map: "created_by")
+  @@index([updated_by], map: "updated_by")
+}
+
+model gallery_hotspots {
+  id                 String          @id @db.VarChar(50)
+  gallery_content_id Int             @db.UnsignedInt
+  x                  Decimal?        @db.Decimal(10, 6)
+  y                  Decimal?        @db.Decimal(10, 6)
+  width              Decimal?        @db.Decimal(10, 6)
+  height             Decimal?        @db.Decimal(10, 6)
+  url                String?         @db.VarChar(500)
+  gallery_content    gallery_content @relation(fields: [gallery_content_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "gallery_hotspots_ibfk_1")
+
+  @@index([gallery_content_id], map: "gallery_content_id")
+}
+
+model home_events {
+  id                                  String    @id @db.VarChar(50)
+  file                                String    @db.VarChar(255)
+  url                                 String?   @db.VarChar(500)
+  start_date                          DateTime? @db.DateTime(0)
+  end_date                            DateTime? @db.DateTime(0)
+  sort_order                          Int?      @default(0) @db.UnsignedInt
+  created_by                          Int?      @db.UnsignedInt
+  updated_by                          Int?      @db.UnsignedInt
+  created_at                          DateTime? @default(now()) @db.DateTime(0)
+  updated_at                          DateTime? @default(now()) @db.DateTime(0)
+  users_home_events_created_byTousers users?    @relation("home_events_created_byTousers", fields: [created_by], references: [id], onUpdate: NoAction, map: "home_events_ibfk_1")
+  users_home_events_updated_byTousers users?    @relation("home_events_updated_byTousers", fields: [updated_by], references: [id], onUpdate: NoAction, map: "home_events_ibfk_2")
+
+  @@index([created_by], map: "created_by")
+  @@index([updated_by], map: "updated_by")
+}
+
+model home_promo {
+  id                                 Int                @id @default(autoincrement()) @db.UnsignedInt
+  title                              String?            @db.VarChar(200)
+  hero_file                          String?            @db.VarChar(255)
+  hero_url                           String?            @db.VarChar(500)
+  left_label                         String?            @db.VarChar(100)
+  right_label                        String?            @db.VarChar(100)
+  created_by                         Int?               @db.UnsignedInt
+  updated_by                         Int?               @db.UnsignedInt
+  created_at                         DateTime?          @default(now()) @db.DateTime(0)
+  updated_at                         DateTime?          @default(now()) @db.DateTime(0)
+  users_home_promo_created_byTousers users?             @relation("home_promo_created_byTousers", fields: [created_by], references: [id], onUpdate: NoAction, map: "home_promo_ibfk_1")
+  users_home_promo_updated_byTousers users?             @relation("home_promo_updated_byTousers", fields: [updated_by], references: [id], onUpdate: NoAction, map: "home_promo_ibfk_2")
+  home_promo_cards                   home_promo_cards[]
+
+  @@index([created_by], map: "created_by")
+  @@index([updated_by], map: "updated_by")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model home_promo_cards {
+  id         Int        @id @default(autoincrement()) @db.UnsignedInt
+  promo_id   Int        @db.UnsignedInt
+  slot       Int        @db.UnsignedTinyInt
+  file       String?    @db.VarChar(255)
+  url        String?    @db.VarChar(500)
+  home_promo home_promo @relation(fields: [promo_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "home_promo_cards_ibfk_1")
+
+  @@index([promo_id], map: "promo_id")
+}
+
+model logo_groups {
+  id                                  String    @id @db.VarChar(50)
+  sort_order                          Int?      @default(0) @db.UnsignedInt
+  created_by                          Int?      @db.UnsignedInt
+  updated_by                          Int?      @db.UnsignedInt
+  created_at                          DateTime? @default(now()) @db.DateTime(0)
+  updated_at                          DateTime? @default(now()) @db.DateTime(0)
+  users_logo_groups_created_byTousers users?    @relation("logo_groups_created_byTousers", fields: [created_by], references: [id], onUpdate: NoAction, map: "logo_groups_ibfk_1")
+  users_logo_groups_updated_byTousers users?    @relation("logo_groups_updated_byTousers", fields: [updated_by], references: [id], onUpdate: NoAction, map: "logo_groups_ibfk_2")
+  logos                               logos[]
+
+  @@index([created_by], map: "created_by")
+  @@index([updated_by], map: "updated_by")
+}
+
+model logos {
+  id          String      @id @db.VarChar(50)
+  group_id    String      @db.VarChar(50)
+  file        String      @db.VarChar(255)
+  sort_order  Int?        @default(0) @db.UnsignedInt
+  logo_groups logo_groups @relation(fields: [group_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "logos_ibfk_1")
+
+  @@index([group_id], map: "group_id")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model page_views {
+  id    Int      @id @default(autoincrement()) @db.UnsignedInt
+  page  String   @db.VarChar(50)
+  date  DateTime @db.Date
+  hour  Int?     @db.UnsignedTinyInt
+  count Int?     @default(0) @db.UnsignedInt
+
+  @@unique([page, date], map: "uq_page_date")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model permissions {
+  id               Int                @id @default(autoincrement()) @db.UnsignedInt
+  module           String             @db.VarChar(50)
+  action           String             @db.VarChar(20)
+  role_permissions role_permissions[]
+
+  @@unique([module, action], map: "uq_perm")
+}
+
+model role_permissions {
+  role_id       Int         @db.UnsignedInt
+  permission_id Int         @db.UnsignedInt
+  roles         roles       @relation(fields: [role_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "role_permissions_ibfk_1")
+  permissions   permissions @relation(fields: [permission_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "role_permissions_ibfk_2")
+
+  @@id([role_id, permission_id])
+  @@index([permission_id], map: "permission_id")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model roles {
+  id               Int                @id @default(autoincrement()) @db.UnsignedInt
+  name             String             @unique(map: "name") @db.VarChar(50)
+  description      String?            @db.VarChar(200)
+  created_at       DateTime?          @default(now()) @db.DateTime(0)
+  role_permissions role_permissions[]
+  users            users[]
+}
+
+model user_sessions {
+  id         Int       @id @default(autoincrement()) @db.UnsignedInt
+  user_id    Int       @db.UnsignedInt
+  token      String    @unique(map: "token") @db.VarChar(255)
+  expires_at DateTime  @db.DateTime(0)
+  created_at DateTime? @default(now()) @db.DateTime(0)
+  users      users     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "user_sessions_ibfk_1")
+
+  @@index([user_id], map: "user_id")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model users {
+  id                                                Int               @id @default(autoincrement()) @db.UnsignedInt
+  employee_id                                       String            @unique(map: "employee_id") @db.VarChar(20)
+  password_hash                                     String            @db.VarChar(255)
+  role_id                                           Int               @db.UnsignedInt
+  is_active                                         Boolean?          @default(true)
+  must_change_password                              Boolean?          @default(false)
+  last_login_at                                     DateTime?         @db.DateTime(0)
+  created_at                                        DateTime?         @default(now()) @db.DateTime(0)
+  updated_at                                        DateTime?         @default(now()) @db.DateTime(0)
+  activities_activities_created_byTousers           activities[]      @relation("activities_created_byTousers")
+  activities_activities_updated_byTousers           activities[]      @relation("activities_updated_byTousers")
+  banners_banners_created_byTousers                 banners[]         @relation("banners_created_byTousers")
+  banners_banners_updated_byTousers                 banners[]         @relation("banners_updated_byTousers")
+  config_config_created_byTousers                   config[]          @relation("config_created_byTousers")
+  config_config_updated_byTousers                   config[]          @relation("config_updated_byTousers")
+  dm_catalogs_dm_catalogs_created_byTousers         dm_catalogs[]     @relation("dm_catalogs_created_byTousers")
+  dm_catalogs_dm_catalogs_updated_byTousers         dm_catalogs[]     @relation("dm_catalogs_updated_byTousers")
+  floor_floors_floor_floors_created_byTousers       floor_floors[]    @relation("floor_floors_created_byTousers")
+  floor_floors_floor_floors_updated_byTousers       floor_floors[]    @relation("floor_floors_updated_byTousers")
+  food_categories_food_categories_created_byTousers food_categories[] @relation("food_categories_created_byTousers")
+  food_categories_food_categories_updated_byTousers food_categories[] @relation("food_categories_updated_byTousers")
+  gallery_content_gallery_content_created_byTousers gallery_content[] @relation("gallery_content_created_byTousers")
+  gallery_content_gallery_content_updated_byTousers gallery_content[] @relation("gallery_content_updated_byTousers")
+  home_events_home_events_created_byTousers         home_events[]     @relation("home_events_created_byTousers")
+  home_events_home_events_updated_byTousers         home_events[]     @relation("home_events_updated_byTousers")
+  home_promo_home_promo_created_byTousers           home_promo[]      @relation("home_promo_created_byTousers")
+  home_promo_home_promo_updated_byTousers           home_promo[]      @relation("home_promo_updated_byTousers")
+  logo_groups_logo_groups_created_byTousers         logo_groups[]     @relation("logo_groups_created_byTousers")
+  logo_groups_logo_groups_updated_byTousers         logo_groups[]     @relation("logo_groups_updated_byTousers")
+  user_sessions                                     user_sessions[]
+  roles                                             roles             @relation(fields: [role_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "users_ibfk_1")
+  winners_events_winners_events_created_byTousers   winners_events[]  @relation("winners_events_created_byTousers")
+  winners_events_winners_events_updated_byTousers   winners_events[]  @relation("winners_events_updated_byTousers")
+
+  @@index([role_id], map: "role_id")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model winners_events {
+  id                                     String         @id @db.VarChar(50)
+  title                                  String?        @db.VarChar(200)
+  subtitle1                              String?        @db.Text
+  subtitle2                              String?        @db.Text
+  columns                                Json?
+  sort_order                             Int?           @default(0) @db.UnsignedInt
+  created_by                             Int?           @db.UnsignedInt
+  updated_by                             Int?           @db.UnsignedInt
+  created_at                             DateTime?      @default(now()) @db.DateTime(0)
+  updated_at                             DateTime?      @default(now()) @db.DateTime(0)
+  users_winners_events_created_byTousers users?         @relation("winners_events_created_byTousers", fields: [created_by], references: [id], onUpdate: NoAction, map: "winners_events_ibfk_1")
+  users_winners_events_updated_byTousers users?         @relation("winners_events_updated_byTousers", fields: [updated_by], references: [id], onUpdate: NoAction, map: "winners_events_ibfk_2")
+  winners_rows                           winners_rows[]
+
+  @@index([created_by], map: "created_by")
+  @@index([updated_by], map: "updated_by")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model winners_rows {
+  id                 Int            @id @default(autoincrement()) @db.UnsignedInt
+  event_id           String         @db.VarChar(50)
+  parent_id          Int?           @db.UnsignedInt
+  value              String?        @db.Text
+  depth              Int?           @default(0) @db.UnsignedTinyInt
+  sort_order         Int?           @default(0) @db.UnsignedInt
+  winners_events     winners_events @relation(fields: [event_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "winners_rows_ibfk_1")
+  winners_rows       winners_rows?  @relation("winners_rowsTowinners_rows", fields: [parent_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "winners_rows_ibfk_2")
+  other_winners_rows winners_rows[] @relation("winners_rowsTowinners_rows")
+
+  @@index([event_id], map: "event_id")
+  @@index([parent_id], map: "parent_id")
+}
+
+enum gallery_content_type {
+  image
+  youtube
+}
+
+enum activity_content_type {
+  image
+  youtube
+}
+
+enum dm_catalogs_type {
+  double
+  single
+  strip
+  url
+}
+
+enum food_items_section {
+  theme
+  foodcourt
+}

@@ -1,17 +1,15 @@
-const express = require('express');
-const multer  = require('multer');
-const fs      = require('fs');
-const path    = require('path');
-const { DATA_DIR, readJSON, writeJSON } = require('../../utils/json');
+const express  = require('express');
+const multer   = require('multer');
+const fs       = require('fs');
+const path     = require('path');
+const { DATA_DIR } = require('../../utils/json');
+const prisma   = require('../../utils/db');
 
-const router   = express.Router();
-const FILE     = 'logos.json';
-const LOGO_DIR = path.join(DATA_DIR, 'logo-pic');
+const router    = express.Router();
+const LOGO_DIR  = path.join(DATA_DIR, 'logo-pic');
 const IMAGE_EXT = /\.(jpg|jpeg|png|webp|gif|svg)$/i;
 
 fs.mkdirSync(LOGO_DIR, { recursive: true });
-
-const defaultData = () => ({ groups: [] });
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -25,80 +23,78 @@ const upload = multer({
 });
 
 /* GET */
-router.get('/', (_req, res) => res.json(readJSON(FILE, defaultData())));
+router.get('/', async (_req, res) => {
+  const groups = await prisma.logo_groups.findMany({
+    include: { logos: { orderBy: { sort_order: 'asc' } } },
+    orderBy: { sort_order: 'asc' },
+  });
+  res.json({ groups });
+});
 
-/* POST /group — 新增組別 */
-router.post('/group', (req, res) => {
-  const data = readJSON(FILE, defaultData());
-  const id   = `group-${Date.now()}`;
-  data.groups.push({ id, logos: [] });
-  writeJSON(FILE, data);
+/* POST /group */
+router.post('/group', async (_req, res) => {
+  const id    = `group-${Date.now()}`;
+  const count = await prisma.logo_groups.count();
+  await prisma.logo_groups.create({ data: { id, sort_order: count } });
   res.json({ success: true, id });
 });
 
-/* PUT /group/reorder — 重新排列組別 */
-router.put('/group/reorder', (req, res) => {
+/* PUT /group/reorder */
+router.put('/group/reorder', async (req, res) => {
   const { ids } = req.body;
   if (!Array.isArray(ids)) return res.status(400).json({ error: '無效' });
-  const data = readJSON(FILE, defaultData());
-  const map  = Object.fromEntries(data.groups.map(g => [g.id, g]));
-  data.groups = ids.map(id => map[id]).filter(Boolean);
-  writeJSON(FILE, data);
+  await prisma.$transaction(
+    ids.map((id, i) => prisma.logo_groups.update({ where: { id }, data: { sort_order: i } }))
+  );
   res.json({ success: true });
 });
 
 /* DELETE /group/:gid */
-router.delete('/group/:gid', (req, res) => {
-  const data = readJSON(FILE, defaultData());
-  const idx  = data.groups.findIndex(g => g.id === req.params.gid);
-  if (idx === -1) return res.status(404).json({ error: '找不到組別' });
-  const group = data.groups[idx];
+router.delete('/group/:gid', async (req, res) => {
+  const group = await prisma.logo_groups.findUnique({
+    where: { id: req.params.gid },
+    include: { logos: true },
+  });
+  if (!group) return res.status(404).json({ error: '找不到組別' });
   group.logos.forEach(l => {
     const p = path.join(LOGO_DIR, l.file);
     if (fs.existsSync(p)) fs.unlinkSync(p);
   });
-  data.groups.splice(idx, 1);
-  writeJSON(FILE, data);
+  await prisma.logo_groups.delete({ where: { id: req.params.gid } });
   res.json({ success: true });
 });
 
-/* POST /group/:gid/upload — 上傳 logo 至指定組別 */
-router.post('/group/:gid/upload', upload.single('image'), (req, res) => {
+/* POST /group/:gid/upload */
+router.post('/group/:gid/upload', upload.single('image'), async (req, res) => {
   if (!req.file) return res.status(400).json({ error: '無效的圖片' });
-  const data  = readJSON(FILE, defaultData());
-  const group = data.groups.find(g => g.id === req.params.gid);
+  const group = await prisma.logo_groups.findUnique({
+    where: { id: req.params.gid },
+    include: { logos: true },
+  });
   if (!group) return res.status(404).json({ error: '找不到組別' });
   if (group.logos.length >= 6) return res.status(400).json({ error: '每組最多 6 張' });
-  const id = `logo-${Date.now()}`;
-  group.logos.push({ id, file: req.file.filename });
-  writeJSON(FILE, data);
+  const id    = `logo-${Date.now()}`;
+  const count = group.logos.length;
+  await prisma.logos.create({ data: { id, group_id: req.params.gid, file: req.file.filename, sort_order: count } });
   res.json({ success: true, id, file: req.file.filename });
 });
 
-/* PUT /group/:gid/reorder — 組內排序 */
-router.put('/group/:gid/reorder', (req, res) => {
+/* PUT /group/:gid/reorder */
+router.put('/group/:gid/reorder', async (req, res) => {
   const { ids } = req.body;
   if (!Array.isArray(ids)) return res.status(400).json({ error: '無效' });
-  const data  = readJSON(FILE, defaultData());
-  const group = data.groups.find(g => g.id === req.params.gid);
-  if (!group) return res.status(404).json({ error: '找不到組別' });
-  const map = Object.fromEntries(group.logos.map(l => [l.id, l]));
-  group.logos = ids.map(id => map[id]).filter(Boolean);
-  writeJSON(FILE, data);
+  await prisma.$transaction(
+    ids.map((id, i) => prisma.logos.update({ where: { id }, data: { sort_order: i } }))
+  );
   res.json({ success: true });
 });
 
-/* DELETE /group/:gid/:lid — 刪除單張 logo */
-router.delete('/group/:gid/:lid', (req, res) => {
-  const data  = readJSON(FILE, defaultData());
-  const group = data.groups.find(g => g.id === req.params.gid);
-  if (!group) return res.status(404).json({ error: '找不到組別' });
-  const idx = group.logos.findIndex(l => l.id === req.params.lid);
-  if (idx === -1) return res.status(404).json({ error: '找不到 Logo' });
-  const { file } = group.logos[idx];
-  group.logos.splice(idx, 1);
-  writeJSON(FILE, data);
-  const p = path.join(LOGO_DIR, file);
+/* DELETE /group/:gid/:lid */
+router.delete('/group/:gid/:lid', async (req, res) => {
+  const logo = await prisma.logos.findUnique({ where: { id: req.params.lid } });
+  if (!logo) return res.status(404).json({ error: '找不到 Logo' });
+  await prisma.logos.delete({ where: { id: req.params.lid } });
+  const p = path.join(LOGO_DIR, logo.file);
   if (fs.existsSync(p)) fs.unlinkSync(p);
   res.json({ success: true });
 });

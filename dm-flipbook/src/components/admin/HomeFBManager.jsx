@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { apiFetch } from '../../utils/apiFetch';
 
 export default function HomeFBManager() {
   const [src, setSrc]       = useState('');
@@ -6,14 +7,14 @@ export default function HomeFBManager() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/admin/home-fb')
+    apiFetch('/api/admin/home-fb')
       .then(r => r.json())
       .then(d => { setSrc(d.src ?? ''); setLoading(false); })
       .catch(() => setLoading(false));
   }, []);
 
   const save = () => {
-    fetch('/api/admin/home-fb', {
+    apiFetch('/api/admin/home-fb', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ src }),
