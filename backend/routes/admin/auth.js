@@ -1,8 +1,9 @@
-const express       = require('express');
-const bcrypt        = require('bcryptjs');
-const jwt           = require('jsonwebtoken');
-const prisma        = require('../../utils/db');
-const requireAdmin  = require('../../middleware/auth');
+const express        = require('express');
+const bcrypt         = require('bcryptjs');
+const jwt            = require('jsonwebtoken');
+const { randomUUID } = require('crypto');
+const prisma         = require('../../utils/db');
+const requireAdmin   = require('../../middleware/auth');
 
 const router = express.Router();
 
@@ -30,7 +31,13 @@ router.post('/login', async (req, res) => {
 
   const user = await prisma.users.findUnique({
     where: { employee_id },
-    include: { roles: true },
+    include: {
+      roles: {
+        include: {
+          role_permissions: { include: { permissions: true } },
+        },
+      },
+    },
   }).catch(() => null);
 
   if (!user || !user.is_active) {
@@ -44,14 +51,27 @@ router.post('/login', async (req, res) => {
 
   const expiresAt = new Date(Date.now() + SESSION_HOURS * 60 * 60 * 1000);
 
+  const userPerms = user.roles.role_permissions.map(
+    rp => `${rp.permissions.module}:${rp.permissions.action}`
+  );
+
+  const sessionId = randomUUID(); // 36 字元，存進 DB；JWT 本身不存 DB
+
   const token = jwt.sign(
-    { userId: user.id, employeeId: user.employee_id, roleId: user.role_id, roleName: user.roles.name },
+    {
+      userId:      user.id,
+      employeeId:  user.employee_id,
+      roleId:      user.role_id,
+      roleName:    user.roles.name,
+      permissions: userPerms,
+      sessionId,
+    },
     process.env.JWT_SECRET,
     { expiresIn: `${SESSION_HOURS}h` }
   );
 
   await prisma.user_sessions.create({
-    data: { user_id: user.id, token, expires_at: expiresAt },
+    data: { user_id: user.id, token: sessionId, expires_at: expiresAt },
   });
 
   await prisma.users.update({
@@ -66,6 +86,7 @@ router.post('/login', async (req, res) => {
       id:          user.id,
       employee_id: user.employee_id,
       role:        user.roles.name,
+      permissions: userPerms,
     },
   });
 });
@@ -74,7 +95,14 @@ router.post('/login', async (req, res) => {
 router.post('/logout', async (req, res) => {
   const token = req.cookies?.admin_token;
   if (token) {
-    await prisma.user_sessions.deleteMany({ where: { token } }).catch(() => null);
+    try {
+      const payload = jwt.verify(token, process.env.JWT_SECRET);
+      if (payload.sessionId) {
+        await prisma.user_sessions.deleteMany({ where: { token: payload.sessionId } }).catch(() => null);
+      }
+    } catch {
+      // token 已過期或無效，無法解出 sessionId；session 會自然過期，直接清 cookie 即可
+    }
   }
   res.clearCookie('admin_token', { ...COOKIE_OPTIONS, maxAge: undefined });
   res.json({ message: '已登出' });

@@ -25,7 +25,17 @@ const upload = multer({
 /* GET /api/admin/banner */
 router.get('/', async (_req, res) => {
   const banners = await prisma.banners.findMany({ orderBy: { sort_order: 'asc' } });
-  res.json({ banners });
+  res.json({
+    banners: banners.map(b => ({
+      id:         b.id,
+      file:       b.file,
+      url:        b.url ?? '',
+      is_active:  b.is_active,
+      sort_order: b.sort_order,
+      startDate:  b.start_date ? b.start_date.toISOString().slice(0, 10) : '',
+      endDate:    b.end_date   ? b.end_date.toISOString().slice(0, 10)   : '',
+    })),
+  });
 });
 
 /* POST /api/admin/banner — 根路由無檔案直接拒絕 */
