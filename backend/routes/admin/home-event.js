@@ -25,7 +25,16 @@ const makeUpload = () => multer({
 /* GET */
 router.get('/', async (_req, res) => {
   const events = await prisma.home_events.findMany({ orderBy: { sort_order: 'asc' } });
-  res.json({ events });
+  res.json({
+    events: events.map(e => ({
+      id:         e.id,
+      file:       e.file,
+      url:        e.url ?? '',
+      sort_order: e.sort_order,
+      startDate:  e.start_date ? e.start_date.toISOString().slice(0, 16) : '',
+      endDate:    e.end_date   ? e.end_date.toISOString().slice(0, 16)   : '',
+    })),
+  });
 });
 
 /* POST /upload */

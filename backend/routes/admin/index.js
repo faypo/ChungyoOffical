@@ -24,6 +24,41 @@ router.use('/auth', authRoutes);
 
 router.use(requireAdmin);
 
+// 依 path 對應 module，統一做 permissions 檢查
+const MODULE_PATH_MAP = {
+  '/banner':         'banner',
+  '/home-event':     'home_event',
+  '/home-promo':     'home_promo',
+  '/home-fb':        'home_fb',
+  '/logos':          'logo',
+  '/catalog':        'dm',
+  '/floor-guide':    'floor',
+  '/food-guide':     'food',
+  '/winners':        'winners',
+  '/activity':       'activity',
+  '/gallery':        'gallery',
+  '/service':        'service',
+  '/sustainability': 'sustainability',
+  '/stats':          'stats',
+  '/users':          'user',
+  '/faq':            'faq',
+};
+
+router.use((req, res, next) => {
+  const module = Object.entries(MODULE_PATH_MAP)
+    .find(([prefix]) => req.path.startsWith(prefix))?.[1];
+  if (!module) return next(); // /roles 有自己的 super_admin 判斷
+
+  const action = req.method === 'DELETE' ? 'delete'
+               : req.method === 'GET'    ? 'read'
+               : 'write';
+
+  if (!req.user.permissions.has(`${module}:${action}`)) {
+    return res.status(403).json({ error: '權限不足' });
+  }
+  next();
+});
+
 router.use('/catalog',     catalogRoutes);
 router.use('/floor-guide', floorGuideRoutes);
 router.use('/food-guide',  foodGuideRoutes);

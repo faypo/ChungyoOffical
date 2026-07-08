@@ -1,0 +1,4 @@
+{"time":"2026-07-08T14:03:56.451+08:00","ip":"::1","method":"POST","path":"/auth/login","body":{"employee_id":"admin","password":"energyc3"}}
+{"time":"2026-07-08T14:04:03.550+08:00","ip":"::1","method":"POST","path":"/auth/login","body":{"employee_id":"admin","password":"energyc3"}}
+{"time":"2026-07-08T14:47:44.826+08:00","ip":"::1","method":"POST","path":"/auth/login","body":{"employee_id":"admin","password":"energyc3"}}
+{"time":"2026-07-08T14:48:02.508+08:00","ip":"::1","method":"POST","path":"/users","body":{"employee_id":"cy1111","password":"CYcy1111","role_id":3}}

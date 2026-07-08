@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './ActivityManager.css';
 import './HomeEventsManager.css';
 import { apiFetch } from '../../utils/apiFetch';
+import { useModulePermission } from '../../utils/useModulePermission';
 
 const isDragHandle = { current: false };
 
@@ -10,6 +11,7 @@ const API = '/api/admin/home-event';
 const isFileDrag = (e) => e.dataTransfer?.types?.includes('Files');
 
 export default function HomeEventsManager() {
+  const { canWrite, canDelete } = useModulePermission('home_event');
   const [events,    setEvents]    = useState([]);
   const [loading,   setLoading]   = useState(true);
   const [msg,       setMsg]       = useState(null);
@@ -165,28 +167,30 @@ export default function HomeEventsManager() {
 
       {msg && <div className="admin-popup-overlay"><div className={`admin-popup admin-popup--${msg.type}`}>{msg.text}</div></div>}
 
-      {/* 拖放上傳區 */}
-      <div
-        className={`bm-dropzone${dropActive ? ' bm-dropzone--active' : ''}`}
-        onClick={() => fileRef.current?.click()}
-        onDragEnter={onZoneDragEnter}
-        onDragOver={onZoneDragOver}
-        onDragLeave={onZoneDragLeave}
-        onDrop={onZoneDrop}
-      >
-        <input ref={fileRef} type="file" accept="image/*" multiple hidden onChange={handleFileInput} />
-        {uploading ? (
-          <span className="bm-dropzone-text">上傳中…</span>
-        ) : dropActive ? (
-          <span className="bm-dropzone-text bm-dropzone-text--active">放開以上傳</span>
-        ) : (
-          <span className="bm-dropzone-text">
-            拖曳圖片至此，或 <u>點擊選擇</u>（支援同時拖入多張）
-          </span>
-        )}
-      </div>
+      {/* 拖放上傳區（唯讀使用者不顯示）*/}
+      {canWrite && (
+        <div
+          className={`bm-dropzone${dropActive ? ' bm-dropzone--active' : ''}`}
+          onClick={() => fileRef.current?.click()}
+          onDragEnter={onZoneDragEnter}
+          onDragOver={onZoneDragOver}
+          onDragLeave={onZoneDragLeave}
+          onDrop={onZoneDrop}
+        >
+          <input ref={fileRef} type="file" accept="image/*" multiple hidden onChange={handleFileInput} />
+          {uploading ? (
+            <span className="bm-dropzone-text">上傳中…</span>
+          ) : dropActive ? (
+            <span className="bm-dropzone-text bm-dropzone-text--active">放開以上傳</span>
+          ) : (
+            <span className="bm-dropzone-text">
+              拖曳圖片至此，或 <u>點擊選擇</u>（支援同時拖入多張）
+            </span>
+          )}
+        </div>
+      )}
 
-      <input ref={replaceFileRef} type="file" accept="image/*" hidden onChange={handleReplaceImage} />
+      {canWrite && <input ref={replaceFileRef} type="file" accept="image/*" hidden onChange={handleReplaceImage} />}
 
       {/* 卡片列表 */}
       <div className="fg-section">
@@ -195,7 +199,7 @@ export default function HomeEventsManager() {
         </div>
 
         {events.length === 0 ? (
-          <div className="fg-empty">尚無活動卡片，請從上方拖入或點擊上傳</div>
+          <div className="fg-empty">{canWrite ? '尚無活動卡片，請從上方拖入或點擊上傳' : '尚無活動卡片'}</div>
         ) : (
           <div className="am-list">
             {events.map((ev, i) => {
@@ -204,20 +208,22 @@ export default function HomeEventsManager() {
                 <div
                   key={ev.id}
                   className="hem-item"
-                  draggable
+                  draggable={canWrite}
                   onDragStart={e => {
-                    if (!isDragHandleRef.current) { e.preventDefault(); return; }
+                    if (!canWrite || !isDragHandleRef.current) { e.preventDefault(); return; }
                     handleDragStart(i);
                   }}
                   onDragEnd={() => { isDragHandleRef.current = false; handleDragEnd(); }}
-                  onDragOver={handleItemDragOver}
-                  onDrop={e => handleDrop(e, i)}
+                  onDragOver={canWrite ? handleItemDragOver : undefined}
+                  onDrop={canWrite ? e => handleDrop(e, i) : undefined}
                 >
-                  <span
-                    className="am-drag-handle"
-                    onMouseDown={() => { isDragHandleRef.current = true; }}
-                    onMouseUp={() => { isDragHandleRef.current = false; }}
-                  >⠿</span>
+                  {canWrite && (
+                    <span
+                      className="am-drag-handle"
+                      onMouseDown={() => { isDragHandleRef.current = true; }}
+                      onMouseUp={() => { isDragHandleRef.current = false; }}
+                    >⠿</span>
+                  )}
                   <img
                     src={`/api/images/home-event-pic/${ev.file}`}
                     alt={ev.file}
@@ -228,8 +234,9 @@ export default function HomeEventsManager() {
                       className="fg-info-input"
                       placeholder="連結網址（選填）"
                       value={f.url ?? ''}
-                      onChange={e => setField(ev.id, 'url', e.target.value)}
-                      onBlur={() => handleBlur(ev.id)}
+                      readOnly={!canWrite}
+                      onChange={e => canWrite && setField(ev.id, 'url', e.target.value)}
+                      onBlur={() => canWrite && handleBlur(ev.id)}
                     />
                     <div className="hem-dates">
                       <label className="hem-date-label">
@@ -238,8 +245,9 @@ export default function HomeEventsManager() {
                           type="datetime-local"
                           className="fg-info-input hem-date-input"
                           value={f.startDate ?? ''}
-                          onChange={e => setField(ev.id, 'startDate', e.target.value)}
-                          onBlur={() => handleBlur(ev.id)}
+                          readOnly={!canWrite}
+                          onChange={e => canWrite && setField(ev.id, 'startDate', e.target.value)}
+                          onBlur={() => canWrite && handleBlur(ev.id)}
                         />
                       </label>
                       <label className="hem-date-label">
@@ -248,26 +256,33 @@ export default function HomeEventsManager() {
                           type="datetime-local"
                           className="fg-info-input hem-date-input"
                           value={f.endDate ?? ''}
-                          onChange={e => setField(ev.id, 'endDate', e.target.value)}
-                          onBlur={() => handleBlur(ev.id)}
+                          readOnly={!canWrite}
+                          onChange={e => canWrite && setField(ev.id, 'endDate', e.target.value)}
+                          onBlur={() => canWrite && handleBlur(ev.id)}
                         />
                       </label>
                     </div>
                   </div>
-                  <div className="hem-actions">
-                    <button
-                      className="fg-btn fg-btn-ghost fg-btn-sm"
-                      onClick={() => triggerReplace(ev.id)}
-                    >
-                      換圖
-                    </button>
-                    <button
-                      className="fg-btn fg-btn-danger fg-btn-sm"
-                      onClick={() => handleDelete(ev.id)}
-                    >
-                      刪除
-                    </button>
-                  </div>
+                  {(canWrite || canDelete) && (
+                    <div className="hem-actions">
+                      {canWrite && (
+                        <button
+                          className="fg-btn fg-btn-ghost fg-btn-sm"
+                          onClick={() => triggerReplace(ev.id)}
+                        >
+                          換圖
+                        </button>
+                      )}
+                      {canDelete && (
+                        <button
+                          className="fg-btn fg-btn-danger fg-btn-sm"
+                          onClick={() => handleDelete(ev.id)}
+                        >
+                          刪除
+                        </button>
+                      )}
+                    </div>
+                  )}
                 </div>
               );
             })}

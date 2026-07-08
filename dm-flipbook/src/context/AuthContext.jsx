@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import React, { createContext, useContext, useState, useCallback, useEffect, useMemo } from 'react';
 
 const AuthContext = createContext(null);
 
@@ -10,6 +10,17 @@ function loadUser() {
 export function AuthProvider({ children }) {
   const [mustChangePw, setMustChangePw] = useState(() => localStorage.getItem('admin_must_change_pw') === 'true');
   const [user, setUser]                 = useState(loadUser);
+
+  // permissions 是 ["banner:read", "banner:write", ...] 字串陣列，做成 Set 方便 O(1) 查詢
+  const permSet = useMemo(
+    () => new Set(user?.permissions ?? []),
+    [user]
+  );
+
+  const hasPermission = useCallback(
+    (module, action) => permSet.has(`${module}:${action}`),
+    [permSet]
+  );
 
   const login = useCallback((mustChange = false, userInfo = null) => {
     localStorage.setItem('admin_must_change_pw', mustChange ? 'true' : 'false');
@@ -62,6 +73,7 @@ export function AuthProvider({ children }) {
       mustChangePw,
       isAuthenticated: !!user,
       isSuperAdmin: user?.role === 'super_admin',
+      hasPermission,
     }}>
       {children}
     </AuthContext.Provider>

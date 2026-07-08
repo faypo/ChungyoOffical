@@ -2,12 +2,14 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './ActivityManager.css';
 import './BannerManager.css';
 import { apiFetch } from '../../utils/apiFetch';
+import { useModulePermission } from '../../utils/useModulePermission';
 
 const API = '/api/admin/banner';
 
 const isFileDrag = (e) => e.dataTransfer?.types?.includes('Files');
 
 export default function BannerManager() {
+  const { canWrite, canDelete } = useModulePermission('banner');
   const [banners,     setBanners]     = useState([]);
   const [loading,     setLoading]     = useState(true);
   const [msg,         setMsg]         = useState(null);
@@ -172,26 +174,28 @@ export default function BannerManager() {
 
       {msg && <div className="admin-popup-overlay"><div className={`admin-popup admin-popup--${msg.type}`}>{msg.text}</div></div>}
 
-      {/* ── 拖放上傳區 ── */}
-      <div
-        className={`bm-dropzone${dropActive ? ' bm-dropzone--active' : ''}`}
-        onClick={() => fileRef.current?.click()}
-        onDragEnter={onZoneDragEnter}
-        onDragOver={onZoneDragOver}
-        onDragLeave={onZoneDragLeave}
-        onDrop={onZoneDrop}
-      >
-        <input ref={fileRef} type="file" accept="image/*" multiple hidden onChange={handleFileInput} />
-        {uploading ? (
-          <span className="bm-dropzone-text">上傳中…</span>
-        ) : dropActive ? (
-          <span className="bm-dropzone-text bm-dropzone-text--active">放開以上傳</span>
-        ) : (
-          <span className="bm-dropzone-text">
-            拖曳圖片至此，或 <u>點擊選擇</u>（支援同時拖入多張）
-          </span>
-        )}
-      </div>
+      {/* ── 拖放上傳區（唯讀使用者不顯示）── */}
+      {canWrite && (
+        <div
+          className={`bm-dropzone${dropActive ? ' bm-dropzone--active' : ''}`}
+          onClick={() => fileRef.current?.click()}
+          onDragEnter={onZoneDragEnter}
+          onDragOver={onZoneDragOver}
+          onDragLeave={onZoneDragLeave}
+          onDrop={onZoneDrop}
+        >
+          <input ref={fileRef} type="file" accept="image/*" multiple hidden onChange={handleFileInput} />
+          {uploading ? (
+            <span className="bm-dropzone-text">上傳中…</span>
+          ) : dropActive ? (
+            <span className="bm-dropzone-text bm-dropzone-text--active">放開以上傳</span>
+          ) : (
+            <span className="bm-dropzone-text">
+              拖曳圖片至此，或 <u>點擊選擇</u>（支援同時拖入多張）
+            </span>
+          )}
+        </div>
+      )}
 
       {/* ── Banner 列表 ── */}
       <div className="fg-section">
@@ -200,29 +204,31 @@ export default function BannerManager() {
         </div>
 
         {banners.length === 0 ? (
-          <div className="fg-empty">尚無 Banner，請從上方拖入或點擊上傳</div>
+          <div className="fg-empty">{canWrite ? '尚無 Banner，請從上方拖入或點擊上傳' : '尚無 Banner'}</div>
         ) : (
           <>
-          <input ref={replaceFileRef} type="file" accept="image/*" hidden onChange={handleReplaceImage} />
+          {canWrite && <input ref={replaceFileRef} type="file" accept="image/*" hidden onChange={handleReplaceImage} />}
           <div className="am-list">
             {banners.map((b, i) => (
               <div
                 key={b.id}
                 className="bm-item"
-                draggable
+                draggable={canWrite}
                 onDragStart={(e) => {
-                  if (!isDraggingHandle.current) { e.preventDefault(); return; }
+                  if (!canWrite || !isDraggingHandle.current) { e.preventDefault(); return; }
                   handleDragStart(i);
                 }}
-                onDragOver={handleItemDragOver}
-                onDrop={e => handleDrop(e, i)}
+                onDragOver={canWrite ? handleItemDragOver : undefined}
+                onDrop={canWrite ? e => handleDrop(e, i) : undefined}
                 onDragEnd={() => { isDraggingHandle.current = false; handleDragEnd(); }}
               >
-                <span
-                  className="am-drag-handle"
-                  onMouseDown={() => { isDraggingHandle.current = true; }}
-                  onMouseUp={() => { isDraggingHandle.current = false; }}
-                >⠿</span>
+                {canWrite && (
+                  <span
+                    className="am-drag-handle"
+                    onMouseDown={() => { isDraggingHandle.current = true; }}
+                    onMouseUp={() => { isDraggingHandle.current = false; }}
+                  >⠿</span>
+                )}
                 <img
                   src={`/api/images/banner-pic/${b.file}`}
                   alt={b.file}
@@ -233,8 +239,9 @@ export default function BannerManager() {
                     className="fg-info-input"
                     placeholder="連結網址（選填，空白表示不跳轉）"
                     value={urls[b.id] ?? ''}
-                    onChange={e => setUrls(prev => ({ ...prev, [b.id]: e.target.value }))}
-                    onBlur={() => handleFieldSave(b.id)}
+                    readOnly={!canWrite}
+                    onChange={e => canWrite && setUrls(prev => ({ ...prev, [b.id]: e.target.value }))}
+                    onBlur={() => canWrite && handleFieldSave(b.id)}
                   />
                   <div className="bm-date-row">
                     <label className="bm-date-label">
@@ -243,7 +250,9 @@ export default function BannerManager() {
                         type="date"
                         className="fg-info-input"
                         value={startDates[b.id] ?? ''}
+                        readOnly={!canWrite}
                         onChange={e => {
+                          if (!canWrite) return;
                           const val = e.target.value;
                           setStartDates(prev => ({ ...prev, [b.id]: val }));
                           handleFieldSave(b.id, { startDate: val });
@@ -256,7 +265,9 @@ export default function BannerManager() {
                         type="date"
                         className="fg-info-input"
                         value={endDates[b.id] ?? ''}
+                        readOnly={!canWrite}
                         onChange={e => {
+                          if (!canWrite) return;
                           const val = e.target.value;
                           setEndDates(prev => ({ ...prev, [b.id]: val }));
                           handleFieldSave(b.id, { endDate: val });
@@ -265,16 +276,22 @@ export default function BannerManager() {
                     </label>
                   </div>
                 </div>
-                <div className="bm-item-btns">
-                  <button
-                    className="fg-btn fg-btn-ghost fg-btn-sm"
-                    onClick={() => triggerReplace(b.id)}
-                  >換圖</button>
-                  <button
-                    className="fg-btn fg-btn-danger fg-btn-sm"
-                    onClick={() => handleDelete(b.id)}
-                  >刪除</button>
-                </div>
+                {(canWrite || canDelete) && (
+                  <div className="bm-item-btns">
+                    {canWrite && (
+                      <button
+                        className="fg-btn fg-btn-ghost fg-btn-sm"
+                        onClick={() => triggerReplace(b.id)}
+                      >換圖</button>
+                    )}
+                    {canDelete && (
+                      <button
+                        className="fg-btn fg-btn-danger fg-btn-sm"
+                        onClick={() => handleDelete(b.id)}
+                      >刪除</button>
+                    )}
+                  </div>
+                )}
               </div>
             ))}
           </div>

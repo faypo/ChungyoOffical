@@ -1,35 +1,36 @@
 import React, { useState } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { useModulePermission } from '../../utils/useModulePermission';
 import ChangePasswordModal from './ChangePasswordModal';
 import './AdminLayout.css';
 
 const OTHER_NAV = [
-  { to: '/admin/dm',       label: 'DM 管理' },
-  { to: '/admin/floor',    label: '樓層導覽' },
-  { to: '/admin/food',     label: '美食導覽' },
-  { to: '/admin/winners',  label: '得獎名單' },
-  { to: '/admin/activity', label: '活動頁' },
-  { to: '/admin/gallery',        label: '時尚藝廊' },
-  { to: '/admin/sustainability', label: '永續報告書' },
-  { to: '/admin/service',       label: '貼心服務' },
-  { to: '/admin/stats',         label: '流量統計' },
-  { to: '/admin/faq',           label: 'FAQ 管理' },
+  { to: '/admin/dm',             label: 'DM 管理',    module: 'dm' },
+  { to: '/admin/floor',          label: '樓層導覽',   module: 'floor' },
+  { to: '/admin/food',           label: '美食導覽',   module: 'food' },
+  { to: '/admin/winners',        label: '得獎名單',   module: 'winners' },
+  { to: '/admin/activity',       label: '活動頁',     module: 'activity' },
+  { to: '/admin/gallery',        label: '時尚藝廊',   module: 'gallery' },
+  { to: '/admin/sustainability',  label: '永續報告書', module: 'sustainability' },
+  { to: '/admin/service',        label: '貼心服務',   module: 'service' },
+  { to: '/admin/stats',          label: '流量統計',   module: 'stats' },
+  { to: '/admin/faq',            label: 'FAQ 管理',   module: 'faq' },
 ];
 
 const HOME_NAV = [
-  { to: '/admin/banner',     label: 'Banner 管理' },
-  { to: '/admin/home-event', label: '活動訊息' },
-  { to: '/admin/home-fb',    label: 'FB 社群' },
-  { to: '/admin/home-promo', label: '推廣區' },
-  { to: '/admin/logos',      label: 'Logo 輪播' },
+  { to: '/admin/banner',     label: 'Banner 管理', module: 'banner' },
+  { to: '/admin/home-event', label: '活動訊息',    module: 'home_event' },
+  { to: '/admin/home-fb',    label: 'FB 社群',     module: 'home_fb' },
+  { to: '/admin/home-promo', label: '推廣區',      module: 'home_promo' },
+  { to: '/admin/logos',      label: 'Logo 輪播',   module: 'logo' },
 ];
 
 export default function AdminLayout() {
   const { pathname } = useLocation();
   const isHomePath = HOME_NAV.some(n => pathname.startsWith(n.to));
   const [homeOpen, setHomeOpen] = useState(isHomePath);
-  const { logout, isSuperAdmin } = useAuth();
+  const { logout, isSuperAdmin, hasPermission } = useAuth();
   const navigate   = useNavigate();
   const [showChangePw, setShowChangePw] = useState(false);
 
@@ -56,7 +57,7 @@ export default function AdminLayout() {
           </button>
           {homeOpen && (
             <div className="admin-nav-children">
-              {HOME_NAV.map(({ to, label }) => (
+              {HOME_NAV.filter(n => hasPermission(n.module, 'read')).map(({ to, label }) => (
                 <NavLink
                   key={to}
                   to={to}
@@ -69,7 +70,7 @@ export default function AdminLayout() {
           )}
 
           {/* 其他功能 */}
-          {OTHER_NAV.map(({ to, label }) => (
+          {OTHER_NAV.filter(n => hasPermission(n.module, 'read')).map(({ to, label }) => (
             <NavLink
               key={to}
               to={to}
