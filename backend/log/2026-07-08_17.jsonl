@@ -1,0 +1,6 @@
+{"time":"2026-07-08T17:43:58.562+08:00","ip":"::1","method":"POST","path":"/auth/login","body":{"employee_id":"admin","password":"energyChungyo123"}}
+{"time":"2026-07-08T17:44:05.003+08:00","ip":"::1","method":"POST","path":"/auth/login","body":{"employee_id":"admin","password":"energyChungyo123"}}
+{"time":"2026-07-08T17:44:12.440+08:00","ip":"::1","method":"POST","path":"/auth/login","body":{"employee_id":"admin","password":"energyCHungyo123"}}
+{"time":"2026-07-08T17:44:20.944+08:00","ip":"::1","method":"POST","path":"/auth/login","body":{"employee_id":"admin","password":"energyc3"}}
+{"time":"2026-07-08T17:50:23.792+08:00","ip":"::1","method":"POST","path":"/faq","body":{"parent_id":null,"question":"附近有停車場嗎","answer":"周邊的特約停車場有以下:\n1.中友停車場\n2.一中停車場\n3.玉雪汽機車停車場\n4.益民停車場\n5.五權停車場\n[相關消費折抵方案](https://dmpage.chungyo.com.tw/service)","keywords":"停車","sort_order":0}}
+{"time":"2026-07-08T17:50:41.350+08:00","ip":"::1","method":"POST","path":"/faq","body":{"parent_id":null,"question":"附近有停車場嗎","answer":"周邊的特約停車場有以下:\n1.中友停車場\n2.一中停車場\n3.玉雪汽機車停車場\n4.益民停車場\n5.五權停車場\n[相關消費折抵方案](https://dmpage.chungyo.com.tw/service)","keywords":"停車","sort_order":0}}

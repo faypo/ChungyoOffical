@@ -1,0 +1,2 @@
+{"time":"2026-07-09T14:26:26.033+08:00","ip":"::1","method":"POST","path":"/auth/login","body":{"employee_id":"admin","password":"energyc3"}}
+{"time":"2026-07-09T14:26:32.305+08:00","ip":"::1","method":"DELETE","path":"/faq/1"}

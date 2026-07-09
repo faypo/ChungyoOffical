@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { useLayout } from '../../context/LayoutContext';
 import Header from './Header';
 import Footer from './Footer';
+import FaqWidget from '../FaqWidget';
 import './Layout.css';
 
 const PAGE_MAP = {
@@ -62,6 +63,7 @@ export default function Layout({ children }) {
       <Header />
       <main className="layout-main">{children}</main>
       {!isViewer && <Footer />}
+      {!isViewer && <FaqWidget />}
     </div>
   );
 }

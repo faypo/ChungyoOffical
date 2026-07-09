@@ -226,57 +226,94 @@ router.get('/privacy-policy', (_req, res) => {
   res.type('html').send(fs.readFileSync(filePath, 'utf8'));
 });
 
-// GET /api/faq — 根節點列表（含一層子節點）
-router.get('/faq', async (_req, res) => {
-  const nodes = await prisma.faq_nodes.findMany({
-    where: { is_active: true },
-    orderBy: { sort_order: 'asc' },
-  });
-  function buildTree(parentId) {
-    return nodes
-      .filter(n => n.parent_id === parentId)
-      .map(n => ({ ...n, children: buildTree(n.id) }));
-  }
-  res.json(buildTree(null));
+// POST /api/faq/unanswered — 記錄無法回答的問題（upsert，重複提問累加次數）
+router.post('/faq/unanswered', async (req, res) => {
+  const query = (req.body?.query ?? '').trim().slice(0, 500);
+  if (!query) return res.status(400).json({ error: '缺少 query' });
+  await prisma.$executeRaw`
+    INSERT INTO faq_unanswered (query, ask_count, last_asked_at)
+    VALUES (${query}, 1, NOW())
+    ON DUPLICATE KEY UPDATE ask_count = ask_count + 1, last_asked_at = NOW()
+  `;
+  res.json({ ok: true });
 });
 
-// GET /api/faq/:id — 單一節點（含子節點）
-router.get('/faq/:id', async (req, res) => {
-  const id = Number(req.params.id);
-  const nodes = await prisma.faq_nodes.findMany({
-    where: { is_active: true },
-    orderBy: { sort_order: 'asc' },
-  });
-  const node = nodes.find(n => n.id === id);
-  if (!node) return res.status(404).json({ error: 'Not found' });
-  const children = nodes
-    .filter(n => n.parent_id === id)
-    .map(n => ({ ...n, children: [] }));
-  res.json({ ...node, children });
-});
-
-// GET /api/faq/search?q=關鍵字 — 關鍵字搜尋，回傳評分最高前 5 筆
+// GET /api/faq/search?q=...&context=1,2,3 — 關鍵字搜尋（含對話語境加權）
+// 必須在 /faq/:id 之前定義，否則 'search' 會被當成 id 參數
 router.get('/faq/search', async (req, res) => {
   const q = (req.query.q || '').trim();
   if (!q) return res.json([]);
 
-  const terms = q.split(/\s+/).filter(Boolean);
-  const nodes = await prisma.faq_nodes.findMany({
-    where: { is_active: true },
-    orderBy: { sort_order: 'asc' },
-  });
+  const qLower   = q.toLowerCase();
+  const qCompact = qLower.replace(/\s/g, ''); // 去空白，用於字符窗口匹配
+  const terms    = q.split(/\s+/).filter(Boolean);
+
+  // 對話語境：最近討論過的節點 ID
+  const contextIds = (req.query.context || '')
+    .split(',').map(Number).filter(n => n > 0);
+
+  const [nodes, contextLinks] = await Promise.all([
+    prisma.faq_nodes.findMany({ where: { is_active: true } }),
+    contextIds.length > 0
+      ? prisma.faq_node_links.findMany({ where: { parent_id: { in: contextIds } }, select: { child_id: true } })
+      : Promise.resolve([]),
+  ]);
+
+  const contextChildIds = new Set(contextLinks.map(l => l.child_id));
 
   const scored = nodes
     .map(n => {
       const haystack = `${n.question} ${n.keywords ?? ''}`.toLowerCase();
-      const score = terms.reduce((acc, t) => acc + (haystack.includes(t.toLowerCase()) ? 1 : 0), 0);
-      return { ...n, score };
+
+      // 正向：搜尋詞出現在問題/標籤中
+      const fwdScore = terms.reduce((acc, t) => acc + (haystack.includes(t.toLowerCase()) ? 1 : 0), 0);
+
+      // 反向精確：標籤直接出現在搜尋句中
+      const kwTokens = (n.keywords ?? '').toLowerCase()
+        .split(/[\s,，、;；]+/).filter(kw => kw.length >= 2);
+      const revScore = kwTokens.reduce((acc, kw) => acc + (qLower.includes(kw) ? 1 : 0), 0);
+
+      // 滑動窗口：關鍵字的字符在搜尋詞鄰近範圍內都出現
+      // 處理語序變化，例：「車子停在哪」能匹配關鍵字「停車」
+      const winScore = kwTokens.reduce((acc, kw) => {
+        if (qLower.includes(kw)) return acc; // 已精確匹配，不重複計分
+        const chars   = [...kw];
+        const winSize = chars.length * 2;    // 窗口為關鍵字長度的 2 倍
+        for (let i = 0; i <= qCompact.length - chars.length; i++) {
+          const win = qCompact.slice(i, i + winSize);
+          if (chars.every(c => win.includes(c))) return acc + 1;
+        }
+        return acc;
+      }, 0);
+
+      // 語境加分：此節點是語境節點的後續問題，且本身有關鍵字匹配才加分
+      // 避免完全不相關的問題被舊對話語境強制拉高
+      const baseScore = fwdScore + revScore + winScore;
+      const ctxBoost  = (baseScore > 0 && contextChildIds.has(n.id)) ? 2 : 0;
+
+      return { ...n, score: baseScore + ctxBoost };
     })
     .filter(n => n.score > 0)
     .sort((a, b) => b.score - a.score)
     .slice(0, 5);
 
   res.json(scored);
+});
+
+// GET /api/faq/:id — 單一節點（含後續問題）
+router.get('/faq/:id', async (req, res) => {
+  const id = Number(req.params.id);
+  const node = await prisma.faq_nodes.findFirst({ where: { id, is_active: true } });
+  if (!node) return res.status(404).json({ error: 'Not found' });
+
+  const links = await prisma.faq_node_links.findMany({
+    where:   { parent_id: id },
+    orderBy: { sort_order: 'asc' },
+    include: { child: true },
+  });
+  const children = links.filter(l => l.child.is_active).map(l => l.child);
+
+  res.json({ ...node, children });
 });
 
 module.exports = router;

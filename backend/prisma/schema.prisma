@@ -504,18 +504,37 @@ enum food_items_section {
 }
 
 model faq_nodes {
-  id         Int        @id @default(autoincrement()) @db.UnsignedInt
-  parent_id  Int?       @db.UnsignedInt
-  question   String     @db.VarChar(300)
-  answer     String     @db.Text
-  keywords   String?    @db.VarChar(500)
-  sort_order Int        @default(0) @db.UnsignedInt
-  is_active  Boolean    @default(true)
-  created_at DateTime   @default(now()) @db.DateTime(0)
-  updated_at DateTime   @default(now()) @db.DateTime(0)
-  parent     faq_nodes?  @relation("faq_tree", fields: [parent_id], references: [id], onDelete: Cascade)
-  children   faq_nodes[] @relation("faq_tree")
+  id           Int              @id @default(autoincrement()) @db.UnsignedInt
+  question     String           @db.VarChar(300)
+  answer       String           @db.Text
+  keywords     String?          @db.VarChar(500)
+  is_active    Boolean          @default(true)
+  created_at   DateTime         @default(now()) @db.DateTime(0)
+  updated_at   DateTime         @default(now()) @db.DateTime(0)
+  parent_links faq_node_links[] @relation("link_parent")
+  child_links  faq_node_links[] @relation("link_child")
+}
 
-  @@index([parent_id], map: "idx_parent")
-  @@index([parent_id, sort_order], map: "idx_sort")
+model faq_node_links {
+  id         Int       @id @default(autoincrement()) @db.UnsignedInt
+  parent_id  Int       @db.UnsignedInt
+  child_id   Int       @db.UnsignedInt
+  sort_order Int       @default(0) @db.UnsignedInt
+  parent     faq_nodes @relation("link_parent", fields: [parent_id], references: [id], onDelete: Cascade)
+  child      faq_nodes @relation("link_child",  fields: [child_id],  references: [id], onDelete: Cascade)
+
+  @@unique([parent_id, child_id])
+  @@index([parent_id, sort_order], map: "idx_link_parent_sort")
+  @@index([child_id], map: "idx_link_child")
+}
+
+model faq_unanswered {
+  id           Int      @id @default(autoincrement()) @db.UnsignedInt
+  query        String   @db.VarChar(500)
+  ask_count    Int      @default(1) @db.UnsignedInt
+  created_at   DateTime @default(now()) @db.DateTime(0)
+  last_asked_at DateTime @default(now()) @db.DateTime(0)
+
+  @@unique([query(length: 255)])
+  @@index([ask_count], map: "idx_count")
 }

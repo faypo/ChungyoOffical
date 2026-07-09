@@ -1,0 +1,10 @@
+{"time":"2026-07-09T17:09:42.398+08:00","ip":"::1","method":"POST","path":"/faq","body":{"question":"歐拉歐拉","answer":"巴拉巴拉","keywords":null}}
+{"time":"2026-07-09T17:09:49.950+08:00","ip":"::1","method":"DELETE","path":"/faq/4"}
+{"time":"2026-07-09T17:09:51.261+08:00","ip":"::1","method":"DELETE","path":"/faq/unanswered/1"}
+{"time":"2026-07-09T17:10:36.908+08:00","ip":"::1","method":"PUT","path":"/faq/config","body":{"fallback_message":"抱歉，我暫時無法回答這個問題。\n您可以透過以下方式獲得協助：\n• [意見回饋](/CustomerFeedback)\n• 洽詢現場客服人員"}}
+{"time":"2026-07-09T17:15:03.396+08:00","ip":"::1","method":"PUT","path":"/faq/config","body":{"fallback_message":"抱歉，我暫時無法回答這個問題。\n您可以透過以下方式獲得協助：\n• [意見回饋](/CustomerFeedback)\n• 請進線客服"}}
+{"time":"2026-07-09T17:26:09.659+08:00","ip":"::1","method":"DELETE","path":"/faq/unanswered/2"}
+{"time":"2026-07-09T17:26:10.159+08:00","ip":"::1","method":"DELETE","path":"/faq/unanswered/3"}
+{"time":"2026-07-09T17:26:11.304+08:00","ip":"::1","method":"DELETE","path":"/faq/unanswered/4"}
+{"time":"2026-07-09T17:26:11.847+08:00","ip":"::1","method":"DELETE","path":"/faq/unanswered/5"}
+{"time":"2026-07-09T17:43:43.408+08:00","ip":"::1","method":"PUT","path":"/faq/3","body":{"question":"停車折抵方法","answer":"![圖片](/api/images/faq-images/85135ff4-299f-4956-9e60-9646a57246e2.png)","keywords":"停車 折抵 錢","is_active":true}}

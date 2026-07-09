@@ -35,6 +35,7 @@ import SustainabilityManager from './components/admin/SustainabilityManager';
 import StatsManager from './components/admin/StatsManager';
 import ServiceManager from './components/admin/ServiceManager';
 import FaqManager from './components/admin/FaqManager';
+import FaqPage from './pages/FaqPage';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Leasing from './components/Leasing';
 import './App.css';
@@ -51,6 +52,9 @@ export default function App() {
       <LayoutProvider>
         <div className="app">
           <Routes>
+            {/* FAQ 獨立頁（供 webview 嵌入） */}
+            <Route path="/faq" element={<FaqPage />} />
+
             {/* Admin 登入頁 */}
             <Route path="/admin/login" element={<LoginPage />} />
 

@@ -30,7 +30,7 @@ export default function AdminLayout() {
   const { pathname } = useLocation();
   const isHomePath = HOME_NAV.some(n => pathname.startsWith(n.to));
   const [homeOpen, setHomeOpen] = useState(isHomePath);
-  const { logout, isSuperAdmin, hasPermission } = useAuth();
+  const { user, logout, isSuperAdmin, hasPermission } = useAuth();
   const navigate   = useNavigate();
   const [showChangePw, setShowChangePw] = useState(false);
 
@@ -44,6 +44,9 @@ export default function AdminLayout() {
       <aside className="admin-sidebar">
         <div className="admin-sidebar-header">
           <span className="admin-sidebar-title">管理後台</span>
+          {user?.employee_id && (
+            <span className="admin-sidebar-user">{user.employee_id}</span>
+          )}
         </div>
         <nav className="admin-nav">
 

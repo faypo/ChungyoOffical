@@ -4,85 +4,244 @@ import { AnswerText } from '../../utils/faqAnswer';
 import './FaqManager.css';
 
 const API = '/api/admin/faq';
-
 const EMPTY_FORM = { question: '', answer: '', keywords: '', is_active: true };
 
 export default function FaqManager() {
-  const [tree,        setTree]        = useState([]);
-  const [loading,     setLoading]     = useState(true);
-  const [msg,         setMsg]         = useState(null);
-  const [selected,    setSelected]    = useState(null);
-  const [expanded,    setExpanded]    = useState({});
-  const [form,        setForm]        = useState(EMPTY_FORM);
-  const [saving,      setSaving]      = useState(false);
-  const [mode,        setMode]        = useState(null);
-  const [newParentId, setNewParentId] = useState(null);
+  const [nodes,    setNodes]    = useState([]);
+  const [links,    setLinks]    = useState([]);
+  const [loading,  setLoading]  = useState(true);
+  const [msg,      setMsg]      = useState(null);
+  const [selected, setSelected] = useState(null);
+  const [form,     setForm]     = useState(EMPTY_FORM);
+  const [saving,   setSaving]   = useState(false);
+  const [mode,     setMode]     = useState(null);
+  const [nodeSearch, setNodeSearch] = useState('');
+  const [linkSearch, setLinkSearch] = useState('');
+  const [showLinkSelector, setShowLinkSelector] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
 
-  // 超連結插入
-  const textareaRef     = useRef(null);
-  const [linkPopup,     setLinkPopup]     = useState(false);
-  const [linkUrl,       setLinkUrl]       = useState('');
-  const [savedSel,      setSavedSel]      = useState(null);
-  const linkUrlRef      = useRef(null);
+  // 無法回答時的 fallback 訊息設定
+  const [fallbackMsg,     setFallbackMsg]     = useState('');
+  const [savingFallback,  setSavingFallback]  = useState(false);
+
+  // 未解答問題清單
+  const [unanswered,      setUnanswered]      = useState([]);
+  const [showUnanswered,  setShowUnanswered]  = useState(false);
+
+  // 工具列
+  const textareaRef  = useRef(null);
+  const [linkPopup,  setLinkPopup]  = useState(false);
+  const [linkUrl,    setLinkUrl]    = useState('');
+  const [savedSel,   setSavedSel]   = useState(null);
+  const linkUrlRef   = useRef(null);
+  const [uploading,  setUploading]  = useState(false);
+  const [dragOver,   setDragOver]   = useState(false);
 
   const showMsg = (text, type = 'ok') => {
     setMsg({ text, type });
     setTimeout(() => setMsg(null), 3000);
   };
 
-  const load = useCallback(async () => {
+  const loadNodes = useCallback(async () => {
     const r = await apiFetch(API);
     const d = await r.json();
-    setTree(Array.isArray(d) ? d : []);
+    setNodes(Array.isArray(d) ? d : []);
     setLoading(false);
   }, []);
 
-  useEffect(() => { load(); }, [load]);
+  const loadLinks = useCallback(async (nodeId) => {
+    const r = await apiFetch(`${API}/${nodeId}/links`);
+    const d = await r.json();
+    setLinks(Array.isArray(d) ? d : []);
+  }, []);
 
-  function findNode(nodes, id) {
-    for (const n of nodes) {
-      if (n.id === id) return n;
-      const found = findNode(n.children || [], id);
-      if (found) return found;
-    }
-    return null;
-  }
+  const loadUnanswered = useCallback(async () => {
+    const r = await apiFetch(`${API}/unanswered`);
+    const d = await r.json();
+    setUnanswered(Array.isArray(d) ? d : []);
+  }, []);
 
-  function getSiblings(nodes, id) {
-    for (const n of nodes) {
-      if (n.id === id) return nodes;
-      const found = getSiblings(n.children || [], id);
-      if (found) return found;
-    }
-    return null;
-  }
+  useEffect(() => {
+    loadNodes();
+    apiFetch(`${API}/config`).then(r => r.json()).then(d => setFallbackMsg(d.fallback_message ?? '')).catch(() => {});
+    loadUnanswered();
+  }, [loadNodes, loadUnanswered]);
 
+  const handleDismissUnanswered = async (id) => {
+    await apiFetch(`${API}/unanswered/${id}`, { method: 'DELETE' });
+    setUnanswered(prev => prev.filter(u => u.id !== id));
+  };
+
+  const handleCreateFromUnanswered = (query) => {
+    setSelected(null);
+    setForm({ ...EMPTY_FORM, question: query });
+    setMode('new');
+    setLinks([]);
+    setShowLinkSelector(false);
+    setShowPreview(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleSaveFallback = async () => {
+    setSavingFallback(true);
+    const r = await apiFetch(`${API}/config`, {
+      method: 'PUT',
+      body: JSON.stringify({ fallback_message: fallbackMsg }),
+    });
+    showMsg(r.ok ? '已儲存無法回答訊息' : '儲存失敗', r.ok ? 'ok' : 'err');
+    setSavingFallback(false);
+  };
+
+  // ── 節點選取 / 新增 ──
   const handleSelect = (node) => {
     setSelected(node.id);
     setForm({ question: node.question, answer: node.answer, keywords: node.keywords ?? '', is_active: node.is_active });
     setMode('edit');
-    setNewParentId(null);
-    setLinkPopup(false);
+    setShowLinkSelector(false);
+    setShowPreview(false);
+    setLinkSearch('');
+    loadLinks(node.id);
   };
 
-  const handleNewRoot = () => {
+  const handleNew = () => {
     setSelected(null);
     setForm(EMPTY_FORM);
-    setMode('new-root');
-    setNewParentId(null);
-    setLinkPopup(false);
+    setMode('new');
+    setLinks([]);
+    setShowLinkSelector(false);
+    setShowPreview(false);
   };
 
-  const handleNewChild = (parentNode) => {
-    setSelected(null);
-    setForm(EMPTY_FORM);
-    setMode('new-child');
-    setNewParentId(parentNode.id);
-    setLinkPopup(false);
+  // ── 儲存 ──
+  const handleSave = async () => {
+    if (!form.question.trim() || !form.answer.trim()) {
+      showMsg('問題與答案為必填', 'err'); return;
+    }
+    setSaving(true);
+    if (mode === 'edit' && selected) {
+      const r = await apiFetch(`${API}/${selected}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          question:  form.question.trim(),
+          answer:    form.answer.trim(),
+          keywords:  form.keywords.trim() || null,
+          is_active: form.is_active,
+        }),
+      });
+      if (r.ok) { showMsg('已儲存'); await loadNodes(); }
+      else showMsg('儲存失敗', 'err');
+    } else {
+      const r = await apiFetch(API, {
+        method: 'POST',
+        body: JSON.stringify({
+          question: form.question.trim(),
+          answer:   form.answer.trim(),
+          keywords: form.keywords.trim() || null,
+        }),
+      });
+      if (r.ok) {
+        const node = await r.json();
+        showMsg('已新增');
+        setSelected(node.id);
+        setForm({ question: node.question, answer: node.answer, keywords: node.keywords ?? '', is_active: node.is_active });
+        setMode('edit');
+        setLinks([]);
+        await loadNodes();
+      } else showMsg('新增失敗', 'err');
+    }
+    setSaving(false);
   };
 
-  const toggleExpand = (id) => setExpanded(prev => ({ ...prev, [id]: !prev[id] }));
+  // ── 刪除節點 ──
+  const handleDelete = async () => {
+    const node = nodes.find(n => n.id === selected);
+    if (!window.confirm(`確定刪除「${node?.question}」？\n此節點的所有連結都會一併移除。`)) return;
+    await apiFetch(`${API}/${selected}`, { method: 'DELETE' });
+    setSelected(null); setMode(null); setLinks([]);
+    showMsg('已刪除');
+    await loadNodes();
+  };
+
+  // ── 後續問題：新增連結 ──
+  const handleAddLink = async (childId) => {
+    const r = await apiFetch(`${API}/${selected}/links`, {
+      method: 'POST',
+      body: JSON.stringify({ child_id: childId }),
+    });
+    if (r.ok) {
+      setShowLinkSelector(false);
+      setLinkSearch('');
+      await loadLinks(selected);
+    } else showMsg('新增連結失敗', 'err');
+  };
+
+  // ── 後續問題：移除連結 ──
+  const handleRemoveLink = async (linkId) => {
+    await apiFetch(`${API}/links/${linkId}`, { method: 'DELETE' });
+    await loadLinks(selected);
+  };
+
+  // ── 後續問題：上下移 ──
+  const handleMoveLink = async (idx, dir) => {
+    const arr = [...links];
+    const swap = dir === 'up' ? idx - 1 : idx + 1;
+    if (swap < 0 || swap >= arr.length) return;
+    [arr[idx], arr[swap]] = [arr[swap], arr[idx]];
+    const items = arr.map((l, i) => ({ link_id: l.link_id, sort_order: i }));
+    await apiFetch(`${API}/${selected}/links/reorder`, { method: 'PUT', body: JSON.stringify(items) });
+    setLinks(arr);
+  };
+
+  // ── 圖片上傳（共用邏輯）──
+  const uploadImage = async (file) => {
+    if (!file || !file.type.startsWith('image/')) return;
+    setUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append('image', file);
+      const r = await apiFetch(`${API}/upload`, { method: 'POST', body: fd });
+      if (!r.ok) { showMsg('圖片上傳失敗', 'err'); return; }
+      const { url } = await r.json();
+      insertAtCursor(`![圖片](${url})`);
+    } catch {
+      showMsg('圖片上傳失敗', 'err');
+    }
+    setUploading(false);
+  };
+
+  const insertAtCursor = (text) => {
+    const ta = textareaRef.current;
+    if (!ta) return;
+    const start = ta.selectionStart;
+    const end   = ta.selectionEnd;
+    const val   = ta.value;
+    const newVal = val.slice(0, start) + text + val.slice(end);
+    setForm(f => ({ ...f, answer: newVal }));
+    setTimeout(() => {
+      ta.focus();
+      const pos = start + text.length;
+      ta.setSelectionRange(pos, pos);
+    }, 0);
+  };
+
+  // ── 拖曳上傳 ──
+  const handleDragOver = (e) => { e.preventDefault(); setDragOver(true); };
+  const handleDragLeave = () => setDragOver(false);
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setDragOver(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file) uploadImage(file);
+  };
+
+  // ── 點擊上傳圖片 ──
+  const handleImageBtn = () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = (e) => uploadImage(e.target.files?.[0]);
+    input.click();
+  };
 
   // ── 超連結工具列 ──
   const handleLinkBtn = () => {
@@ -97,129 +256,23 @@ export default function FaqManager() {
   const handleInsertLink = () => {
     const url = linkUrl.trim();
     if (!url) { setLinkPopup(false); return; }
-    const ta   = textareaRef.current;
     const { start, end } = savedSel;
-    const text     = form.answer;
-    const selected = text.slice(start, end).trim() || '連結文字';
-    const insertion = `[${selected}](${url})`;
-    const newText   = text.slice(0, start) + insertion + text.slice(end);
-    setForm(f => ({ ...f, answer: newText }));
+    const selText = form.answer.slice(start, end).trim() || '連結文字';
+    insertAtCursor(`[${selText}](${url})`);
     setLinkPopup(false);
     setLinkUrl('');
-    setTimeout(() => {
-      ta.focus();
-      const pos = start + insertion.length;
-      ta.setSelectionRange(pos, pos);
-    }, 0);
   };
 
-  const handleSave = async () => {
-    if (!form.question.trim() || !form.answer.trim()) {
-      showMsg('問題與答案為必填', 'err');
-      return;
-    }
-    setSaving(true);
-    if (mode === 'edit') {
-      const res = await apiFetch(`${API}/${selected}`, {
-        method: 'PUT',
-        body: JSON.stringify({
-          question:  form.question.trim(),
-          answer:    form.answer.trim(),
-          keywords:  form.keywords.trim() || null,
-          is_active: form.is_active,
-        }),
-      });
-      if (res.ok) { showMsg('已儲存'); await load(); }
-      else showMsg('儲存失敗', 'err');
-    } else {
-      const res = await apiFetch(API, {
-        method: 'POST',
-        body: JSON.stringify({
-          parent_id:  newParentId ?? null,
-          question:   form.question.trim(),
-          answer:     form.answer.trim(),
-          keywords:   form.keywords.trim() || null,
-          sort_order: 0,
-        }),
-      });
-      if (res.ok) {
-        const node = await res.json();
-        showMsg('已新增');
-        setMode('edit');
-        setSelected(node.id);
-        setForm({ question: node.question, answer: node.answer, keywords: node.keywords ?? '', is_active: node.is_active });
-        if (newParentId) setExpanded(prev => ({ ...prev, [newParentId]: true }));
-        await load();
-      } else showMsg('新增失敗', 'err');
-    }
-    setSaving(false);
-  };
-
-  const handleDelete = async (node) => {
-    const hasChildren = (node.children || []).length > 0;
-    const confirmMsg = hasChildren
-      ? `刪除「${node.question}」將同時刪除其下所有子問題，確定嗎？`
-      : `確定刪除「${node.question}」？`;
-    if (!window.confirm(confirmMsg)) return;
-    await apiFetch(`${API}/${node.id}`, { method: 'DELETE' });
-    if (selected === node.id) { setSelected(null); setMode(null); }
-    showMsg('已刪除');
-    await load();
-  };
-
-  const handleMove = async (node, dir) => {
-    const siblings = getSiblings(tree, node.id);
-    if (!siblings) return;
-    const idx     = siblings.findIndex(n => n.id === node.id);
-    const swapIdx = dir === 'up' ? idx - 1 : idx + 1;
-    if (swapIdx < 0 || swapIdx >= siblings.length) return;
-    const items = siblings.map((n, i) => {
-      if (i === idx)     return { id: n.id, sort_order: siblings[swapIdx].sort_order };
-      if (i === swapIdx) return { id: n.id, sort_order: siblings[idx].sort_order };
-      return { id: n.id, sort_order: n.sort_order };
-    });
-    await apiFetch(`${API}/reorder`, { method: 'PUT', body: JSON.stringify(items) });
-    await load();
-  };
-
-  function renderNode(node, depth = 0) {
-    const hasChildren = (node.children || []).length > 0;
-    const isOpen      = expanded[node.id];
-    const isSelected  = selected === node.id;
-
-    return (
-      <div key={node.id} className="faq-tree-node">
-        <div
-          className={`faq-tree-row${isSelected ? ' faq-tree-row--selected' : ''}${!node.is_active ? ' faq-tree-row--inactive' : ''}`}
-          style={{ paddingLeft: 12 + depth * 20 }}
-        >
-          <button
-            className="faq-tree-toggle"
-            onClick={() => hasChildren && toggleExpand(node.id)}
-            style={{ visibility: hasChildren ? 'visible' : 'hidden' }}
-          >
-            {isOpen ? '▾' : '▸'}
-          </button>
-          <span className="faq-tree-label" onClick={() => handleSelect(node)}>
-            {node.question}
-          </span>
-          <div className="faq-tree-actions">
-            <button className="faq-icon-btn" title="上移"  onClick={() => handleMove(node, 'up')}>↑</button>
-            <button className="faq-icon-btn" title="下移"  onClick={() => handleMove(node, 'down')}>↓</button>
-            <button className="faq-icon-btn faq-icon-btn--add" title="新增子問題"
-              onClick={() => { handleNewChild(node); setExpanded(prev => ({ ...prev, [node.id]: true })); }}>＋</button>
-            <button className="faq-icon-btn faq-icon-btn--del" title="刪除"
-              onClick={() => handleDelete(node)}>✕</button>
-          </div>
-        </div>
-        {hasChildren && isOpen && (
-          <div className="faq-tree-children">
-            {node.children.map(child => renderNode(child, depth + 1))}
-          </div>
-        )}
-      </div>
-    );
-  }
+  // ── 篩選邏輯 ──
+  const filteredNodes = nodes.filter(n =>
+    !nodeSearch || n.question.includes(nodeSearch) || (n.keywords && n.keywords.includes(nodeSearch))
+  );
+  const linkedChildIds = new Set(links.map(l => l.id));
+  const filteredLinkable = nodes.filter(n =>
+    n.id !== selected &&
+    !linkedChildIds.has(n.id) &&
+    (!linkSearch || n.question.includes(linkSearch) || (n.keywords && n.keywords.includes(linkSearch)))
+  );
 
   if (loading) return <p className="fg-loading">載入中…</p>;
 
@@ -227,7 +280,7 @@ export default function FaqManager() {
     <div className="fg-manager faq-manager">
       <div className="fg-manager-header">
         <h1 className="fg-manager-title">FAQ 管理</h1>
-        <button className="fg-btn fg-btn-primary" onClick={handleNewRoot}>＋ 新增根問題</button>
+        <button className="fg-btn fg-btn-primary" onClick={handleNew}>＋ 新增問題</button>
       </div>
 
       {msg && (
@@ -236,135 +289,240 @@ export default function FaqManager() {
         </div>
       )}
 
-      <div className="faq-layout">
-        {/* ── 左側樹 ── */}
-        <div className="faq-tree-panel">
-          <div className="faq-tree-header">問題結構</div>
-          {tree.length === 0 ? (
-            <div className="faq-tree-empty">尚無問題，點右上角「新增根問題」開始</div>
-          ) : (
-            tree.map(node => renderNode(node))
-          )}
+      {/* ── 無法回答設定 ── */}
+      <div className="faq-fallback-section">
+        <div className="faq-fallback-header">
+          <span className="faq-fallback-title">無法回答時的訊息</span>
+          <span className="faq-hint">當搜尋結果不夠準確或找不到相關問題時顯示，支援 [文字](網址) 連結語法</span>
         </div>
+        <textarea
+          className="faq-textarea faq-fallback-textarea"
+          value={fallbackMsg}
+          onChange={e => setFallbackMsg(e.target.value)}
+          rows={3}
+          placeholder="例：抱歉，我暫時無法回答此問題。&#10;您可以透過 [意見回饋](/CustomerFeedback) 或洽詢現場客服人員。"
+        />
+        <div className="faq-fallback-actions">
+          <button className="fg-btn fg-btn-primary fg-btn-sm" onClick={handleSaveFallback} disabled={savingFallback}>
+            {savingFallback ? '儲存中…' : '儲存'}
+          </button>
+        </div>
+      </div>
 
-        {/* ── 右側表單 ── */}
-        <div className="faq-form-panel">
-          {!mode ? (
-            <div className="faq-form-empty">← 選擇左側問題編輯，或新增根問題</div>
-          ) : (
-            <>
-              <div className="faq-form-title">
-                {mode === 'edit' ? '編輯問題' : mode === 'new-child' ? '新增子問題' : '新增根問題'}
-              </div>
-
-              {mode === 'new-child' && newParentId && (
-                <div className="faq-form-parent-hint">
-                  上層：{findNode(tree, newParentId)?.question}
-                </div>
-              )}
-
-              <label className="faq-label">問題 <span className="faq-required">*</span></label>
-              <input
-                className="faq-input"
-                value={form.question}
-                onChange={e => setForm(f => ({ ...f, question: e.target.value }))}
-                placeholder="輸入問題"
-              />
-
-              {/* ── 答案欄位 + 工具列 ── */}
-              <div className="faq-answer-header">
-                <label className="faq-label" style={{ margin: 0 }}>
-                  答案 <span className="faq-required">*</span>
-                </label>
-                <div className="faq-toolbar">
-                  <button
-                    type="button"
-                    className="faq-toolbar-btn"
-                    onClick={handleLinkBtn}
-                    title="反白文字後點此插入超連結"
-                  >
-                    🔗 加入連結
-                  </button>
-                  <button
-                    type="button"
-                    className={`faq-toolbar-btn${showPreview ? ' faq-toolbar-btn--active' : ''}`}
-                    onClick={() => setShowPreview(v => !v)}
-                  >
-                    {showPreview ? '隱藏預覽' : '顯示預覽'}
-                  </button>
-                </div>
-              </div>
-
-              {/* 連結輸入浮層 */}
-              {linkPopup && (
-                <div className="faq-link-popup">
-                  <input
-                    ref={linkUrlRef}
-                    className="faq-link-input"
-                    value={linkUrl}
-                    onChange={e => setLinkUrl(e.target.value)}
-                    placeholder="輸入網址，例：/service 或 https://..."
-                    onKeyDown={e => {
-                      if (e.key === 'Enter') handleInsertLink();
-                      if (e.key === 'Escape') setLinkPopup(false);
-                    }}
-                  />
-                  <button className="fg-btn fg-btn-primary fg-btn-sm" onClick={handleInsertLink}>插入</button>
-                  <button className="fg-btn fg-btn-ghost fg-btn-sm" onClick={() => setLinkPopup(false)}>取消</button>
-                </div>
-              )}
-
-              <textarea
-                ref={textareaRef}
-                className="faq-textarea"
-                value={form.answer}
-                onChange={e => setForm(f => ({ ...f, answer: e.target.value }))}
-                placeholder="輸入答案內容"
-                rows={5}
-              />
-
-              {showPreview && form.answer && (
-                <div className="faq-preview">
-                  <div className="faq-preview-label">預覽</div>
-                  <div className="faq-preview-body">
-                    <AnswerText text={form.answer} />
+      {/* ── 未解答問題 ── */}
+      {unanswered.length > 0 && (
+        <div className="faq-unanswered-section">
+          <div className="faq-unanswered-header" onClick={() => setShowUnanswered(v => !v)}>
+            <span className="faq-unanswered-title">
+              待補充問題
+              <span className="faq-unanswered-badge">{unanswered.length}</span>
+            </span>
+            <span className="faq-unanswered-toggle">{showUnanswered ? '▲ 收起' : '▼ 展開'}</span>
+          </div>
+          {showUnanswered && (
+            <div className="faq-unanswered-list">
+              {unanswered.map(u => (
+                <div key={u.id} className="faq-unanswered-row">
+                  <span className="faq-unanswered-count">×{u.ask_count}</span>
+                  <span className="faq-unanswered-query">{u.query}</span>
+                  <div className="faq-unanswered-actions">
+                    <button className="fg-btn fg-btn-primary fg-btn-sm"
+                      onClick={() => handleCreateFromUnanswered(u.query)}>
+                      建立問題
+                    </button>
+                    <button className="fg-btn fg-btn-ghost fg-btn-sm"
+                      onClick={() => handleDismissUnanswered(u.id)}>
+                      忽略
+                    </button>
                   </div>
                 </div>
-              )}
-
-              <label className="faq-label">
-                關鍵字
-                <span className="faq-hint">（用空格分隔，用於搜尋比對）</span>
-              </label>
-              <input
-                className="faq-input"
-                value={form.keywords}
-                onChange={e => setForm(f => ({ ...f, keywords: e.target.value }))}
-                placeholder="例：退換貨 退款 發票"
-              />
-
-              {mode === 'edit' && (
-                <label className="faq-toggle-row">
-                  <input
-                    type="checkbox"
-                    checked={form.is_active}
-                    onChange={e => setForm(f => ({ ...f, is_active: e.target.checked }))}
-                  />
-                  <span>啟用此問題</span>
-                </label>
-              )}
-
-              <div className="faq-form-actions">
-                <button className="fg-btn fg-btn-ghost"
-                  onClick={() => { setMode(null); setSelected(null); setLinkPopup(false); }}>
-                  取消
-                </button>
-                <button className="fg-btn fg-btn-primary" onClick={handleSave} disabled={saving}>
-                  {saving ? '儲存中…' : '儲存'}
-                </button>
-              </div>
-            </>
+              ))}
+            </div>
           )}
+        </div>
+      )}
+
+      <div className="faq-layout">
+
+        {/* ── 左側：節點列表 ── */}
+        <div className="faq-tree-panel">
+          <div className="faq-tree-header">所有問題（{nodes.length}）</div>
+          <input
+            className="faq-node-search"
+            placeholder="搜尋問題…"
+            value={nodeSearch}
+            onChange={e => setNodeSearch(e.target.value)}
+          />
+          {filteredNodes.length === 0
+            ? <div className="faq-tree-empty">尚無問題</div>
+            : filteredNodes.map(n => (
+              <div
+                key={n.id}
+                className={`faq-node-row${n.id === selected ? ' faq-node-row--selected' : ''}${!n.is_active ? ' faq-node-row--inactive' : ''}`}
+                onClick={() => handleSelect(n)}
+              >
+                <span className="faq-node-q">{n.question}</span>
+                <span className="faq-node-badges">
+                  {n.is_root  && <span className="faq-badge faq-badge--root">根</span>}
+                  {!n.is_active && <span className="faq-badge faq-badge--off">停用</span>}
+                </span>
+              </div>
+            ))
+          }
+        </div>
+
+        {/* ── 右側：編輯區 ── */}
+        <div className="faq-form-panel">
+          {!mode
+            ? <div className="faq-form-empty">← 選擇左側問題編輯，或點「新增問題」</div>
+            : (
+              <>
+                <div className="faq-form-title">
+                  {mode === 'edit' ? '編輯問題' : '新增問題'}
+                </div>
+
+                <label className="faq-label">問題 <span className="faq-required">*</span></label>
+                <input
+                  className="faq-input"
+                  value={form.question}
+                  onChange={e => setForm(f => ({ ...f, question: e.target.value }))}
+                  placeholder="輸入問題"
+                />
+
+                <div className="faq-answer-header">
+                  <label className="faq-label" style={{ margin: 0 }}>答案 <span className="faq-required">*</span></label>
+                  <div className="faq-toolbar">
+                    <button type="button" className="faq-toolbar-btn" onClick={handleLinkBtn}>🔗 加入連結</button>
+                    <button type="button" className="faq-toolbar-btn" onClick={handleImageBtn} disabled={uploading}>
+                      {uploading ? '上傳中…' : '🖼 插入圖片'}
+                    </button>
+                    <button type="button" className={`faq-toolbar-btn${showPreview ? ' faq-toolbar-btn--active' : ''}`}
+                      onClick={() => setShowPreview(v => !v)}>
+                      {showPreview ? '隱藏預覽' : '顯示預覽'}
+                    </button>
+                  </div>
+                </div>
+
+                {linkPopup && (
+                  <div className="faq-link-popup">
+                    <input
+                      ref={linkUrlRef}
+                      className="faq-link-input"
+                      value={linkUrl}
+                      onChange={e => setLinkUrl(e.target.value)}
+                      placeholder="輸入網址，例：/service 或 https://..."
+                      onKeyDown={e => {
+                        if (e.key === 'Enter')  handleInsertLink();
+                        if (e.key === 'Escape') setLinkPopup(false);
+                      }}
+                    />
+                    <button className="fg-btn fg-btn-primary fg-btn-sm" onClick={handleInsertLink}>插入</button>
+                    <button className="fg-btn fg-btn-ghost fg-btn-sm" onClick={() => setLinkPopup(false)}>取消</button>
+                  </div>
+                )}
+
+                <textarea
+                  ref={textareaRef}
+                  className={`faq-textarea${dragOver ? ' faq-textarea--dragover' : ''}`}
+                  value={form.answer}
+                  onChange={e => setForm(f => ({ ...f, answer: e.target.value }))}
+                  placeholder={uploading ? '圖片上傳中…' : '輸入答案內容，或將圖片拖曳至此'}
+                  rows={5}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                />
+
+                {showPreview && form.answer && (
+                  <div className="faq-preview">
+                    <div className="faq-preview-label">預覽</div>
+                    <div className="faq-preview-body"><AnswerText text={form.answer} /></div>
+                  </div>
+                )}
+
+                <label className="faq-label">
+                  關鍵字 <span className="faq-hint">（空格分隔，用於搜尋比對）</span>
+                </label>
+                <input
+                  className="faq-input"
+                  value={form.keywords}
+                  onChange={e => setForm(f => ({ ...f, keywords: e.target.value }))}
+                  placeholder="例：停車 收費 折抵"
+                />
+
+                {mode === 'edit' && (
+                  <label className="faq-toggle-row">
+                    <input type="checkbox" checked={form.is_active}
+                      onChange={e => setForm(f => ({ ...f, is_active: e.target.checked }))} />
+                    <span>啟用此問題</span>
+                  </label>
+                )}
+
+                <div className="faq-form-actions">
+                  <button className="fg-btn fg-btn-ghost" onClick={() => { setMode(null); setSelected(null); }}>取消</button>
+                  <button className="fg-btn fg-btn-primary" onClick={handleSave} disabled={saving}>
+                    {saving ? '儲存中…' : '儲存'}
+                  </button>
+                  {mode === 'edit' && (
+                    <button className="fg-btn fg-btn-danger" onClick={handleDelete}>刪除節點</button>
+                  )}
+                </div>
+
+                {/* ── 後續問題（連結管理）── */}
+                {mode === 'edit' && (
+                  <div className="faq-links-section">
+                    <div className="faq-links-header">
+                      <span className="faq-links-title">後續問題</span>
+                      <button className="fg-btn fg-btn-sm fg-btn-primary"
+                        onClick={() => { setShowLinkSelector(v => !v); setLinkSearch(''); }}>
+                        {showLinkSelector ? '取消' : '＋ 新增連結'}
+                      </button>
+                    </div>
+
+                    {showLinkSelector && (
+                      <div className="faq-link-selector">
+                        <input
+                          className="faq-node-search"
+                          placeholder="搜尋要連結的問題…"
+                          value={linkSearch}
+                          onChange={e => setLinkSearch(e.target.value)}
+                          autoFocus
+                        />
+                        <div className="faq-link-options">
+                          {filteredLinkable.length === 0
+                            ? <div className="faq-tree-empty">無可連結的問題</div>
+                            : filteredLinkable.map(n => (
+                              <div key={n.id} className="faq-link-option" onClick={() => handleAddLink(n.id)}>
+                                {n.question}
+                              </div>
+                            ))
+                          }
+                        </div>
+                      </div>
+                    )}
+
+                    {links.length === 0
+                      ? <div className="faq-tree-empty">尚未設定後續問題</div>
+                      : (
+                        <div className="faq-linked-list">
+                          {links.map((l, i) => (
+                            <div key={l.link_id} className="faq-linked-item">
+                              <div className="faq-linked-order">
+                                <button className="faq-icon-btn" onClick={() => handleMoveLink(i, 'up')}  disabled={i === 0}>↑</button>
+                                <button className="faq-icon-btn" onClick={() => handleMoveLink(i, 'down')} disabled={i === links.length - 1}>↓</button>
+                              </div>
+                              <span className="faq-linked-q">{l.question}</span>
+                              <button className="faq-icon-btn faq-icon-btn--del" onClick={() => handleRemoveLink(l.link_id)}>✕</button>
+                            </div>
+                          ))}
+                        </div>
+                      )
+                    }
+                  </div>
+                )}
+              </>
+            )
+          }
         </div>
       </div>
     </div>

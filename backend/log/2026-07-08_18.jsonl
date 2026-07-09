@@ -1,0 +1,6 @@
+{"time":"2026-07-08T18:05:59.239+08:00","ip":"::1","method":"POST","path":"/faq","body":{"question":"test","answer":"test"}}
+{"time":"2026-07-08T18:06:33.199+08:00","ip":"::1","method":"POST","path":"/faq","body":{"question":"test","answer":"test"}}
+{"time":"2026-07-08T18:07:48.583+08:00","ip":"::1","method":"POST","path":"/auth/logout"}
+{"time":"2026-07-08T18:07:53.891+08:00","ip":"::1","method":"POST","path":"/auth/login","body":{"employee_id":"admin","password":"energyc3"}}
+{"time":"2026-07-08T18:09:05.712+08:00","ip":"::1","method":"POST","path":"/faq","body":{"parent_id":null,"question":"附近有停車場嗎","answer":"周邊特約停車場有以下:\n1.\n2.\n3.\n4.\n[相關折抵方法](https://dmpage.chungyo.com.tw/service)","keywords":"停車","sort_order":0}}
+{"time":"2026-07-08T18:10:16.232+08:00","ip":"::1","method":"PUT","path":"/faq/2","body":{"question":"附近有停車場嗎","answer":"周邊特約停車場有以下:\n1.\n2.\n3.\n4.\n[相關折抵方法](https://dmpage.chungyo.com.tw/service)","keywords":"停車","is_active":true}}
