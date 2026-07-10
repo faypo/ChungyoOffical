@@ -527,6 +527,11 @@ export default function ActivityManager() {
                 <button
                   className="fg-btn fg-btn-ghost fg-btn-sm"
                   disabled={safePage <= 1}
+                  onClick={() => setPage(1)}
+                >« 第一頁</button>
+                <button
+                  className="fg-btn fg-btn-ghost fg-btn-sm"
+                  disabled={safePage <= 1}
                   onClick={() => setPage(p => Math.max(1, p - 1))}
                 >‹ 上一頁</button>
                 <span className="am-pagination-info">
@@ -537,6 +542,11 @@ export default function ActivityManager() {
                   disabled={safePage >= totalPages}
                   onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                 >下一頁 ›</button>
+                <button
+                  className="fg-btn fg-btn-ghost fg-btn-sm"
+                  disabled={safePage >= totalPages}
+                  onClick={() => setPage(totalPages)}
+                >最後一頁 »</button>
               </div>
             )}
           </>
