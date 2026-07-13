@@ -78,14 +78,16 @@ router.get('/', async (_req, res) => {
 
 // POST /api/admin/faq — 新增節點
 router.post('/', async (req, res) => {
-  const { question, answer, keywords } = req.body;
+  const { question, answer, keywords, start_date, end_date } = req.body;
   if (!question?.trim() || !answer?.trim())
     return res.status(400).json({ error: '問題與答案為必填' });
   const node = await prisma.faq_nodes.create({
     data: {
-      question: question.trim(),
-      answer:   answer.trim(),
-      keywords: keywords?.trim() || null,
+      question:   question.trim(),
+      answer:     answer.trim(),
+      keywords:   keywords?.trim() || null,
+      start_date: start_date ? new Date(start_date) : null,
+      end_date:   end_date   ? new Date(end_date)   : null,
     },
   });
   res.status(201).json(node);
@@ -140,7 +142,7 @@ router.delete('/links/:linkId', async (req, res) => {
 // PUT /api/admin/faq/:id — 更新節點
 router.put('/:id', async (req, res) => {
   const id = Number(req.params.id);
-  const { question, answer, keywords, is_active } = req.body;
+  const { question, answer, keywords, is_active, start_date, end_date } = req.body;
   if (!question?.trim() || !answer?.trim())
     return res.status(400).json({ error: '問題與答案為必填' });
   const node = await prisma.faq_nodes.update({
@@ -149,6 +151,8 @@ router.put('/:id', async (req, res) => {
       question:   question.trim(),
       answer:     answer.trim(),
       keywords:   keywords?.trim() || null,
+      start_date: start_date ? new Date(start_date) : null,
+      end_date:   end_date   ? new Date(end_date)   : null,
       ...(is_active !== undefined && { is_active }),
       updated_at: new Date(),
     },

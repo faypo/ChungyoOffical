@@ -4,7 +4,7 @@ import { AnswerText } from '../../utils/faqAnswer';
 import './FaqManager.css';
 
 const API = '/api/admin/faq';
-const EMPTY_FORM = { question: '', answer: '', keywords: '', is_active: true };
+const EMPTY_FORM = { question: '', answer: '', keywords: '', is_active: true, start_date: '', end_date: '' };
 
 export default function FaqManager() {
   const [nodes,    setNodes]    = useState([]);
@@ -25,8 +25,9 @@ export default function FaqManager() {
   const [savingFallback,  setSavingFallback]  = useState(false);
 
   // 未解答問題清單
-  const [unanswered,      setUnanswered]      = useState([]);
-  const [showUnanswered,  setShowUnanswered]  = useState(false);
+  const [unanswered,        setUnanswered]        = useState([]);
+  const [showUnanswered,    setShowUnanswered]    = useState(false);
+  const [fromUnansweredId,  setFromUnansweredId]  = useState(null); // 建立問題來源的待補充 id
 
   // 工具列
   const textareaRef  = useRef(null);
@@ -72,13 +73,14 @@ export default function FaqManager() {
     setUnanswered(prev => prev.filter(u => u.id !== id));
   };
 
-  const handleCreateFromUnanswered = (query) => {
+  const handleCreateFromUnanswered = (id, query) => {
     setSelected(null);
     setForm({ ...EMPTY_FORM, question: query });
     setMode('new');
     setLinks([]);
     setShowLinkSelector(false);
     setShowPreview(false);
+    setFromUnansweredId(id);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -95,11 +97,19 @@ export default function FaqManager() {
   // ── 節點選取 / 新增 ──
   const handleSelect = (node) => {
     setSelected(node.id);
-    setForm({ question: node.question, answer: node.answer, keywords: node.keywords ?? '', is_active: node.is_active });
+    setForm({
+      question:   node.question,
+      answer:     node.answer,
+      keywords:   node.keywords ?? '',
+      is_active:  node.is_active,
+      start_date: node.start_date ? node.start_date.slice(0, 16) : '',
+      end_date:   node.end_date   ? node.end_date.slice(0, 16)   : '',
+    });
     setMode('edit');
     setShowLinkSelector(false);
     setShowPreview(false);
     setLinkSearch('');
+    setFromUnansweredId(null);
     loadLinks(node.id);
   };
 
@@ -110,6 +120,7 @@ export default function FaqManager() {
     setLinks([]);
     setShowLinkSelector(false);
     setShowPreview(false);
+    setFromUnansweredId(null);
   };
 
   // ── 儲存 ──
@@ -122,10 +133,12 @@ export default function FaqManager() {
       const r = await apiFetch(`${API}/${selected}`, {
         method: 'PUT',
         body: JSON.stringify({
-          question:  form.question.trim(),
-          answer:    form.answer.trim(),
-          keywords:  form.keywords.trim() || null,
-          is_active: form.is_active,
+          question:   form.question.trim(),
+          answer:     form.answer.trim(),
+          keywords:   form.keywords.trim() || null,
+          is_active:  form.is_active,
+          start_date: form.start_date || null,
+          end_date:   form.end_date   || null,
         }),
       });
       if (r.ok) { showMsg('已儲存'); await loadNodes(); }
@@ -134,19 +147,34 @@ export default function FaqManager() {
       const r = await apiFetch(API, {
         method: 'POST',
         body: JSON.stringify({
-          question: form.question.trim(),
-          answer:   form.answer.trim(),
-          keywords: form.keywords.trim() || null,
+          question:   form.question.trim(),
+          answer:     form.answer.trim(),
+          keywords:   form.keywords.trim() || null,
+          start_date: form.start_date || null,
+          end_date:   form.end_date   || null,
         }),
       });
       if (r.ok) {
         const node = await r.json();
         showMsg('已新增');
         setSelected(node.id);
-        setForm({ question: node.question, answer: node.answer, keywords: node.keywords ?? '', is_active: node.is_active });
+        setForm({
+          question:   node.question,
+          answer:     node.answer,
+          keywords:   node.keywords ?? '',
+          is_active:  node.is_active,
+          start_date: node.start_date ? node.start_date.slice(0, 16) : '',
+          end_date:   node.end_date   ? node.end_date.slice(0, 16)   : '',
+        });
         setMode('edit');
         setLinks([]);
         await loadNodes();
+        if (fromUnansweredId) {
+          const uid = fromUnansweredId;
+          await apiFetch(`${API}/unanswered/${uid}`, { method: 'DELETE' });
+          setFromUnansweredId(null);
+          setUnanswered(prev => prev.filter(u => u.id !== uid));
+        }
       } else showMsg('新增失敗', 'err');
     }
     setSaving(false);
@@ -327,7 +355,7 @@ export default function FaqManager() {
                   <span className="faq-unanswered-query">{u.query}</span>
                   <div className="faq-unanswered-actions">
                     <button className="fg-btn fg-btn-primary fg-btn-sm"
-                      onClick={() => handleCreateFromUnanswered(u.query)}>
+                      onClick={() => handleCreateFromUnanswered(u.id, u.query)}>
                       建立問題
                     </button>
                     <button className="fg-btn fg-btn-ghost fg-btn-sm"
@@ -449,6 +477,31 @@ export default function FaqManager() {
                   onChange={e => setForm(f => ({ ...f, keywords: e.target.value }))}
                   placeholder="例：停車 收費 折抵"
                 />
+
+                <div className="faq-date-row">
+                  <div className="faq-date-field">
+                    <label className="faq-label" style={{ marginTop: 16 }}>
+                      有效開始時間 <span className="faq-hint">（空白 = 無限制）</span>
+                    </label>
+                    <input
+                      type="datetime-local"
+                      className="faq-input"
+                      value={form.start_date}
+                      onChange={e => setForm(f => ({ ...f, start_date: e.target.value }))}
+                    />
+                  </div>
+                  <div className="faq-date-field">
+                    <label className="faq-label" style={{ marginTop: 16 }}>
+                      有效結束時間 <span className="faq-hint">（空白 = 無限制）</span>
+                    </label>
+                    <input
+                      type="datetime-local"
+                      className="faq-input"
+                      value={form.end_date}
+                      onChange={e => setForm(f => ({ ...f, end_date: e.target.value }))}
+                    />
+                  </div>
+                </div>
 
                 {mode === 'edit' && (
                   <label className="faq-toggle-row">

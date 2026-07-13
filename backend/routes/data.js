@@ -252,8 +252,15 @@ router.get('/faq/search', async (req, res) => {
   const contextIds = (req.query.context || '')
     .split(',').map(Number).filter(n => n > 0);
 
+  const now = new Date();
   const [nodes, contextLinks] = await Promise.all([
-    prisma.faq_nodes.findMany({ where: { is_active: true } }),
+    prisma.faq_nodes.findMany({
+      where: {
+        is_active: true,
+        OR: [{ start_date: null }, { start_date: { lte: now } }],
+        AND: [{ OR: [{ end_date: null }, { end_date: { gte: now } }] }],
+      },
+    }),
     contextIds.length > 0
       ? prisma.faq_node_links.findMany({ where: { parent_id: { in: contextIds } }, select: { child_id: true } })
       : Promise.resolve([]),
@@ -263,9 +270,9 @@ router.get('/faq/search', async (req, res) => {
 
   const scored = nodes
     .map(n => {
-      const haystack = `${n.question} ${n.keywords ?? ''}`.toLowerCase();
+      const haystack = (n.keywords ?? '').toLowerCase();
 
-      // 正向：搜尋詞出現在問題/標籤中
+      // 正向：搜尋詞出現在關鍵字中
       const fwdScore = terms.reduce((acc, t) => acc + (haystack.includes(t.toLowerCase()) ? 1 : 0), 0);
 
       // 反向精確：標籤直接出現在搜尋句中
@@ -294,7 +301,7 @@ router.get('/faq/search', async (req, res) => {
       return { ...n, score: baseScore + ctxBoost };
     })
     .filter(n => n.score > 0)
-    .sort((a, b) => b.score - a.score)
+    .sort((a, b) => b.score - a.score || a.id - b.id)
     .slice(0, 5);
 
   res.json(scored);
@@ -302,8 +309,16 @@ router.get('/faq/search', async (req, res) => {
 
 // GET /api/faq/:id — 單一節點（含後續問題）
 router.get('/faq/:id', async (req, res) => {
-  const id = Number(req.params.id);
-  const node = await prisma.faq_nodes.findFirst({ where: { id, is_active: true } });
+  const id  = Number(req.params.id);
+  const now = new Date();
+  const node = await prisma.faq_nodes.findFirst({
+    where: {
+      id,
+      is_active: true,
+      OR:  [{ start_date: null }, { start_date: { lte: now } }],
+      AND: [{ OR: [{ end_date: null }, { end_date: { gte: now } }] }],
+    },
+  });
   if (!node) return res.status(404).json({ error: 'Not found' });
 
   const links = await prisma.faq_node_links.findMany({
@@ -311,7 +326,11 @@ router.get('/faq/:id', async (req, res) => {
     orderBy: { sort_order: 'asc' },
     include: { child: true },
   });
-  const children = links.filter(l => l.child.is_active).map(l => l.child);
+  const children = links
+    .filter(l => l.child.is_active &&
+      (l.child.start_date === null || l.child.start_date <= now) &&
+      (l.child.end_date   === null || l.child.end_date   >= now))
+    .map(l => l.child);
 
   res.json({ ...node, children });
 });
