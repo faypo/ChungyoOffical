@@ -1,8 +1,9 @@
-const express  = require('express');
-const multer   = require('multer');
-const fs       = require('fs');
-const path     = require('path');
-const { DATA_DIR } = require('../../utils/json');
+const express        = require('express');
+const multer         = require('multer');
+const fs             = require('fs');
+const path           = require('path');
+const { randomUUID } = require('crypto');
+const { DATA_DIR }   = require('../../utils/json');
 const prisma   = require('../../utils/db');
 
 const router    = express.Router();
@@ -15,8 +16,8 @@ const makeUpload = () => multer({
   storage: multer.diskStorage({
     destination: (_req, _file, cb) => cb(null, EVENT_DIR),
     filename:    (_req,  file, cb) => {
-      const ext = path.extname(file.originalname).toLowerCase();
-      cb(null, `${Date.now()}${ext}`);
+      const ext = path.extname(file.originalname).toLowerCase() || '.jpg';
+      cb(null, `${randomUUID()}${ext}`);
     },
   }),
   fileFilter: (_req, file, cb) => cb(null, IMAGE_EXT.test(file.originalname)),

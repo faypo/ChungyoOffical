@@ -1,0 +1,2 @@
+{"time":"2026-07-14T17:12:44.988+08:00","ip":"::1","method":"POST","path":"/catalog","body":{"title":"123","subtitle":"123","order":1,"type":"single","startDate":"2026-07-14","endDate":"2026-07-17","url":""}}
+{"time":"2026-07-14T17:13:20.021+08:00","ip":"::1","method":"POST","path":"/catalog/20260714001/upload","body":"[file upload]"}

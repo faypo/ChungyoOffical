@@ -18,7 +18,10 @@ const storage = multer.diskStorage({
     fs.mkdirSync(dir, { recursive: true });
     cb(null, dir);
   },
-  filename: (_req, file, cb) => cb(null, file.originalname),
+  filename: (_req, file, cb) => {
+    const ext = path.extname(file.originalname).toLowerCase() || '.jpg';
+    cb(null, `${randomUUID()}${ext}`);
+  },
 });
 const upload = multer({ storage, fileFilter: (_req, file, cb) => cb(null, IMAGE_EXT.test(file.originalname)) });
 
