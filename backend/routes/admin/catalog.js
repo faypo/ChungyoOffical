@@ -93,7 +93,7 @@ router.get('/', async (_req, res) => {
 
 /* POST new DM */
 router.post('/', async (req, res) => {
-  const { title, subtitle, order, button, type, hotspots, url } = req.body;
+  const { title, subtitle, order, button, type, hotspots, url, startDate, endDate } = req.body;
   if (!title) return res.status(400).json({ error: 'title 為必填' });
   const existing = await prisma.dm_catalogs.findMany({ select: { id: true } });
   const id = generateId(existing);
@@ -109,6 +109,8 @@ router.post('/', async (req, res) => {
         type:       dmType,
         url:        dmType === 'url' ? (url || '') : '',
         sort_order: Number(order) || count + 1,
+        start_date: startDate ? new Date(startDate) : null,
+        end_date:   endDate   ? new Date(endDate)   : null,
         dm_buttons:  { create: (Array.isArray(button)   ? button   : []).map(b => ({ page: b.page, url: b.url || '' })) },
         dm_hotspots: { create: (Array.isArray(hotspots) ? hotspots : []).map(h => ({ id: h.id, x: h.x, y: h.y, width: h.width, height: h.height, url: h.url || '' })) },
       },

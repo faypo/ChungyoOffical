@@ -47,10 +47,13 @@ export default function DMShowcase() {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
+  // 用 local date constructor 避免 YYYY-MM-DD 字串被當 UTC 解析
+  const parseDate = (str) => { const [y, m, d] = str.split('-').map(Number); return new Date(y, m - 1, d); };
+
   const visibleDMs = catalog.filter(dm => {
-    if (dm.startDate && today < new Date(dm.startDate)) return false;
+    if (dm.startDate && today < parseDate(dm.startDate)) return false;
     if (dm.endDate) {
-      const end = new Date(dm.endDate);
+      const end = parseDate(dm.endDate);
       end.setHours(23, 59, 59, 999);
       if (today > end) return false;
     }
