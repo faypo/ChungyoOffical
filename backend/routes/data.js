@@ -253,7 +253,7 @@ router.get('/faq/search', async (req, res) => {
     .split(',').map(Number).filter(n => n > 0);
 
   const now = new Date();
-  const [nodes, contextLinks] = await Promise.all([
+  const [nodes, contextLinks, floors, allCounters] = await Promise.all([
     prisma.faq_nodes.findMany({
       where: {
         is_active: true,
@@ -264,9 +264,32 @@ router.get('/faq/search', async (req, res) => {
     contextIds.length > 0
       ? prisma.faq_node_links.findMany({ where: { parent_id: { in: contextIds } }, select: { child_id: true } })
       : Promise.resolve([]),
+    prisma.floor_floors.findMany(),
+    prisma.floor_counters.findMany(),
   ]);
 
   const contextChildIds = new Set(contextLinks.map(l => l.child_id));
+
+  // 樓層櫃位名稱比對
+  const floorLabel = Object.fromEntries(
+    floors.map(f => [f.id, (f.label ?? '').split(/\s+/)[0] || f.id])
+  );
+  const counterGroups = {};
+  for (const c of allCounters) {
+    if (!c.name || c.name.length < 2) continue;
+    if (qLower.includes(c.name.toLowerCase())) {
+      if (!counterGroups[c.name]) counterGroups[c.name] = [];
+      counterGroups[c.name].push(`${c.building}棟 ${floorLabel[c.floor_id] ?? c.floor_id}`);
+    }
+  }
+  const counterResults = Object.entries(counterGroups).map(([name, locs]) => ({
+    type:     'counter',
+    question: `${name} 在哪裡？`,
+    answer:   locs.length === 1
+      ? `${name} 位於 ${locs[0]}。`
+      : `${name} 位於：\n${locs.map(l => `• ${l}`).join('\n')}`,
+    score:    4,
+  }));
 
   const scored = nodes
     .map(n => {
@@ -275,14 +298,14 @@ router.get('/faq/search', async (req, res) => {
       // 正向：搜尋詞出現在關鍵字中
       const fwdScore = terms.reduce((acc, t) => acc + (haystack.includes(t.toLowerCase()) ? 1 : 0), 0);
 
-      // 反向精確：標籤直接出現在搜尋句中
+      // 反向精確：標籤直接出現在搜尋句中（允許單字關鍵字）
       const kwTokens = (n.keywords ?? '').toLowerCase()
-        .split(/[\s,，、;；]+/).filter(kw => kw.length >= 2);
+        .split(/[\s,，、;；]+/).filter(kw => kw.length >= 1);
       const revScore = kwTokens.reduce((acc, kw) => acc + (qLower.includes(kw) ? 1 : 0), 0);
 
-      // 滑動窗口：關鍵字的字符在搜尋詞鄰近範圍內都出現
+      // 滑動窗口：關鍵字的字符在搜尋詞鄰近範圍內都出現（需 >= 2 字才有意義）
       // 處理語序變化，例：「車子停在哪」能匹配關鍵字「停車」
-      const winScore = kwTokens.reduce((acc, kw) => {
+      const winScore = kwTokens.filter(kw => kw.length >= 2).reduce((acc, kw) => {
         if (qLower.includes(kw)) return acc; // 已精確匹配，不重複計分
         const chars   = [...kw];
         const winSize = chars.length * 2;    // 窗口為關鍵字長度的 2 倍
@@ -304,7 +327,11 @@ router.get('/faq/search', async (req, res) => {
     .sort((a, b) => b.score - a.score || a.id - b.id)
     .slice(0, 5);
 
-  res.json(scored);
+  const combined = [...scored, ...counterResults]
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 5);
+
+  res.json(combined);
 });
 
 // GET /api/faq/:id — 單一節點（含後續問題）

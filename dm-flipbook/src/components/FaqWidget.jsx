@@ -84,16 +84,21 @@ export default function FaqWidget({ standalone = false }) {
         }).catch(() => {});
       } else {
         const top = results[0];
-        addContext(top.id);
-        // 取完整節點（含後續問題子節點）
-        const nodeRes = await fetch(`/api/faq/${top.id}`);
-        const node    = await nodeRes.json();
-        const kids    = node.children ?? [];
-        setMsgs(prev => [...prev, {
-          from:    'bot',
-          text:    node.answer || null,
-          options: kids.length > 0 ? kids.map(c => ({ id: c.id, label: c.question })) : null,
-        }]);
+        if (top.type === 'counter') {
+          // 櫃位位置查詢：答案已在搜尋結果中，不需再 fetch 節點
+          setMsgs(prev => [...prev, { from: 'bot', text: top.answer, options: null }]);
+        } else {
+          addContext(top.id);
+          // 取完整節點（含後續問題子節點）
+          const nodeRes = await fetch(`/api/faq/${top.id}`);
+          const node    = await nodeRes.json();
+          const kids    = node.children ?? [];
+          setMsgs(prev => [...prev, {
+            from:    'bot',
+            text:    node.answer || null,
+            options: kids.length > 0 ? kids.map(c => ({ id: c.id, label: c.question })) : null,
+          }]);
+        }
       }
     } catch {
       setMsgs(prev => [...prev, { from: 'bot', text: '搜尋時發生錯誤，請稍後再試。', options: null }]);
