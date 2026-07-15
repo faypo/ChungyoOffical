@@ -54,7 +54,9 @@ export default function Winners() {
         )}
 
         {events.map(event => {
-          const numCols = event.columns?.length || 5;
+          const cols = event.columns ?? [];
+          let numCols = cols.length;
+          while (numCols > 1 && !cols[numCols - 1]) numCols--;
           const rows = buildRows(event.rows ?? [], 0, numCols);
           const hasData = (event.rows?.length ?? 0) > 0;
 
@@ -70,8 +72,8 @@ export default function Winners() {
                 <table className="winners-table">
                   <thead>
                     <tr>
-                      {(event.columns ?? []).map((col) => (
-                        <th key={col}>{col}</th>
+                      {(event.columns ?? []).slice(0, numCols).map((col, i) => (
+                        <th key={i}>{col}</th>
                       ))}
                     </tr>
                   </thead>

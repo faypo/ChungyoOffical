@@ -1,0 +1,3 @@
+{"time":"2026-07-15T16:23:52.058+08:00","ip":"::1","method":"POST","path":"/auth/login","body":{"employee_id":"admin","password":"energyc3"}}
+{"time":"2026-07-15T16:23:57.541+08:00","ip":"::1","method":"POST","path":"/winners/events","body":{"title":"aaa"}}
+{"time":"2026-07-15T16:24:13.485+08:00","ip":"::1","method":"PUT","path":"/winners/events/ev-1784103837551","body":{"title":"aaa","subtitle1":"aaa","subtitle2":"bbb","columns":"[array:5]","rows":"[array:1]"}}
