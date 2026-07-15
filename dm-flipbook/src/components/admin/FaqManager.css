@@ -565,3 +565,57 @@
   gap: 6px;
   flex-shrink: 0;
 }
+
+/* ── 查詢文字雲區塊 ── */
+.faq-wordcloud-section {
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.faq-wordcloud-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: #f8f8f8;
+  cursor: pointer;
+  user-select: none;
+  border-bottom: 1px solid #e5e5e5;
+}
+.faq-wordcloud-header:hover { background: #f0f0f0; }
+
+.faq-wordcloud-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #333;
+}
+
+.faq-wordcloud-header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.faq-wordcloud-body {
+  padding: 16px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.faq-wordcloud-canvas {
+  max-width: 100%;
+  border-radius: 6px;
+}
+
+.faq-wordcloud-status {
+  color: #666;
+  font-size: 14px;
+  padding: 40px 0;
+  text-align: center;
+}
+.faq-wordcloud-status--err {
+  color: #c0392b;
+}

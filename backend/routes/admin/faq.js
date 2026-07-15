@@ -54,6 +54,47 @@ router.put('/config', async (req, res) => {
   res.json({ ok: true });
 });
 
+// GET /api/admin/faq/wordcloud — 查詢文字雲（bigram 切詞頻率）
+router.get('/wordcloud', async (_req, res) => {
+  let logs;
+  try {
+    logs = await prisma.faq_query_log.findMany({
+      select:  { query: true },
+      orderBy: { created_at: 'desc' },
+      take:    2000,
+    });
+  } catch {
+    return res.status(500).json({ error: '查詢紀錄表不存在，請先執行 migration 020' });
+  }
+
+  const STOP = new Set('的了在是我有和就不都一上也很到說要去你會著嗎呢啊哦嗯哈那這什麼可以如何怎麼哪裡誰'.split(''));
+
+  const freq = {};
+  for (const { query } of logs) {
+    const q = query.trim();
+    // 空白/標點切出整詞（≥ 2 字，加權較高）
+    for (const w of q.split(/[\s,，、！？!?.。]+/).filter(w => w.length >= 2)) {
+      freq[w] = (freq[w] || 0) + 3;
+    }
+    // Bigram（去空白後連續 2 字）
+    const compact = q.replace(/\s/g, '');
+    for (let i = 0; i < compact.length - 1; i++) {
+      const bg = compact.slice(i, i + 2);
+      if (![...bg].some(c => STOP.has(c))) {
+        freq[bg] = (freq[bg] || 0) + 1;
+      }
+    }
+  }
+
+  const words = Object.entries(freq)
+    .filter(([w]) => w.length >= 2 && ![...w].every(c => STOP.has(c)))
+    .map(([text, value]) => ({ text, value }))
+    .sort((a, b) => b.value - a.value)
+    .slice(0, 80);
+
+  res.json(words);
+});
+
 // GET /api/admin/faq/unanswered — 未解答問題清單（依次數排序）
 router.get('/unanswered', async (_req, res) => {
   const rows = await prisma.faq_unanswered.findMany({ orderBy: [{ ask_count: 'desc' }, { last_asked_at: 'desc' }] });

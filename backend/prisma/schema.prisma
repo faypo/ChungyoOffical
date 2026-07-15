@@ -540,3 +540,12 @@ model faq_unanswered {
   @@unique([query(length: 255)])
   @@index([ask_count], map: "idx_count")
 }
+
+model faq_query_log {
+  id         Int      @id @default(autoincrement()) @db.UnsignedInt
+  query      String   @db.VarChar(500)
+  answered   Boolean  @default(true)
+  created_at DateTime @default(now()) @db.DateTime(0)
+
+  @@index([created_at])
+}

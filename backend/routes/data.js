@@ -331,6 +331,11 @@ router.get('/faq/search', async (req, res) => {
     .sort((a, b) => b.score - a.score)
     .slice(0, 5);
 
+  // 背景寫入查詢紀錄（不阻塞回應）
+  prisma.faq_query_log.create({
+    data: { query: q, answered: combined.length > 0 },
+  }).catch(() => {});
+
   res.json(combined);
 });
 

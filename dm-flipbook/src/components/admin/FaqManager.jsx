@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import * as WordCloudModule from 'wordcloud';
 import { apiFetch } from '../../utils/apiFetch';
 import { AnswerText } from '../../utils/faqAnswer';
 import './FaqManager.css';
+
+const WordCloud = WordCloudModule.default ?? WordCloudModule;
 
 const API = '/api/admin/faq';
 const EMPTY_FORM = { question: '', answer: '', keywords: '', is_active: true, start_date: '', end_date: '' };
@@ -28,6 +31,13 @@ export default function FaqManager() {
   const [unanswered,        setUnanswered]        = useState([]);
   const [showUnanswered,    setShowUnanswered]    = useState(false);
   const [fromUnansweredId,  setFromUnansweredId]  = useState(null); // 建立問題來源的待補充 id
+
+  // 查詢文字雲
+  const [showWordCloud,   setShowWordCloud]   = useState(false);
+  const [wordCloudWords,  setWordCloudWords]  = useState([]);
+  const [wcLoading,       setWcLoading]       = useState(false);
+  const [wcError,         setWcError]         = useState('');
+  const canvasRef = useRef(null);
 
   // 工具列
   const textareaRef  = useRef(null);
@@ -67,6 +77,41 @@ export default function FaqManager() {
     apiFetch(`${API}/config`).then(r => r.json()).then(d => setFallbackMsg(d.fallback_message ?? '')).catch(() => {});
     loadUnanswered();
   }, [loadNodes, loadUnanswered]);
+
+  const loadWordCloud = useCallback(async () => {
+    setWcLoading(true);
+    setWcError('');
+    try {
+      const r = await apiFetch(`${API}/wordcloud`);
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const d = await r.json();
+      setWordCloudWords(Array.isArray(d) ? d : []);
+    } catch (e) {
+      setWcError(`載入失敗：${e.message}`);
+    } finally {
+      setWcLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!showWordCloud || !canvasRef.current || wordCloudWords.length === 0) return;
+    if (typeof WordCloud !== 'function') return;
+    // 正規化字型大小，最大 60px 最小 14px
+    const maxVal = Math.max(...wordCloudWords.map(w => w.value), 1);
+    const list = wordCloudWords.map(w => [
+      w.text,
+      Math.round(14 + (w.value / maxVal) * 46),
+    ]);
+    WordCloud(canvasRef.current, {
+      list,
+      gridSize:        8,
+      fontFamily:      'sans-serif',
+      rotateRatio:     0,
+      backgroundColor: '#fafafa',
+      color:           () => `hsl(${Math.floor(Math.random() * 220 + 180)},55%,42%)`,
+      shrinkToFit:     true,
+    });
+  }, [showWordCloud, wordCloudWords]);
 
   const handleDismissUnanswered = async (id) => {
     await apiFetch(`${API}/unanswered/${id}`, { method: 'DELETE' });
@@ -369,6 +414,36 @@ export default function FaqManager() {
           )}
         </div>
       )}
+
+      {/* ── 查詢文字雲 ── */}
+      <div className="faq-wordcloud-section">
+        <div className="faq-wordcloud-header" onClick={() => {
+          if (!showWordCloud) { setShowWordCloud(true); loadWordCloud(); }
+          else setShowWordCloud(false);
+        }}>
+          <span className="faq-wordcloud-title">查詢文字雲</span>
+          <div className="faq-wordcloud-header-right">
+            {showWordCloud && (
+              <button className="fg-btn fg-btn-ghost fg-btn-sm" onClick={e => { e.stopPropagation(); loadWordCloud(); }}>
+                重新整理
+              </button>
+            )}
+            <span className="faq-unanswered-toggle">{showWordCloud ? '▲ 收起' : '▼ 展開'}</span>
+          </div>
+        </div>
+        {showWordCloud && (
+          <div className="faq-wordcloud-body">
+            {wcLoading
+              ? <div className="faq-wordcloud-status">載入中…</div>
+              : wcError
+                ? <div className="faq-wordcloud-status faq-wordcloud-status--err">{wcError}</div>
+              : wordCloudWords.length === 0
+                ? <div className="faq-wordcloud-status">尚無查詢紀錄，請先讓使用者使用 FAQ 後再查看</div>
+                : <canvas ref={canvasRef} className="faq-wordcloud-canvas" width={700} height={340} />
+            }
+          </div>
+        )}
+      </div>
 
       <div className="faq-layout">
 
