@@ -247,7 +247,8 @@ async function main() {
 
       for (const [i, c] of j.content.entries()) {
         await tx.gallery_content.create({ data: {
-          type: c.type, file: c.file || null, video_id: c.videoId || null, sort_order: i,
+          type: c.type, file: c.file || null, video_id: c.videoId || null,
+          start_date: toDate(c.startDate), end_date: toDate(c.endDate), sort_order: i,
           ...(c.hotspots?.length ? { gallery_hotspots: { create: c.hotspots.map(h => ({
             id: h.id, x: h.x, y: h.y, width: h.width, height: h.height, url: h.url || null
           }))} } : {}),

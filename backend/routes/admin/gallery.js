@@ -17,9 +17,11 @@ const upload = multer({ storage, fileFilter: (_req, file, cb) => cb(null, IMAGE_
 
 function formatContent(rows) {
   return rows.map(r => ({
-    type:     r.type,
-    file:     r.file     ?? undefined,
-    videoId:  r.video_id ?? undefined,
+    type:      r.type,
+    file:      r.file       ?? undefined,
+    videoId:   r.video_id   ?? undefined,
+    startDate: r.start_date ? r.start_date.toISOString().slice(0, 10) : '',
+    endDate:   r.end_date   ? r.end_date.toISOString().slice(0, 10)   : '',
     hotspots: (r.gallery_hotspots ?? []).map(h => ({
       id: h.id, x: Number(h.x), y: Number(h.y),
       width: Number(h.width), height: Number(h.height), url: h.url,
@@ -48,6 +50,8 @@ router.put('/', async (req, res) => {
           type:       item.type,
           file:       item.file    || null,
           video_id:   item.videoId || null,
+          start_date: item.startDate ? new Date(item.startDate) : null,
+          end_date:   item.endDate   ? new Date(item.endDate)   : null,
           sort_order: i,
           gallery_hotspots: {
             create: (item.hotspots || []).map(h => ({

@@ -253,6 +253,8 @@ model gallery_content {
   type                                    gallery_content_type
   file                                    String?              @db.VarChar(255)
   video_id                                String?              @db.VarChar(50)
+  start_date                              DateTime?            @db.DateTime(0)
+  end_date                                DateTime?            @db.DateTime(0)
   page_id                                 Int?                 @db.UnsignedInt
   sort_order                              Int?                 @default(0) @db.UnsignedInt
   created_by                              Int?                 @db.UnsignedInt
