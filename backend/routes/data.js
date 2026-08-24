@@ -171,7 +171,12 @@ router.get('/home-events', async (_req, res) => {
 });
 
 router.get('/gallery', async (_req, res) => {
+  const now  = new Date();
   const rows = await prisma.gallery_content.findMany({
+    where: {
+      OR:  [{ start_date: null }, { start_date: { lte: now } }],
+      AND: [{ OR: [{ end_date: null }, { end_date: { gte: now } }] }],
+    },
     include: { gallery_hotspots: true },
     orderBy: { sort_order: 'asc' },
   });

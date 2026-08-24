@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import HotspotEditor from './HotspotEditor';
 import './FloorGuideManager.css';
 import './ActivityManager.css';
+import './BannerManager.css';
 import { apiFetch } from '../../utils/apiFetch';
 
 const API = '/api/admin/gallery';
@@ -95,6 +96,10 @@ export default function GalleryManager() {
     ));
     setHotspotIdx(null);
   }, [hotspotIdx]);
+
+  const handleDateChange = (i, field, value) => {
+    setContent(prev => prev.map((item, idx) => idx === i ? { ...item, [field]: value } : item));
+  };
 
   const handleDragStart = (i) => { dragSrc.current = i; };
   const handleDragOver  = (e) => { e.preventDefault(); };
@@ -195,7 +200,29 @@ export default function GalleryManager() {
                       alt={item.file}
                       className="am-thumb"
                     />
-                    <span className="am-label">{item.file}</span>
+                    <div className="bm-fields">
+                      <span className="am-label">{item.file}</span>
+                      <div className="bm-date-row">
+                        <label className="bm-date-label">
+                          開始日期
+                          <input
+                            type="date"
+                            className="fg-info-input"
+                            value={item.startDate ?? ''}
+                            onChange={e => handleDateChange(i, 'startDate', e.target.value)}
+                          />
+                        </label>
+                        <label className="bm-date-label">
+                          結束日期
+                          <input
+                            type="date"
+                            className="fg-info-input"
+                            value={item.endDate ?? ''}
+                            onChange={e => handleDateChange(i, 'endDate', e.target.value)}
+                          />
+                        </label>
+                      </div>
+                    </div>
                     <button
                       className="fg-btn fg-btn-ghost fg-btn-sm"
                       onClick={() => setHotspotIdx(i)}
@@ -206,7 +233,29 @@ export default function GalleryManager() {
                 ) : (
                   <>
                     <div className="am-yt-badge">YT</div>
-                    <span className="am-label">{item.videoId}</span>
+                    <div className="bm-fields">
+                      <span className="am-label">{item.videoId}</span>
+                      <div className="bm-date-row">
+                        <label className="bm-date-label">
+                          開始日期
+                          <input
+                            type="date"
+                            className="fg-info-input"
+                            value={item.startDate ?? ''}
+                            onChange={e => handleDateChange(i, 'startDate', e.target.value)}
+                          />
+                        </label>
+                        <label className="bm-date-label">
+                          結束日期
+                          <input
+                            type="date"
+                            className="fg-info-input"
+                            value={item.endDate ?? ''}
+                            onChange={e => handleDateChange(i, 'endDate', e.target.value)}
+                          />
+                        </label>
+                      </div>
+                    </div>
                   </>
                 )}
 
