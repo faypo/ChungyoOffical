@@ -18,6 +18,8 @@ const MODULE_LABELS = {
   stats:          '流量統計',
   config:         '系統設定',
   user:           '帳號管理',
+  faq:            'FAQ 管理',
+  aws_usage:      'AWS 用量統計',
 };
 
 export default function RolesManager() {

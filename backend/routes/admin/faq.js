@@ -9,6 +9,7 @@ const { randomUUID } = require('crypto');
 const { DATA_DIR }   = require('../../utils/json');
 const prisma         = require('../../utils/db');
 const { syncFaqKnowledgeBase } = require('../../utils/faqAiClient');
+const { logAwsUsage } = require('../../utils/awsUsageLogger');
 
 const router      = express.Router();
 const FAQ_IMG_DIR = path.join(DATA_DIR, 'faq-images');
@@ -101,7 +102,9 @@ async function runKnowledgeBaseSync() {
     };
   }).filter(d => d.text.trim());
 
-  return syncFaqKnowledgeBase([...faqDocuments, ...counterDocuments, ...uploadedDocuments]);
+  const result = await syncFaqKnowledgeBase([...faqDocuments, ...counterDocuments, ...uploadedDocuments]);
+  logAwsUsage(result.usage);
+  return result;
 }
 
 // GET /api/admin/faq/documents — 客服文件清單

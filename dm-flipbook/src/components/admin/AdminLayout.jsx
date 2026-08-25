@@ -16,6 +16,7 @@ const OTHER_NAV = [
   { to: '/admin/service',        label: '貼心服務',   module: 'service' },
   { to: '/admin/stats',          label: '流量統計',   module: 'stats' },
   { to: '/admin/faq',            label: 'FAQ 管理',   module: 'faq' },
+  { to: '/admin/aws-usage',      label: 'AWS 用量統計', module: 'aws_usage' },
 ];
 
 const HOME_NAV = [

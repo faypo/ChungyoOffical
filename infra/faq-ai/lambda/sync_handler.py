@@ -5,6 +5,8 @@ import os
 import boto3
 from botocore.exceptions import ClientError
 
+import usage_tracker
+
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
@@ -47,6 +49,7 @@ def handler(event, context):
     # 正在跑的那個索引工作之後也會處理到（或下次同步再觸發一次即可）。
     ingestion_job = None
     ingestion_note = None
+    usage = []
     if KNOWLEDGE_BASE_ID and DATA_SOURCE_ID:
         try:
             job = _bedrock_agent.start_ingestion_job(
@@ -57,6 +60,11 @@ def handler(event, context):
                 "ingestionJobId": job["ingestionJob"]["ingestionJobId"],
                 "status": job["ingestionJob"]["status"],
             }
+            # 索引工作真的被觸發時才計費估算（ConflictException 代表沒有真的觸發，
+            # 前一個索引工作還在跑）。用「這次同步的全部文件」字元數估算，是估算
+            # 上限，Bedrock 實際只會重新 embed 有異動的檔案。
+            total_chars = sum(len(doc.get("text") or "") for doc in documents)
+            usage.append(usage_tracker.bedrock_embed_cost(total_chars))
         except ClientError as e:
             if e.response.get("Error", {}).get("Code") == "ConflictException":
                 ingestion_note = "已有索引工作正在進行中，S3 內容已同步，稍後請再按一次同步以觸發重新索引"
@@ -71,6 +79,7 @@ def handler(event, context):
             "deleted": deleted,
             "ingestionJob": ingestion_job,
             "ingestionNote": ingestion_note,
+            "usage": usage,
         },
     )
 

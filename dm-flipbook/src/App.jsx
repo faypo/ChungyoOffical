@@ -35,6 +35,7 @@ import SustainabilityManager from './components/admin/SustainabilityManager';
 import StatsManager from './components/admin/StatsManager';
 import ServiceManager from './components/admin/ServiceManager';
 import FaqManager from './components/admin/FaqManager';
+import AwsUsageManager from './components/admin/AwsUsageManager';
 import FaqPage from './pages/FaqPage';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Leasing from './components/Leasing';
@@ -79,6 +80,7 @@ export default function App() {
               <Route path="stats"         element={<StatsManager />} />
               <Route path="service"        element={<ServiceManager />} />
               <Route path="faq"            element={<FaqManager />} />
+              <Route path="aws-usage"      element={<AwsUsageManager />} />
               <Route path="users"          element={<SuperAdminOnly><UsersManager /></SuperAdminOnly>} />
               <Route path="roles"          element={<SuperAdminOnly><RolesManager /></SuperAdminOnly>} />
             </Route>

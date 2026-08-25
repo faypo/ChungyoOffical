@@ -4,6 +4,8 @@ from datetime import datetime, timedelta, timezone
 
 import boto3
 
+import usage_tracker
+
 _bedrock_agent_runtime = boto3.client("bedrock-agent-runtime", region_name=os.environ.get("AWS_REGION"))
 _bedrock_runtime       = boto3.client("bedrock-runtime",       region_name=os.environ.get("AWS_REGION"))
 
@@ -71,7 +73,7 @@ def to_speech_friendly(text: str) -> str:
     return "、".join(lines) if len(lines) > 1 else (lines[0] if lines else text)
 
 
-def _retrieve_context(query_text: str) -> str:
+def _retrieve_context(query_text: str) -> tuple[str, dict]:
     # 受管知識庫（Managed Knowledge Base）目前不支援 RetrieveAndGenerate，
     # 改用 Retrieve 拿檢索片段，自己組 prompt 呼叫 Converse 生成答案。
     response = _bedrock_agent_runtime.retrieve(
@@ -86,14 +88,14 @@ def _retrieve_context(query_text: str) -> str:
         for r in response.get("retrievalResults", [])
         if r.get("content", {}).get("text")
     ]
-    return "\n---\n".join(chunks)
+    return "\n---\n".join(chunks), usage_tracker.bedrock_retrieve_cost()
 
 
 def retrieve_and_generate(query_text: str, history: list | None = None) -> dict:
     if not KNOWLEDGE_BASE_ID or not MODEL_ARN:
         raise RuntimeError("BEDROCK_KB_ID / BEDROCK_MODEL_ARN 尚未設定")
 
-    context = _retrieve_context(query_text)
+    context, retrieve_usage = _retrieve_context(query_text)
     user_message = (
         f"今天的日期：{_today_taiwan_str()}\n"
         f"檢索到的內容：\n{context or '（無相關內容）'}\n\n使用者問題：{query_text}"
@@ -116,10 +118,18 @@ def retrieve_and_generate(query_text: str, history: list | None = None) -> dict:
         inferenceConfig={"maxTokens": 300, "temperature": 0.3},
     )
     raw_text = response["output"]["message"]["content"][0]["text"].strip()
+    token_usage = response.get("usage", {}) or {}
+    converse_usage = usage_tracker.bedrock_converse_cost(
+        token_usage.get("inputTokens", 0), token_usage.get("outputTokens", 0)
+    )
 
     answered = True
     if raw_text.startswith(NO_MATCH_MARKER):
         answered = False
         raw_text = raw_text[len(NO_MATCH_MARKER):].lstrip()
 
-    return {"text": _strip_markdown_emphasis(raw_text), "answered": answered}
+    return {
+        "text":     _strip_markdown_emphasis(raw_text),
+        "answered": answered,
+        "usage":    [retrieve_usage, converse_usage],
+    }

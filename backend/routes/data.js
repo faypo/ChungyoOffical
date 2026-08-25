@@ -5,6 +5,7 @@ const path    = require('path');
 const { DATA_DIR } = require('../utils/json');
 const prisma  = require('../utils/db');
 const { askFaqAi } = require('../utils/faqAiClient');
+const { logAwsUsage } = require('../utils/awsUsageLogger');
 
 const IMAGE_EXT    = /\.(jpg|jpeg|png|webp)$/i;
 const SERVICE_KEYS = ['service', 'traffic', 'parking', 'gift'];
@@ -253,6 +254,8 @@ router.post('/faq/ai/text', async (req, res) => {
   const history = Array.isArray(req.body?.history) ? req.body.history : [];
   try {
     const result = await askFaqAi({ text: q, history });
+    logAwsUsage(result.usage);
+    delete result.usage; // 內部成本估算，不回傳給前台
     res.json(result);
   } catch (e) {
     res.status(e.status && e.status < 500 ? e.status : 502).json({ error: e.message || 'AI 服務暫時無法使用' });
@@ -272,6 +275,8 @@ router.post('/faq/ai/voice', uploadAudio.single('audio'), async (req, res) => {
       sampleRate,
       history,
     });
+    logAwsUsage(result.usage);
+    delete result.usage; // 內部成本估算，不回傳給前台
     res.json(result);
   } catch (e) {
     res.status(e.status && e.status < 500 ? e.status : 502).json({ error: e.message || 'AI 服務暫時無法使用' });

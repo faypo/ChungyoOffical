@@ -17,6 +17,7 @@ const serviceRoutes          = require('./service');
 const usersRoutes            = require('./users');
 const rolesRoutes            = require('./roles');
 const faqRoutes              = require('./faq');
+const awsUsageRoutes         = require('./awsUsage');
 
 const router = express.Router();
 
@@ -42,6 +43,7 @@ const MODULE_PATH_MAP = {
   '/stats':          'stats',
   '/users':          'user',
   '/faq':            'faq',
+  '/aws-usage':      'aws_usage',
 };
 
 router.use((req, res, next) => {
@@ -75,5 +77,6 @@ router.use('/service',         serviceRoutes);
 router.use('/users',           usersRoutes);
 router.use('/roles',           rolesRoutes);
 router.use('/faq',             faqRoutes);
+router.use('/aws-usage',       awsUsageRoutes);
 
 module.exports = router;

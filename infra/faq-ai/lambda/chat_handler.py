@@ -6,6 +6,7 @@ import os
 from bedrock_client import retrieve_and_generate, to_speech_friendly
 from polly_client import synthesize
 from transcribe_client import transcribe_pcm_sync
+import usage_tracker
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -28,10 +29,13 @@ def handler(event, context):
     sample_rate = int(body.get("sampleRate") or 16000)
     history = body.get("history") if isinstance(body.get("history"), list) else []
 
+    usage = []
     transcript = None
     try:
         if not text and audio_b64:
             pcm_bytes = base64.b64decode(audio_b64)
+            duration_seconds = len(pcm_bytes) / (sample_rate * 2)  # 16-bit mono PCM
+            usage.append(usage_tracker.transcribe_cost(duration_seconds))
             transcript = transcribe_pcm_sync(pcm_bytes, sample_rate)
             if not transcript:
                 return _response(422, {"error": "no speech detected"})
@@ -41,14 +45,18 @@ def handler(event, context):
             return _response(400, {"error": "text or audioBase64 is required"})
 
         gen = retrieve_and_generate(text, history=history)
+        usage.extend(gen["usage"])
         reply_text = gen["text"]
-        audio_mp3 = synthesize(to_speech_friendly(reply_text))
+        speech_text = to_speech_friendly(reply_text)
+        usage.append(usage_tracker.polly_cost(len(speech_text)))
+        audio_mp3 = synthesize(speech_text)
 
         payload = {
             "replyText": reply_text,
             "answered": gen["answered"],
             "audioBase64": base64.b64encode(audio_mp3).decode("ascii"),
             "mimeType": "audio/mpeg",
+            "usage": usage,
         }
         if transcript is not None:
             payload["transcript"] = transcript
