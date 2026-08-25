@@ -514,7 +514,11 @@ export default function FaqManager() {
             {syncResult && (
               <div className={`faq-hint${syncResult.ok ? '' : ' faq-wordcloud-status--err'}`} style={{ marginTop: 8 }}>
                 {syncResult.ok
-                  ? `已同步 ${syncResult.uploaded} 筆，刪除 ${syncResult.deleted} 筆舊資料${syncResult.ingestionJob ? `，索引工作狀態：${syncResult.ingestionJob.status}` : '（尚未設定 Knowledge Base，僅完成 S3 同步）'}`
+                  ? `已同步 ${syncResult.uploaded} 筆，刪除 ${syncResult.deleted} 筆舊資料${
+                      syncResult.ingestionNote ? `（${syncResult.ingestionNote}）`
+                      : syncResult.ingestionJob ? `，索引工作狀態：${syncResult.ingestionJob.status}`
+                      : '（尚未設定 Knowledge Base，僅完成 S3 同步）'
+                    }`
                   : `同步失敗：${syncResult.error}`}
               </div>
             )}

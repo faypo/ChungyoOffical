@@ -3,6 +3,7 @@ import logging
 import os
 
 import boto3
+from botocore.exceptions import ClientError
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -36,9 +37,18 @@ def handler(event, context):
 
     try:
         uploaded, deleted = _sync_documents(documents)
+    except Exception:
+        logger.exception("faq sync handler failed (S3 sync)")
+        return _response(500, {"error": "internal error"})
 
-        ingestion_job = None
-        if KNOWLEDGE_BASE_ID and DATA_SOURCE_ID:
+    # S3 內容已經同步好了，接下來只是「觸發重新索引」。同一個 data source
+    # 同時間只能跑一個索引工作，短時間內連續觸發（例如一次刪改上傳很多筆）
+    # 常會撞到前一個還在跑的工作——這不是真的失敗，S3 內容已經是最新的，
+    # 正在跑的那個索引工作之後也會處理到（或下次同步再觸發一次即可）。
+    ingestion_job = None
+    ingestion_note = None
+    if KNOWLEDGE_BASE_ID and DATA_SOURCE_ID:
+        try:
             job = _bedrock_agent.start_ingestion_job(
                 knowledgeBaseId=KNOWLEDGE_BASE_ID,
                 dataSourceId=DATA_SOURCE_ID,
@@ -47,18 +57,22 @@ def handler(event, context):
                 "ingestionJobId": job["ingestionJob"]["ingestionJobId"],
                 "status": job["ingestionJob"]["status"],
             }
+        except ClientError as e:
+            if e.response.get("Error", {}).get("Code") == "ConflictException":
+                ingestion_note = "已有索引工作正在進行中，S3 內容已同步，稍後請再按一次同步以觸發重新索引"
+            else:
+                logger.exception("faq sync handler failed (start ingestion job)")
+                return _response(500, {"error": "internal error"})
 
-        return _response(
-            200,
-            {
-                "uploaded": uploaded,
-                "deleted": deleted,
-                "ingestionJob": ingestion_job,
-            },
-        )
-    except Exception:
-        logger.exception("faq sync handler failed")
-        return _response(500, {"error": "internal error"})
+    return _response(
+        200,
+        {
+            "uploaded": uploaded,
+            "deleted": deleted,
+            "ingestionJob": ingestion_job,
+            "ingestionNote": ingestion_note,
+        },
+    )
 
 
 def _sync_documents(documents):

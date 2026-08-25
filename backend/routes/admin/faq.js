@@ -4,6 +4,7 @@ const express        = require('express');
 const multer         = require('multer');
 const fs             = require('fs');
 const path           = require('path');
+const iconv          = require('iconv-lite');
 const { randomUUID } = require('crypto');
 const { DATA_DIR }   = require('../../utils/json');
 const prisma         = require('../../utils/db');
@@ -38,17 +39,21 @@ router.post('/upload', upload.single('image'), (req, res) => {
 const FAQ_DOC_DIR = path.join(DATA_DIR, 'faq-documents');
 const DOC_EXT      = /\.txt$/i;
 
+// 用 memoryStorage 而非 diskStorage，因為要先偵測/轉換編碼才能寫檔案。
 const uploadDoc = multer({
-  storage: multer.diskStorage({
-    destination: (_req, _file, cb) => {
-      fs.mkdirSync(FAQ_DOC_DIR, { recursive: true });
-      cb(null, FAQ_DOC_DIR);
-    },
-    filename: (_req, _file, cb) => cb(null, `${randomUUID()}.txt`),
-  }),
+  storage: multer.memoryStorage(),
   fileFilter: (_req, file, cb) => cb(null, DOC_EXT.test(file.originalname)),
   limits: { fileSize: 2 * 1024 * 1024 }, // 2 MB，純文字檔已足夠
 });
+
+// 使用者上傳的 .txt 常常是 Windows 記事本存的 Big5 編碼，不是 UTF-8，
+// 直接當 UTF-8 讀會整段變亂碼。這裡判斷：原始位元組轉成字串再轉回位元組，
+// 如果跟原始完全一樣，代表本來就是合法 UTF-8；不一樣的話視為 Big5 並轉換。
+function decodeToUtf8(buffer) {
+  const asUtf8 = buffer.toString('utf8');
+  if (Buffer.from(asUtf8, 'utf8').equals(buffer)) return asUtf8;
+  return iconv.decode(buffer, 'big5');
+}
 
 // 把 FAQ 節點＋櫃位樓層資料＋客服文件同步進 Bedrock 知識庫（共用邏輯，
 // 供手動「立即同步知識庫」按鈕與文件上傳/刪除/切換啟用時自動觸發共用）。
@@ -118,15 +123,18 @@ function syncAfterDocChange() {
 router.post('/documents/upload', uploadDoc.single('file'), async (req, res) => {
   if (!req.file) return res.status(400).json({ error: '請上傳 .txt 純文字檔（2MB 以內）' });
   const title = (req.body?.title || '').trim();
-  if (!title) {
-    fs.unlinkSync(req.file.path);
-    return res.status(400).json({ error: '標題為必填' });
-  }
+  if (!title) return res.status(400).json({ error: '標題為必填' });
+
+  const content  = decodeToUtf8(req.file.buffer);
+  const filename = `${randomUUID()}.txt`;
+  fs.mkdirSync(FAQ_DOC_DIR, { recursive: true });
+  fs.writeFileSync(path.join(FAQ_DOC_DIR, filename), content, 'utf8');
+
   const { start_date, end_date } = req.body;
   const doc = await prisma.faq_documents.create({
     data: {
       title,
-      filename:           req.file.filename,
+      filename,
       original_filename:  req.file.originalname,
       start_date: start_date ? new Date(start_date) : null,
       end_date:   end_date   ? new Date(end_date)   : null,

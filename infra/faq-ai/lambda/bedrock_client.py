@@ -11,10 +11,12 @@ KNOWLEDGE_BASE_ID = os.environ.get("BEDROCK_KB_ID", "")
 MODEL_ARN         = os.environ.get("BEDROCK_MODEL_ARN", "")
 
 TAIWAN_TZ = timezone(timedelta(hours=8))
+_WEEKDAY_ZH = ["一", "二", "三", "四", "五", "六", "日"]
 
 
 def _today_taiwan_str() -> str:
-    return datetime.now(TAIWAN_TZ).strftime("%Y-%m-%d")
+    now = datetime.now(TAIWAN_TZ)
+    return f"{now.strftime('%Y-%m-%d')}（星期{_WEEKDAY_ZH[now.weekday()]}）"
 
 
 # 回答會同時被當作文字氣泡顯示、也會被 Polly 唸出來。文字版允許用「•」條列多個
@@ -39,6 +41,11 @@ SYSTEM_PROMPT = """你是中友百貨的客服助理。請只根據下方「檢�
 開頭提供的「今天的日期」：如果今天不在該區間內（還沒開始，或已經過期），這段
 內容視為目前不存在，絕對不能拿來回答，也不要跟使用者提起這段已過期/未生效的
 資訊。標示「長期有效」或沒有標示有效期間的內容則不受此限制。
+
+如果使用者問的是今天日期、星期幾，請直接使用訊息開頭提供的「今天的日期」回答，
+不需要比對檢索到的內容、也不算「無法回答」。但天氣、即時路況、即時新聞等系統
+沒有連接的即時外部資訊，你並不知道實際狀況，請照下面的規則誠實回答無法提供，
+不要憑空猜測（尤其天氣，猜錯會誤導使用者，比誠實說不知道更糟）。
 
 如果檢索到的內容（扣除掉已過期/未生效的部分後）不足以回答，請在回覆的最開頭加上
 [NO_MATCH] 這個標記（後面緊接著自然的回覆文字，不要換行、不要有空格），例如：

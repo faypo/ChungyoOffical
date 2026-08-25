@@ -3,6 +3,8 @@
 // 不接受該格式，需要原始 PCM。
 const TARGET_SAMPLE_RATE = 16000;
 const BUFFER_SIZE = 4096;
+const SILENCE_RMS_THRESHOLD = 0.012; // 低於此音量視為靜音
+const SILENCE_AUTO_STOP_MS = 1000;   // 偵測到「已開始講話」後，連續靜音超過此時間自動停止
 
 export class PcmRecorder {
   constructor() {
@@ -12,10 +14,16 @@ export class PcmRecorder {
     this.stream = null;
     this.chunks = [];
     this.inputSampleRate = TARGET_SAMPLE_RATE;
+    this.hasSpoken = false;
+    this.silenceTimer = null;
+    this.onAutoStop = null;
   }
 
-  async start() {
+  /** @param {() => void} [onAutoStop] 開始講話後、靜音超過 1 秒時觸發，用來自動結束錄音 */
+  async start(onAutoStop) {
     this.chunks = [];
+    this.hasSpoken = false;
+    this.onAutoStop = onAutoStop || null;
     this.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     this.audioContext = new AudioContext();
     this.inputSampleRate = this.audioContext.sampleRate;
@@ -23,15 +31,42 @@ export class PcmRecorder {
     this.processor = this.audioContext.createScriptProcessor(BUFFER_SIZE, 1, 1);
 
     this.processor.onaudioprocess = (event) => {
-      this.chunks.push(new Float32Array(event.inputBuffer.getChannelData(0)));
+      const data = event.inputBuffer.getChannelData(0);
+      this.chunks.push(new Float32Array(data));
+      this._detectSilence(data);
     };
 
     this.source.connect(this.processor);
     this.processor.connect(this.audioContext.destination);
   }
 
+  _detectSilence(data) {
+    if (!this.onAutoStop) return;
+    let sumSquares = 0;
+    for (let i = 0; i < data.length; i++) sumSquares += data[i] * data[i];
+    const rms = Math.sqrt(sumSquares / data.length);
+
+    if (rms > SILENCE_RMS_THRESHOLD) {
+      this.hasSpoken = true;
+      if (this.silenceTimer) {
+        clearTimeout(this.silenceTimer);
+        this.silenceTimer = null;
+      }
+    } else if (this.hasSpoken && !this.silenceTimer) {
+      this.silenceTimer = setTimeout(() => {
+        this.silenceTimer = null;
+        this.onAutoStop?.();
+      }, SILENCE_AUTO_STOP_MS);
+    }
+  }
+
   /** @returns {{ pcm: Uint8Array, sampleRate: number }} */
   stop() {
+    if (this.silenceTimer) {
+      clearTimeout(this.silenceTimer);
+      this.silenceTimer = null;
+    }
+    this.onAutoStop = null;
     this.processor?.disconnect();
     this.source?.disconnect();
     this.stream?.getTracks().forEach(track => track.stop());

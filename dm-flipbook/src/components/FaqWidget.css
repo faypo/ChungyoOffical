@@ -52,6 +52,8 @@
 .faq-dialog--standalone {
   width: 100%;
   height: 100%;
+  max-height: none;
+  flex: 1; /* 保險：即使 % 高度沒吃到，flex:1 也能撐滿 .faq-page 剩餘空間 */
   border-radius: 0;
   box-shadow: none;
   animation: none;
@@ -260,6 +262,7 @@
 }
 .faq-search-input {
   flex: 1;
+  min-width: 0; /* input 預設有內容最小寬度，不會真的隨 flex 縮小，需明確歸零才會讓送出按鈕維持完整寬度 */
   border: 1.5px solid #ddd;
   border-radius: 20px;
   padding: 11px 18px;
@@ -272,6 +275,7 @@
   border-color: #6c5ce7;
 }
 .faq-search-btn {
+  flex-shrink: 0;
   background: #6c5ce7;
   color: #fff;
   border: none;
@@ -361,10 +365,16 @@
   text-decoration: underline;
 }
 
-/* ===== 獨立頁模式 ===== */
+/* ===== 獨立頁模式 =====
+   /faq 是掛在 Layout 外面的獨立路由（見 App.jsx），沒有外層 Header/Footer，
+   所以直接貼齊整個視窗即可，不需要扣任何高度。用 position: fixed 而非
+   height:100% 是為了不依賴父層一路傳遞百分比高度（巢狀 flex + % 高度容易斷鏈）。 */
 .faq-page {
+  position: fixed;
+  inset: 0;
   width: 100%;
   height: 100dvh;
   display: flex;
   flex-direction: column;
+  z-index: 10;
 }

@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AnswerText } from '../utils/faqAnswer';
 import { PcmRecorder } from '../utils/pcmRecorder';
 import { playBase64Audio } from '../utils/audioPlayer';
+import { useLayout } from '../context/LayoutContext';
 import './FaqWidget.css';
 
 const GREETING     = '您好，請問有什麼事可以為您服務的嗎？';
@@ -10,6 +12,8 @@ const MIN_SCORE    = 1; // 低於此分數視為無法回答
 const MAX_AI_HISTORY = 6; // AI 對話記憶保留最近幾則（使用者/AI 各算一則）
 
 export default function FaqWidget({ standalone = false }) {
+  const navigate = useNavigate();
+  const { isMobile } = useLayout();
   const [open, setOpen]       = useState(standalone);
   const [msgs, setMsgs]       = useState([]);
   const [searchQ, setSearchQ] = useState('');
@@ -92,21 +96,10 @@ export default function FaqWidget({ standalone = false }) {
     }
   }
 
-  async function handleMicClick() {
-    if (busy) return;
-
-    if (!recording) {
-      try {
-        recorderRef.current = new PcmRecorder();
-        await recorderRef.current.start();
-        setRecording(true);
-      } catch {
-        recorderRef.current = null;
-        setMsgs(prev => [...prev, { from: 'bot', text: '無法取得麥克風權限，請檢查瀏覽器設定。', options: null }]);
-      }
-      return;
-    }
-
+  // 停止錄音並送出辨識，手動點擊麥克風按鈕、或錄音端偵測到「講完話後靜音 1 秒」
+  // 自動觸發，都會呼叫這裡。
+  async function stopAndSendRecording() {
+    if (!recorderRef.current) return;
     setRecording(false);
     const { pcm, sampleRate } = recorderRef.current.stop();
     recorderRef.current = null;
@@ -129,6 +122,24 @@ export default function FaqWidget({ standalone = false }) {
       setMsgs(prev => [...prev, { from: 'bot', text: '聽不清楚或發生錯誤，請再試一次。', options: null }]);
     }
     setBusy(false);
+  }
+
+  async function handleMicClick() {
+    if (busy) return;
+
+    if (!recording) {
+      try {
+        recorderRef.current = new PcmRecorder();
+        await recorderRef.current.start(stopAndSendRecording);
+        setRecording(true);
+      } catch {
+        recorderRef.current = null;
+        setMsgs(prev => [...prev, { from: 'bot', text: '無法取得麥克風權限，請檢查瀏覽器設定。', options: null }]);
+      }
+      return;
+    }
+
+    await stopAndSendRecording();
   }
 
   async function handleSearch(e) {
@@ -203,9 +214,13 @@ export default function FaqWidget({ standalone = false }) {
             <div className="faq-dialog-subtitle">線上為您服務</div>
           </div>
         </div>
-        {!standalone && (
-          <button className="faq-close-btn" onClick={() => setOpen(false)} aria-label="關閉">✕</button>
-        )}
+        <button
+          className="faq-close-btn"
+          onClick={() => (standalone ? navigate(-1) : setOpen(false))}
+          aria-label="關閉"
+        >
+          ✕
+        </button>
       </div>
 
       <div className="faq-messages">
@@ -291,7 +306,7 @@ export default function FaqWidget({ standalone = false }) {
       {open && dialog}
       <button
         className={`faq-fab${open ? ' faq-fab--open' : ''}`}
-        onClick={() => setOpen(v => !v)}
+        onClick={() => (isMobile ? navigate('/faq') : setOpen(v => !v))}
         aria-label="智能客服 YOYO"
       >
         <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28">

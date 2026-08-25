@@ -51,7 +51,9 @@ export default function Layout({ children }) {
   usePageTracking(pathname);
 
   const isDmRoute = /^\/dm\/.+/.test(pathname);
-  /* strip DMs set viewerMode='page'; flipbook DMs set 'full'; non-DM routes ignore viewerMode */
+  /* strip DMs set viewerMode='page'; flipbook DMs set 'full'; non-DM routes ignore viewerMode。
+     注意：/faq 是獨立頁，在 App.jsx 裡直接掛在 Layout 外面（不經過這個元件），
+     所以這裡完全不需要處理 /faq——它沒有 Header/Footer，是它自己的全螢幕頁面。 */
   const isViewer = isDmRoute && viewerMode !== 'page';
 
   if (isWebView) {
