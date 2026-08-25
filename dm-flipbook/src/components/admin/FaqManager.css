@@ -619,3 +619,19 @@
 .faq-wordcloud-status--err {
   color: #c0392b;
 }
+
+/* ── AI 知識庫問答區塊（沿用待補充問題的摺疊互動，改用中性紫色系）── */
+.faq-ai-section {
+  padding: 0;
+  overflow: hidden;
+}
+.faq-ai-header {
+  background: #f5f3ff;
+  border-bottom: 1px solid #ddd6fe;
+  margin: 0;
+}
+.faq-ai-header:hover { background: #ede9fe; }
+.faq-ai-title { color: #5b21b6; }
+.faq-ai-body {
+  padding: 16px 20px;
+}

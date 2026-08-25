@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import * as WordCloudModule from 'wordcloud';
 import { apiFetch } from '../../utils/apiFetch';
 import { AnswerText } from '../../utils/faqAnswer';
+import { useModulePermission } from '../../utils/useModulePermission';
 import './FaqManager.css';
 
 const WordCloud = WordCloudModule.default ?? WordCloudModule;
@@ -10,6 +11,7 @@ const API = '/api/admin/faq';
 const EMPTY_FORM = { question: '', answer: '', keywords: '', is_active: true, start_date: '', end_date: '' };
 
 export default function FaqManager() {
+  const { canWrite } = useModulePermission('faq');
   const [nodes,    setNodes]    = useState([]);
   const [links,    setLinks]    = useState([]);
   const [loading,  setLoading]  = useState(true);
@@ -26,6 +28,23 @@ export default function FaqManager() {
   // 無法回答時的 fallback 訊息設定
   const [fallbackMsg,     setFallbackMsg]     = useState('');
   const [savingFallback,  setSavingFallback]  = useState(false);
+
+  // AI 知識庫問答
+  const [aiEnabled,   setAiEnabled]   = useState(false);
+  const [savingAi,    setSavingAi]    = useState(false);
+  const [syncing,     setSyncing]     = useState(false);
+  const [syncResult,  setSyncResult]  = useState(null);
+  const [showAiSection, setShowAiSection] = useState(false);
+
+  // 客服文件（純文字，附起訖日期，同步進知識庫）
+  const [documents,      setDocuments]      = useState([]);
+  const [showDocsSection, setShowDocsSection] = useState(false);
+  const [docTitle,       setDocTitle]       = useState('');
+  const [docStart,       setDocStart]       = useState('');
+  const [docEnd,         setDocEnd]         = useState('');
+  const [docFile,        setDocFile]        = useState(null);
+  const [uploadingDoc,   setUploadingDoc]   = useState(false);
+  const docFileRef = useRef(null);
 
   // 未解答問題清單
   const [unanswered,        setUnanswered]        = useState([]);
@@ -72,11 +91,19 @@ export default function FaqManager() {
     setUnanswered(Array.isArray(d) ? d : []);
   }, []);
 
+  const loadDocuments = useCallback(async () => {
+    const r = await apiFetch(`${API}/documents`);
+    const d = await r.json();
+    setDocuments(Array.isArray(d) ? d : []);
+  }, []);
+
   useEffect(() => {
     loadNodes();
     apiFetch(`${API}/config`).then(r => r.json()).then(d => setFallbackMsg(d.fallback_message ?? '')).catch(() => {});
+    apiFetch(`${API}/ai-config`).then(r => r.json()).then(d => setAiEnabled(!!d.enabled)).catch(() => {});
     loadUnanswered();
-  }, [loadNodes, loadUnanswered]);
+    loadDocuments();
+  }, [loadNodes, loadUnanswered, loadDocuments]);
 
   const loadWordCloud = useCallback(async () => {
     setWcLoading(true);
@@ -137,6 +164,76 @@ export default function FaqManager() {
     });
     showMsg(r.ok ? '已儲存無法回答訊息' : '儲存失敗', r.ok ? 'ok' : 'err');
     setSavingFallback(false);
+  };
+
+  const handleToggleAi = async (checked) => {
+    setSavingAi(true);
+    const r = await apiFetch(`${API}/ai-config`, {
+      method: 'PUT',
+      body: JSON.stringify({ enabled: checked }),
+    });
+    if (r.ok) { setAiEnabled(checked); showMsg(checked ? '已開啟 AI 問答' : '已關閉 AI 問答'); }
+    else showMsg('切換失敗', 'err');
+    setSavingAi(false);
+  };
+
+  const handleSyncKb = async () => {
+    setSyncing(true);
+    setSyncResult(null);
+    try {
+      const r = await apiFetch(`${API}/sync-knowledge-base`, { method: 'POST' });
+      const d = await r.json();
+      if (!r.ok) throw new Error(d.error || '同步失敗');
+      setSyncResult({ ok: true, ...d });
+      showMsg('知識庫同步完成');
+    } catch (e) {
+      setSyncResult({ ok: false, error: e.message });
+      showMsg('知識庫同步失敗', 'err');
+    }
+    setSyncing(false);
+  };
+
+  // ── 客服文件：上傳 ──
+  const handleUploadDoc = async () => {
+    if (!docTitle.trim()) return showMsg('文件標題為必填', 'err');
+    if (!docFile) return showMsg('請選擇 .txt 文件', 'err');
+    setUploadingDoc(true);
+    const fd = new FormData();
+    fd.append('file', docFile);
+    fd.append('title', docTitle.trim());
+    fd.append('start_date', docStart);
+    fd.append('end_date', docEnd);
+    const r = await apiFetch(`${API}/documents/upload`, { method: 'POST', body: fd });
+    const d = await r.json();
+    setUploadingDoc(false);
+    if (!r.ok) return showMsg(d.error || '上傳失敗', 'err');
+    showMsg('已上傳，正在背景同步進知識庫（可稍後按「立即同步知識庫」確認結果）');
+    setDocTitle(''); setDocStart(''); setDocEnd(''); setDocFile(null);
+    if (docFileRef.current) docFileRef.current.value = '';
+    await loadDocuments();
+  };
+
+  // ── 客服文件：切換啟用狀態 ──
+  const handleToggleDocActive = async (doc, checked) => {
+    const r = await apiFetch(`${API}/documents/${doc.id}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        title: doc.title,
+        start_date: doc.start_date ? doc.start_date.slice(0, 10) : '',
+        end_date:   doc.end_date   ? doc.end_date.slice(0, 10)   : '',
+        is_active:  checked,
+      }),
+    });
+    if (!r.ok) return showMsg('更新失敗', 'err');
+    await loadDocuments();
+  };
+
+  // ── 客服文件：刪除 ──
+  const handleDeleteDoc = async (doc) => {
+    if (!window.confirm(`確定刪除文件「${doc.title}」？`)) return;
+    await apiFetch(`${API}/documents/${doc.id}`, { method: 'DELETE' });
+    showMsg('已刪除文件，正在背景同步知識庫');
+    await loadDocuments();
   };
 
   // ── 節點選取 / 新增 ──
@@ -380,6 +477,151 @@ export default function FaqManager() {
             {savingFallback ? '儲存中…' : '儲存'}
           </button>
         </div>
+      </div>
+
+      {/* ── AI 知識庫問答 ── */}
+      <div className="faq-fallback-section faq-ai-section">
+        <div className="faq-unanswered-header faq-ai-header" onClick={() => setShowAiSection(v => !v)}>
+          <span className="faq-unanswered-title faq-ai-title">AI 知識庫問答</span>
+          <span className="faq-unanswered-toggle">{showAiSection ? '▲ 收起' : '▼ 展開'}</span>
+        </div>
+        {showAiSection && (
+          <div className="faq-ai-body">
+            <div className="faq-hint" style={{ margin: '0 0 10px' }}>
+              開啟後，前台 FAQ 對話框的文字/語音自由輸入問答會改由 AWS Bedrock（基於知識庫）回答，
+              並同時回覆語音；點選既有的後續問題 chip 不受影響。若 AWS 成本過高，可隨時關閉退回原本的
+              關鍵字比對機制。「立即同步知識庫」會把目前有效的 FAQ 問答與樓層導覽的櫃位資料
+              （店家名稱、位置、電話、簡介）一併同步進知識庫。詳細設定見 docs/faq-ai-voice-setup.md。
+            </div>
+            <label className="faq-toggle-row">
+              <input
+                type="checkbox"
+                checked={aiEnabled}
+                disabled={!canWrite || savingAi}
+                onChange={e => handleToggleAi(e.target.checked)}
+              />
+              <span>啟用 AI 問答（語音／文字）</span>
+            </label>
+            <div className="faq-fallback-actions">
+              <button
+                className="fg-btn fg-btn-primary fg-btn-sm"
+                onClick={handleSyncKb}
+                disabled={!canWrite || syncing}
+              >
+                {syncing ? '同步中…' : '立即同步知識庫'}
+              </button>
+            </div>
+            {syncResult && (
+              <div className={`faq-hint${syncResult.ok ? '' : ' faq-wordcloud-status--err'}`} style={{ marginTop: 8 }}>
+                {syncResult.ok
+                  ? `已同步 ${syncResult.uploaded} 筆，刪除 ${syncResult.deleted} 筆舊資料${syncResult.ingestionJob ? `，索引工作狀態：${syncResult.ingestionJob.status}` : '（尚未設定 Knowledge Base，僅完成 S3 同步）'}`
+                  : `同步失敗：${syncResult.error}`}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* ── 客服文件 ── */}
+      <div className="faq-fallback-section faq-ai-section">
+        <div className="faq-unanswered-header faq-ai-header" onClick={() => setShowDocsSection(v => !v)}>
+          <span className="faq-unanswered-title faq-ai-title">
+            客服文件
+            {documents.length > 0 && <span className="faq-unanswered-badge">{documents.length}</span>}
+          </span>
+          <span className="faq-unanswered-toggle">{showDocsSection ? '▲ 收起' : '▼ 展開'}</span>
+        </div>
+        {showDocsSection && (
+          <div className="faq-ai-body">
+            <div className="faq-hint" style={{ margin: '0 0 10px' }}>
+              上傳純文字（.txt，2MB 以內）客服文件，例如樓層介紹、服務規範。設定的起訖日期會寫進文件內容，
+              由 AI 在回答時動態判斷是否仍在有效期間內，不需要每天重新同步。上傳後記得回到上方按
+              「立即同步知識庫」才會生效。
+            </div>
+
+            <div className="faq-date-row">
+              <div className="faq-date-field" style={{ flex: 2 }}>
+                <label className="faq-label">文件標題</label>
+                <input
+                  className="faq-input"
+                  value={docTitle}
+                  onChange={e => setDocTitle(e.target.value)}
+                  placeholder="例：3樓樓層介紹"
+                  disabled={!canWrite}
+                />
+              </div>
+              <div className="faq-date-field">
+                <label className="faq-label">有效開始</label>
+                <input
+                  type="date"
+                  className="faq-input"
+                  value={docStart}
+                  onChange={e => setDocStart(e.target.value)}
+                  disabled={!canWrite}
+                />
+              </div>
+              <div className="faq-date-field">
+                <label className="faq-label">有效結束</label>
+                <input
+                  type="date"
+                  className="faq-input"
+                  value={docEnd}
+                  onChange={e => setDocEnd(e.target.value)}
+                  disabled={!canWrite}
+                />
+              </div>
+            </div>
+
+            <input
+              ref={docFileRef}
+              type="file"
+              accept=".txt,text/plain"
+              onChange={e => setDocFile(e.target.files?.[0] ?? null)}
+              disabled={!canWrite}
+              style={{ marginTop: 10 }}
+            />
+
+            <div className="faq-fallback-actions">
+              <button
+                className="fg-btn fg-btn-primary fg-btn-sm"
+                onClick={handleUploadDoc}
+                disabled={!canWrite || uploadingDoc}
+              >
+                {uploadingDoc ? '上傳中…' : '上傳文件'}
+              </button>
+            </div>
+
+            {documents.length === 0 ? (
+              <div className="faq-tree-empty">尚無客服文件</div>
+            ) : (
+              <div className="faq-linked-list" style={{ marginTop: 12 }}>
+                {documents.map(doc => (
+                  <div key={doc.id} className="faq-linked-item">
+                    <label style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                      <input
+                        type="checkbox"
+                        checked={doc.is_active}
+                        disabled={!canWrite}
+                        onChange={e => handleToggleDocActive(doc, e.target.checked)}
+                      />
+                    </label>
+                    <span className="faq-linked-q">
+                      {doc.title}
+                      <span className="faq-hint" style={{ marginLeft: 8 }}>
+                        {doc.start_date || doc.end_date
+                          ? `${doc.start_date ? doc.start_date.slice(0, 10) : '無起始'} ～ ${doc.end_date ? doc.end_date.slice(0, 10) : '無結束'}`
+                          : '長期有效'}
+                      </span>
+                    </span>
+                    {canWrite && (
+                      <button className="faq-icon-btn faq-icon-btn--del" onClick={() => handleDeleteDoc(doc)}>✕</button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* ── 未解答問題 ── */}

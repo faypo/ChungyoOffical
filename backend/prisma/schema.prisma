@@ -427,6 +427,8 @@ model users {
   config_config_updated_byTousers                   config[]          @relation("config_updated_byTousers")
   dm_catalogs_dm_catalogs_created_byTousers         dm_catalogs[]     @relation("dm_catalogs_created_byTousers")
   dm_catalogs_dm_catalogs_updated_byTousers         dm_catalogs[]     @relation("dm_catalogs_updated_byTousers")
+  faq_documents_faq_documents_created_byTousers     faq_documents[]   @relation("faq_documents_created_byTousers")
+  faq_documents_faq_documents_updated_byTousers     faq_documents[]   @relation("faq_documents_updated_byTousers")
   floor_floors_floor_floors_created_byTousers       floor_floors[]    @relation("floor_floors_created_byTousers")
   floor_floors_floor_floors_updated_byTousers       floor_floors[]    @relation("floor_floors_updated_byTousers")
   food_categories_food_categories_created_byTousers food_categories[] @relation("food_categories_created_byTousers")
@@ -541,6 +543,25 @@ model faq_unanswered {
 
   @@unique([query(length: 255)])
   @@index([ask_count], map: "idx_count")
+}
+
+model faq_documents {
+  id                                     Int       @id @default(autoincrement()) @db.UnsignedInt
+  title                                  String    @db.VarChar(200)
+  filename                               String    @db.VarChar(255)
+  original_filename                      String?   @db.VarChar(255)
+  is_active                              Boolean   @default(true)
+  start_date                             DateTime? @db.DateTime(0)
+  end_date                               DateTime? @db.DateTime(0)
+  created_by                             Int?      @db.UnsignedInt
+  updated_by                             Int?      @db.UnsignedInt
+  created_at                             DateTime  @default(now()) @db.DateTime(0)
+  updated_at                             DateTime  @default(now()) @db.DateTime(0)
+  users_faq_documents_created_byTousers  users?    @relation("faq_documents_created_byTousers", fields: [created_by], references: [id], onDelete: SetNull, onUpdate: NoAction, map: "faq_documents_ibfk_1")
+  users_faq_documents_updated_byTousers  users?    @relation("faq_documents_updated_byTousers", fields: [updated_by], references: [id], onDelete: SetNull, onUpdate: NoAction, map: "faq_documents_ibfk_2")
+
+  @@index([created_by], map: "created_by")
+  @@index([updated_by], map: "updated_by")
 }
 
 model faq_query_log {

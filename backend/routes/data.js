@@ -1,13 +1,16 @@
 const express = require('express');
+const multer  = require('multer');
 const fs      = require('fs');
 const path    = require('path');
 const { DATA_DIR } = require('../utils/json');
 const prisma  = require('../utils/db');
+const { askFaqAi } = require('../utils/faqAiClient');
 
 const IMAGE_EXT    = /\.(jpg|jpeg|png|webp)$/i;
 const SERVICE_KEYS = ['service', 'traffic', 'parking', 'gift'];
 
 const router = express.Router();
+const uploadAudio = multer({ storage: multer.memoryStorage() });
 
 router.get('/catalog', async (_req, res) => {
   const catalogs = await prisma.dm_catalogs.findMany({
@@ -241,6 +244,38 @@ router.post('/faq/unanswered', async (req, res) => {
     ON DUPLICATE KEY UPDATE ask_count = ask_count + 1, last_asked_at = NOW()
   `;
   res.json({ ok: true });
+});
+
+// POST /api/faq/ai/text — 文字問答，經 Express 轉發給 Lambda（不含 AWS SDK）
+router.post('/faq/ai/text', async (req, res) => {
+  const q = (req.body?.q ?? '').trim();
+  if (!q) return res.status(400).json({ error: '缺少 q' });
+  const history = Array.isArray(req.body?.history) ? req.body.history : [];
+  try {
+    const result = await askFaqAi({ text: q, history });
+    res.json(result);
+  } catch (e) {
+    res.status(e.status && e.status < 500 ? e.status : 502).json({ error: e.message || 'AI 服務暫時無法使用' });
+  }
+});
+
+// POST /api/faq/ai/voice — 語音問答（multipart，欄位名 audio，原始 PCM16）
+router.post('/faq/ai/voice', uploadAudio.single('audio'), async (req, res) => {
+  if (!req.file) return res.status(400).json({ error: '缺少音訊檔案' });
+  const sampleRate = Number(req.body?.sampleRate) || 16000;
+  let history = [];
+  try { history = JSON.parse(req.body?.history || '[]'); } catch { history = []; }
+  if (!Array.isArray(history)) history = [];
+  try {
+    const result = await askFaqAi({
+      audioBase64: req.file.buffer.toString('base64'),
+      sampleRate,
+      history,
+    });
+    res.json(result);
+  } catch (e) {
+    res.status(e.status && e.status < 500 ? e.status : 502).json({ error: e.message || 'AI 服務暫時無法使用' });
+  }
 });
 
 // GET /api/faq/search?q=...&context=1,2,3 — 關鍵字搜尋（含對話語境加權）

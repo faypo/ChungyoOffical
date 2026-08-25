@@ -7,6 +7,7 @@ const path           = require('path');
 const { randomUUID } = require('crypto');
 const { DATA_DIR }   = require('../../utils/json');
 const prisma         = require('../../utils/db');
+const { syncFaqKnowledgeBase } = require('../../utils/faqAiClient');
 
 const router      = express.Router();
 const FAQ_IMG_DIR = path.join(DATA_DIR, 'faq-images');
@@ -33,6 +34,140 @@ router.post('/upload', upload.single('image'), (req, res) => {
   res.json({ url: `/api/images/faq-images/${req.file.filename}` });
 });
 
+// ── 客服文件（純文字，附起訖日期，同步時併入知識庫）───────────────────────
+const FAQ_DOC_DIR = path.join(DATA_DIR, 'faq-documents');
+const DOC_EXT      = /\.txt$/i;
+
+const uploadDoc = multer({
+  storage: multer.diskStorage({
+    destination: (_req, _file, cb) => {
+      fs.mkdirSync(FAQ_DOC_DIR, { recursive: true });
+      cb(null, FAQ_DOC_DIR);
+    },
+    filename: (_req, _file, cb) => cb(null, `${randomUUID()}.txt`),
+  }),
+  fileFilter: (_req, file, cb) => cb(null, DOC_EXT.test(file.originalname)),
+  limits: { fileSize: 2 * 1024 * 1024 }, // 2 MB，純文字檔已足夠
+});
+
+// 把 FAQ 節點＋櫃位樓層資料＋客服文件同步進 Bedrock 知識庫（共用邏輯，
+// 供手動「立即同步知識庫」按鈕與文件上傳/刪除/切換啟用時自動觸發共用）。
+// 注意：這裡只過濾 is_active，刻意不過濾 start_date/end_date——把起訖日期寫進
+// 文件內容裡，讓 AI 在每次回答時比對「今天日期」動態判斷是否仍在有效期間，
+// 這樣日期跨界（開始生效／過期）不需要等下次手動同步就會生效，也不用每天
+// 排程重新同步增加成本。詳見 infra/faq-ai/lambda/bedrock_client.py。
+async function runKnowledgeBaseSync() {
+  const [nodes, counters, docs] = await Promise.all([
+    prisma.faq_nodes.findMany({ where: { is_active: true } }),
+    prisma.floor_counters.findMany({ include: { floor_floors: true } }),
+    prisma.faq_documents.findMany({ where: { is_active: true } }),
+  ]);
+
+  const formatDate = d => d ? d.toISOString().slice(0, 10) : null;
+  const validityText = (start, end) => {
+    if (!start && !end) return '有效期間：長期有效';
+    return `有效期間：${formatDate(start) ?? '無起始限制'} 至 ${formatDate(end) ?? '無結束限制'}`;
+  };
+
+  const faqDocuments = nodes.map(n => ({
+    id:   `faq-${n.id}`,
+    text: `問題：${n.question}\n答案：${n.answer}${n.keywords ? `\n關鍵字：${n.keywords}` : ''}\n${validityText(n.start_date, n.end_date)}`,
+  }));
+
+  const counterDocuments = counters
+    .filter(c => c.name?.trim())
+    .map(c => ({
+      id: `counter-${c.id}`,
+      text: [
+        `店家／櫃位：${c.name}`,
+        `位置：${c.building}棟 ${c.floor_floors?.label ?? c.floor_id}`,
+        c.phone       ? `電話：${c.phone}`       : null,
+        c.description ? `簡介：${c.description}` : null,
+      ].filter(Boolean).join('\n'),
+    }));
+
+  const uploadedDocuments = docs.map(d => {
+    const filePath = path.join(FAQ_DOC_DIR, d.filename);
+    let content = '';
+    try { content = fs.readFileSync(filePath, 'utf8'); } catch { content = ''; }
+    return {
+      id:   `doc-${d.id}`,
+      text: `文件標題：${d.title}\n${content}\n${validityText(d.start_date, d.end_date)}`,
+    };
+  }).filter(d => d.text.trim());
+
+  return syncFaqKnowledgeBase([...faqDocuments, ...counterDocuments, ...uploadedDocuments]);
+}
+
+// GET /api/admin/faq/documents — 客服文件清單
+router.get('/documents', async (_req, res) => {
+  const docs = await prisma.faq_documents.findMany({ orderBy: { created_at: 'desc' } });
+  res.json(docs);
+});
+
+// 文件異動後自動觸發知識庫同步。在背景執行、不等待完成才回應，避免每次上傳/
+// 刪除/切換啟用都要卡在等待完整同步（列出並比對 S3 所有檔案）跑完才有反應。
+// 失敗只記錄在伺服器 log，管理者可用「立即同步知識庫」按鈕手動確認/重試。
+function syncAfterDocChange() {
+  runKnowledgeBaseSync().catch(e => {
+    console.error('[faq documents] 背景同步知識庫失敗：', e.message || e);
+  });
+}
+
+// POST /api/admin/faq/documents/upload — 上傳客服文件（僅純文字 .txt，附起訖日期），上傳後自動同步知識庫
+router.post('/documents/upload', uploadDoc.single('file'), async (req, res) => {
+  if (!req.file) return res.status(400).json({ error: '請上傳 .txt 純文字檔（2MB 以內）' });
+  const title = (req.body?.title || '').trim();
+  if (!title) {
+    fs.unlinkSync(req.file.path);
+    return res.status(400).json({ error: '標題為必填' });
+  }
+  const { start_date, end_date } = req.body;
+  const doc = await prisma.faq_documents.create({
+    data: {
+      title,
+      filename:           req.file.filename,
+      original_filename:  req.file.originalname,
+      start_date: start_date ? new Date(start_date) : null,
+      end_date:   end_date   ? new Date(end_date)   : null,
+    },
+  });
+  syncAfterDocChange();
+  res.status(201).json(doc);
+});
+
+// PUT /api/admin/faq/documents/:id — 更新標題／起訖日期／啟用狀態，異動後自動同步知識庫
+router.put('/documents/:id', async (req, res) => {
+  const id = Number(req.params.id);
+  const { title, start_date, end_date, is_active } = req.body;
+  if (!title?.trim()) return res.status(400).json({ error: '標題為必填' });
+  const doc = await prisma.faq_documents.update({
+    where: { id },
+    data: {
+      title:      title.trim(),
+      start_date: start_date ? new Date(start_date) : null,
+      end_date:   end_date   ? new Date(end_date)   : null,
+      ...(is_active !== undefined && { is_active }),
+      updated_at: new Date(),
+    },
+  }).catch(() => null);
+  if (!doc) return res.status(404).json({ error: '找不到該文件' });
+  syncAfterDocChange();
+  res.json(doc);
+});
+
+// DELETE /api/admin/faq/documents/:id — 刪除文件（含本機檔案），刪除後自動同步知識庫
+router.delete('/documents/:id', async (req, res) => {
+  const id = Number(req.params.id);
+  const doc = await prisma.faq_documents.delete({ where: { id } }).catch(() => null);
+  if (doc) {
+    const filePath = path.join(FAQ_DOC_DIR, doc.filename);
+    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+  }
+  syncAfterDocChange();
+  res.json({ ok: true });
+});
+
 const FAQ_FALLBACK_KEY = 'faq_fallback_message';
 
 // GET /api/admin/faq/config — 取得 FAQ 設定（目前只有 fallback 訊息）
@@ -52,6 +187,36 @@ router.put('/config', async (req, res) => {
     create: { key_name: FAQ_FALLBACK_KEY, value: fallback_message.trim() },
   });
   res.json({ ok: true });
+});
+
+const FAQ_AI_ENABLED_KEY = 'faq_ai_enabled';
+
+// GET /api/admin/faq/ai-config — 取得 AI 問答開關狀態
+router.get('/ai-config', async (_req, res) => {
+  const row = await prisma.config.findUnique({ where: { key_name: FAQ_AI_ENABLED_KEY } });
+  res.json({ enabled: row?.value === '1' });
+});
+
+// PUT /api/admin/faq/ai-config — 切換 AI 問答開關
+router.put('/ai-config', async (req, res) => {
+  const { enabled } = req.body;
+  if (typeof enabled !== 'boolean') return res.status(400).json({ error: '無效的資料' });
+  await prisma.config.upsert({
+    where:  { key_name: FAQ_AI_ENABLED_KEY },
+    update: { value: enabled ? '1' : '' },
+    create: { key_name: FAQ_AI_ENABLED_KEY, value: enabled ? '1' : '' },
+  });
+  res.json({ ok: true });
+});
+
+// POST /api/admin/faq/sync-knowledge-base — 手動觸發同步（邏輯同文件上傳/刪除/切換時自動觸發的那套）
+router.post('/sync-knowledge-base', async (req, res) => {
+  try {
+    const result = await runKnowledgeBaseSync();
+    res.json(result);
+  } catch (e) {
+    res.status(e.status && e.status < 500 ? e.status : 502).json({ error: e.message || '同步知識庫失敗' });
+  }
 });
 
 // GET /api/admin/faq/wordcloud — 查詢文字雲（bigram 切詞頻率）

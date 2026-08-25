@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { AnswerText } from '../utils/faqAnswer';
+import { PcmRecorder } from '../utils/pcmRecorder';
+import { playBase64Audio } from '../utils/audioPlayer';
 import './FaqWidget.css';
 
 const GREETING     = '您好，請問有什麼事可以為您服務的嗎？';
 const DEFAULT_FALLBACK = '抱歉，我暫時無法回答這個問題。\n您可以透過以下方式獲得協助：\n• [意見回饋](/CustomerFeedback)\n• 洽詢現場客服人員';
 const MIN_SCORE    = 1; // 低於此分數視為無法回答
+const MAX_AI_HISTORY = 6; // AI 對話記憶保留最近幾則（使用者/AI 各算一則）
 
 export default function FaqWidget({ standalone = false }) {
   const [open, setOpen]       = useState(standalone);
@@ -13,12 +16,19 @@ export default function FaqWidget({ standalone = false }) {
   const [busy, setBusy]       = useState(false);
   const [contextIds, setContextIds] = useState([]);
   const [fallback,   setFallback]   = useState(DEFAULT_FALLBACK);
+  const [aiEnabled,  setAiEnabled]  = useState(false);
+  const [recording,  setRecording]  = useState(false);
+  const [aiHistory,  setAiHistory]  = useState([]); // [{role:'user'|'assistant', text}]
   const endRef = useRef(null);
+  const recorderRef = useRef(null);
 
   useEffect(() => {
     fetch('/api/config')
       .then(r => r.json())
-      .then(cfg => { if (cfg.faq_fallback_message) setFallback(cfg.faq_fallback_message); })
+      .then(cfg => {
+        if (cfg.faq_fallback_message) setFallback(cfg.faq_fallback_message);
+        setAiEnabled(cfg.faq_ai_enabled === '1');
+      })
       .catch(() => {});
   }, []);
 
@@ -41,6 +51,7 @@ export default function FaqWidget({ standalone = false }) {
   async function handleOption(opt) {
     if (opt.id === '__home__') {
       setMsgs([]);
+      setAiHistory([]);
       initChat();
       return;
     }
@@ -63,6 +74,63 @@ export default function FaqWidget({ standalone = false }) {
     setBusy(false);
   }
 
+  // 推一則含語音的 bot 回覆，抵達時自動播放一次，並記進 AI 對話歷史。
+  // answered === false 時代表 AI 答不出來，記錄進「待補充問題」讓後台可以迭代知識庫。
+  function pushAiReply(replyText, audioBase64, mimeType, answered, queryText) {
+    setMsgs(prev => [...prev, {
+      from: 'bot', text: replyText, options: null,
+      audio: audioBase64 ? { audioBase64, mimeType } : null,
+    }]);
+    setAiHistory(prev => [...prev, { role: 'assistant', text: replyText }].slice(-MAX_AI_HISTORY));
+    if (audioBase64) playBase64Audio(audioBase64, mimeType);
+    if (answered === false && queryText) {
+      fetch('/api/faq/unanswered', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: queryText }),
+      }).catch(() => {});
+    }
+  }
+
+  async function handleMicClick() {
+    if (busy) return;
+
+    if (!recording) {
+      try {
+        recorderRef.current = new PcmRecorder();
+        await recorderRef.current.start();
+        setRecording(true);
+      } catch {
+        recorderRef.current = null;
+        setMsgs(prev => [...prev, { from: 'bot', text: '無法取得麥克風權限，請檢查瀏覽器設定。', options: null }]);
+      }
+      return;
+    }
+
+    setRecording(false);
+    const { pcm, sampleRate } = recorderRef.current.stop();
+    recorderRef.current = null;
+    if (pcm.length === 0) return;
+
+    setBusy(true);
+    try {
+      const fd = new FormData();
+      fd.append('audio', new Blob([pcm], { type: 'application/octet-stream' }), 'audio.pcm');
+      fd.append('sampleRate', String(sampleRate));
+      fd.append('history', JSON.stringify(aiHistory));
+      const res  = await fetch('/api/faq/ai/voice', { method: 'POST', body: fd });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || '語音辨識失敗');
+      const userText = data.transcript || '（語音輸入）';
+      setMsgs(prev => [...prev, { from: 'user', text: userText, options: null }]);
+      setAiHistory(prev => [...prev, { role: 'user', text: userText }].slice(-MAX_AI_HISTORY));
+      pushAiReply(data.replyText, data.audioBase64, data.mimeType, data.answered, userText);
+    } catch {
+      setMsgs(prev => [...prev, { from: 'bot', text: '聽不清楚或發生錯誤，請再試一次。', options: null }]);
+    }
+    setBusy(false);
+  }
+
   async function handleSearch(e) {
     e.preventDefault();
     const q = searchQ.trim();
@@ -71,6 +139,25 @@ export default function FaqWidget({ standalone = false }) {
     setMsgs(prev => [...prev, { from: 'user', text: q, options: null }]);
     setSearchQ('');
     setBusy(true);
+
+    if (aiEnabled) {
+      try {
+        const res  = await fetch('/api/faq/ai/text', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ q, history: aiHistory }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'AI 回覆失敗');
+        setAiHistory(prev => [...prev, { role: 'user', text: q }].slice(-MAX_AI_HISTORY));
+        pushAiReply(data.replyText, data.audioBase64, data.mimeType, data.answered, q);
+      } catch {
+        setMsgs(prev => [...prev, { from: 'bot', text: '發生錯誤，請稍後再試。', options: null }]);
+      }
+      setBusy(false);
+      return;
+    }
+
     try {
       const ctx = contextIds.length > 0 ? `&context=${contextIds.join(',')}` : '';
       const res = await fetch(`/api/faq/search?q=${encodeURIComponent(q)}${ctx}`);
@@ -129,6 +216,16 @@ export default function FaqWidget({ standalone = false }) {
               {msg.text && (
                 <div className="faq-bubble">
                   <AnswerText text={msg.text} />
+                  {msg.audio && (
+                    <button
+                      type="button"
+                      className="faq-audio-btn"
+                      onClick={() => playBase64Audio(msg.audio.audioBase64, msg.audio.mimeType)}
+                      aria-label="播放語音"
+                    >
+                      🔊 播放語音
+                    </button>
+                  )}
                 </div>
               )}
               {msg.options && msg.options.length > 0 && (
@@ -161,14 +258,26 @@ export default function FaqWidget({ standalone = false }) {
       </div>
 
       <form className="faq-search-bar" onSubmit={handleSearch}>
+        {aiEnabled && (
+          <button
+            type="button"
+            className={`faq-mic-btn${recording ? ' faq-mic-btn--recording' : ''}`}
+            onClick={handleMicClick}
+            disabled={busy && !recording}
+            aria-label={recording ? '停止錄音並送出' : '語音輸入'}
+          >
+            {recording ? '⏹' : '🎤'}
+          </button>
+        )}
         <input
           type="text"
           className="faq-search-input"
-          placeholder="請輸入問題…"
+          placeholder={recording ? '聆聽中…' : '請輸入問題…'}
           value={searchQ}
           onChange={e => setSearchQ(e.target.value)}
+          disabled={recording}
         />
-        <button type="submit" className="faq-search-btn" disabled={busy || !searchQ.trim()}>
+        <button type="submit" className="faq-search-btn" disabled={busy || recording || !searchQ.trim()}>
           送出
         </button>
       </form>
