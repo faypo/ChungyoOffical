@@ -6,6 +6,7 @@ const { DATA_DIR } = require('../utils/json');
 const prisma  = require('../utils/db');
 const { askFaqAi } = require('../utils/faqAiClient');
 const { logAwsUsage } = require('../utils/awsUsageLogger');
+const { taiwanTodayAsUtcMidnight } = require('../utils/taiwanDate');
 
 const IMAGE_EXT    = /\.(jpg|jpeg|png|webp)$/i;
 const SERVICE_KEYS = ['service', 'traffic', 'parking', 'gift'];
@@ -150,18 +151,22 @@ router.get('/activity/:id', async (req, res) => {
 });
 
 router.get('/banners', async (_req, res) => {
-  const now     = new Date();
+  const today   = taiwanTodayAsUtcMidnight();
   const banners = await prisma.banners.findMany({
     where: {
       is_active: true,
-      OR:  [{ start_date: null }, { start_date: { lte: now } }],
-      AND: [{ OR: [{ end_date: null }, { end_date: { gte: now } }] }],
+      OR:  [{ start_date: null }, { start_date: { lte: today } }],
+      AND: [{ OR: [{ end_date: null }, { end_date: { gte: today } }] }],
     },
     orderBy: { sort_order: 'asc' },
   });
   res.json({ banners });
 });
 
+// home_events 是 <input type="datetime-local">，有精確到分鐘的起訖時間（不是整天），
+// 所以這裡用「這一刻」精確比對，不能比照 banners/gallery 用整天為單位——只要後台寫入時
+// 用 taiwanDate.js 的 parseTaiwanDateTimeLocal() 正確存成台灣時間對應的 UTC 時刻，
+// 這裡直接跟目前的真實時間比較就是對的。
 router.get('/home-events', async (_req, res) => {
   const now    = new Date();
   const events = await prisma.home_events.findMany({
@@ -175,11 +180,11 @@ router.get('/home-events', async (_req, res) => {
 });
 
 router.get('/gallery', async (_req, res) => {
-  const now  = new Date();
-  const rows = await prisma.gallery_content.findMany({
+  const today = taiwanTodayAsUtcMidnight();
+  const rows  = await prisma.gallery_content.findMany({
     where: {
-      OR:  [{ start_date: null }, { start_date: { lte: now } }],
-      AND: [{ OR: [{ end_date: null }, { end_date: { gte: now } }] }],
+      OR:  [{ start_date: null }, { start_date: { lte: today } }],
+      AND: [{ OR: [{ end_date: null }, { end_date: { gte: today } }] }],
     },
     include: { gallery_hotspots: true },
     orderBy: { sort_order: 'asc' },

@@ -5,6 +5,7 @@ const path           = require('path');
 const { randomUUID } = require('crypto');
 const { DATA_DIR }   = require('../../utils/json');
 const prisma         = require('../../utils/db');
+const { parseTaiwanDateTimeLocal, formatTaiwanDateTimeLocal } = require('../../utils/taiwanDate');
 
 const router    = express.Router();
 const IMAGE_EXT = /\.(jpg|jpeg|png|webp|gif)$/i;
@@ -44,8 +45,8 @@ function formatActivity(act) {
   return {
     id:            act.id,
     title:         act.title,
-    startDate:     act.start_date ? act.start_date.toISOString().slice(0, 10) : '',
-    endDate:       act.end_date   ? act.end_date.toISOString().slice(0, 10)   : '',
+    startDate:     formatTaiwanDateTimeLocal(act.start_date),
+    endDate:       formatTaiwanDateTimeLocal(act.end_date),
     ogTitle:       act.og_title       ?? '',
     ogDescription: act.og_description ?? '',
     ogImage:       act.og_image       ?? '',
@@ -127,8 +128,8 @@ router.put('/:id', async (req, res) => {
         ...(ogTitle       !== undefined && { og_title:       ogTitle       || null }),
         ...(ogDescription !== undefined && { og_description: ogDescription || null }),
         ...(ogImage       !== undefined && { og_image:       ogImage       || null }),
-        ...(startDate     !== undefined && { start_date:     startDate ? new Date(startDate) : null }),
-        ...(endDate       !== undefined && { end_date:       endDate   ? new Date(endDate)   : null }),
+        ...(startDate     !== undefined && { start_date:     parseTaiwanDateTimeLocal(startDate) }),
+        ...(endDate       !== undefined && { end_date:       parseTaiwanDateTimeLocal(endDate) }),
       },
     });
     if (tags !== undefined) {
