@@ -5,6 +5,7 @@ const path           = require('path');
 const { randomUUID } = require('crypto');
 const { DATA_DIR }   = require('../../utils/json');
 const prisma   = require('../../utils/db');
+const { parseTaiwanDateTimeLocal, formatTaiwanDateTimeLocal } = require('../../utils/taiwanDate');
 
 const router    = express.Router();
 const EVENT_DIR = path.join(DATA_DIR, 'home-event-pic');
@@ -32,8 +33,8 @@ router.get('/', async (_req, res) => {
       file:       e.file,
       url:        e.url ?? '',
       sort_order: e.sort_order,
-      startDate:  e.start_date ? e.start_date.toISOString().slice(0, 16) : '',
-      endDate:    e.end_date   ? e.end_date.toISOString().slice(0, 16)   : '',
+      startDate:  formatTaiwanDateTimeLocal(e.start_date),
+      endDate:    formatTaiwanDateTimeLocal(e.end_date),
     })),
   });
 });
@@ -66,8 +67,8 @@ router.put('/:id', async (req, res) => {
     where: { id: req.params.id },
     data: {
       ...(url       !== undefined && { url }),
-      ...(startDate !== undefined && { start_date: startDate ? new Date(startDate) : null }),
-      ...(endDate   !== undefined && { end_date:   endDate   ? new Date(endDate)   : null }),
+      ...(startDate !== undefined && { start_date: parseTaiwanDateTimeLocal(startDate) }),
+      ...(endDate   !== undefined && { end_date:   parseTaiwanDateTimeLocal(endDate) }),
     },
   });
   res.json({ success: true });
