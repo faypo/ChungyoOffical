@@ -116,7 +116,6 @@ export default function AwsUsageManager() {
           {saveMsg && <span className="faq-hint">{saveMsg}</span>}
         </div>
         <p className="faq-hint">
-          目前僅作為顯示用的門檻，超過時會在這裡顯示警示，尚未接自動關閉 AI 問答的功能（未來擴充）。
           金額為依 AWS 公開定價換算的估算值，非實際帳單金額。
         </p>
       </div>

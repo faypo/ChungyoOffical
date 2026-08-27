@@ -24,6 +24,20 @@ function taiwanTodayAsUtcMidnight() {
   return new Date(Date.UTC(t.getUTCFullYear(), t.getUTCMonth(), t.getUTCDate()));
 }
 
+// 3) 需要拿「台灣當地日曆」的年/月/日邊界去比對存了真正 UTC 時刻的 DateTime 欄位
+//    （例如 AWS 用量統計按台灣的日期/小時彙總）。跟 (1) 不同，這裡的欄位不是借用
+//    UTC 午夜表示法，而是真的 UTC 時刻，所以邊界要換算回真正對應的 UTC 時刻。
+
+// 回傳一個「UTC getter 讀出來就是台灣當地時間」的 Date，方便取台灣的年/月/日。
+function taiwanNow() {
+  return new Date(Date.now() + 8 * 60 * 60 * 1000);
+}
+
+// 把「台灣當地」年/月/日 00:00 換算成真正對應的 UTC 時刻（台灣午夜 = 前一天 UTC 16:00）。
+function taiwanMidnightUtcInstant(year, month, day) {
+  return new Date(Date.UTC(year, month, day) - 8 * 60 * 60 * 1000);
+}
+
 function parseTaiwanDateTimeLocal(str) {
   if (!str) return null;
   const hasOffset = /[+-]\d\d:\d\d$|Z$/.test(str);
@@ -37,4 +51,10 @@ function formatTaiwanDateTimeLocal(date) {
   return `${tw.getUTCFullYear()}-${pad(tw.getUTCMonth() + 1)}-${pad(tw.getUTCDate())}T${pad(tw.getUTCHours())}:${pad(tw.getUTCMinutes())}`;
 }
 
-module.exports = { taiwanTodayAsUtcMidnight, parseTaiwanDateTimeLocal, formatTaiwanDateTimeLocal };
+module.exports = {
+  taiwanTodayAsUtcMidnight,
+  parseTaiwanDateTimeLocal,
+  formatTaiwanDateTimeLocal,
+  taiwanNow,
+  taiwanMidnightUtcInstant,
+};

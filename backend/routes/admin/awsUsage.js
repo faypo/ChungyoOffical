@@ -2,28 +2,32 @@
 
 const express = require('express');
 const prisma  = require('../../utils/db');
+const { taiwanNow, taiwanMidnightUtcInstant } = require('../../utils/taiwanDate');
 
 const router = express.Router();
 const THRESHOLD_KEY = 'aws_usage_monthly_budget_usd';
 
+// 用「台灣當地」的日曆月份去算本月區間，而不是伺服器所在時區的月份。
 function currentMonthRange() {
-  const now   = new Date();
-  const start = new Date(now.getFullYear(), now.getMonth(), 1);
-  const end   = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+  const t = taiwanNow();
+  const start = taiwanMidnightUtcInstant(t.getUTCFullYear(), t.getUTCMonth(), 1);
+  const end   = taiwanMidnightUtcInstant(t.getUTCFullYear(), t.getUTCMonth() + 1, 1);
   return { start, end };
 }
 
 // GET /api/admin/aws-usage/stats?days=14 — 依大分類／日期／小時彙總的用量成本估算
 router.get('/stats', async (req, res) => {
   const days = Math.min(90, Math.max(1, Number(req.query.days) || 14));
-  const rangeStart = new Date();
-  rangeStart.setDate(rangeStart.getDate() - (days - 1));
-  rangeStart.setHours(0, 0, 0, 0);
+  const t = taiwanNow();
+  // 用「台灣當地」的日曆日去算起始日，而不是伺服器所在時區的日期。
+  const rangeStart = taiwanMidnightUtcInstant(t.getUTCFullYear(), t.getUTCMonth(), t.getUTCDate() - (days - 1));
 
+  // occurred_at 存的是真正的 UTC 時刻，這裡先轉回台灣時間再取日期/小時，
+  // 不然彙總出來的日期分界跟小時都會跟伺服器所在時區（不是台灣）綁在一起。
   const rows = await prisma.$queryRaw`
     SELECT category,
-           DATE_FORMAT(occurred_at, '%Y-%m-%d') AS day,
-           HOUR(occurred_at) AS hour,
+           DATE_FORMAT(CONVERT_TZ(occurred_at, '+00:00', '+08:00'), '%Y-%m-%d') AS day,
+           HOUR(CONVERT_TZ(occurred_at, '+00:00', '+08:00')) AS hour,
            SUM(cost_usd) AS cost,
            COUNT(*) AS calls
     FROM aws_usage_log
