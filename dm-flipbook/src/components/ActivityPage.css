@@ -53,3 +53,39 @@
   height: 100%;
   border: none;
 }
+
+/* 左右翻頁點擊區（樣式比照 DM FlipBook 的 click-hint / hint-arrow）— 只在手機版顯示 */
+.act-click-hint {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .act-click-hint {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 80px;
+    width: 15%;
+    min-width: 44px;
+    max-width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    cursor: pointer;
+  }
+  .act-click-hint--left  { left: 0; }
+  .act-click-hint--right { right: 0; }
+}
+
+.act-hint-arrow {
+  font-size: 40px;
+  color: rgba(0, 0, 0, 0.15);
+  transition: color 0.2s, transform 0.2s;
+  user-select: none;
+  line-height: 1;
+}
+.act-click-hint:hover .act-hint-arrow {
+  color: rgba(0, 0, 0, 0.45);
+  transform: scale(1.2);
+}
