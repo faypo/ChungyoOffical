@@ -54,7 +54,7 @@
   border: none;
 }
 
-/* 左右翻頁點擊區（樣式比照 DM FlipBook 的 click-hint / hint-arrow）— 只在手機版顯示 */
+/* 左右翻頁按鈕（樣式比照雙頁 DM 手機版的 mobile-nav）— 只在手機版顯示 */
 .act-click-hint {
   display: none;
 }
@@ -64,28 +64,27 @@
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
-    height: 80px;
-    width: 15%;
-    min-width: 44px;
-    max-width: 120px;
+    z-index: 20;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 20;
-    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: background 0.2s, opacity 0.2s;
   }
-  .act-click-hint--left  { left: 0; }
-  .act-click-hint--right { right: 0; }
+  .act-click-hint--left  { left: 4px; }
+  .act-click-hint--right { right: 4px; }
+  .act-click-hint:hover  { background: rgba(0, 0, 0, 0.65); }
 }
 
 .act-hint-arrow {
-  font-size: 40px;
-  color: rgba(0, 0, 0, 0.15);
-  transition: color 0.2s, transform 0.2s;
-  user-select: none;
+  font-size: 22px;
+  color: #fff;
   line-height: 1;
-}
-.act-click-hint:hover .act-hint-arrow {
-  color: rgba(0, 0, 0, 0.45);
-  transform: scale(1.2);
+  user-select: none;
 }
