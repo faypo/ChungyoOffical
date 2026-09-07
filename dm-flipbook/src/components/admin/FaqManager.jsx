@@ -3,15 +3,19 @@ import * as WordCloudModule from 'wordcloud';
 import { apiFetch } from '../../utils/apiFetch';
 import { AnswerText } from '../../utils/faqAnswer';
 import { useModulePermission } from '../../utils/useModulePermission';
+import { useAuth } from '../../context/AuthContext';
 import './FaqManager.css';
 
 const WordCloud = WordCloudModule.default ?? WordCloudModule;
 
 const API = '/api/admin/faq';
-const EMPTY_FORM = { question: '', answer: '', keywords: '', is_active: true, start_date: '', end_date: '' };
+const EMPTY_FORM = { question: '', answer: '', keywords: '', category_id: '', is_active: true, start_date: '', end_date: '' };
 
 export default function FaqManager() {
   const { canWrite } = useModulePermission('faq');
+  const { faqCategoryIds, canEditFaqCategory } = useAuth();
+  // 未受類別限制的角色（faqCategoryIds 為空）才能管理分類本身，跟後端規則一致
+  const canManageCategories = canWrite && faqCategoryIds.length === 0;
   const [nodes,    setNodes]    = useState([]);
   const [links,    setLinks]    = useState([]);
   const [loading,  setLoading]  = useState(true);
@@ -42,6 +46,7 @@ export default function FaqManager() {
   const [docTitle,       setDocTitle]       = useState('');
   const [docStart,       setDocStart]       = useState('');
   const [docEnd,         setDocEnd]         = useState('');
+  const [docCategoryId,  setDocCategoryId]  = useState('');
   const [docFile,        setDocFile]        = useState(null);
   const [uploadingDoc,   setUploadingDoc]   = useState(false);
   const docFileRef = useRef(null);
@@ -49,6 +54,14 @@ export default function FaqManager() {
   const [docContent,       setDocContent]       = useState('');
   const [docContentLoading, setDocContentLoading] = useState(false);
   const [savingDocContent, setSavingDocContent] = useState(false);
+  const [docEditTitle,      setDocEditTitle]      = useState('');
+  const [docEditCategoryId, setDocEditCategoryId] = useState('');
+
+  // 問題分類
+  const [categories,     setCategories]     = useState([]);
+  const [showCatSection, setShowCatSection] = useState(false);
+  const [newCatName,     setNewCatName]     = useState('');
+  const [savingCat,      setSavingCat]      = useState(false);
 
   // 未解答問題清單
   const [unanswered,        setUnanswered]        = useState([]);
@@ -101,13 +114,29 @@ export default function FaqManager() {
     setDocuments(Array.isArray(d) ? d : []);
   }, []);
 
+  const loadCategories = useCallback(async () => {
+    const r = await apiFetch(`${API}/categories`);
+    const d = await r.json();
+    setCategories(Array.isArray(d) ? d : []);
+  }, []);
+
   useEffect(() => {
     loadNodes();
     apiFetch(`${API}/config`).then(r => r.json()).then(d => setFallbackMsg(d.fallback_message ?? '')).catch(() => {});
     apiFetch(`${API}/ai-config`).then(r => r.json()).then(d => setAiEnabled(!!d.enabled)).catch(() => {});
     loadUnanswered();
     loadDocuments();
-  }, [loadNodes, loadUnanswered, loadDocuments]);
+    loadCategories();
+  }, [loadNodes, loadUnanswered, loadDocuments, loadCategories]);
+
+  const categoryName = (id) => categories.find(c => c.id === id)?.name ?? null;
+  // 可選的分類：受類別限制的角色只能選自己被指派的分類（＋維持目前已選的，避免選單看不到目前值）
+  const getSelectableCategories = (currentId) => faqCategoryIds.length === 0
+    ? categories
+    : categories.filter(c => faqCategoryIds.includes(c.id) || c.id === Number(currentId));
+  const selectableCategories = getSelectableCategories(form.category_id);
+  // 正在編輯一筆屬於自己沒有權限分類的節點時，整份表單唯讀（後端也會擋，這裡只是提前告知）
+  const formLocked = mode === 'edit' && !canEditFaqCategory(form.category_id ? Number(form.category_id) : null);
 
   const loadWordCloud = useCallback(async () => {
     setWcLoading(true);
@@ -205,6 +234,7 @@ export default function FaqManager() {
     const fd = new FormData();
     fd.append('file', docFile);
     fd.append('title', docTitle.trim());
+    fd.append('category_id', docCategoryId);
     fd.append('start_date', docStart);
     fd.append('end_date', docEnd);
     const r = await apiFetch(`${API}/documents/upload`, { method: 'POST', body: fd });
@@ -212,7 +242,7 @@ export default function FaqManager() {
     setUploadingDoc(false);
     if (!r.ok) return showMsg(d.error || '上傳失敗', 'err');
     showMsg('已上傳，正在背景同步進知識庫（可稍後按「立即同步知識庫」確認結果）');
-    setDocTitle(''); setDocStart(''); setDocEnd(''); setDocFile(null);
+    setDocTitle(''); setDocStart(''); setDocEnd(''); setDocFile(null); setDocCategoryId('');
     if (docFileRef.current) docFileRef.current.value = '';
     await loadDocuments();
   };
@@ -223,27 +253,31 @@ export default function FaqManager() {
       method: 'PUT',
       body: JSON.stringify({
         title: doc.title,
+        category_id: doc.category_id ?? null,
         start_date: doc.start_date ? doc.start_date.slice(0, 10) : '',
         end_date:   doc.end_date   ? doc.end_date.slice(0, 10)   : '',
         is_active:  checked,
       }),
     });
-    if (!r.ok) return showMsg('更新失敗', 'err');
+    if (!r.ok) return showMsg((await r.json().catch(() => ({}))).error || '更新失敗', 'err');
     await loadDocuments();
   };
 
   // ── 客服文件：刪除 ──
   const handleDeleteDoc = async (doc) => {
     if (!window.confirm(`確定刪除文件「${doc.title}」？`)) return;
-    await apiFetch(`${API}/documents/${doc.id}`, { method: 'DELETE' });
+    const r = await apiFetch(`${API}/documents/${doc.id}`, { method: 'DELETE' });
+    if (!r.ok) return showMsg((await r.json().catch(() => ({}))).error || '刪除失敗', 'err');
     showMsg('已刪除文件，正在背景同步知識庫');
     await loadDocuments();
   };
 
-  // ── 客服文件：預覽／編輯內容 ──
+  // ── 客服文件：預覽／編輯（內容＋標題／分類）──
   const handleToggleDocContent = async (doc) => {
     if (openDocId === doc.id) { setOpenDocId(null); return; }
     setOpenDocId(doc.id);
+    setDocEditTitle(doc.title);
+    setDocEditCategoryId(doc.category_id ?? '');
     setDocContentLoading(true);
     const r = await apiFetch(`${API}/documents/${doc.id}/content`);
     const d = await r.json();
@@ -253,27 +287,67 @@ export default function FaqManager() {
   };
 
   const handleSaveDocContent = async (doc) => {
+    if (!docEditTitle.trim()) return showMsg('文件標題為必填', 'err');
     setSavingDocContent(true);
-    const r = await apiFetch(`${API}/documents/${doc.id}/content`, {
+
+    const metaR = await apiFetch(`${API}/documents/${doc.id}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        title:       docEditTitle.trim(),
+        category_id: docEditCategoryId || null,
+        start_date:  doc.start_date ? doc.start_date.slice(0, 10) : '',
+        end_date:    doc.end_date   ? doc.end_date.slice(0, 10)   : '',
+        is_active:   doc.is_active,
+      }),
+    });
+    if (!metaR.ok) {
+      setSavingDocContent(false);
+      return showMsg((await metaR.json().catch(() => ({}))).error || '儲存失敗', 'err');
+    }
+
+    const contentR = await apiFetch(`${API}/documents/${doc.id}/content`, {
       method: 'PUT',
       body: JSON.stringify({ content: docContent }),
     });
-    const d = await r.json();
     setSavingDocContent(false);
-    if (!r.ok) return showMsg(d.error || '儲存失敗', 'err');
+    if (!contentR.ok) return showMsg((await contentR.json().catch(() => ({}))).error || '儲存失敗', 'err');
     showMsg('已儲存，正在背景同步進知識庫（可稍後按「立即同步知識庫」確認結果）');
+    await loadDocuments();
+  };
+
+  // ── 問題分類：新增／刪除 ──
+  const handleAddCategory = async () => {
+    if (!newCatName.trim()) return showMsg('分類名稱為必填', 'err');
+    setSavingCat(true);
+    const r = await apiFetch(`${API}/categories`, {
+      method: 'POST',
+      body: JSON.stringify({ name: newCatName.trim() }),
+    });
+    const d = await r.json();
+    setSavingCat(false);
+    if (!r.ok) return showMsg(d.error || '新增失敗', 'err');
+    setNewCatName('');
+    await loadCategories();
+  };
+
+  const handleDeleteCategory = async (cat) => {
+    if (!window.confirm(`確定刪除分類「${cat.name}」？\n該分類底下的問題會變成未分類，不會被刪除。`)) return;
+    const r = await apiFetch(`${API}/categories/${cat.id}`, { method: 'DELETE' });
+    if (!r.ok) return showMsg((await r.json().catch(() => ({}))).error || '刪除失敗', 'err');
+    await Promise.all([loadCategories(), loadNodes()]);
   };
 
   // ── 節點選取 / 新增 ──
   const handleSelect = (node) => {
     setSelected(node.id);
     setForm({
-      question:   node.question,
-      answer:     node.answer,
-      keywords:   node.keywords ?? '',
-      is_active:  node.is_active,
-      start_date: node.start_date ? node.start_date.slice(0, 16) : '',
-      end_date:   node.end_date   ? node.end_date.slice(0, 16)   : '',
+      question:    node.question,
+      answer:      node.answer,
+      keywords:    node.keywords ?? '',
+      category_id: node.category_id ?? '',
+      is_active:   node.is_active,
+      start_date:  node.start_date ? node.start_date.slice(0, 16) : '',
+      end_date:    node.end_date   ? node.end_date.slice(0, 16)   : '',
     });
     setMode('edit');
     setShowLinkSelector(false);
@@ -303,25 +377,27 @@ export default function FaqManager() {
       const r = await apiFetch(`${API}/${selected}`, {
         method: 'PUT',
         body: JSON.stringify({
-          question:   form.question.trim(),
-          answer:     form.answer.trim(),
-          keywords:   form.keywords.trim() || null,
-          is_active:  form.is_active,
-          start_date: form.start_date || null,
-          end_date:   form.end_date   || null,
+          question:    form.question.trim(),
+          answer:      form.answer.trim(),
+          keywords:    form.keywords.trim() || null,
+          category_id: form.category_id || null,
+          is_active:   form.is_active,
+          start_date:  form.start_date || null,
+          end_date:    form.end_date   || null,
         }),
       });
       if (r.ok) { showMsg('已儲存'); await loadNodes(); }
-      else showMsg('儲存失敗', 'err');
+      else showMsg((await r.json().catch(() => ({}))).error || '儲存失敗', 'err');
     } else {
       const r = await apiFetch(API, {
         method: 'POST',
         body: JSON.stringify({
-          question:   form.question.trim(),
-          answer:     form.answer.trim(),
-          keywords:   form.keywords.trim() || null,
-          start_date: form.start_date || null,
-          end_date:   form.end_date   || null,
+          question:    form.question.trim(),
+          answer:      form.answer.trim(),
+          keywords:    form.keywords.trim() || null,
+          category_id: form.category_id || null,
+          start_date:  form.start_date || null,
+          end_date:    form.end_date   || null,
         }),
       });
       if (r.ok) {
@@ -329,12 +405,13 @@ export default function FaqManager() {
         showMsg('已新增');
         setSelected(node.id);
         setForm({
-          question:   node.question,
-          answer:     node.answer,
-          keywords:   node.keywords ?? '',
-          is_active:  node.is_active,
-          start_date: node.start_date ? node.start_date.slice(0, 16) : '',
-          end_date:   node.end_date   ? node.end_date.slice(0, 16)   : '',
+          question:    node.question,
+          answer:      node.answer,
+          keywords:    node.keywords ?? '',
+          category_id: node.category_id ?? '',
+          is_active:   node.is_active,
+          start_date:  node.start_date ? node.start_date.slice(0, 16) : '',
+          end_date:    node.end_date   ? node.end_date.slice(0, 16)   : '',
         });
         setMode('edit');
         setLinks([]);
@@ -354,7 +431,8 @@ export default function FaqManager() {
   const handleDelete = async () => {
     const node = nodes.find(n => n.id === selected);
     if (!window.confirm(`確定刪除「${node?.question}」？\n此節點的所有連結都會一併移除。`)) return;
-    await apiFetch(`${API}/${selected}`, { method: 'DELETE' });
+    const r = await apiFetch(`${API}/${selected}`, { method: 'DELETE' });
+    if (!r.ok) return showMsg((await r.json().catch(() => ({}))).error || '刪除失敗', 'err');
     setSelected(null); setMode(null); setLinks([]);
     showMsg('已刪除');
     await loadNodes();
@@ -554,6 +632,51 @@ export default function FaqManager() {
         )}
       </div>
 
+      {/* ── 問題分類 ── */}
+      {canManageCategories && (
+        <div className="faq-fallback-section faq-ai-section">
+          <div className="faq-unanswered-header faq-ai-header" onClick={() => setShowCatSection(v => !v)}>
+            <span className="faq-unanswered-title faq-ai-title">
+              問題分類
+              {categories.length > 0 && <span className="faq-unanswered-badge">{categories.length}</span>}
+            </span>
+            <span className="faq-unanswered-toggle">{showCatSection ? '▲ 收起' : '▼ 展開'}</span>
+          </div>
+          {showCatSection && (
+            <div className="faq-ai-body">
+              <div className="faq-hint" style={{ margin: '0 0 10px' }}>
+                分類可以在「角色管理」裡指派給特定角色，讓該角色只能編輯所屬分類的問題；
+                沒有被指派任何分類的角色不受限制，可以編輯所有問題。
+              </div>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <input
+                  className="faq-input"
+                  value={newCatName}
+                  onChange={e => setNewCatName(e.target.value)}
+                  placeholder="新增分類名稱，例：美食、服飾"
+                  onKeyDown={e => { if (e.key === 'Enter') handleAddCategory(); }}
+                />
+                <button className="fg-btn fg-btn-primary fg-btn-sm" onClick={handleAddCategory} disabled={savingCat}>
+                  {savingCat ? '新增中…' : '新增分類'}
+                </button>
+              </div>
+              {categories.length === 0 ? (
+                <div className="faq-tree-empty" style={{ marginTop: 12 }}>尚無分類</div>
+              ) : (
+                <div className="faq-linked-list" style={{ marginTop: 12 }}>
+                  {categories.map(cat => (
+                    <div key={cat.id} className="faq-linked-item">
+                      <span className="faq-linked-q">{cat.name}</span>
+                      <button className="faq-icon-btn faq-icon-btn--del" onClick={() => handleDeleteCategory(cat)}>✕</button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+
       {/* ── 客服文件 ── */}
       <div className="faq-fallback-section faq-ai-section">
         <div className="faq-unanswered-header faq-ai-header" onClick={() => setShowDocsSection(v => !v)}>
@@ -582,6 +705,22 @@ export default function FaqManager() {
                   disabled={!canWrite}
                 />
               </div>
+              {categories.length > 0 && (
+                <div className="faq-date-field">
+                  <label className="faq-label">分類</label>
+                  <select
+                    className="faq-input"
+                    value={docCategoryId}
+                    onChange={e => setDocCategoryId(e.target.value)}
+                    disabled={!canWrite}
+                  >
+                    <option value="">未分類</option>
+                    {getSelectableCategories(docCategoryId).map(c => (
+                      <option key={c.id} value={c.id}>{c.name}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
               <div className="faq-date-field">
                 <label className="faq-label">有效開始</label>
                 <input
@@ -627,19 +766,25 @@ export default function FaqManager() {
               <div className="faq-tree-empty">尚無客服文件</div>
             ) : (
               <div className="faq-linked-list" style={{ marginTop: 12 }}>
-                {documents.map(doc => (
+                {documents.map(doc => {
+                  const docCanEdit = canWrite && canEditFaqCategory(doc.category_id);
+                  return (
                   <React.Fragment key={doc.id}>
                     <div className="faq-linked-item">
                       <label style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                         <input
                           type="checkbox"
                           checked={doc.is_active}
-                          disabled={!canWrite}
+                          disabled={!docCanEdit}
                           onChange={e => handleToggleDocActive(doc, e.target.checked)}
                         />
                       </label>
                       <span className="faq-linked-q">
                         {doc.title}
+                        {doc.category_id != null && categoryName(doc.category_id) && (
+                          <span className="faq-badge" style={{ marginLeft: 8 }}>{categoryName(doc.category_id)}</span>
+                        )}
+                        {!docCanEdit && <span className="faq-badge faq-badge--off" title="您沒有此分類的編輯權限">🔒</span>}
                         <span className="faq-hint" style={{ marginLeft: 8 }}>
                           {doc.start_date || doc.end_date
                             ? `${doc.start_date ? doc.start_date.slice(0, 10) : '無起始'} ～ ${doc.end_date ? doc.end_date.slice(0, 10) : '無結束'}`
@@ -647,9 +792,9 @@ export default function FaqManager() {
                         </span>
                       </span>
                       <button className="faq-toolbar-btn" onClick={() => handleToggleDocContent(doc)}>
-                        {openDocId === doc.id ? '收起內容' : (canWrite ? '檢視/編輯內容' : '檢視內容')}
+                        {openDocId === doc.id ? '收起內容' : (docCanEdit ? '檢視/編輯內容' : '檢視內容')}
                       </button>
-                      {canWrite && (
+                      {docCanEdit && (
                         <button className="faq-icon-btn faq-icon-btn--del" onClick={() => handleDeleteDoc(doc)}>✕</button>
                       )}
                     </div>
@@ -659,21 +804,48 @@ export default function FaqManager() {
                           <div className="faq-hint">載入中…</div>
                         ) : (
                           <>
+                            <div className="faq-date-row" style={{ marginBottom: 8 }}>
+                              <div className="faq-date-field" style={{ flex: 2 }}>
+                                <label className="faq-label">文件標題</label>
+                                <input
+                                  className="faq-input"
+                                  value={docEditTitle}
+                                  onChange={e => setDocEditTitle(e.target.value)}
+                                  disabled={!docCanEdit}
+                                />
+                              </div>
+                              {categories.length > 0 && (
+                                <div className="faq-date-field">
+                                  <label className="faq-label">分類</label>
+                                  <select
+                                    className="faq-input"
+                                    value={docEditCategoryId}
+                                    onChange={e => setDocEditCategoryId(e.target.value)}
+                                    disabled={!docCanEdit}
+                                  >
+                                    <option value="">未分類</option>
+                                    {getSelectableCategories(docEditCategoryId).map(c => (
+                                      <option key={c.id} value={c.id}>{c.name}</option>
+                                    ))}
+                                  </select>
+                                </div>
+                              )}
+                            </div>
                             <textarea
                               className="faq-textarea"
                               rows={10}
                               value={docContent}
                               onChange={e => setDocContent(e.target.value)}
-                              disabled={!canWrite}
+                              disabled={!docCanEdit}
                             />
-                            {canWrite && (
+                            {docCanEdit && (
                               <div className="faq-fallback-actions" style={{ marginTop: 6 }}>
                                 <button
                                   className="fg-btn fg-btn-primary fg-btn-sm"
                                   onClick={() => handleSaveDocContent(doc)}
                                   disabled={savingDocContent}
                                 >
-                                  {savingDocContent ? '儲存中…' : '儲存內容'}
+                                  {savingDocContent ? '儲存中…' : '儲存'}
                                 </button>
                               </div>
                             )}
@@ -682,7 +854,8 @@ export default function FaqManager() {
                       </div>
                     )}
                   </React.Fragment>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>
@@ -773,8 +946,12 @@ export default function FaqManager() {
               >
                 <span className="faq-node-q">{n.question}</span>
                 <span className="faq-node-badges">
+                  {n.category_id != null && categoryName(n.category_id) && (
+                    <span className="faq-badge">{categoryName(n.category_id)}</span>
+                  )}
                   {n.is_root  && <span className="faq-badge faq-badge--root">根</span>}
                   {!n.is_active && <span className="faq-badge faq-badge--off">停用</span>}
+                  {!canEditFaqCategory(n.category_id) && <span className="faq-badge faq-badge--off" title="您沒有此分類的編輯權限">🔒</span>}
                 </span>
               </div>
             ))
@@ -791,13 +968,37 @@ export default function FaqManager() {
                   {mode === 'edit' ? '編輯問題' : '新增問題'}
                 </div>
 
+                {formLocked && (
+                  <div className="faq-hint" style={{ color: '#c0392b', margin: '0 0 10px' }}>
+                    🔒 此問題屬於您沒有編輯權限的分類，僅能檢視，無法修改或刪除。
+                  </div>
+                )}
+
                 <label className="faq-label">問題 <span className="faq-required">*</span></label>
                 <input
                   className="faq-input"
                   value={form.question}
                   onChange={e => setForm(f => ({ ...f, question: e.target.value }))}
                   placeholder="輸入問題"
+                  disabled={formLocked}
                 />
+
+                {categories.length > 0 && (
+                  <>
+                    <label className="faq-label">分類 <span className="faq-hint">（選填）</span></label>
+                    <select
+                      className="faq-input"
+                      value={form.category_id}
+                      onChange={e => setForm(f => ({ ...f, category_id: e.target.value }))}
+                      disabled={formLocked}
+                    >
+                      <option value="">未分類</option>
+                      {selectableCategories.map(c => (
+                        <option key={c.id} value={c.id}>{c.name}</option>
+                      ))}
+                    </select>
+                  </>
+                )}
 
                 <div className="faq-answer-header">
                   <label className="faq-label" style={{ margin: 0 }}>答案 <span className="faq-required">*</span></label>
@@ -841,6 +1042,7 @@ export default function FaqManager() {
                   onDragOver={handleDragOver}
                   onDragLeave={handleDragLeave}
                   onDrop={handleDrop}
+                  disabled={formLocked}
                 />
 
                 {showPreview && form.answer && (
@@ -858,6 +1060,7 @@ export default function FaqManager() {
                   value={form.keywords}
                   onChange={e => setForm(f => ({ ...f, keywords: e.target.value }))}
                   placeholder="例：停車 收費 折抵"
+                  disabled={formLocked}
                 />
 
                 <div className="faq-date-row">
@@ -870,6 +1073,7 @@ export default function FaqManager() {
                       className="faq-input"
                       value={form.start_date}
                       onChange={e => setForm(f => ({ ...f, start_date: e.target.value }))}
+                      disabled={formLocked}
                     />
                   </div>
                   <div className="faq-date-field">
@@ -881,6 +1085,7 @@ export default function FaqManager() {
                       className="faq-input"
                       value={form.end_date}
                       onChange={e => setForm(f => ({ ...f, end_date: e.target.value }))}
+                      disabled={formLocked}
                     />
                   </div>
                 </div>
@@ -888,17 +1093,20 @@ export default function FaqManager() {
                 {mode === 'edit' && (
                   <label className="faq-toggle-row">
                     <input type="checkbox" checked={form.is_active}
-                      onChange={e => setForm(f => ({ ...f, is_active: e.target.checked }))} />
+                      onChange={e => setForm(f => ({ ...f, is_active: e.target.checked }))}
+                      disabled={formLocked} />
                     <span>啟用此問題</span>
                   </label>
                 )}
 
                 <div className="faq-form-actions">
                   <button className="fg-btn fg-btn-ghost" onClick={() => { setMode(null); setSelected(null); }}>取消</button>
-                  <button className="fg-btn fg-btn-primary" onClick={handleSave} disabled={saving}>
-                    {saving ? '儲存中…' : '儲存'}
-                  </button>
-                  {mode === 'edit' && (
+                  {!formLocked && (
+                    <button className="fg-btn fg-btn-primary" onClick={handleSave} disabled={saving}>
+                      {saving ? '儲存中…' : '儲存'}
+                    </button>
+                  )}
+                  {mode === 'edit' && !formLocked && (
                     <button className="fg-btn fg-btn-danger" onClick={handleDelete}>刪除節點</button>
                   )}
                 </div>

@@ -34,7 +34,8 @@ router.post('/login', async (req, res) => {
     include: {
       roles: {
         include: {
-          role_permissions: { include: { permissions: true } },
+          role_permissions:    { include: { permissions: true } },
+          role_faq_categories: { select: { category_id: true } },
         },
       },
     },
@@ -54,6 +55,8 @@ router.post('/login', async (req, res) => {
   const userPerms = user.roles.role_permissions.map(
     rp => `${rp.permissions.module}:${rp.permissions.action}`
   );
+  // 空陣列＝該角色不受 FAQ 問題分類限制（見 backend/routes/admin/faq.js 的 canEditCategory）
+  const faqCategoryIds = user.roles.role_faq_categories.map(rc => rc.category_id);
 
   const sessionId = randomUUID(); // 36 字元，存進 DB；JWT 本身不存 DB
 
@@ -64,6 +67,7 @@ router.post('/login', async (req, res) => {
       roleId:      user.role_id,
       roleName:    user.roles.name,
       permissions: userPerms,
+      faqCategoryIds,
       sessionId,
     },
     process.env.JWT_SECRET,
@@ -83,10 +87,11 @@ router.post('/login', async (req, res) => {
   res.json({
     must_change_password: user.must_change_password ?? false,
     user: {
-      id:          user.id,
-      employee_id: user.employee_id,
-      role:        user.roles.name,
-      permissions: userPerms,
+      id:              user.id,
+      employee_id:     user.employee_id,
+      role:            user.roles.name,
+      permissions:     userPerms,
+      faqCategoryIds,
     },
   });
 });

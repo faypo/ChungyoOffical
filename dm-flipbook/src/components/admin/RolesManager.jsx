@@ -23,7 +23,7 @@ const MODULE_LABELS = {
 };
 
 export default function RolesManager() {
-  const [data,    setData]    = useState({ roles: [], permissions: [] });
+  const [data,    setData]    = useState({ roles: [], permissions: [], faqCategories: [] });
   const [loading, setLoading] = useState(true);
   const [modal,   setModal]   = useState(null);
 
@@ -87,6 +87,7 @@ export default function RolesManager() {
       {modal === 'create' && (
         <RoleFormModal
           permissions={data.permissions}
+          faqCategories={data.faqCategories}
           onClose={() => setModal(null)}
           onDone={fetchAll}
         />
@@ -95,6 +96,7 @@ export default function RolesManager() {
         <RoleFormModal
           role={modal.role}
           permissions={data.permissions}
+          faqCategories={data.faqCategories}
           onClose={() => setModal(null)}
           onDone={fetchAll}
         />
@@ -177,7 +179,7 @@ export default function RolesManager() {
   );
 }
 
-function RoleFormModal({ role, permissions, onClose, onDone }) {
+function RoleFormModal({ role, permissions, faqCategories = [], onClose, onDone }) {
   const isEdit       = !!role;
   const isSuperAdmin = role?.name === 'super_admin';
 
@@ -191,8 +193,17 @@ function RoleFormModal({ role, permissions, onClose, onDone }) {
   const [name,        setName]        = useState(role?.name ?? '');
   const [description, setDescription] = useState(role?.description ?? '');
   const [checkedIds,  setCheckedIds]  = useState(new Set(role?.permission_ids ?? []));
+  const [checkedCatIds, setCheckedCatIds] = useState(new Set(role?.faq_category_ids ?? []));
   const [err,         setErr]         = useState('');
   const [busy,        setBusy]        = useState(false);
+
+  const toggleCat = (id) => {
+    setCheckedCatIds(prev => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  };
 
   const toggle = (id) => {
     setCheckedIds(prev => {
@@ -218,7 +229,12 @@ function RoleFormModal({ role, permissions, onClose, onDone }) {
     setErr('');
     setBusy(true);
 
-    const body   = { name: isSuperAdmin ? role.name : name.trim(), description, permission_ids: [...checkedIds] };
+    const body   = {
+      name: isSuperAdmin ? role.name : name.trim(),
+      description,
+      permission_ids:   [...checkedIds],
+      faq_category_ids: [...checkedCatIds],
+    };
     const url    = isEdit ? `/api/admin/roles/${role.id}` : '/api/admin/roles';
     const method = isEdit ? 'PUT' : 'POST';
 
@@ -303,6 +319,37 @@ function RoleFormModal({ role, permissions, onClose, onDone }) {
               })}
             </tbody>
           </table>
+
+          {faqCategories.length > 0 && (
+            <>
+              <div className="rm-section-label">FAQ 問題分類限制</div>
+              <p style={{ color: '#888', fontSize: '.8rem', margin: '0 0 .6rem' }}>
+                完全不勾＝不受限制，只要有 FAQ 寫入權限就能編輯所有分類的問題；
+                勾選特定分類後，此角色只能編輯這些分類（＋未分類）的問題。
+              </p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '.5rem' }}>
+                {faqCategories.map(cat => (
+                  <label
+                    key={cat.id}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: '.35rem',
+                      padding: '.3rem .6rem', borderRadius: '6px',
+                      background: checkedCatIds.has(cat.id) ? '#2a3550' : '#1a1a1a',
+                      border: '1px solid #444', cursor: 'pointer', fontSize: '.85rem',
+                      color: checkedCatIds.has(cat.id) ? '#7eb8f7' : '#ccc',
+                    }}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={checkedCatIds.has(cat.id)}
+                      onChange={() => toggleCat(cat.id)}
+                    />
+                    {cat.name}
+                  </label>
+                ))}
+              </div>
+            </>
+          )}
 
           {err && <p style={{ color: '#f87171', margin: '.7rem 0 0', fontSize: '.88rem' }}>{err}</p>}
           <div className="rm-modal-actions">

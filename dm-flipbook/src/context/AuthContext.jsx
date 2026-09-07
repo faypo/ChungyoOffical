@@ -22,6 +22,18 @@ export function AuthProvider({ children }) {
     [permSet]
   );
 
+  // 空陣列＝不受 FAQ 問題分類限制（可編輯全部分類）；categoryId 為 null（未分類）
+  // 一律視為可編輯，規則需跟後端 backend/routes/admin/faq.js 的 canEditCategory 保持一致。
+  const faqCategoryIds = user?.faqCategoryIds ?? [];
+  const canEditFaqCategory = useCallback(
+    (categoryId) => {
+      if (faqCategoryIds.length === 0) return true;
+      if (categoryId == null) return true;
+      return faqCategoryIds.includes(categoryId);
+    },
+    [faqCategoryIds]
+  );
+
   const login = useCallback((mustChange = false, userInfo = null) => {
     localStorage.setItem('admin_must_change_pw', mustChange ? 'true' : 'false');
     localStorage.setItem('admin_user', JSON.stringify(userInfo));
@@ -74,6 +86,8 @@ export function AuthProvider({ children }) {
       isAuthenticated: !!user,
       isSuperAdmin: user?.role === 'super_admin',
       hasPermission,
+      faqCategoryIds,
+      canEditFaqCategory,
     }}>
       {children}
     </AuthContext.Provider>

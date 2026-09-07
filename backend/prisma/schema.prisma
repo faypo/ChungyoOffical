@@ -389,12 +389,13 @@ model role_permissions {
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model roles {
-  id               Int                @id @default(autoincrement()) @db.UnsignedInt
-  name             String             @unique(map: "name") @db.VarChar(50)
-  description      String?            @db.VarChar(200)
-  created_at       DateTime?          @default(now()) @db.DateTime(0)
-  role_permissions role_permissions[]
-  users            users[]
+  id                  Int                   @id @default(autoincrement()) @db.UnsignedInt
+  name                String                @unique(map: "name") @db.VarChar(50)
+  description         String?               @db.VarChar(200)
+  created_at          DateTime?             @default(now()) @db.DateTime(0)
+  role_permissions    role_permissions[]
+  role_faq_categories role_faq_categories[]
+  users               users[]
 }
 
 model user_sessions {
@@ -508,17 +509,41 @@ enum food_items_section {
 }
 
 model faq_nodes {
-  id           Int              @id @default(autoincrement()) @db.UnsignedInt
-  question     String           @db.VarChar(300)
-  answer       String           @db.Text
-  keywords     String?          @db.VarChar(500)
-  is_active    Boolean          @default(true)
-  start_date   DateTime?        @db.DateTime(0)
-  end_date     DateTime?        @db.DateTime(0)
-  created_at   DateTime         @default(now()) @db.DateTime(0)
-  updated_at   DateTime         @default(now()) @db.DateTime(0)
-  parent_links faq_node_links[] @relation("link_parent")
-  child_links  faq_node_links[] @relation("link_child")
+  id             Int              @id @default(autoincrement()) @db.UnsignedInt
+  question       String           @db.VarChar(300)
+  answer         String           @db.Text
+  keywords       String?          @db.VarChar(500)
+  category_id    Int?             @db.UnsignedInt
+  is_active      Boolean          @default(true)
+  start_date     DateTime?        @db.DateTime(0)
+  end_date       DateTime?        @db.DateTime(0)
+  created_at     DateTime         @default(now()) @db.DateTime(0)
+  updated_at     DateTime         @default(now()) @db.DateTime(0)
+  faq_categories faq_categories?  @relation(fields: [category_id], references: [id], onDelete: SetNull, onUpdate: NoAction, map: "faq_nodes_ibfk_1")
+  parent_links   faq_node_links[] @relation("link_parent")
+  child_links    faq_node_links[] @relation("link_child")
+
+  @@index([category_id], map: "category_id")
+}
+
+model faq_categories {
+  id                  Int                   @id @default(autoincrement()) @db.UnsignedInt
+  name                String                @unique(map: "uq_faq_category_name") @db.VarChar(50)
+  sort_order          Int                   @default(0) @db.UnsignedInt
+  created_at          DateTime              @default(now()) @db.DateTime(0)
+  faq_nodes           faq_nodes[]
+  faq_documents       faq_documents[]
+  role_faq_categories role_faq_categories[]
+}
+
+model role_faq_categories {
+  role_id        Int            @db.UnsignedInt
+  category_id    Int            @db.UnsignedInt
+  roles          roles          @relation(fields: [role_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "role_faq_categories_ibfk_1")
+  faq_categories faq_categories @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "role_faq_categories_ibfk_2")
+
+  @@id([role_id, category_id])
+  @@index([category_id], map: "category_id")
 }
 
 model faq_node_links {
@@ -546,22 +571,25 @@ model faq_unanswered {
 }
 
 model faq_documents {
-  id                                     Int       @id @default(autoincrement()) @db.UnsignedInt
-  title                                  String    @db.VarChar(200)
-  filename                               String    @db.VarChar(255)
-  original_filename                      String?   @db.VarChar(255)
-  is_active                              Boolean   @default(true)
-  start_date                             DateTime? @db.DateTime(0)
-  end_date                               DateTime? @db.DateTime(0)
-  created_by                             Int?      @db.UnsignedInt
-  updated_by                             Int?      @db.UnsignedInt
-  created_at                             DateTime  @default(now()) @db.DateTime(0)
-  updated_at                             DateTime  @default(now()) @db.DateTime(0)
-  users_faq_documents_created_byTousers  users?    @relation("faq_documents_created_byTousers", fields: [created_by], references: [id], onDelete: SetNull, onUpdate: NoAction, map: "faq_documents_ibfk_1")
-  users_faq_documents_updated_byTousers  users?    @relation("faq_documents_updated_byTousers", fields: [updated_by], references: [id], onDelete: SetNull, onUpdate: NoAction, map: "faq_documents_ibfk_2")
+  id                                     Int             @id @default(autoincrement()) @db.UnsignedInt
+  title                                  String          @db.VarChar(200)
+  category_id                            Int?            @db.UnsignedInt
+  filename                               String          @db.VarChar(255)
+  original_filename                      String?         @db.VarChar(255)
+  is_active                              Boolean         @default(true)
+  start_date                             DateTime?       @db.DateTime(0)
+  end_date                               DateTime?       @db.DateTime(0)
+  created_by                             Int?            @db.UnsignedInt
+  updated_by                             Int?            @db.UnsignedInt
+  created_at                             DateTime        @default(now()) @db.DateTime(0)
+  updated_at                             DateTime        @default(now()) @db.DateTime(0)
+  users_faq_documents_created_byTousers  users?          @relation("faq_documents_created_byTousers", fields: [created_by], references: [id], onDelete: SetNull, onUpdate: NoAction, map: "faq_documents_ibfk_1")
+  users_faq_documents_updated_byTousers  users?          @relation("faq_documents_updated_byTousers", fields: [updated_by], references: [id], onDelete: SetNull, onUpdate: NoAction, map: "faq_documents_ibfk_2")
+  faq_categories                         faq_categories? @relation(fields: [category_id], references: [id], onDelete: SetNull, onUpdate: NoAction, map: "faq_documents_ibfk_3")
 
   @@index([created_by], map: "created_by")
   @@index([updated_by], map: "updated_by")
+  @@index([category_id], map: "category_id")
 }
 
 model faq_query_log {

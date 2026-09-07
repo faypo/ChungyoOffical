@@ -12,10 +12,11 @@ router.use((req, res, next) => {
 
 // GET /api/admin/roles
 router.get('/', async (req, res) => {
-  const [roles, permissions] = await Promise.all([
+  const [roles, permissions, faqCategories] = await Promise.all([
     prisma.roles.findMany({
       include: {
-        role_permissions: { select: { permission_id: true } },
+        role_permissions:    { select: { permission_id: true } },
+        role_faq_categories: { select: { category_id: true } },
         _count: { select: { users: true } },
       },
       orderBy: { id: 'asc' },
@@ -23,25 +24,30 @@ router.get('/', async (req, res) => {
     prisma.permissions.findMany({
       orderBy: [{ module: 'asc' }, { action: 'asc' }],
     }),
-  ]).catch(() => [null, null]);
+    prisma.faq_categories.findMany({
+      orderBy: [{ sort_order: 'asc' }, { id: 'asc' }],
+    }),
+  ]).catch(() => [null, null, null]);
 
   if (!roles) return res.status(500).json({ error: '查詢失敗' });
 
   res.json({
     roles: roles.map(r => ({
-      id:             r.id,
-      name:           r.name,
-      description:    r.description,
-      user_count:     r._count.users,
-      permission_ids: r.role_permissions.map(rp => rp.permission_id),
+      id:                 r.id,
+      name:               r.name,
+      description:        r.description,
+      user_count:         r._count.users,
+      permission_ids:     r.role_permissions.map(rp => rp.permission_id),
+      faq_category_ids:   r.role_faq_categories.map(rc => rc.category_id),
     })),
     permissions,
+    faqCategories,
   });
 });
 
 // POST /api/admin/roles
 router.post('/', async (req, res) => {
-  const { name, description, permission_ids = [] } = req.body;
+  const { name, description, permission_ids = [], faq_category_ids = [] } = req.body;
   if (!name?.trim()) return res.status(400).json({ error: '請提供角色名稱' });
 
   const existing = await prisma.roles.findUnique({ where: { name: name.trim() } }).catch(() => null);
@@ -55,14 +61,18 @@ router.post('/', async (req, res) => {
         role_permissions: {
           create: permission_ids.map(pid => ({ permission_id: Number(pid) })),
         },
+        role_faq_categories: {
+          create: faq_category_ids.map(cid => ({ category_id: Number(cid) })),
+        },
       },
     });
     res.status(201).json({
-      id:             role.id,
-      name:           role.name,
-      description:    role.description,
-      user_count:     0,
-      permission_ids: permission_ids.map(Number),
+      id:               role.id,
+      name:             role.name,
+      description:      role.description,
+      user_count:       0,
+      permission_ids:   permission_ids.map(Number),
+      faq_category_ids: faq_category_ids.map(Number),
     });
   } catch {
     res.status(500).json({ error: '建立失敗' });
@@ -74,7 +84,7 @@ router.put('/:id', async (req, res) => {
   const id = Number(req.params.id);
   if (!Number.isInteger(id)) return res.status(400).json({ error: '無效的角色 ID' });
 
-  const { name, description, permission_ids } = req.body;
+  const { name, description, permission_ids, faq_category_ids } = req.body;
 
   const role = await prisma.roles.findUnique({ where: { id } }).catch(() => null);
   if (!role) return res.status(404).json({ error: '角色不存在' });
@@ -100,6 +110,15 @@ router.put('/:id', async (req, res) => {
         if (permission_ids.length > 0) {
           await tx.role_permissions.createMany({
             data: permission_ids.map(pid => ({ role_id: id, permission_id: Number(pid) })),
+          });
+        }
+      }
+
+      if (Array.isArray(faq_category_ids)) {
+        await tx.role_faq_categories.deleteMany({ where: { role_id: id } });
+        if (faq_category_ids.length > 0) {
+          await tx.role_faq_categories.createMany({
+            data: faq_category_ids.map(cid => ({ role_id: id, category_id: Number(cid) })),
           });
         }
       }

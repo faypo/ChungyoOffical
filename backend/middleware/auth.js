@@ -18,11 +18,12 @@ async function requireAdmin(req, res, next) {
   }
 
   req.user = {
-    id:          payload.userId,
-    employeeId:  payload.employeeId,
-    roleId:      payload.roleId,
-    roleName:    payload.roleName,
-    permissions: new Set(payload.permissions ?? []),
+    id:              payload.userId,
+    employeeId:      payload.employeeId,
+    roleId:          payload.roleId,
+    roleName:        payload.roleName,
+    permissions:     new Set(payload.permissions ?? []),
+    faqCategoryIds:  payload.faqCategoryIds ?? [],
   };
 
   next();

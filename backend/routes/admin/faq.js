@@ -63,11 +63,13 @@ function decodeToUtf8(buffer) {
 // 這樣日期跨界（開始生效／過期）不需要等下次手動同步就會生效，也不用每天
 // 排程重新同步增加成本。詳見 infra/faq-ai/lambda/bedrock_client.py。
 async function runKnowledgeBaseSync() {
-  const [nodes, counters, docs] = await Promise.all([
+  const [nodes, counters, docs, categories] = await Promise.all([
     prisma.faq_nodes.findMany({ where: { is_active: true } }),
     prisma.floor_counters.findMany({ include: { floor_floors: true } }),
     prisma.faq_documents.findMany({ where: { is_active: true } }),
+    prisma.faq_categories.findMany(),
   ]);
+  const categoryNameById = new Map(categories.map(c => [c.id, c.name]));
 
   const formatDate = d => d ? d.toISOString().slice(0, 10) : null;
   const validityText = (start, end) => {
@@ -77,7 +79,7 @@ async function runKnowledgeBaseSync() {
 
   const faqDocuments = nodes.map(n => ({
     id:   `faq-${n.id}`,
-    text: `問題：${n.question}\n答案：${n.answer}${n.keywords ? `\n關鍵字：${n.keywords}` : ''}\n${validityText(n.start_date, n.end_date)}`,
+    text: `問題：${n.question}\n答案：${n.answer}${n.keywords ? `\n關鍵字：${n.keywords}` : ''}${n.category_id != null ? `\n分類：${categoryNameById.get(n.category_id) ?? ''}` : ''}\n${validityText(n.start_date, n.end_date)}`,
   }));
 
   const counterDocuments = counters
@@ -98,7 +100,7 @@ async function runKnowledgeBaseSync() {
     try { content = fs.readFileSync(filePath, 'utf8'); } catch { content = ''; }
     return {
       id:   `doc-${d.id}`,
-      text: `文件標題：${d.title}\n${content}\n${validityText(d.start_date, d.end_date)}`,
+      text: `文件標題：${d.title}${d.category_id != null ? `\n分類：${categoryNameById.get(d.category_id) ?? ''}` : ''}\n${content}\n${validityText(d.start_date, d.end_date)}`,
     };
   }).filter(d => d.text.trim());
 
@@ -128,6 +130,10 @@ router.post('/documents/upload', uploadDoc.single('file'), async (req, res) => {
   const title = (req.body?.title || '').trim();
   if (!title) return res.status(400).json({ error: '標題為必填' });
 
+  const categoryId = req.body?.category_id ? Number(req.body.category_id) : null;
+  if (!canEditCategory(req, categoryId))
+    return res.status(403).json({ error: '權限不足，無法在此分類上傳文件' });
+
   const content  = decodeToUtf8(req.file.buffer);
   const filename = `${randomUUID()}.txt`;
   fs.mkdirSync(FAQ_DOC_DIR, { recursive: true });
@@ -137,6 +143,7 @@ router.post('/documents/upload', uploadDoc.single('file'), async (req, res) => {
   const doc = await prisma.faq_documents.create({
     data: {
       title,
+      category_id: categoryId,
       filename,
       original_filename:  req.file.originalname,
       start_date: start_date ? new Date(start_date) : null,
@@ -165,6 +172,8 @@ router.put('/documents/:id/content', async (req, res) => {
   if (typeof content !== 'string') return res.status(400).json({ error: '無效的內容' });
   const doc = await prisma.faq_documents.findUnique({ where: { id } });
   if (!doc) return res.status(404).json({ error: '找不到該文件' });
+  if (!canEditCategory(req, doc.category_id))
+    return res.status(403).json({ error: '權限不足，無法編輯此分類的文件' });
   fs.mkdirSync(FAQ_DOC_DIR, { recursive: true });
   fs.writeFileSync(path.join(FAQ_DOC_DIR, doc.filename), content, 'utf8');
   await prisma.faq_documents.update({ where: { id }, data: { updated_at: new Date() } });
@@ -172,17 +181,31 @@ router.put('/documents/:id/content', async (req, res) => {
   res.json({ ok: true });
 });
 
-// PUT /api/admin/faq/documents/:id — 更新標題／起訖日期／啟用狀態，異動後自動同步知識庫
+// PUT /api/admin/faq/documents/:id — 更新標題／分類／起訖日期／啟用狀態，異動後自動同步知識庫
 router.put('/documents/:id', async (req, res) => {
   const id = Number(req.params.id);
-  const { title, start_date, end_date, is_active } = req.body;
+  const existing = await prisma.faq_documents.findUnique({ where: { id } });
+  if (!existing) return res.status(404).json({ error: '找不到該文件' });
+  if (!canEditCategory(req, existing.category_id))
+    return res.status(403).json({ error: '權限不足，無法編輯此分類的文件' });
+
+  const { title, category_id, start_date, end_date, is_active } = req.body;
   if (!title?.trim()) return res.status(400).json({ error: '標題為必填' });
+
+  let categoryId = existing.category_id;
+  if (category_id !== undefined) {
+    categoryId = category_id ? Number(category_id) : null;
+    if (!canEditCategory(req, categoryId))
+      return res.status(403).json({ error: '權限不足，無法將文件移至此分類' });
+  }
+
   const doc = await prisma.faq_documents.update({
     where: { id },
     data: {
-      title:      title.trim(),
-      start_date: start_date ? new Date(start_date) : null,
-      end_date:   end_date   ? new Date(end_date)   : null,
+      title:       title.trim(),
+      category_id: categoryId,
+      start_date:  start_date ? new Date(start_date) : null,
+      end_date:    end_date   ? new Date(end_date)   : null,
       ...(is_active !== undefined && { is_active }),
       updated_at: new Date(),
     },
@@ -195,6 +218,9 @@ router.put('/documents/:id', async (req, res) => {
 // DELETE /api/admin/faq/documents/:id — 刪除文件（含本機檔案），刪除後自動同步知識庫
 router.delete('/documents/:id', async (req, res) => {
   const id = Number(req.params.id);
+  const existing = await prisma.faq_documents.findUnique({ where: { id } });
+  if (existing && !canEditCategory(req, existing.category_id))
+    return res.status(403).json({ error: '權限不足，無法刪除此分類的文件' });
   const doc = await prisma.faq_documents.delete({ where: { id } }).catch(() => null);
   if (doc) {
     const filePath = path.join(FAQ_DOC_DIR, doc.filename);
@@ -308,28 +334,96 @@ router.delete('/unanswered/:id', async (req, res) => {
   res.json({ ok: true });
 });
 
+// ── 問題分類（faq_categories）＋依角色限制可編輯類別（role_faq_categories）──────
+// 規則：req.user.faqCategoryIds 是登入時依角色算好、寫進 JWT 的允許類別清單。
+// 空陣列＝該角色不受類別限制（可編輯全部類別，向後相容現況）；
+// 節點 category_id 為 null（未分類）＝對所有人開放，不受類別限制影響。
+function canEditCategory(req, categoryId) {
+  const allowed = req.user.faqCategoryIds || [];
+  if (allowed.length === 0) return true;
+  if (categoryId == null) return true;
+  return allowed.includes(categoryId);
+}
+
+// 類別本身（新增/改名/刪除/指派給角色）只開放給「不受類別限制」的角色管理，
+// 避免被限制在特定類別的角色反過來改動類別清單本身。
+function requireUnrestrictedCategoryAccess(req, res) {
+  if ((req.user.faqCategoryIds || []).length > 0) {
+    res.status(403).json({ error: '權限不足，僅未受類別限制的角色可管理問題分類' });
+    return false;
+  }
+  return true;
+}
+
+// GET /api/admin/faq/categories — 問題分類清單
+router.get('/categories', async (_req, res) => {
+  const categories = await prisma.faq_categories.findMany({ orderBy: [{ sort_order: 'asc' }, { id: 'asc' }] });
+  res.json(categories);
+});
+
+// POST /api/admin/faq/categories — 新增分類
+router.post('/categories', async (req, res) => {
+  if (!requireUnrestrictedCategoryAccess(req, res)) return;
+  const name = (req.body?.name || '').trim();
+  if (!name) return res.status(400).json({ error: '分類名稱為必填' });
+  const count = await prisma.faq_categories.count();
+  const category = await prisma.faq_categories.create({
+    data: { name, sort_order: count },
+  }).catch(() => null);
+  if (!category) return res.status(409).json({ error: '分類名稱已存在' });
+  res.status(201).json(category);
+});
+
+// PUT /api/admin/faq/categories/:id — 改名／重新排序
+router.put('/categories/:id', async (req, res) => {
+  if (!requireUnrestrictedCategoryAccess(req, res)) return;
+  const id = Number(req.params.id);
+  const { name, sort_order } = req.body;
+  const data = {};
+  if (name !== undefined) {
+    if (!name.trim()) return res.status(400).json({ error: '分類名稱為必填' });
+    data.name = name.trim();
+  }
+  if (sort_order !== undefined) data.sort_order = Number(sort_order) || 0;
+  const category = await prisma.faq_categories.update({ where: { id }, data }).catch(() => null);
+  if (!category) return res.status(404).json({ error: '找不到該分類' });
+  res.json(category);
+});
+
+// DELETE /api/admin/faq/categories/:id — 刪除分類（底下節點會自動變為未分類）
+router.delete('/categories/:id', async (req, res) => {
+  if (!requireUnrestrictedCategoryAccess(req, res)) return;
+  const id = Number(req.params.id);
+  await prisma.faq_categories.delete({ where: { id } }).catch(() => null);
+  res.json({ ok: true });
+});
+
 // GET /api/admin/faq — 所有節點（flat，含 is_root 標記）
 router.get('/', async (_req, res) => {
   const [nodes, links] = await Promise.all([
     prisma.faq_nodes.findMany({ orderBy: { created_at: 'asc' } }),
     prisma.faq_node_links.findMany({ select: { child_id: true } }),
   ]);
-  const childIds = new Set(links.map(l => l.child_id));
+  const childIds  = new Set(links.map(l => l.child_id));
   res.json(nodes.map(n => ({ ...n, is_root: !childIds.has(n.id) })));
 });
 
 // POST /api/admin/faq — 新增節點
 router.post('/', async (req, res) => {
-  const { question, answer, keywords, start_date, end_date } = req.body;
+  const { question, answer, keywords, category_id, start_date, end_date } = req.body;
   if (!question?.trim() || !answer?.trim())
     return res.status(400).json({ error: '問題與答案為必填' });
+  const categoryId = category_id ? Number(category_id) : null;
+  if (!canEditCategory(req, categoryId))
+    return res.status(403).json({ error: '權限不足，無法在此分類建立問題' });
   const node = await prisma.faq_nodes.create({
     data: {
-      question:   question.trim(),
-      answer:     answer.trim(),
-      keywords:   keywords?.trim() || null,
-      start_date: start_date ? new Date(start_date) : null,
-      end_date:   end_date   ? new Date(end_date)   : null,
+      question:    question.trim(),
+      answer:      answer.trim(),
+      keywords:    keywords?.trim() || null,
+      category_id: categoryId,
+      start_date:  start_date ? new Date(start_date) : null,
+      end_date:    end_date   ? new Date(end_date)   : null,
     },
   });
   res.status(201).json(node);
@@ -384,17 +478,31 @@ router.delete('/links/:linkId', async (req, res) => {
 // PUT /api/admin/faq/:id — 更新節點
 router.put('/:id', async (req, res) => {
   const id = Number(req.params.id);
-  const { question, answer, keywords, is_active, start_date, end_date } = req.body;
+  const existing = await prisma.faq_nodes.findUnique({ where: { id } });
+  if (!existing) return res.status(404).json({ error: '找不到該節點' });
+  if (!canEditCategory(req, existing.category_id))
+    return res.status(403).json({ error: '權限不足，無法編輯此分類的問題' });
+
+  const { question, answer, keywords, category_id, is_active, start_date, end_date } = req.body;
   if (!question?.trim() || !answer?.trim())
     return res.status(400).json({ error: '問題與答案為必填' });
+
+  let categoryId = existing.category_id;
+  if (category_id !== undefined) {
+    categoryId = category_id ? Number(category_id) : null;
+    if (!canEditCategory(req, categoryId))
+      return res.status(403).json({ error: '權限不足，無法將問題移至此分類' });
+  }
+
   const node = await prisma.faq_nodes.update({
     where: { id },
     data: {
-      question:   question.trim(),
-      answer:     answer.trim(),
-      keywords:   keywords?.trim() || null,
-      start_date: start_date ? new Date(start_date) : null,
-      end_date:   end_date   ? new Date(end_date)   : null,
+      question:    question.trim(),
+      answer:      answer.trim(),
+      keywords:    keywords?.trim() || null,
+      category_id: categoryId,
+      start_date:  start_date ? new Date(start_date) : null,
+      end_date:    end_date   ? new Date(end_date)   : null,
       ...(is_active !== undefined && { is_active }),
       updated_at: new Date(),
     },
@@ -406,6 +514,9 @@ router.put('/:id', async (req, res) => {
 // DELETE /api/admin/faq/:id — 刪除節點（關聯連結 cascade 自動刪）
 router.delete('/:id', async (req, res) => {
   const id = Number(req.params.id);
+  const existing = await prisma.faq_nodes.findUnique({ where: { id } });
+  if (existing && !canEditCategory(req, existing.category_id))
+    return res.status(403).json({ error: '權限不足，無法刪除此分類的問題' });
   await prisma.faq_nodes.delete({ where: { id } }).catch(() => null);
   res.json({ ok: true });
 });
