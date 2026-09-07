@@ -45,6 +45,10 @@ export default function FaqManager() {
   const [docFile,        setDocFile]        = useState(null);
   const [uploadingDoc,   setUploadingDoc]   = useState(false);
   const docFileRef = useRef(null);
+  const [openDocId,        setOpenDocId]        = useState(null);
+  const [docContent,       setDocContent]       = useState('');
+  const [docContentLoading, setDocContentLoading] = useState(false);
+  const [savingDocContent, setSavingDocContent] = useState(false);
 
   // 未解答問題清單
   const [unanswered,        setUnanswered]        = useState([]);
@@ -234,6 +238,30 @@ export default function FaqManager() {
     await apiFetch(`${API}/documents/${doc.id}`, { method: 'DELETE' });
     showMsg('已刪除文件，正在背景同步知識庫');
     await loadDocuments();
+  };
+
+  // ── 客服文件：預覽／編輯內容 ──
+  const handleToggleDocContent = async (doc) => {
+    if (openDocId === doc.id) { setOpenDocId(null); return; }
+    setOpenDocId(doc.id);
+    setDocContentLoading(true);
+    const r = await apiFetch(`${API}/documents/${doc.id}/content`);
+    const d = await r.json();
+    setDocContent(r.ok ? (d.content ?? '') : '');
+    setDocContentLoading(false);
+    if (!r.ok) showMsg(d.error || '讀取內容失敗', 'err');
+  };
+
+  const handleSaveDocContent = async (doc) => {
+    setSavingDocContent(true);
+    const r = await apiFetch(`${API}/documents/${doc.id}/content`, {
+      method: 'PUT',
+      body: JSON.stringify({ content: docContent }),
+    });
+    const d = await r.json();
+    setSavingDocContent(false);
+    if (!r.ok) return showMsg(d.error || '儲存失敗', 'err');
+    showMsg('已儲存，正在背景同步進知識庫（可稍後按「立即同步知識庫」確認結果）');
   };
 
   // ── 節點選取 / 新增 ──
@@ -600,27 +628,60 @@ export default function FaqManager() {
             ) : (
               <div className="faq-linked-list" style={{ marginTop: 12 }}>
                 {documents.map(doc => (
-                  <div key={doc.id} className="faq-linked-item">
-                    <label style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                      <input
-                        type="checkbox"
-                        checked={doc.is_active}
-                        disabled={!canWrite}
-                        onChange={e => handleToggleDocActive(doc, e.target.checked)}
-                      />
-                    </label>
-                    <span className="faq-linked-q">
-                      {doc.title}
-                      <span className="faq-hint" style={{ marginLeft: 8 }}>
-                        {doc.start_date || doc.end_date
-                          ? `${doc.start_date ? doc.start_date.slice(0, 10) : '無起始'} ～ ${doc.end_date ? doc.end_date.slice(0, 10) : '無結束'}`
-                          : '長期有效'}
+                  <React.Fragment key={doc.id}>
+                    <div className="faq-linked-item">
+                      <label style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                        <input
+                          type="checkbox"
+                          checked={doc.is_active}
+                          disabled={!canWrite}
+                          onChange={e => handleToggleDocActive(doc, e.target.checked)}
+                        />
+                      </label>
+                      <span className="faq-linked-q">
+                        {doc.title}
+                        <span className="faq-hint" style={{ marginLeft: 8 }}>
+                          {doc.start_date || doc.end_date
+                            ? `${doc.start_date ? doc.start_date.slice(0, 10) : '無起始'} ～ ${doc.end_date ? doc.end_date.slice(0, 10) : '無結束'}`
+                            : '長期有效'}
+                        </span>
                       </span>
-                    </span>
-                    {canWrite && (
-                      <button className="faq-icon-btn faq-icon-btn--del" onClick={() => handleDeleteDoc(doc)}>✕</button>
+                      <button className="faq-toolbar-btn" onClick={() => handleToggleDocContent(doc)}>
+                        {openDocId === doc.id ? '收起內容' : (canWrite ? '檢視/編輯內容' : '檢視內容')}
+                      </button>
+                      {canWrite && (
+                        <button className="faq-icon-btn faq-icon-btn--del" onClick={() => handleDeleteDoc(doc)}>✕</button>
+                      )}
+                    </div>
+                    {openDocId === doc.id && (
+                      <div style={{ margin: '4px 0 10px' }}>
+                        {docContentLoading ? (
+                          <div className="faq-hint">載入中…</div>
+                        ) : (
+                          <>
+                            <textarea
+                              className="faq-textarea"
+                              rows={10}
+                              value={docContent}
+                              onChange={e => setDocContent(e.target.value)}
+                              disabled={!canWrite}
+                            />
+                            {canWrite && (
+                              <div className="faq-fallback-actions" style={{ marginTop: 6 }}>
+                                <button
+                                  className="fg-btn fg-btn-primary fg-btn-sm"
+                                  onClick={() => handleSaveDocContent(doc)}
+                                  disabled={savingDocContent}
+                                >
+                                  {savingDocContent ? '儲存中…' : '儲存內容'}
+                                </button>
+                              </div>
+                            )}
+                          </>
+                        )}
+                      </div>
                     )}
-                  </div>
+                  </React.Fragment>
                 ))}
               </div>
             )}

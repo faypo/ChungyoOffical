@@ -147,6 +147,31 @@ router.post('/documents/upload', uploadDoc.single('file'), async (req, res) => {
   res.status(201).json(doc);
 });
 
+// GET /api/admin/faq/documents/:id/content — 讀取文件純文字內容（供預覽/編輯）
+router.get('/documents/:id/content', async (req, res) => {
+  const id = Number(req.params.id);
+  const doc = await prisma.faq_documents.findUnique({ where: { id } });
+  if (!doc) return res.status(404).json({ error: '找不到該文件' });
+  const filePath = path.join(FAQ_DOC_DIR, doc.filename);
+  let content = '';
+  try { content = fs.readFileSync(filePath, 'utf8'); } catch { content = ''; }
+  res.json({ content });
+});
+
+// PUT /api/admin/faq/documents/:id/content — 覆寫文件純文字內容，異動後自動同步知識庫
+router.put('/documents/:id/content', async (req, res) => {
+  const id = Number(req.params.id);
+  const { content } = req.body;
+  if (typeof content !== 'string') return res.status(400).json({ error: '無效的內容' });
+  const doc = await prisma.faq_documents.findUnique({ where: { id } });
+  if (!doc) return res.status(404).json({ error: '找不到該文件' });
+  fs.mkdirSync(FAQ_DOC_DIR, { recursive: true });
+  fs.writeFileSync(path.join(FAQ_DOC_DIR, doc.filename), content, 'utf8');
+  await prisma.faq_documents.update({ where: { id }, data: { updated_at: new Date() } });
+  syncAfterDocChange();
+  res.json({ ok: true });
+});
+
 // PUT /api/admin/faq/documents/:id — 更新標題／起訖日期／啟用狀態，異動後自動同步知識庫
 router.put('/documents/:id', async (req, res) => {
   const id = Number(req.params.id);
