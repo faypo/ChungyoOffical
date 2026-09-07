@@ -70,7 +70,8 @@
 @media (max-width: 700px) {
   .service-page {
     flex-direction: column;
-    height: calc(100dvh - var(--header-h, 0px));
+    height: auto;
+    min-height: calc(100dvh - var(--header-h, 0px));
   }
 
   .service-sidebar {
@@ -100,5 +101,5 @@
     color: #fff;
   }
 
-  .service-content { padding: 16px; }
+  .service-content { padding: 16px; overflow: visible; }
 }

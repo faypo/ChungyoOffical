@@ -44,9 +44,9 @@ export default function Header() {
               {label}
             </NavLink>
           ))}
-          {/* memberUrl && (
-            <a href={memberUrl} className="site-nav-link">會員點數查詢</a>
-          ) */}
+          {memberUrl && (
+            <a href={memberUrl} className="site-nav-link">會員載具歸戶</a>
+          )}
           {NAV_AFTER_MEMBER.map(({ to, label }) => (
             <NavLink
               key={to}
@@ -83,11 +83,11 @@ export default function Header() {
             {label}
           </NavLink>
         ))}
-        {/* memberUrl && (
+        {memberUrl && (
           <a href={memberUrl} className="site-mobile-nav-link" onClick={() => setMenuOpen(false)}>
-            會員點數查詢
+            會員載具歸戶
           </a>
-        ) */}
+        )}
         {NAV_AFTER_MEMBER.map(({ to, label }) => (
           <NavLink
             key={to}

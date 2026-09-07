@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import SwipeHint from './SwipeHint';
 import './ActivityPage.css';
 
 function extractYouTubeId(input = '') {
@@ -63,6 +62,9 @@ export default function ActivityPage() {
   const touchStartX = useRef(null);
   const touchStartY = useRef(null);
 
+  const goPrev = () => window.history.back();
+  const goNext = () => window.history.forward();
+
   const onTouchStart = (e) => {
     touchStartX.current = e.touches[0].clientX;
     touchStartY.current = e.touches[0].clientY;
@@ -75,8 +77,8 @@ export default function ActivityPage() {
     touchStartX.current = null;
     touchStartY.current = null;
     if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
-    if (dx > 0) window.history.back();
-    else        window.history.forward();
+    if (dx > 0) goPrev();
+    else        goNext();
   };
 
   if (loading) return <div className="act-status">載入中…</div>;
@@ -84,7 +86,12 @@ export default function ActivityPage() {
 
   return (
     <div className="act-page" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-      <SwipeHint />
+      <div className="act-click-hint act-click-hint--left" onClick={goPrev}>
+        <span className="act-hint-arrow">‹</span>
+      </div>
+      <div className="act-click-hint act-click-hint--right" onClick={goNext}>
+        <span className="act-hint-arrow">›</span>
+      </div>
       <div className="act-content">
         {(activity.content ?? []).map((item, i) => {
           if (item.type === 'image') {
