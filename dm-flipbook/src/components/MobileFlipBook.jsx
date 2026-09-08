@@ -1,37 +1,17 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import PageContent from './PageContent';
+import { buildMobilePages } from '../utils/flipbookPages';
 import './MobileFlipBook.css';
 
-/**
- * Flatten spreads into individual mobile pages.
- * double: spread 0 → right half (cover), spread N → left+right, last → left (back cover)
- * single: each page shown in full, no splitting
- */
-function buildMobilePages(pages, type) {
-  if (type === 'single') {
-    return pages.map((page, i) => ({ page, side: 'single', spreadIndex: i }));
-  }
-  const result = [];
-  pages.forEach((page, i) => {
-    if (i === 0) {
-      result.push({ page, side: 'right', spreadIndex: 0 });
-    } else {
-      result.push({ page, side: 'left',  spreadIndex: i });
-      result.push({ page, side: 'right', spreadIndex: i });
-    }
-  });
-  if (pages.length > 0) {
-    result.push({ page: pages[0], side: 'left', spreadIndex: 0 });
-  }
-  return result;
-}
-
-export default function MobileFlipBook({ pages, type = 'double', buttons = [], onBack }) {
+export default function MobileFlipBook({ pages, type = 'double', buttons = [], onBack, initialPage }) {
   const mobilePages = buildMobilePages(pages, type);
   const TOTAL = mobilePages.length;
 
   // dragOffset: -1..1  (negative = moving toward next, positive = moving toward prev)
-  const [current, setCurrent]     = useState(0);
+  const [current, setCurrent]     = useState(() => {
+    if (initialPage == null) return 0;
+    return Math.max(0, Math.min(initialPage, TOTAL - 1));
+  });
   const [dragOffset, setDragOffset] = useState(0);
   const [slideDir, setSlideDir]   = useState(null); // 'next'|'prev'
 

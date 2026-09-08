@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import FlipBook from './FlipBook';
 import StripViewer from './StripViewer';
 import { fetchDMPages, fetchDMMeta } from '../data/catalog';
@@ -9,6 +9,10 @@ import './DMViewer.css';
 export default function DMViewer() {
   const { id }    = useParams();
   const navigate  = useNavigate();
+  const [searchParams] = useSearchParams();
+  // ?page=N — 跟 DMManager 嵌入按鈕的「頁碼」同一套編號（拆頁後的攤平索引，封面=0）
+  const pageParam  = searchParams.get('page');
+  const initialPage = pageParam !== null && !Number.isNaN(Number(pageParam)) ? Number(pageParam) : undefined;
   const { setViewerMode } = useLayout();
   const [pages,   setPages]   = useState([]);
   const [meta,    setMeta]    = useState(null);
@@ -52,6 +56,7 @@ export default function DMViewer() {
       type={meta?.type ?? 'double'}
       buttons={meta?.button ?? []}
       onBack={() => navigate(-1)}
+      initialPage={initialPage}
     />
   );
 }

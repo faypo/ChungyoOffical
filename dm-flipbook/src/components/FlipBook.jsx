@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import PageContent from './PageContent';
 import MobileFlipBook from './MobileFlipBook';
+import { pageNumberToSpreadIndex } from '../utils/flipbookPages';
 import './FlipBook.css';
 
 function useIsMobile() {
@@ -52,11 +53,13 @@ function leafAngles(progress, direction) {
   };
 }
 
-export default function FlipBook({ pages, type = 'double', buttons = [], onBack }) {
+export default function FlipBook({ pages, type = 'double', buttons = [], onBack, initialPage }) {
   const isMobile      = useIsMobile();
   const TOTAL_SPREADS = type === 'single' ? Math.ceil(pages.length / 2) : pages.length;
 
-  const [currentSpread, setCurrentSpread]   = useState(0);
+  const [currentSpread, setCurrentSpread]   = useState(() =>
+    initialPage == null ? 0 : pageNumberToSpreadIndex(pages, type, initialPage)
+  );
   const [flipActive, setFlipActive]         = useState(false);
   const [flipDirection, setFlipDirection]   = useState(null); // 'next' | 'prev'
   const [pendingSpread, setPendingSpread]   = useState(null);
@@ -344,7 +347,7 @@ export default function FlipBook({ pages, type = 'double', buttons = [], onBack 
 
   // ─── Mobile: delegate to single-page slider ───────────────────────────────
 
-  if (isMobile) return <MobileFlipBook pages={pages} type={type} buttons={buttons} onBack={onBack} />;
+  if (isMobile) return <MobileFlipBook pages={pages} type={type} buttons={buttons} onBack={onBack} initialPage={initialPage} />;
 
   // ─── Compute leaf transforms ──────────────────────────────────────────────
 
