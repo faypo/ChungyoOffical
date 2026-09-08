@@ -26,6 +26,8 @@ export default function GalleryManager() {
 
   const dragSrc = useRef(null);
   const fileRef = useRef();
+  const replaceFileRef  = useRef();
+  const replacingIdxRef = useRef(null);
 
   const showMsgFn = (text, type = 'ok') => {
     setMsg({ text, type });
@@ -71,6 +73,33 @@ export default function GalleryManager() {
     const newItems = (d.files ?? []).map(file => ({ type: 'image', file, hotspots: [] }));
     setContent(prev => [...prev, ...newItems]);
     e.target.value = '';
+  };
+
+  /* ── 換圖：替換圖片檔案，保留熱區/日期設定 ── */
+  const triggerReplace = (idx) => {
+    replacingIdxRef.current = idx;
+    replaceFileRef.current?.click();
+  };
+  const handleReplaceImage = async (e) => {
+    const file = e.target.files?.[0];
+    e.target.value = '';
+    if (!file) return;
+    const idx = replacingIdxRef.current;
+    replacingIdxRef.current = null;
+    if (idx === null) return;
+
+    const oldFile = content[idx]?.file;
+    const fd = new FormData();
+    fd.append('images', file);
+    const res = await apiFetch(`${API}/upload`, { method: 'POST', body: fd });
+    const d = await res.json();
+    if (!res.ok || !d.files?.[0]) return showMsgFn(d.error || '換圖失敗', 'err');
+
+    setContent(prev => prev.map((item, i) => i === idx ? { ...item, file: d.files[0] } : item));
+    if (oldFile && oldFile !== d.files[0]) {
+      await apiFetch(`${API}/image/${oldFile}`, { method: 'DELETE' }).catch(() => {});
+    }
+    showMsgFn('圖片已更換，熱區設定已保留，記得按「儲存」');
   };
 
   const handleAddYt = () => {
@@ -157,6 +186,7 @@ export default function GalleryManager() {
               {uploading ? '上傳中…' : '＋ 上傳圖片'}
             </button>
             <input ref={fileRef} type="file" accept="image/*" multiple hidden onChange={handleUpload} />
+            <input ref={replaceFileRef} type="file" accept="image/*" hidden onChange={handleReplaceImage} />
             <button className="fg-btn fg-btn-ghost" onClick={() => setShowYt(v => !v)}>
               ＋ YouTube
             </button>
@@ -229,6 +259,10 @@ export default function GalleryManager() {
                     >
                       熱區 {(item.hotspots?.length ?? 0) > 0 ? `(${item.hotspots.length})` : ''}
                     </button>
+                    <button
+                      className="fg-btn fg-btn-ghost fg-btn-sm"
+                      onClick={() => triggerReplace(i)}
+                    >換圖</button>
                   </>
                 ) : (
                   <>
