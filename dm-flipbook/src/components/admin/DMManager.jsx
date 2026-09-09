@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import HotspotEditor from './HotspotEditor';
 import { apiFetch } from '../../utils/apiFetch';
+import { buildMobilePages } from '../../utils/flipbookPages';
 import './FloorGuideManager.css';
 import './DMManager.css';
 
@@ -266,6 +267,16 @@ export default function DMManager() {
 
   /* ── 上傳圖片 ── */
   const isStrip = uploading ? (catalog.find(d => d.id === uploading)?.type === 'strip') : false;
+  const uploadingType = uploading ? (catalog.find(d => d.id === uploading)?.type ?? 'double') : 'double';
+
+  // 「現有圖片」清單裡第 i 張（#i+1）對應到 DM 頁面路由 ?page= 要輸入的頁碼——
+  // 跟 #1#2#3（上傳順序）不是同一套編號，雙頁版型一張圖會橫跨兩個頁碼（左右頁）。
+  const pageNumbersBySpread = {};
+  if (!isStrip) {
+    buildMobilePages(existingPages, uploadingType).forEach((m, pageNo) => {
+      (pageNumbersBySpread[m.spreadIndex] ??= []).push(pageNo);
+    });
+  }
 
   const addFiles = (files) => {
     const images = files.filter(f => f.type.startsWith('image/'));
@@ -511,6 +522,11 @@ export default function DMManager() {
                   />
                   <span className="upload-file-name">{file}</span>
                   {!isStrip && <span className="upload-file-order">#{i + 1}</span>}
+                  {!isStrip && (
+                    <span className="upload-file-order" title="DM 頁面網址 ?page= 要輸入的頁碼">
+                      PAGE {(pageNumbersBySpread[i] ?? []).join('、') || '—'}
+                    </span>
+                  )}
                   <button
                     className="upload-file-remove"
                     onClick={() => handleDeleteExistingImage(file)}

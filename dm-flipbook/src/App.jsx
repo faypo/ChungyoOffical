@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { LayoutProvider } from './context/LayoutContext';
 import { AuthProvider } from './context/AuthContext';
@@ -6,8 +6,6 @@ import { useAuth } from './context/AuthContext';
 import AdminGuard from './components/admin/AdminGuard';
 import LoginPage from './components/admin/LoginPage';
 import ChangePasswordPage from './components/admin/ChangePasswordPage';
-import UsersManager from './components/admin/UsersManager';
-import RolesManager from './components/admin/RolesManager';
 import Layout from './components/layout/Layout';
 import DMShowcase from './components/DMShowcase';
 import DMViewer from './components/DMViewer';
@@ -16,30 +14,39 @@ import CustomerFeedbackViewer from './components/feedback/CustomerFeedbackViewer
 import Food from './components/Food';
 import Service from './components/Service';
 import AdminLayout from './components/admin/AdminLayout';
-import DMManager from './components/admin/DMManager';
-import FloorGuideManager from './components/admin/FloorGuideManager';
-import FoodGuideManager from './components/admin/FoodGuideManager';
-import WinnersManager from './components/admin/WinnersManager';
-import ActivityManager from './components/admin/ActivityManager';
-import GalleryManager from './components/admin/GalleryManager';
 import Winners from './components/Winners';
 import ActivityPage from './components/ActivityPage';
 import GalleryPage from './components/GalleryPage';
 import Home from './components/Home';
-import BannerManager from './components/admin/BannerManager';
-import HomeEventsManager from './components/admin/HomeEventsManager';
-import HomeFBManager from './components/admin/HomeFBManager';
-import HomePromoManager from './components/admin/HomePromoManager';
-import LogoManager from './components/admin/LogoManager';
-import SustainabilityManager from './components/admin/SustainabilityManager';
-import StatsManager from './components/admin/StatsManager';
-import ServiceManager from './components/admin/ServiceManager';
-import FaqManager from './components/admin/FaqManager';
-import AwsUsageManager from './components/admin/AwsUsageManager';
 import FaqPage from './pages/FaqPage';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Leasing from './components/Leasing';
 import './App.css';
+
+// 後台管理頁面只有登入後台的人會用到，改成路由層級動態載入（code splitting），
+// 避免一般訪客看 DM/活動/藝廊等前台頁面時，要連整包後台管理介面的 JS 都下載。
+const UsersManager         = lazy(() => import('./components/admin/UsersManager'));
+const RolesManager         = lazy(() => import('./components/admin/RolesManager'));
+const DMManager            = lazy(() => import('./components/admin/DMManager'));
+const FloorGuideManager    = lazy(() => import('./components/admin/FloorGuideManager'));
+const FoodGuideManager     = lazy(() => import('./components/admin/FoodGuideManager'));
+const WinnersManager       = lazy(() => import('./components/admin/WinnersManager'));
+const ActivityManager      = lazy(() => import('./components/admin/ActivityManager'));
+const GalleryManager       = lazy(() => import('./components/admin/GalleryManager'));
+const BannerManager        = lazy(() => import('./components/admin/BannerManager'));
+const HomeEventsManager    = lazy(() => import('./components/admin/HomeEventsManager'));
+const HomeFBManager        = lazy(() => import('./components/admin/HomeFBManager'));
+const HomePromoManager     = lazy(() => import('./components/admin/HomePromoManager'));
+const LogoManager          = lazy(() => import('./components/admin/LogoManager'));
+const SustainabilityManager = lazy(() => import('./components/admin/SustainabilityManager'));
+const StatsManager         = lazy(() => import('./components/admin/StatsManager'));
+const ServiceManager       = lazy(() => import('./components/admin/ServiceManager'));
+const FaqManager           = lazy(() => import('./components/admin/FaqManager'));
+const AwsUsageManager      = lazy(() => import('./components/admin/AwsUsageManager'));
+
+function RouteLoading() {
+  return <div style={{ padding: 40, textAlign: 'center', color: '#888' }}>載入中…</div>;
+}
 
 function SuperAdminOnly({ children }) {
   const { isSuperAdmin } = useAuth();
@@ -65,24 +72,24 @@ export default function App() {
             {/* Admin — 無 header/footer，需登入 */}
             <Route path="/admin" element={<AdminGuard><AdminLayout /></AdminGuard>}>
               <Route index element={<Navigate to="banner" replace />} />
-              <Route path="banner"      element={<BannerManager />} />
-              <Route path="home-event"  element={<HomeEventsManager />} />
-              <Route path="home-fb"     element={<HomeFBManager />} />
-              <Route path="home-promo"  element={<HomePromoManager />} />
-              <Route path="logos"       element={<LogoManager />} />
-              <Route path="dm"       element={<DMManager />} />
-              <Route path="floor"    element={<FloorGuideManager />} />
-              <Route path="food"     element={<FoodGuideManager />} />
-              <Route path="winners"  element={<WinnersManager />} />
-              <Route path="activity" element={<ActivityManager />} />
-              <Route path="gallery"        element={<GalleryManager />} />
-              <Route path="sustainability" element={<SustainabilityManager />} />
-              <Route path="stats"         element={<StatsManager />} />
-              <Route path="service"        element={<ServiceManager />} />
-              <Route path="faq"            element={<FaqManager />} />
-              <Route path="aws-usage"      element={<AwsUsageManager />} />
-              <Route path="users"          element={<SuperAdminOnly><UsersManager /></SuperAdminOnly>} />
-              <Route path="roles"          element={<SuperAdminOnly><RolesManager /></SuperAdminOnly>} />
+              <Route path="banner"      element={<Suspense fallback={<RouteLoading />}><BannerManager /></Suspense>} />
+              <Route path="home-event"  element={<Suspense fallback={<RouteLoading />}><HomeEventsManager /></Suspense>} />
+              <Route path="home-fb"     element={<Suspense fallback={<RouteLoading />}><HomeFBManager /></Suspense>} />
+              <Route path="home-promo"  element={<Suspense fallback={<RouteLoading />}><HomePromoManager /></Suspense>} />
+              <Route path="logos"       element={<Suspense fallback={<RouteLoading />}><LogoManager /></Suspense>} />
+              <Route path="dm"       element={<Suspense fallback={<RouteLoading />}><DMManager /></Suspense>} />
+              <Route path="floor"    element={<Suspense fallback={<RouteLoading />}><FloorGuideManager /></Suspense>} />
+              <Route path="food"     element={<Suspense fallback={<RouteLoading />}><FoodGuideManager /></Suspense>} />
+              <Route path="winners"  element={<Suspense fallback={<RouteLoading />}><WinnersManager /></Suspense>} />
+              <Route path="activity" element={<Suspense fallback={<RouteLoading />}><ActivityManager /></Suspense>} />
+              <Route path="gallery"        element={<Suspense fallback={<RouteLoading />}><GalleryManager /></Suspense>} />
+              <Route path="sustainability" element={<Suspense fallback={<RouteLoading />}><SustainabilityManager /></Suspense>} />
+              <Route path="stats"         element={<Suspense fallback={<RouteLoading />}><StatsManager /></Suspense>} />
+              <Route path="service"        element={<Suspense fallback={<RouteLoading />}><ServiceManager /></Suspense>} />
+              <Route path="faq"            element={<Suspense fallback={<RouteLoading />}><FaqManager /></Suspense>} />
+              <Route path="aws-usage"      element={<Suspense fallback={<RouteLoading />}><AwsUsageManager /></Suspense>} />
+              <Route path="users"          element={<SuperAdminOnly><Suspense fallback={<RouteLoading />}><UsersManager /></Suspense></SuperAdminOnly>} />
+              <Route path="roles"          element={<SuperAdminOnly><Suspense fallback={<RouteLoading />}><RolesManager /></Suspense></SuperAdminOnly>} />
             </Route>
 
             {/* 一般頁面 — 有 Layout */}
