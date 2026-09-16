@@ -4,6 +4,15 @@ import { useAuth } from '../../context/AuthContext';
 import { useModulePermission } from '../../utils/useModulePermission';
 import ChangePasswordModal from './ChangePasswordModal';
 import './AdminLayout.css';
+// 這三個是好幾個後台管理頁共用的基底樣式表（FloorGuideManager.css 是最底層的
+// fg-* 共用 class，ActivityManager.css／BannerManager.css 再往上疊）。改成
+// lazy-loading 之前，全部頁面打包成同一包 CSS，這幾個檔案的載入順序（覆蓋關係）
+// 是固定的；改成路由層級動態載入後，順序會變成「看使用者先逛哪個後台頁」，
+// 導致哪個樣式蓋過哪個變得不確定，版型忽好忽壞。在這裡固定 import 一次（跟
+// AdminLayout 本身一樣是 eager、永遠先載入），確保覆蓋順序永遠固定。
+import './FloorGuideManager.css';
+import './ActivityManager.css';
+import './BannerManager.css';
 
 const OTHER_NAV = [
   { to: '/admin/dm',             label: 'DM 管理',    module: 'dm' },
