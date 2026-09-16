@@ -4,15 +4,28 @@ import { useAuth } from '../../context/AuthContext';
 import { useModulePermission } from '../../utils/useModulePermission';
 import ChangePasswordModal from './ChangePasswordModal';
 import './AdminLayout.css';
-// 這三個是好幾個後台管理頁共用的基底樣式表（FloorGuideManager.css 是最底層的
-// fg-* 共用 class，ActivityManager.css／BannerManager.css 再往上疊）。改成
-// lazy-loading 之前，全部頁面打包成同一包 CSS，這幾個檔案的載入順序（覆蓋關係）
-// 是固定的；改成路由層級動態載入後，順序會變成「看使用者先逛哪個後台頁」，
-// 導致哪個樣式蓋過哪個變得不確定，版型忽好忽壞。在這裡固定 import 一次（跟
-// AdminLayout 本身一樣是 eager、永遠先載入），確保覆蓋順序永遠固定。
+// 後台每個管理頁的 CSS 不是完全獨立的：不只互相 import 共用檔案（例如
+// FloorGuideManager.css 是很多頁的共用基底），還有更隱性的狀況——例如
+// ActivityManager.jsx 的表單用了 .wm-meta-label 這個 class，但它的基礎樣式
+// （display:flex; flex-direction:column 等）其實是定義在 WinnersManager.css
+// 裡，ActivityManager.jsx 自己完全沒有 import 那個檔案，純粹是因為改成
+// lazy-loading 以前，全部後台頁面的 CSS 打包成同一包全域樣式表，所以「誰定義
+// 誰使用」從來不用對齊，都能互相套用。改成路由層級動態載入後，每個管理頁的
+// CSS 只剩自己 import 的那份，上面這種隱性依賴就會直接消失、版型跑掉。
+// 與其一個個抓漏，這裡乾脆把全部後台管理頁的 CSS 都固定 eager import
+// （跟 AdminLayout 本身一樣，每個 /admin/* 路由一定會先載入），還原成改
+// lazy-loading 之前「全部後台 CSS 都是全域的」這個狀態，只有元件的 JS
+// 程式碼維持 lazy-loading（vite build chunk 過大的問題本來就是 JS 造成的，
+// CSS 檔案都很小，全部 eager 載入不會有實際影響）。
 import './FloorGuideManager.css';
+import './HotspotEditor.css';
+import './DMManager.css';
+import './FoodGuideManager.css';
+import './WinnersManager.css';
 import './ActivityManager.css';
 import './BannerManager.css';
+import './HomeEventsManager.css';
+import './StatsManager.css';
 
 const OTHER_NAV = [
   { to: '/admin/dm',             label: 'DM 管理',    module: 'dm' },
